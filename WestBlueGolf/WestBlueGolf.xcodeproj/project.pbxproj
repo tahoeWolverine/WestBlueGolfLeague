@@ -22,7 +22,7 @@
 		A5F477091890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F4770A1890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
 		A5F477121890769400AB3529 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5F477101890769400AB3529 /* InfoPlist.strings */; };
-		A5F477141890769400AB3529 /* West_Blue_GolfTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F477131890769400AB3529 /* West_Blue_GolfTests.m */; };
+		A5F477141890769400AB3529 /* WestBlueGolfTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F477131890769400AB3529 /* WestBlueGolfTests.m */; };
 		A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F4771D18907E5E00AB3529 /* CoreData.framework */; };
 		A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -38,14 +38,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A5F476DF1890769400AB3529 /* West Blue Golf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "West Blue Golf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A5F476E61890769400AB3529 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A5F476EA1890769400AB3529 /* West Blue Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "West Blue Golf-Info.plist"; sourceTree = "<group>"; };
+		A5F476EA1890769400AB3529 /* WestBlueGolf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WestBlueGolf-Info.plist"; sourceTree = "<group>"; };
 		A5F476EC1890769400AB3529 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A5F476EE1890769400AB3529 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A5F476F01890769400AB3529 /* West Blue Golf-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "West Blue Golf-Prefix.pch"; sourceTree = "<group>"; };
+		A5F476F01890769400AB3529 /* WestBlueGolf-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WestBlueGolf-Prefix.pch"; sourceTree = "<group>"; };
 		A5F476F11890769400AB3529 /* WBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBAppDelegate.h; sourceTree = "<group>"; };
 		A5F476F21890769400AB3529 /* WBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBAppDelegate.m; sourceTree = "<group>"; };
 		A5F476F51890769400AB3529 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
@@ -55,11 +55,11 @@
 		A5F476FD1890769400AB3529 /* WBSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSecondViewController.h; sourceTree = "<group>"; };
 		A5F476FE1890769400AB3529 /* WBSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSecondViewController.m; sourceTree = "<group>"; };
 		A5F477001890769400AB3529 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A5F477061890769400AB3529 /* West Blue GolfTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "West Blue GolfTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5F477061890769400AB3529 /* WestBlueGolfTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WestBlueGolfTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F477071890769400AB3529 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		A5F4770F1890769400AB3529 /* West Blue GolfTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "West Blue GolfTests-Info.plist"; sourceTree = "<group>"; };
+		A5F4770F1890769400AB3529 /* WestBlueGolfTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WestBlueGolfTests-Info.plist"; sourceTree = "<group>"; };
 		A5F477111890769400AB3529 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A5F477131890769400AB3529 /* West_Blue_GolfTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = West_Blue_GolfTests.m; sourceTree = "<group>"; };
+		A5F477131890769400AB3529 /* WestBlueGolfTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WestBlueGolfTests.m; sourceTree = "<group>"; };
 		A5F4771D18907E5E00AB3529 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A5F4772818907F5000AB3529 /* WestBlueGolf.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WestBlueGolf.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,8 +92,8 @@
 		A5F476D61890769400AB3529 = {
 			isa = PBXGroup;
 			children = (
-				A5F476E81890769400AB3529 /* West Blue Golf */,
-				A5F4770D1890769400AB3529 /* West Blue GolfTests */,
+				A5F476E81890769400AB3529 /* WestBlueGolf */,
+				A5F4770D1890769400AB3529 /* WestBlueGolfTests */,
 				A5F476E11890769400AB3529 /* Frameworks */,
 				A5F476E01890769400AB3529 /* Products */,
 			);
@@ -102,8 +102,8 @@
 		A5F476E01890769400AB3529 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A5F476DF1890769400AB3529 /* West Blue Golf.app */,
-				A5F477061890769400AB3529 /* West Blue GolfTests.xctest */,
+				A5F476DF1890769400AB3529 /* WestBlueGolf.app */,
+				A5F477061890769400AB3529 /* WestBlueGolfTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A5F476E81890769400AB3529 /* West Blue Golf */ = {
+		A5F476E81890769400AB3529 /* WestBlueGolf */ = {
 			isa = PBXGroup;
 			children = (
 				A5F4772218907ECD00AB3529 /* PlayerProfile */,
@@ -139,33 +139,33 @@
 				A5F476FE1890769400AB3529 /* WBSecondViewController.m */,
 				A5F476E91890769400AB3529 /* Supporting Files */,
 			);
-			path = "West Blue Golf";
+			path = WestBlueGolf;
 			sourceTree = "<group>";
 		};
 		A5F476E91890769400AB3529 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A5F476EA1890769400AB3529 /* West Blue Golf-Info.plist */,
+				A5F476EA1890769400AB3529 /* WestBlueGolf-Info.plist */,
 				A5F476EB1890769400AB3529 /* InfoPlist.strings */,
 				A5F476EE1890769400AB3529 /* main.m */,
-				A5F476F01890769400AB3529 /* West Blue Golf-Prefix.pch */,
+				A5F476F01890769400AB3529 /* WestBlueGolf-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A5F4770D1890769400AB3529 /* West Blue GolfTests */ = {
+		A5F4770D1890769400AB3529 /* WestBlueGolfTests */ = {
 			isa = PBXGroup;
 			children = (
-				A5F477131890769400AB3529 /* West_Blue_GolfTests.m */,
+				A5F477131890769400AB3529 /* WestBlueGolfTests.m */,
 				A5F4770E1890769400AB3529 /* Supporting Files */,
 			);
-			path = "West Blue GolfTests";
+			path = WestBlueGolfTests;
 			sourceTree = "<group>";
 		};
 		A5F4770E1890769400AB3529 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A5F4770F1890769400AB3529 /* West Blue GolfTests-Info.plist */,
+				A5F4770F1890769400AB3529 /* WestBlueGolfTests-Info.plist */,
 				A5F477101890769400AB3529 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -202,9 +202,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A5F476DE1890769400AB3529 /* West Blue Golf */ = {
+		A5F476DE1890769400AB3529 /* WestBlueGolf */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5F477171890769400AB3529 /* Build configuration list for PBXNativeTarget "West Blue Golf" */;
+			buildConfigurationList = A5F477171890769400AB3529 /* Build configuration list for PBXNativeTarget "WestBlueGolf" */;
 			buildPhases = (
 				A5F476DB1890769400AB3529 /* Sources */,
 				A5F476DC1890769400AB3529 /* Frameworks */,
@@ -214,14 +214,14 @@
 			);
 			dependencies = (
 			);
-			name = "West Blue Golf";
+			name = WestBlueGolf;
 			productName = "West Blue Golf";
-			productReference = A5F476DF1890769400AB3529 /* West Blue Golf.app */;
+			productReference = A5F476DF1890769400AB3529 /* WestBlueGolf.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A5F477051890769400AB3529 /* West Blue GolfTests */ = {
+		A5F477051890769400AB3529 /* WestBlueGolfTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5F4771A1890769400AB3529 /* Build configuration list for PBXNativeTarget "West Blue GolfTests" */;
+			buildConfigurationList = A5F4771A1890769400AB3529 /* Build configuration list for PBXNativeTarget "WestBlueGolfTests" */;
 			buildPhases = (
 				A5F477021890769400AB3529 /* Sources */,
 				A5F477031890769400AB3529 /* Frameworks */,
@@ -232,9 +232,9 @@
 			dependencies = (
 				A5F4770C1890769400AB3529 /* PBXTargetDependency */,
 			);
-			name = "West Blue GolfTests";
+			name = WestBlueGolfTests;
 			productName = "West Blue GolfTests";
-			productReference = A5F477061890769400AB3529 /* West Blue GolfTests.xctest */;
+			productReference = A5F477061890769400AB3529 /* WestBlueGolfTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -252,7 +252,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A5F476DA1890769400AB3529 /* Build configuration list for PBXProject "West Blue Golf" */;
+			buildConfigurationList = A5F476DA1890769400AB3529 /* Build configuration list for PBXProject "WestBlueGolf" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -265,8 +265,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A5F476DE1890769400AB3529 /* West Blue Golf */,
-				A5F477051890769400AB3529 /* West Blue GolfTests */,
+				A5F476DE1890769400AB3529 /* WestBlueGolf */,
+				A5F477051890769400AB3529 /* WestBlueGolfTests */,
 			);
 		};
 /* End PBXProject section */
@@ -310,7 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5F477141890769400AB3529 /* West_Blue_GolfTests.m in Sources */,
+				A5F477141890769400AB3529 /* WestBlueGolfTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +319,7 @@
 /* Begin PBXTargetDependency section */
 		A5F4770C1890769400AB3529 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A5F476DE1890769400AB3529 /* West Blue Golf */;
+			target = A5F476DE1890769400AB3529 /* WestBlueGolf */;
 			targetProxy = A5F4770B1890769400AB3529 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -440,9 +440,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "West Blue Golf/West Blue Golf-Prefix.pch";
-				INFOPLIST_FILE = "West Blue Golf/West Blue Golf-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "West Blue Golf/WestBlueGolf-Prefix.pch";
+				INFOPLIST_FILE = "West Blue Golf/WestBlueGolf-Info.plist";
+				PRODUCT_NAME = WestBlueGolf;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -453,9 +453,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "West Blue Golf/West Blue Golf-Prefix.pch";
-				INFOPLIST_FILE = "West Blue Golf/West Blue Golf-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "West Blue Golf/WestBlueGolf-Prefix.pch";
+				INFOPLIST_FILE = "West Blue Golf/WestBlueGolf-Info.plist";
+				PRODUCT_NAME = WestBlueGolf;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -476,8 +476,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "West Blue GolfTests/West Blue GolfTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "West Blue GolfTests/WestBlueGolfTests-Info.plist";
+				PRODUCT_NAME = WestBlueGolfTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -495,8 +495,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "West Blue Golf/West Blue Golf-Prefix.pch";
-				INFOPLIST_FILE = "West Blue GolfTests/West Blue GolfTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "West Blue GolfTests/WestBlueGolfTests-Info.plist";
+				PRODUCT_NAME = WestBlueGolfTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -505,7 +505,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A5F476DA1890769400AB3529 /* Build configuration list for PBXProject "West Blue Golf" */ = {
+		A5F476DA1890769400AB3529 /* Build configuration list for PBXProject "WestBlueGolf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5F477151890769400AB3529 /* Debug */,
@@ -514,7 +514,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5F477171890769400AB3529 /* Build configuration list for PBXNativeTarget "West Blue Golf" */ = {
+		A5F477171890769400AB3529 /* Build configuration list for PBXNativeTarget "WestBlueGolf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5F477181890769400AB3529 /* Debug */,
@@ -523,7 +523,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5F4771A1890769400AB3529 /* Build configuration list for PBXNativeTarget "West Blue GolfTests" */ = {
+		A5F4771A1890769400AB3529 /* Build configuration list for PBXNativeTarget "WestBlueGolfTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5F4771B1890769400AB3529 /* Debug */,
