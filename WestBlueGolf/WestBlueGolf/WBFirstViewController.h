@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface WBFirstViewController : UIViewController
 
 @end
