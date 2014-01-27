@@ -7,6 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50E162D18972418008933A5 /* _WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160618972418008933A5 /* _WBCaptain.m */; };
+		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
+		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
+		A50E163018972418008933A5 /* _WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160C18972418008933A5 /* _WBPlayer.m */; };
+		A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160E18972418008933A5 /* _WBPlayerYearData.m */; };
+		A50E163218972418008933A5 /* _WBResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161018972418008933A5 /* _WBResult.m */; };
+		A50E163318972418008933A5 /* _WBTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161218972418008933A5 /* _WBTeam.m */; };
+		A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161418972418008933A5 /* _WBTeamMatchup.m */; };
+		A50E163518972418008933A5 /* _WBWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161618972418008933A5 /* _WBWeek.m */; };
+		A50E163618972418008933A5 /* _WBYear.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161818972418008933A5 /* _WBYear.m */; };
+		A50E163718972418008933A5 /* WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161A18972418008933A5 /* WBCaptain.m */; };
+		A50E163818972418008933A5 /* WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161C18972418008933A5 /* WBCourse.m */; };
+		A50E163918972418008933A5 /* WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E161E18972418008933A5 /* WBMatch.m */; };
+		A50E163A18972418008933A5 /* WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162018972418008933A5 /* WBPlayer.m */; };
+		A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162218972418008933A5 /* WBPlayerYearData.m */; };
+		A50E163C18972418008933A5 /* WBResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162418972418008933A5 /* WBResult.m */; };
+		A50E163D18972418008933A5 /* WBTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162618972418008933A5 /* WBTeam.m */; };
+		A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162818972418008933A5 /* WBTeamMatchup.m */; };
+		A50E163F18972418008933A5 /* WBWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162A18972418008933A5 /* WBWeek.m */; };
+		A50E164018972418008933A5 /* WBYear.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162C18972418008933A5 /* WBYear.m */; };
 		A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E41890769400AB3529 /* CoreGraphics.framework */; };
 		A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
@@ -38,6 +58,46 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50E160518972418008933A5 /* _WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCaptain.h; path = Model/_WBCaptain.h; sourceTree = "<group>"; };
+		A50E160618972418008933A5 /* _WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCaptain.m; path = Model/_WBCaptain.m; sourceTree = "<group>"; };
+		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
+		A50E160818972418008933A5 /* _WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCourse.m; path = Model/_WBCourse.m; sourceTree = "<group>"; };
+		A50E160918972418008933A5 /* _WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBMatch.h; path = Model/_WBMatch.h; sourceTree = "<group>"; };
+		A50E160A18972418008933A5 /* _WBMatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBMatch.m; path = Model/_WBMatch.m; sourceTree = "<group>"; };
+		A50E160B18972418008933A5 /* _WBPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBPlayer.h; path = Model/_WBPlayer.h; sourceTree = "<group>"; };
+		A50E160C18972418008933A5 /* _WBPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBPlayer.m; path = Model/_WBPlayer.m; sourceTree = "<group>"; };
+		A50E160D18972418008933A5 /* _WBPlayerYearData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBPlayerYearData.h; path = Model/_WBPlayerYearData.h; sourceTree = "<group>"; };
+		A50E160E18972418008933A5 /* _WBPlayerYearData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBPlayerYearData.m; path = Model/_WBPlayerYearData.m; sourceTree = "<group>"; };
+		A50E160F18972418008933A5 /* _WBResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBResult.h; path = Model/_WBResult.h; sourceTree = "<group>"; };
+		A50E161018972418008933A5 /* _WBResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBResult.m; path = Model/_WBResult.m; sourceTree = "<group>"; };
+		A50E161118972418008933A5 /* _WBTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBTeam.h; path = Model/_WBTeam.h; sourceTree = "<group>"; };
+		A50E161218972418008933A5 /* _WBTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBTeam.m; path = Model/_WBTeam.m; sourceTree = "<group>"; };
+		A50E161318972418008933A5 /* _WBTeamMatchup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBTeamMatchup.h; path = Model/_WBTeamMatchup.h; sourceTree = "<group>"; };
+		A50E161418972418008933A5 /* _WBTeamMatchup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBTeamMatchup.m; path = Model/_WBTeamMatchup.m; sourceTree = "<group>"; };
+		A50E161518972418008933A5 /* _WBWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBWeek.h; path = Model/_WBWeek.h; sourceTree = "<group>"; };
+		A50E161618972418008933A5 /* _WBWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBWeek.m; path = Model/_WBWeek.m; sourceTree = "<group>"; };
+		A50E161718972418008933A5 /* _WBYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBYear.h; path = Model/_WBYear.h; sourceTree = "<group>"; };
+		A50E161818972418008933A5 /* _WBYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBYear.m; path = Model/_WBYear.m; sourceTree = "<group>"; };
+		A50E161918972418008933A5 /* WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBCaptain.h; path = Model/WBCaptain.h; sourceTree = "<group>"; };
+		A50E161A18972418008933A5 /* WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBCaptain.m; path = Model/WBCaptain.m; sourceTree = "<group>"; };
+		A50E161B18972418008933A5 /* WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBCourse.h; path = Model/WBCourse.h; sourceTree = "<group>"; };
+		A50E161C18972418008933A5 /* WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBCourse.m; path = Model/WBCourse.m; sourceTree = "<group>"; };
+		A50E161D18972418008933A5 /* WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBMatch.h; path = Model/WBMatch.h; sourceTree = "<group>"; };
+		A50E161E18972418008933A5 /* WBMatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBMatch.m; path = Model/WBMatch.m; sourceTree = "<group>"; };
+		A50E161F18972418008933A5 /* WBPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBPlayer.h; path = Model/WBPlayer.h; sourceTree = "<group>"; };
+		A50E162018972418008933A5 /* WBPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPlayer.m; path = Model/WBPlayer.m; sourceTree = "<group>"; };
+		A50E162118972418008933A5 /* WBPlayerYearData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBPlayerYearData.h; path = Model/WBPlayerYearData.h; sourceTree = "<group>"; };
+		A50E162218972418008933A5 /* WBPlayerYearData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPlayerYearData.m; path = Model/WBPlayerYearData.m; sourceTree = "<group>"; };
+		A50E162318972418008933A5 /* WBResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBResult.h; path = Model/WBResult.h; sourceTree = "<group>"; };
+		A50E162418972418008933A5 /* WBResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBResult.m; path = Model/WBResult.m; sourceTree = "<group>"; };
+		A50E162518972418008933A5 /* WBTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBTeam.h; path = Model/WBTeam.h; sourceTree = "<group>"; };
+		A50E162618972418008933A5 /* WBTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBTeam.m; path = Model/WBTeam.m; sourceTree = "<group>"; };
+		A50E162718972418008933A5 /* WBTeamMatchup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBTeamMatchup.h; path = Model/WBTeamMatchup.h; sourceTree = "<group>"; };
+		A50E162818972418008933A5 /* WBTeamMatchup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBTeamMatchup.m; path = Model/WBTeamMatchup.m; sourceTree = "<group>"; };
+		A50E162918972418008933A5 /* WBWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBWeek.h; path = Model/WBWeek.h; sourceTree = "<group>"; };
+		A50E162A18972418008933A5 /* WBWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBWeek.m; path = Model/WBWeek.m; sourceTree = "<group>"; };
+		A50E162B18972418008933A5 /* WBYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBYear.h; path = Model/WBYear.h; sourceTree = "<group>"; };
+		A50E162C18972418008933A5 /* WBYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBYear.m; path = Model/WBYear.m; sourceTree = "<group>"; };
 		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,6 +149,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A50E160418972400008933A5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A50E160518972418008933A5 /* _WBCaptain.h */,
+				A50E160618972418008933A5 /* _WBCaptain.m */,
+				A50E160718972418008933A5 /* _WBCourse.h */,
+				A50E160818972418008933A5 /* _WBCourse.m */,
+				A50E160918972418008933A5 /* _WBMatch.h */,
+				A50E160A18972418008933A5 /* _WBMatch.m */,
+				A50E160B18972418008933A5 /* _WBPlayer.h */,
+				A50E160C18972418008933A5 /* _WBPlayer.m */,
+				A50E160D18972418008933A5 /* _WBPlayerYearData.h */,
+				A50E160E18972418008933A5 /* _WBPlayerYearData.m */,
+				A50E160F18972418008933A5 /* _WBResult.h */,
+				A50E161018972418008933A5 /* _WBResult.m */,
+				A50E161118972418008933A5 /* _WBTeam.h */,
+				A50E161218972418008933A5 /* _WBTeam.m */,
+				A50E161318972418008933A5 /* _WBTeamMatchup.h */,
+				A50E161418972418008933A5 /* _WBTeamMatchup.m */,
+				A50E161518972418008933A5 /* _WBWeek.h */,
+				A50E161618972418008933A5 /* _WBWeek.m */,
+				A50E161718972418008933A5 /* _WBYear.h */,
+				A50E161818972418008933A5 /* _WBYear.m */,
+				A50E161918972418008933A5 /* WBCaptain.h */,
+				A50E161A18972418008933A5 /* WBCaptain.m */,
+				A50E161B18972418008933A5 /* WBCourse.h */,
+				A50E161C18972418008933A5 /* WBCourse.m */,
+				A50E161D18972418008933A5 /* WBMatch.h */,
+				A50E161E18972418008933A5 /* WBMatch.m */,
+				A50E161F18972418008933A5 /* WBPlayer.h */,
+				A50E162018972418008933A5 /* WBPlayer.m */,
+				A50E162118972418008933A5 /* WBPlayerYearData.h */,
+				A50E162218972418008933A5 /* WBPlayerYearData.m */,
+				A50E162318972418008933A5 /* WBResult.h */,
+				A50E162418972418008933A5 /* WBResult.m */,
+				A50E162518972418008933A5 /* WBTeam.h */,
+				A50E162618972418008933A5 /* WBTeam.m */,
+				A50E162718972418008933A5 /* WBTeamMatchup.h */,
+				A50E162818972418008933A5 /* WBTeamMatchup.m */,
+				A50E162918972418008933A5 /* WBWeek.h */,
+				A50E162A18972418008933A5 /* WBWeek.m */,
+				A50E162B18972418008933A5 /* WBYear.h */,
+				A50E162C18972418008933A5 /* WBYear.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		A5F476D61890769400AB3529 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +234,7 @@
 				A5F4772318907EDD00AB3529 /* TeamProfile */,
 				A5F4772418907EE500AB3529 /* Leaderboards */,
 				A5F4772518907EED00AB3529 /* Info */,
+				A50E160418972400008933A5 /* Model */,
 				A5F476F11890769400AB3529 /* WBAppDelegate.h */,
 				A5F476F21890769400AB3529 /* WBAppDelegate.m */,
 				A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */,
@@ -298,11 +406,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
+				A50E162D18972418008933A5 /* _WBCaptain.m in Sources */,
+				A50E162F18972418008933A5 /* _WBMatch.m in Sources */,
 				A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */,
+				A50E163618972418008933A5 /* _WBYear.m in Sources */,
+				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A5F476FC1890769400AB3529 /* WBFirstViewController.m in Sources */,
+				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
+				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
+				A50E163218972418008933A5 /* _WBResult.m in Sources */,
+				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
+				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
+				A50E163C18972418008933A5 /* WBResult.m in Sources */,
+				A50E163A18972418008933A5 /* WBPlayer.m in Sources */,
+				A50E164018972418008933A5 /* WBYear.m in Sources */,
+				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
+				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
+				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
+				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
 				A5F476FF1890769400AB3529 /* WBSecondViewController.m in Sources */,
+				A50E163918972418008933A5 /* WBMatch.m in Sources */,
+				A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */,
+				A50E163718972418008933A5 /* WBCaptain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,8 +568,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "West Blue Golf/WestBlueGolf-Prefix.pch";
-				INFOPLIST_FILE = "West Blue Golf/WestBlueGolf-Info.plist";
+				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
+				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
 				PRODUCT_NAME = WestBlueGolf;
 				WRAPPER_EXTENSION = app;
 			};
@@ -453,8 +581,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "West Blue Golf/WestBlueGolf-Prefix.pch";
-				INFOPLIST_FILE = "West Blue Golf/WestBlueGolf-Info.plist";
+				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
+				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
 				PRODUCT_NAME = WestBlueGolf;
 				WRAPPER_EXTENSION = app;
 			};

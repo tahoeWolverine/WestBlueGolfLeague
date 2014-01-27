@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Captain" parentEntity="Player" syncable="YES">
+    <entity name="WBCaptain" representedClassName="WBCaptain" parentEntity="WBPlayer" syncable="YES">
         <attribute name="captainId" attributeType="Integer 16" syncable="YES"/>
         <attribute name="password" attributeType="String" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Course" syncable="YES">
+    <entity name="WBCourse" representedClassName="WBCourse" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="par" attributeType="Integer 16" minValueString="0" defaultValueString="36" syncable="YES"/>
-        <relationship name="weeks" toMany="YES" deletionRule="Nullify" destinationEntity="Week" inverseName="course" inverseEntity="Week" syncable="YES"/>
+        <relationship name="weeks" toMany="YES" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="course" inverseEntity="WBWeek" syncable="YES"/>
     </entity>
-    <entity name="Match" syncable="YES">
-        <relationship name="players" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="Player" inverseName="matches" inverseEntity="Player" syncable="YES"/>
-        <relationship name="results" toMany="YES" minCount="2" maxCount="2" deletionRule="Cascade" destinationEntity="Result" inverseName="match" inverseEntity="Result" syncable="YES"/>
-        <relationship name="teamMatchup" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMatchup" inverseName="matches" inverseEntity="TeamMatchup" syncable="YES"/>
+    <entity name="WBMatch" representedClassName="WBMatch" syncable="YES">
+        <relationship name="players" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="matches" inverseEntity="WBPlayer" syncable="YES"/>
+        <relationship name="results" toMany="YES" minCount="2" maxCount="2" deletionRule="Cascade" destinationEntity="WBResult" inverseName="match" inverseEntity="WBResult" syncable="YES"/>
+        <relationship name="teamMatchup" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeamMatchup" inverseName="matches" inverseEntity="WBTeamMatchup" syncable="YES"/>
     </entity>
-    <entity name="Player" syncable="YES">
+    <entity name="WBPlayer" representedClassName="WBPlayer" syncable="YES">
         <attribute name="currentHandicap" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="Match" inverseName="players" inverseEntity="Match" syncable="YES"/>
-        <relationship name="results" maxCount="1" deletionRule="Cascade" destinationEntity="Result" inverseName="player" inverseEntity="Result" syncable="YES"/>
-        <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="players" inverseEntity="Team" syncable="YES"/>
-        <relationship name="yearData" maxCount="1" deletionRule="Cascade" destinationEntity="PlayerYearData" inverseName="player" inverseEntity="PlayerYearData" syncable="YES"/>
+        <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="players" inverseEntity="WBMatch" syncable="YES"/>
+        <relationship name="results" maxCount="1" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
+        <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="players" inverseEntity="WBTeam" syncable="YES"/>
+        <relationship name="yearData" maxCount="1" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="player" inverseEntity="WBPlayerYearData" syncable="YES"/>
     </entity>
-    <entity name="PlayerYearData" syncable="YES">
+    <entity name="WBPlayerYearData" representedClassName="WBPlayerYearData" syncable="YES">
         <attribute name="isRookie" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="startingHandicap" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="yearData" inverseEntity="Player" syncable="YES"/>
+        <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="yearData" inverseEntity="WBPlayer" syncable="YES"/>
     </entity>
-    <entity name="Result" syncable="YES">
+    <entity name="WBResult" representedClassName="WBResult" syncable="YES">
         <attribute name="points" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="24" defaultValueString="0" syncable="YES"/>
         <attribute name="priorHandicap" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="score" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="match" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="results" inverseEntity="Match" syncable="YES"/>
-        <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="results" inverseEntity="Player" syncable="YES"/>
+        <relationship name="match" maxCount="1" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="results" inverseEntity="WBMatch" syncable="YES"/>
+        <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="results" inverseEntity="WBPlayer" syncable="YES"/>
     </entity>
-    <entity name="Team" syncable="YES">
+    <entity name="WBTeam" representedClassName="WBTeam" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="championYears" toMany="YES" deletionRule="Nullify" destinationEntity="Year" inverseName="champion" inverseEntity="Year" syncable="YES"/>
-        <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="TeamMatchup" inverseName="teams" inverseEntity="TeamMatchup" syncable="YES"/>
-        <relationship name="players" toMany="YES" deletionRule="Nullify" destinationEntity="Player" inverseName="team" inverseEntity="Player" syncable="YES"/>
+        <relationship name="championYears" toMany="YES" deletionRule="Nullify" destinationEntity="WBYear" inverseName="champion" inverseEntity="WBYear" syncable="YES"/>
+        <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBTeamMatchup" inverseName="teams" inverseEntity="WBTeamMatchup" syncable="YES"/>
+        <relationship name="players" toMany="YES" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="team" inverseEntity="WBPlayer" syncable="YES"/>
     </entity>
-    <entity name="TeamMatchup" syncable="YES">
+    <entity name="WBTeamMatchup" representedClassName="WBTeamMatchup" syncable="YES">
         <attribute name="matchComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <relationship name="matches" toMany="YES" minCount="4" maxCount="4" deletionRule="Cascade" ordered="YES" destinationEntity="Match" inverseName="teamMatchup" inverseEntity="Match" syncable="YES"/>
-        <relationship name="teams" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="Team" inverseName="matches" inverseEntity="Team" syncable="YES"/>
-        <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="Week" inverseName="teamMatchups" inverseEntity="Week" syncable="YES"/>
+        <relationship name="matches" toMany="YES" minCount="4" maxCount="4" deletionRule="Cascade" ordered="YES" destinationEntity="WBMatch" inverseName="teamMatchup" inverseEntity="WBMatch" syncable="YES"/>
+        <relationship name="teams" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="matches" inverseEntity="WBTeam" syncable="YES"/>
+        <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="teamMatchups" inverseEntity="WBWeek" syncable="YES"/>
     </entity>
-    <entity name="Week" syncable="YES">
+    <entity name="WBWeek" representedClassName="WBWeek" syncable="YES">
         <attribute name="date" attributeType="Date" syncable="YES"/>
         <attribute name="seasonIndex" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="weeks" inverseEntity="Course" syncable="YES"/>
-        <relationship name="teamMatchups" toMany="YES" deletionRule="Cascade" destinationEntity="TeamMatchup" inverseName="week" inverseEntity="TeamMatchup" syncable="YES"/>
-        <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="Year" inverseName="weeks" inverseEntity="Year" syncable="YES"/>
+        <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="WBCourse" inverseName="weeks" inverseEntity="WBCourse" syncable="YES"/>
+        <relationship name="teamMatchups" toMany="YES" deletionRule="Cascade" destinationEntity="WBTeamMatchup" inverseName="week" inverseEntity="WBTeamMatchup" syncable="YES"/>
+        <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="weeks" inverseEntity="WBYear" syncable="YES"/>
     </entity>
-    <entity name="Year" syncable="YES">
-        <relationship name="champion" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="championYears" inverseEntity="Team" syncable="YES"/>
-        <relationship name="weeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Week" inverseName="year" inverseEntity="Week" syncable="YES"/>
+    <entity name="WBYear" representedClassName="WBYear" syncable="YES">
+        <relationship name="champion" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="championYears" inverseEntity="WBTeam" syncable="YES"/>
+        <relationship name="weeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBWeek" inverseName="year" inverseEntity="WBWeek" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TeamMatchup" positionX="-162" positionY="-265" width="128" height="103"/>
-        <element name="Result" positionX="315" positionY="-352" width="128" height="118"/>
-        <element name="Team" positionX="-2" positionY="-100" width="128" height="103"/>
-        <element name="Week" positionX="-162" positionY="-144" width="128" height="118"/>
-        <element name="Player" positionX="160" positionY="-243" width="128" height="133"/>
-        <element name="Captain" positionX="160" positionY="-90" width="128" height="88"/>
-        <element name="PlayerYearData" positionX="315" positionY="-198" width="128" height="88"/>
-        <element name="Match" positionX="7" positionY="-322" width="128" height="88"/>
-        <element name="Course" positionX="-317" positionY="-144" width="128" height="88"/>
-        <element name="Year" positionX="-162" positionY="-18" width="128" height="73"/>
+        <element name="WBCaptain" positionX="160" positionY="-90" width="128" height="88"/>
+        <element name="WBCourse" positionX="-317" positionY="-144" width="128" height="88"/>
+        <element name="WBMatch" positionX="7" positionY="-322" width="128" height="88"/>
+        <element name="WBPlayer" positionX="160" positionY="-243" width="128" height="133"/>
+        <element name="WBPlayerYearData" positionX="315" positionY="-198" width="128" height="88"/>
+        <element name="WBResult" positionX="315" positionY="-352" width="128" height="118"/>
+        <element name="WBTeam" positionX="-2" positionY="-100" width="128" height="103"/>
+        <element name="WBTeamMatchup" positionX="-162" positionY="-265" width="128" height="103"/>
+        <element name="WBWeek" positionX="-162" positionY="-144" width="128" height="118"/>
+        <element name="WBYear" positionX="-162" positionY="-18" width="128" height="73"/>
     </elements>
 </model>
