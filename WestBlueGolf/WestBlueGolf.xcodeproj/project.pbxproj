@@ -27,6 +27,8 @@
 		A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162818972418008933A5 /* WBTeamMatchup.m */; };
 		A50E163F18972418008933A5 /* WBWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162A18972418008933A5 /* WBWeek.m */; };
 		A50E164018972418008933A5 /* WBYear.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162C18972418008933A5 /* WBYear.m */; };
+		A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */; };
+		A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = A52FC24E18A5A324004C9580 /* WBFileSystem.m */; };
 		A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E41890769400AB3529 /* CoreGraphics.framework */; };
 		A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
@@ -98,6 +100,10 @@
 		A50E162A18972418008933A5 /* WBWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBWeek.m; path = Model/WBWeek.m; sourceTree = "<group>"; };
 		A50E162B18972418008933A5 /* WBYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBYear.h; path = Model/WBYear.h; sourceTree = "<group>"; };
 		A50E162C18972418008933A5 /* WBYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBYear.m; path = Model/WBYear.m; sourceTree = "<group>"; };
+		A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBCoreDataManager.h; path = Model/WBCoreDataManager.h; sourceTree = "<group>"; };
+		A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBCoreDataManager.m; path = Model/WBCoreDataManager.m; sourceTree = "<group>"; };
+		A52FC24D18A5A324004C9580 /* WBFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBFileSystem.h; sourceTree = "<group>"; };
+		A52FC24E18A5A324004C9580 /* WBFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBFileSystem.m; sourceTree = "<group>"; };
 		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -155,6 +161,8 @@
 				A50E1641189726F4008933A5 /* Private */,
 				A50E161918972418008933A5 /* WBCaptain.h */,
 				A50E161A18972418008933A5 /* WBCaptain.m */,
+				A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */,
+				A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */,
 				A50E161B18972418008933A5 /* WBCourse.h */,
 				A50E161C18972418008933A5 /* WBCourse.m */,
 				A50E161D18972418008933A5 /* WBMatch.h */,
@@ -245,6 +253,8 @@
 				A50E160418972400008933A5 /* Model */,
 				A5F476F11890769400AB3529 /* WBAppDelegate.h */,
 				A5F476F21890769400AB3529 /* WBAppDelegate.m */,
+				A52FC24D18A5A324004C9580 /* WBFileSystem.h */,
+				A52FC24E18A5A324004C9580 /* WBFileSystem.m */,
 				A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */,
 				A5F477001890769400AB3529 /* Images.xcassets */,
 				A5F476F41890769400AB3529 /* Main_iPhone.storyboard */,
@@ -417,6 +427,7 @@
 				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
 				A50E162D18972418008933A5 /* _WBCaptain.m in Sources */,
+				A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */,
 				A50E162F18972418008933A5 /* _WBMatch.m in Sources */,
 				A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */,
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
@@ -431,6 +442,7 @@
 				A50E163A18972418008933A5 /* WBPlayer.m in Sources */,
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
+				A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
