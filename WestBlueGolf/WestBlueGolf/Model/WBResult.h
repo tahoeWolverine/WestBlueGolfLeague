@@ -1,5 +1,11 @@
 #import "_WBResult.h"
 
 @interface WBResult : _WBResult {}
-// Custom logic goes here.
+
++ (WBResult *)createResultForMatch:(WBMatch *)match
+						 forPlayer:(WBPlayer *)player
+						withPoints:(NSInteger)points
+					 priorHandicap:(NSInteger)priorHandicap
+							 score:(NSInteger)score;
+
 @end

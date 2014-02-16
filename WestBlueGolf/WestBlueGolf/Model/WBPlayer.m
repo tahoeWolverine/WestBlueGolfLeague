@@ -1,15 +1,28 @@
 #import "WBPlayer.h"
-
+#import "WBCoreDataManager.h"
+#import "WBTeam.h"
 
 @interface WBPlayer ()
 
-// Private interface goes here.
-
 @end
-
 
 @implementation WBPlayer
 
-// Custom logic goes here.
++ (WBPlayer *)createPlayerWithName:(NSString *)name
+				   currentHandicap:(NSInteger)currentHandicap
+							onTeam:(WBTeam *)currentTeam {
+	WBPlayer *newPlayer = [NSEntityDescription insertNewObjectForEntityForName:@"WBPlayer" inManagedObjectContext:[[self class] managedObjectContext]];
+	newPlayer.name = name;
+	newPlayer.currentHandicapValue = currentHandicap;
+	
+	[currentTeam addPlayersObject:newPlayer];
+	
+	[[WBCoreDataManager sharedManager] saveContext];
+	return newPlayer;
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
 
 @end

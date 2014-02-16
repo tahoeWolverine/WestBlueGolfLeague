@@ -1,15 +1,24 @@
 #import "WBCourse.h"
-
+#import "WBCoreDataManager.h"
 
 @interface WBCourse ()
 
-// Private interface goes here.
-
 @end
-
 
 @implementation WBCourse
 
-// Custom logic goes here.
++ (WBCourse *)createCourseWithName:(NSString *)name
+							   par:(NSInteger)par {
+	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:@"WBCourse" inManagedObjectContext:[[self class] managedObjectContext]];
+	newCourse.name = name;
+	newCourse.parValue = par;
+	
+	[[WBCoreDataManager sharedManager] saveContext];
+	return newCourse;
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
 
 @end

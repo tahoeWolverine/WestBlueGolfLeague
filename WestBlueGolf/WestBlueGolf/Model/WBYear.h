@@ -1,5 +1,7 @@
 #import "_WBYear.h"
 
 @interface WBYear : _WBYear {}
-// Custom logic goes here.
+
++ (WBYear *)createYearWithValue:(NSInteger)year;
+
 @end

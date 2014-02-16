@@ -1,5 +1,9 @@
 #import "_WBWeek.h"
 
 @interface WBWeek : _WBWeek {}
-// Custom logic goes here.
+
++ (WBWeek *)createWeekWithDate:(NSDate *)date
+						inYear:(WBYear *)year
+					 forCourse:(WBCourse *)course;
+
 @end

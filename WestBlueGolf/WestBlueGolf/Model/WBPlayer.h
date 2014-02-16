@@ -1,5 +1,9 @@
 #import "_WBPlayer.h"
 
 @interface WBPlayer : _WBPlayer {}
-// Custom logic goes here.
+
++ (WBPlayer *)createPlayerWithName:(NSString *)name
+				   currentHandicap:(NSInteger)currentHandicap
+							onTeam:(WBTeam *)currentTeam;
+
 @end

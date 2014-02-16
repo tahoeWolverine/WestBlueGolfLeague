@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="WBCaptain" representedClassName="WBCaptain" parentEntity="WBPlayer" syncable="YES">
         <attribute name="captainId" attributeType="Integer 16" syncable="YES"/>
         <attribute name="password" attributeType="String" syncable="YES"/>
@@ -19,9 +19,9 @@
         <attribute name="currentHandicap" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="players" inverseEntity="WBMatch" syncable="YES"/>
-        <relationship name="results" maxCount="1" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
+        <relationship name="results" toMany="YES" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
         <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="players" inverseEntity="WBTeam" syncable="YES"/>
-        <relationship name="yearData" maxCount="1" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="player" inverseEntity="WBPlayerYearData" syncable="YES"/>
+        <relationship name="yearData" toMany="YES" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="player" inverseEntity="WBPlayerYearData" syncable="YES"/>
     </entity>
     <entity name="WBPlayerYearData" representedClassName="WBPlayerYearData" syncable="YES">
         <attribute name="isRookie" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -55,6 +55,7 @@
         <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="weeks" inverseEntity="WBYear" syncable="YES"/>
     </entity>
     <entity name="WBYear" representedClassName="WBYear" syncable="YES">
+        <attribute name="value" attributeType="Integer 16" minValueString="0" syncable="YES"/>
         <relationship name="champion" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="championYears" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="weeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBWeek" inverseName="year" inverseEntity="WBWeek" syncable="YES"/>
     </entity>
@@ -68,6 +69,6 @@
         <element name="WBTeam" positionX="-2" positionY="-100" width="128" height="103"/>
         <element name="WBTeamMatchup" positionX="-162" positionY="-265" width="128" height="103"/>
         <element name="WBWeek" positionX="-162" positionY="-144" width="128" height="118"/>
-        <element name="WBYear" positionX="-162" positionY="-18" width="128" height="73"/>
+        <element name="WBYear" positionX="-162" positionY="-18" width="128" height="88"/>
     </elements>
 </model>

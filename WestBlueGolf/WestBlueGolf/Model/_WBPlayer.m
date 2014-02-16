@@ -105,6 +105,15 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 @dynamic results;
 
 	
+- (NSMutableSet*)resultsSet {
+	[self willAccessValueForKey:@"results"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"results"];
+  
+	[self didAccessValueForKey:@"results"];
+	return result;
+}
+	
 
 @dynamic team;
 
@@ -112,6 +121,15 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 @dynamic yearData;
 
+	
+- (NSMutableSet*)yearDataSet {
+	[self willAccessValueForKey:@"yearData"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"yearData"];
+  
+	[self didAccessValueForKey:@"yearData"];
+	return result;
+}
 	
 
 

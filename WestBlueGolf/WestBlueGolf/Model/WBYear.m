@@ -1,15 +1,21 @@
 #import "WBYear.h"
-
+#import "WBCoreDataManager.h"
 
 @interface WBYear ()
 
-// Private interface goes here.
-
 @end
-
 
 @implementation WBYear
 
-// Custom logic goes here.
++ (WBYear *)createYearWithValue:(NSInteger)year {
+	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[[self class] managedObjectContext]];
+	newYear.valueValue = year;
+	[[WBCoreDataManager sharedManager] saveContext];
+	return newYear;
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
 
 @end

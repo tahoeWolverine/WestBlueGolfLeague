@@ -1,5 +1,10 @@
 #import "_WBTeam.h"
+#import "WBCaptain.h"
 
 @interface WBTeam : _WBTeam {}
-// Custom logic goes here.
+
++ (WBTeam *)createTeamWithName:(NSString *)name;
+
+- (WBCaptain *)captain;
+
 @end
