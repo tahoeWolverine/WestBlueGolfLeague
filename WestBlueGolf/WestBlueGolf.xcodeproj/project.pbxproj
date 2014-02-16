@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		A50E162D18972418008933A5 /* _WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160618972418008933A5 /* _WBCaptain.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
@@ -58,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBProfileTableViewController.h; sourceTree = "<group>"; };
+		48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBProfileTableViewController.m; sourceTree = "<group>"; };
+		48B221B318B03D8600F2DD99 /* WBModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModels.h; sourceTree = "<group>"; };
 		A50E160518972418008933A5 /* _WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCaptain.h; path = Model/_WBCaptain.h; sourceTree = "<group>"; };
 		A50E160618972418008933A5 /* _WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCaptain.m; path = Model/_WBCaptain.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				A50E1641189726F4008933A5 /* Private */,
+				48B221B318B03D8600F2DD99 /* WBModels.h */,
 				A50E161918972418008933A5 /* WBCaptain.h */,
 				A50E161A18972418008933A5 /* WBCaptain.m */,
 				A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */,
@@ -290,6 +295,8 @@
 		A5F4772218907ECD00AB3529 /* PlayerProfile */ = {
 			isa = PBXGroup;
 			children = (
+				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
+				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
 			);
 			name = PlayerProfile;
 			sourceTree = "<group>";
@@ -436,6 +443,7 @@
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
+				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */,
 				A50E163718972418008933A5 /* WBCaptain.m in Sources */,

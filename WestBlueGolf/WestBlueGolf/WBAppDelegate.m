@@ -8,14 +8,40 @@
 
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
+#import "WBModels.h"
 
 @implementation WBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
-	
+
     return YES;
+}
+
+- (void)createTestData {
+	/*WBYear *year = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBWeek *week = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 
+	 WBTeam *team1 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBCaptain *captain1 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player10 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player11 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player12 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player13 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 
+	 WBTeam *team2 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBCaptain *captain2 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player20 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player21 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player22 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
+	 WBPlayer *player23 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];*/
+	
+	[[WBCoreDataManager sharedManager] saveContext];
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application {
