@@ -1,5 +1,6 @@
 #import "WBYear.h"
 #import "WBCoreDataManager.h"
+#import "WBTeam.h"
 
 @interface WBYear ()
 
@@ -7,10 +8,12 @@
 
 @implementation WBYear
 
-+ (WBYear *)createYearWithValue:(NSInteger)year {
-	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[[self class] managedObjectContext]];
++ (WBYear *)createYearWithValue:(NSInteger)year
+					   champion:(WBTeam *)champion {
+	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newYear.valueValue = year;
-	[[WBCoreDataManager sharedManager] saveContext];
+	newYear.champion = champion;
+	[WBCoreDataManager saveContext];
 	return newYear;
 }
 

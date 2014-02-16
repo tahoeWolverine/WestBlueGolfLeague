@@ -2,8 +2,11 @@
 
 @interface WBCaptain : _WBCaptain {}
 
-//+ (WBCaptain *)createCaptainWithName:(NSString *)name
-//					 currentHandicap:(NSInteger)currentHandicap
-//							  onTeam:(WBTeam *)currentTeam;
++ (WBCaptain *)createCaptainWithId:(NSInteger)captainId
+						  username:(NSString *)username
+						  password:(NSString *)password
+							  name:(NSString *)name
+				   currentHandicap:(NSInteger)currentHandicap
+							onTeam:(WBTeam *)currentTeam;
 
 @end

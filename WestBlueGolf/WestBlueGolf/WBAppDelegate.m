@@ -16,28 +16,45 @@
     // Override point for customization after application launch.
 	[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 
+	[self createTestData];
+	
     return YES;
 }
 
 - (void)createTestData {
-	/*WBYear *year = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBWeek *week = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 
-	 WBTeam *team1 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBCaptain *captain1 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player10 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player11 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player12 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player13 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 
-	 WBTeam *team2 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBCaptain *captain2 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player20 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player21 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player22 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];
-	 WBPlayer *player23 = [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:[self managedObjectContext]];*/
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
+	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
+	WBCourse *course = [WBCourse createCourseWithName:@"Gold Front" par:36];
+	WBWeek *week = [WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course];
 	
-	[[WBCoreDataManager sharedManager] saveContext];
+	WBTeam *team1 = [WBTeam createTeamWithName:@"Earthmovers"];
+	WBCaptain *captain1 = [WBCaptain createCaptainWithId:1 username:@"dale" password:@"vlasak" name:@"Dale Vlasak" currentHandicap:14 onTeam:team1];
+	WBPlayer *player10 = [WBPlayer createPlayerWithName:@"Michael Harlow" currentHandicap:5 onTeam:team1];
+	WBPlayer *player11 = [WBPlayer createPlayerWithName:@"Tim Wagner" currentHandicap:3 onTeam:team1];
+	WBPlayer *player12 = [WBPlayer createPlayerWithName:@"Andy Norgren" currentHandicap:14 onTeam:team1];
+	
+	WBTeam *team2 = [WBTeam createTeamWithName:@"Swing Doctors"];
+	WBCaptain *captain2 = [WBCaptain createCaptainWithId:2 username:@"nick" password:@"remarke" name:@"Nick Remarke" currentHandicap:11 onTeam:team2];
+	WBPlayer *player20 = [WBPlayer createPlayerWithName:@"Ryan Hunecke" currentHandicap:9 onTeam:team2];
+	WBPlayer *player21 = [WBPlayer createPlayerWithName:@"Jason Meggit" currentHandicap:7 onTeam:team2];
+	WBPlayer *player22 = [WBPlayer createPlayerWithName:@"Nick Brett" currentHandicap:7 onTeam:team2];
+
+	WBTeamMatchup *matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
+	WBMatch *match1 = [WBMatch createMatchForTeamMatchup:matchup player1:player11 player2:player21];
+	[WBResult createResultForMatch:match1 forPlayer:player11 withPoints:18 priorHandicap:3 score:39];
+	[WBResult createResultForMatch:match1 forPlayer:player21 withPoints:6 priorHandicap:7 score:43];
+	WBMatch *match2 = [WBMatch createMatchForTeamMatchup:matchup player1:player10 player2:player22];
+	[WBResult createResultForMatch:match2 forPlayer:player10 withPoints:22 priorHandicap:5 score:41];
+	[WBResult createResultForMatch:match2 forPlayer:player22 withPoints:2 priorHandicap:7 score:43];
+	WBMatch *match3 = [WBMatch createMatchForTeamMatchup:matchup player1:captain1 player2:player20];
+	[WBResult createResultForMatch:match3 forPlayer:captain1 withPoints:15 priorHandicap:14 score:50];
+	[WBResult createResultForMatch:match3 forPlayer:player20 withPoints:9 priorHandicap:7 score:43];
+	WBMatch *match4 = [WBMatch createMatchForTeamMatchup:matchup player1:player12 player2:captain2];
+	[WBResult createResultForMatch:match4 forPlayer:player12 withPoints:12 priorHandicap:14 score:50];
+	[WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
+	
+	
+	[WBCoreDataManager saveContext];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {

@@ -11,13 +11,13 @@
 + (WBMatch *)createMatchForTeamMatchup:(WBTeamMatchup *)teamMatchup
 							   player1:(WBPlayer *)player1
 							   player2:(WBPlayer *)player2 {
-	WBMatch *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"WBMatch" inManagedObjectContext:[[self class] managedObjectContext]];
+	WBMatch *newMatch = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	[newMatch addPlayersObject:player1];
 	[newMatch addPlayersObject:player2];
 	
 	[teamMatchup addMatchesObject:newMatch];
 	
-	[[WBCoreDataManager sharedManager] saveContext];
+	[WBCoreDataManager saveContext];
 	return newMatch;
 }
 

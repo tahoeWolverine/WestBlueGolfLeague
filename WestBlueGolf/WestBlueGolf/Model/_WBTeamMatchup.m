@@ -83,10 +83,10 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 @dynamic matches;
 
 	
-- (NSMutableOrderedSet*)matchesSet {
+- (NSMutableSet*)matchesSet {
 	[self willAccessValueForKey:@"matches"];
   
-	NSMutableOrderedSet *result = (NSMutableOrderedSet*)[self mutableOrderedSetValueForKey:@"matches"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"matches"];
   
 	[self didAccessValueForKey:@"matches"];
 	return result;

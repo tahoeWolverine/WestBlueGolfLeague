@@ -2,6 +2,7 @@
 
 @interface WBYear : _WBYear {}
 
-+ (WBYear *)createYearWithValue:(NSInteger)year;
++ (WBYear *)createYearWithValue:(NSInteger)year
+					   champion:(WBTeam *)champion;
 
 @end

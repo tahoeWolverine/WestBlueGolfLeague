@@ -50,9 +50,9 @@ extern const struct WBTeamMatchupFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSOrderedSet *matches;
+@property (nonatomic, strong) NSSet *matches;
 
-- (NSMutableOrderedSet*)matchesSet;
+- (NSMutableSet*)matchesSet;
 
 
 
@@ -76,8 +76,8 @@ extern const struct WBTeamMatchupFetchedProperties {
 
 @interface _WBTeamMatchup (CoreDataGeneratedAccessors)
 
-- (void)addMatches:(NSOrderedSet*)value_;
-- (void)removeMatches:(NSOrderedSet*)value_;
+- (void)addMatches:(NSSet*)value_;
+- (void)removeMatches:(NSSet*)value_;
 - (void)addMatchesObject:(WBMatch*)value_;
 - (void)removeMatchesObject:(WBMatch*)value_;
 
@@ -101,8 +101,8 @@ extern const struct WBTeamMatchupFetchedProperties {
 
 
 
-- (NSMutableOrderedSet*)primitiveMatches;
-- (void)setPrimitiveMatches:(NSMutableOrderedSet*)value;
+- (NSMutableSet*)primitiveMatches;
+- (void)setPrimitiveMatches:(NSMutableSet*)value;
 
 
 

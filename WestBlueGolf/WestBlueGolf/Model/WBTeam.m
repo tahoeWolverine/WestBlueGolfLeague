@@ -8,10 +8,10 @@
 @implementation WBTeam
 
 + (WBTeam *)createTeamWithName:(NSString *)name {
-	WBTeam *newTeam = [NSEntityDescription insertNewObjectForEntityForName:@"WBTeam" inManagedObjectContext:[[self class] managedObjectContext]];
+	WBTeam *newTeam = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newTeam.name = name;
 	
-	[[WBCoreDataManager sharedManager] saveContext];
+	[WBCoreDataManager saveContext];
 	return newTeam;
 }
 

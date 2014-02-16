@@ -8,12 +8,15 @@
 @implementation WBTeamMatchup
 
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week {
-	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:@"WBTeamMatchup" inManagedObjectContext:[[self class] managedObjectContext]];
+	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newTeamMatchup.week = week;
 	[newTeamMatchup addTeamsObject:team1];
 	[newTeamMatchup addTeamsObject:team2];
+
+	//TODO: Support incomplete matches
+	newTeamMatchup.matchCompleteValue = YES;
 	
-	[[WBCoreDataManager sharedManager] saveContext];
+	[WBCoreDataManager saveContext];
 	return newTeamMatchup;
 }
 
