@@ -1,16 +1,17 @@
 //
-//  WBProfileTableViewController.m
+//  WBPlayersTableViewController.m
 //  WestBlueGolf
 //
-//  Created by Michael Harlow on 2/15/14.
+//  Created by Michael Harlow on 2/16/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBProfileTableViewController.h"
+#import "WBPlayersTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBProfileTableViewController.h"
 
-@interface WBProfileTableViewController () {
+@interface WBPlayersTableViewController () {
 	NSFetchedResultsController *_fetchedResultsController;
 }
 
@@ -18,7 +19,7 @@
 
 @end
 
-@implementation WBProfileTableViewController
+@implementation WBPlayersTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -77,7 +78,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"ProfileResultsCell";
+    static NSString *CellIdentifier = @"PlayerListCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
 	[self configureCell:cell atIndexPath:indexPath];
@@ -88,9 +89,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
-    WBResult *result = (WBResult *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	cell.textLabel.text = result.player.name;
-	cell.detailTextLabel.text = [result.score stringValue];
+    cell.textLabel.text = [(WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath] name];
+	cell.detailTextLabel.text = @"Test";
 }
 
 
@@ -106,20 +106,11 @@
         // Create the fetch request for the entity.
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         // Edit the entity name as appropriate.
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"WBResult" inManagedObjectContext:[self managedObjectContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"WBPlayer" inManagedObjectContext:[self managedObjectContext]];
         [fetchRequest setEntity:entity];
-		
-		//ALog(@"No selected player for profile vc");
-		NSString *name = @"Michael Harlow";
-		if (self.selectedPlayer) {
-			name = self.selectedPlayer.name;
-		}
-		
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", name];
-		[fetchRequest setPredicate:predicate];
         
         // Edit the sort key as appropriate.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"match.teamMatchup.week.date" ascending:YES];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         
         [fetchRequest setSortDescriptors:sortDescriptors];
@@ -176,16 +167,14 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+	WBProfileTableViewController *vc = [segue destinationViewController];
+	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 }
-
- */
 
 @end
