@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */; };
+		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
 		A50E162D18972418008933A5 /* _WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160618972418008933A5 /* _WBCaptain.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
@@ -65,6 +66,8 @@
 		48B221B318B03D8600F2DD99 /* WBModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModels.h; sourceTree = "<group>"; };
 		48B221B418B1D57B00F2DD99 /* WBPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPlayersTableViewController.h; sourceTree = "<group>"; };
 		48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPlayersTableViewController.m; sourceTree = "<group>"; };
+		48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBResultTableViewCell.h; sourceTree = "<group>"; };
+		48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBResultTableViewCell.m; sourceTree = "<group>"; };
 		A50E160518972418008933A5 /* _WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCaptain.h; path = Model/_WBCaptain.h; sourceTree = "<group>"; };
 		A50E160618972418008933A5 /* _WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCaptain.m; path = Model/_WBCaptain.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
@@ -302,6 +305,8 @@
 				48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */,
 				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
 				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
+				48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */,
+				48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */,
 			);
 			name = PlayerProfile;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
 				A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */,
+				48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,

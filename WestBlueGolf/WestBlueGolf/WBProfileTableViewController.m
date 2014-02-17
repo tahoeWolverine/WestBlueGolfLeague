@@ -9,6 +9,7 @@
 #import "WBProfileTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBResultTableViewCell.h"
 
 @interface WBProfileTableViewController () {
 	NSFetchedResultsController *_fetchedResultsController;
@@ -46,6 +47,12 @@
 		 */
 		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
+	
+	self.selectedPlayerNameLabel.text = [self selectedPlayerName];
+}
+
+- (NSString *)selectedPlayerName {
+	return self.selectedPlayer ? self.selectedPlayer.name : @"Michael Harlow";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,8 +96,8 @@
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
     WBResult *result = (WBResult *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	cell.textLabel.text = result.player.name;
-	cell.detailTextLabel.text = [result.score stringValue];
+	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
+	[resultCell configureCellForResult:result];
 }
 
 
@@ -110,12 +117,7 @@
         [fetchRequest setEntity:entity];
 		
 		//ALog(@"No selected player for profile vc");
-		NSString *name = @"Michael Harlow";
-		if (self.selectedPlayer) {
-			name = self.selectedPlayer.name;
-		}
-		
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", name];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedPlayerName]];
 		[fetchRequest setPredicate:predicate];
         
         // Edit the sort key as appropriate.

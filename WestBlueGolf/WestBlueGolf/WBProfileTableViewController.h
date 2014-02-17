@@ -12,4 +12,6 @@
 
 @property (weak, nonatomic) WBPlayer *selectedPlayer;
 
+@property (weak, nonatomic) IBOutlet UILabel *selectedPlayerNameLabel;
+
 @end

@@ -245,7 +245,7 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileResultsCell" rowHeight="40" id="p0E-94-5bj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileResultsCell" rowHeight="40" id="p0E-94-5bj" customClass="WBResultTableViewCell">
                                 <rect key="frame" x="0.0" y="206" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p0E-94-5bj" id="a2V-Gm-ViA">
@@ -290,6 +290,9 @@
                     <navigationItem key="navigationItem" title="Player Profile" id="q6u-QE-GOv">
                         <barButtonItem key="backBarButtonItem" title="Profiles" id="6Ar-fy-aKN"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="selectedPlayerNameLabel" destination="OYv-sK-Frn" id="fnB-EE-FjN"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8xV-Ny-g7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
