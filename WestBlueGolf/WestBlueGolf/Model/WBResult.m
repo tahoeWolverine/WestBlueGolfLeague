@@ -45,4 +45,15 @@
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
+- (WBResult *)opponentResult {
+	WBMatch *match = self.match;
+	for (WBResult *result in match.results) {
+		if (result != self) {
+			return result;
+		}
+	}
+	ALog(@"Could not find opponent result for WBResult");
+	return nil;
+}
+
 @end

@@ -89,8 +89,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
-    cell.textLabel.text = [(WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath] name];
-	cell.detailTextLabel.text = @"Test";
+	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = player.name;
+	cell.detailTextLabel.text = player.team.name;
 }
 
 

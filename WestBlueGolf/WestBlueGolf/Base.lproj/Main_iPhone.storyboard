@@ -279,6 +279,11 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateAndOpponentLabel" destination="wzG-HK-SFK" id="Hsc-e6-bAN"/>
+                                    <outlet property="scoreLabel" destination="qBp-Ut-Fna" id="XfJ-Az-Gg6"/>
+                                    <outlet property="winLossLabel" destination="BNX-ne-Kfv" id="nVI-aJ-hQE"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

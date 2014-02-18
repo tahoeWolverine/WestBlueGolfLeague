@@ -10,6 +10,10 @@
 
 @interface WBResultTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *dateAndOpponentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
 - (void)configureCellForResult:(WBResult *)result;
 
 @end

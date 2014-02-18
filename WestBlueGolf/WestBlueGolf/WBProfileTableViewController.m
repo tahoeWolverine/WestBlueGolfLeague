@@ -117,8 +117,8 @@
         [fetchRequest setEntity:entity];
 		
 		//ALog(@"No selected player for profile vc");
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedPlayerName]];
-		[fetchRequest setPredicate:predicate];
+		/*NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedPlayerName]];
+		[fetchRequest setPredicate:predicate];*/
         
         // Edit the sort key as appropriate.
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"match.teamMatchup.week.date" ascending:YES];

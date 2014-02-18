@@ -32,4 +32,10 @@
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
+- (NSString *)shortName {
+	NSString *firstName = [self.name componentsSeparatedByString:@" "][0];
+	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
+	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
+}
+
 @end

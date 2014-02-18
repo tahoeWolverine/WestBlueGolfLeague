@@ -27,12 +27,18 @@
 
 - (void)configureCellForResult:(WBResult *)result {
 	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"MM/dd"];
+	[dateFormatter setDateFormat:@"M/dd"];
 	NSString *dateString = [dateFormatter stringFromDate:result.match.teamMatchup.week.date];
 	
-	self.textLabel.text = dateString;
+	//if (dateString && [dateString characterAtIndex:0] == '0'
+	WBResult *opponentResult = [result opponentResult];
+	self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ vs %@", dateString, [opponentResult.player shortName]];
 	
-	//cell.detailTextLabel.text = [result.score stringValue];
+	BOOL win = result.pointsValue > 12;
+	BOOL tie = result.pointsValue == 12;
+	self.winLossLabel.text = win ? @"W" : tie ? @"T" : @"L";
+	self.winLossLabel.textColor = win ? [UIColor greenColor] : tie ? [UIColor blackColor] : [UIColor redColor];
+	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentResult.score];
 }
 
 @end

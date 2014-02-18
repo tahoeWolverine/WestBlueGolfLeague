@@ -12,4 +12,6 @@
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam;
 
+- (NSString *)shortName;
+
 @end
