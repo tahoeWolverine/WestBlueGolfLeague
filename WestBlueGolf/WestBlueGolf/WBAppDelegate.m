@@ -53,6 +53,7 @@
 	[WBResult createResultForMatch:match4 forPlayer:player12 withPoints:12 priorHandicap:14 score:50];
 	[WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
 	
+	// Delete the noTeam
 	
 	[WBCoreDataManager saveContext];
 }

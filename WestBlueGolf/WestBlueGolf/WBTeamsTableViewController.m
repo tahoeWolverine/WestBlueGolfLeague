@@ -78,7 +78,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"PlayerListCell";
+    static NSString *CellIdentifier = @"TeamListCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
 	[self configureCell:cell atIndexPath:indexPath];
@@ -89,9 +89,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
-	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = player.team.name;
+	WBTeam *team = (WBTeam *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = team.name;
 }
 
 
@@ -107,7 +106,7 @@
         // Create the fetch request for the entity.
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         // Edit the entity name as appropriate.
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"WBPlayer" inManagedObjectContext:[self managedObjectContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"WBTeam" inManagedObjectContext:[self managedObjectContext]];
         [fetchRequest setEntity:entity];
         
         // Edit the sort key as appropriate.
@@ -174,8 +173,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-	WBProfileTableViewController *vc = [segue destinationViewController];
-	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+	//WBProfileTableViewController *vc = [segue destinationViewController];
+	//vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 }
 
 @end
