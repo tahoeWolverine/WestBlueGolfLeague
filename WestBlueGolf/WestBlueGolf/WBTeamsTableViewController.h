@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBTeamsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+#import "WBEntityTableViewController.h"
+
+@interface WBTeamsTableViewController : WBEntityTableViewController
 
 @end

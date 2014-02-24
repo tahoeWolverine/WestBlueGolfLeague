@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */; };
+		480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */; };
+		480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */; };
 		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */; };
 		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
@@ -62,6 +65,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityTableViewController.h; sourceTree = "<group>"; };
+		480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityTableViewController.m; sourceTree = "<group>"; };
+		480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityDetailViewController.h; sourceTree = "<group>"; };
+		480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityDetailViewController.m; sourceTree = "<group>"; };
+		480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileTableViewController.h; sourceTree = "<group>"; };
+		480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamProfileTableViewController.m; sourceTree = "<group>"; };
 		48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBProfileTableViewController.h; sourceTree = "<group>"; };
 		48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBProfileTableViewController.m; sourceTree = "<group>"; };
 		48B221B318B03D8600F2DD99 /* WBModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModels.h; sourceTree = "<group>"; };
@@ -304,6 +313,10 @@
 		A5F4772218907ECD00AB3529 /* PlayerProfile */ = {
 			isa = PBXGroup;
 			children = (
+				480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */,
+				480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */,
+				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
+				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
 				48B221B418B1D57B00F2DD99 /* WBPlayersTableViewController.h */,
 				48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */,
 				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
@@ -317,6 +330,8 @@
 		A5F4772318907EDD00AB3529 /* TeamProfile */ = {
 			isa = PBXGroup;
 			children = (
+				480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */,
+				480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */,
 				48B221BA18B2F6EA00F2DD99 /* WBTeamsTableViewController.h */,
 				48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */,
 			);
@@ -441,9 +456,11 @@
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
 				A50E162D18972418008933A5 /* _WBCaptain.m in Sources */,
 				A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */,
+				480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */,
 				A50E162F18972418008933A5 /* _WBMatch.m in Sources */,
 				A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */,
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
+				480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */,
 				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
@@ -461,6 +478,7 @@
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
+				480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */,
 				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */,

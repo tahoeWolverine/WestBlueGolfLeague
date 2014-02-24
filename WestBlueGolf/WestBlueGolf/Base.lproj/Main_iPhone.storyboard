@@ -13,15 +13,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TeamListCell" textLabel="hYa-fl-L7k" style="IBUITableViewCellStyleDefault" id="PE0-c3-xcG">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TeamListCell" textLabel="hYa-fl-L7k" style="IBUITableViewCellStyleDefault" id="PE0-c3-xcG">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PE0-c3-xcG" id="qJP-f6-5qc">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Earthmovers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hYa-fl-L7k">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -29,6 +29,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="t0G-8d-uu9" kind="push" id="UI1-ay-y2c"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -217,10 +220,10 @@
             </objects>
             <point key="canvasLocation" x="132" y="180"/>
         </scene>
-        <!--Profile Table View Controller - Player Profile-->
+        <!--Entity Detail View Controller - Player Profile-->
         <scene sceneID="YW9-Ft-zwg">
             <objects>
-                <tableViewController id="t0G-8d-uu9" customClass="WBProfileTableViewController" sceneMemberID="viewController">
+                <tableViewController id="t0G-8d-uu9" customClass="WBEntityDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="Y87-cL-m5L">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -296,7 +299,7 @@
                         <barButtonItem key="backBarButtonItem" title="Profiles" id="6Ar-fy-aKN"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="selectedPlayerNameLabel" destination="OYv-sK-Frn" id="fnB-EE-FjN"/>
+                        <outlet property="selectedEntityNameLabel" destination="OYv-sK-Frn" id="8Tg-SH-SVI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8xV-Ny-g7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -377,6 +380,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="80t-SK-Aia"/>
+        <segue reference="UI1-ay-y2c"/>
     </inferredMetricsTieBreakers>
 </document>

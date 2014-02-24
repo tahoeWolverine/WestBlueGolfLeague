@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBPlayersTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+#import "WBEntityTableViewController.h"
+
+@interface WBPlayersTableViewController : WBEntityTableViewController
 
 @end
