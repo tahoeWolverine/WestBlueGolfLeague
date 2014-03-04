@@ -1,17 +1,17 @@
 //
-//  WBTeamsTableViewController.m
+//  WBTeamTableViewController.m
 //  WestBlueGolf
 //
 //  Created by Michael Harlow on 2/17/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBTeamsTableViewController.h"
+#import "WBTeamTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBProfileTableViewController.h"
 
-@interface WBTeamsTableViewController () {
+@interface WBTeamTableViewController () {
 	NSFetchedResultsController *_fetchedResultsController;
 }
 
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation WBTeamsTableViewController
+@implementation WBTeamTableViewController
 
 #pragma mark - WBEntityTableViewController methods to implement
 

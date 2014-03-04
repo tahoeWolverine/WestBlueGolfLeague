@@ -51,7 +51,7 @@
 		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
 	
-	NSString *name = [self selectedEntityName];
+	//NSString *name = [self selectedEntityName];
 	self.selectedEntityNameLabel.text = [self selectedEntityName];
 	
 	/* XLS Reader test code

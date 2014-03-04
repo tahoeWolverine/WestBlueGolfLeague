@@ -1,5 +1,5 @@
 //
-//  WBTeamsTableViewController.h
+//  WBTeamTableViewController.h
 //  WestBlueGolf
 //
 //  Created by Michael Harlow on 2/17/14.
@@ -8,6 +8,6 @@
 
 #import "WBEntityTableViewController.h"
 
-@interface WBTeamsTableViewController : WBEntityTableViewController
+@interface WBTeamTableViewController : WBEntityTableViewController
 
 @end

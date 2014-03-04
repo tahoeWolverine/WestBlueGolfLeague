@@ -13,7 +13,7 @@
 		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */; };
 		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
-		48B221BC18B2F6EA00F2DD99 /* WBTeamsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */; };
+		48B221BC18B2F6EA00F2DD99 /* WBTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221BB18B2F6EA00F2DD99 /* WBTeamTableViewController.m */; };
 		A50E162D18972418008933A5 /* _WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160618972418008933A5 /* _WBCaptain.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
@@ -78,8 +78,8 @@
 		48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPlayersTableViewController.m; sourceTree = "<group>"; };
 		48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBResultTableViewCell.h; sourceTree = "<group>"; };
 		48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBResultTableViewCell.m; sourceTree = "<group>"; };
-		48B221BA18B2F6EA00F2DD99 /* WBTeamsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamsTableViewController.h; sourceTree = "<group>"; };
-		48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamsTableViewController.m; sourceTree = "<group>"; };
+		48B221BA18B2F6EA00F2DD99 /* WBTeamTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamTableViewController.h; sourceTree = "<group>"; };
+		48B221BB18B2F6EA00F2DD99 /* WBTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamTableViewController.m; sourceTree = "<group>"; };
 		A50E160518972418008933A5 /* _WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCaptain.h; path = Model/_WBCaptain.h; sourceTree = "<group>"; };
 		A50E160618972418008933A5 /* _WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCaptain.m; path = Model/_WBCaptain.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
@@ -332,8 +332,8 @@
 			children = (
 				480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */,
 				480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */,
-				48B221BA18B2F6EA00F2DD99 /* WBTeamsTableViewController.h */,
-				48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */,
+				48B221BA18B2F6EA00F2DD99 /* WBTeamTableViewController.h */,
+				48B221BB18B2F6EA00F2DD99 /* WBTeamTableViewController.m */,
 			);
 			name = TeamProfile;
 			sourceTree = "<group>";
@@ -468,7 +468,7 @@
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
 				A50E163218972418008933A5 /* _WBResult.m in Sources */,
-				48B221BC18B2F6EA00F2DD99 /* WBTeamsTableViewController.m in Sources */,
+				48B221BC18B2F6EA00F2DD99 /* WBTeamTableViewController.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
 				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
 				A50E163C18972418008933A5 /* WBResult.m in Sources */,
