@@ -1,5 +1,12 @@
 #import "_WBCaptain.h"
 
 @interface WBCaptain : _WBCaptain {}
-// Custom logic goes here.
+
++ (WBCaptain *)createCaptainWithId:(NSInteger)captainId
+						  username:(NSString *)username
+						  password:(NSString *)password
+							  name:(NSString *)name
+				   currentHandicap:(NSInteger)currentHandicap
+							onTeam:(WBTeam *)currentTeam;
+
 @end

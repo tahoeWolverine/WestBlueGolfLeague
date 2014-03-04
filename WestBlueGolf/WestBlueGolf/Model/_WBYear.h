@@ -5,6 +5,7 @@
 
 
 extern const struct WBYearAttributes {
+	__unsafe_unretained NSString *value;
 } WBYearAttributes;
 
 extern const struct WBYearRelationships {
@@ -19,6 +20,7 @@ extern const struct WBYearFetchedProperties {
 @class WBWeek;
 
 
+
 @interface WBYearID : NSManagedObjectID {}
 @end
 
@@ -27,6 +29,20 @@ extern const struct WBYearFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBYearID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* value;
+
+
+
+@property int16_t valueValue;
+- (int16_t)valueValue;
+- (void)setValueValue:(int16_t)value_;
+
+//- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -59,6 +75,15 @@ extern const struct WBYearFetchedProperties {
 @end
 
 @interface _WBYear (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveValue;
+- (void)setPrimitiveValue:(NSNumber*)value;
+
+- (int16_t)primitiveValueValue;
+- (void)setPrimitiveValueValue:(int16_t)value_;
+
+
 
 
 

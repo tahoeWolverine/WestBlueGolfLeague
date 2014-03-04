@@ -1,5 +1,7 @@
 #import "_WBTeamMatchup.h"
 
 @interface WBTeamMatchup : _WBTeamMatchup {}
-// Custom logic goes here.
+
++ (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week;
+
 @end

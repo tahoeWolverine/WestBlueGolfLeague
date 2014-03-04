@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */; };
+		480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */; };
+		480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */; };
+		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
+		48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */; };
+		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
+		48B221BC18B2F6EA00F2DD99 /* WBTeamsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */; };
 		A50E162D18972418008933A5 /* _WBCaptain.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160618972418008933A5 /* _WBCaptain.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
@@ -58,6 +65,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityTableViewController.h; sourceTree = "<group>"; };
+		480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityTableViewController.m; sourceTree = "<group>"; };
+		480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityDetailViewController.h; sourceTree = "<group>"; };
+		480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityDetailViewController.m; sourceTree = "<group>"; };
+		480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileTableViewController.h; sourceTree = "<group>"; };
+		480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamProfileTableViewController.m; sourceTree = "<group>"; };
+		48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBProfileTableViewController.h; sourceTree = "<group>"; };
+		48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBProfileTableViewController.m; sourceTree = "<group>"; };
+		48B221B318B03D8600F2DD99 /* WBModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModels.h; sourceTree = "<group>"; };
+		48B221B418B1D57B00F2DD99 /* WBPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPlayersTableViewController.h; sourceTree = "<group>"; };
+		48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPlayersTableViewController.m; sourceTree = "<group>"; };
+		48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBResultTableViewCell.h; sourceTree = "<group>"; };
+		48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBResultTableViewCell.m; sourceTree = "<group>"; };
+		48B221BA18B2F6EA00F2DD99 /* WBTeamsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamsTableViewController.h; sourceTree = "<group>"; };
+		48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamsTableViewController.m; sourceTree = "<group>"; };
 		A50E160518972418008933A5 /* _WBCaptain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCaptain.h; path = Model/_WBCaptain.h; sourceTree = "<group>"; };
 		A50E160618972418008933A5 /* _WBCaptain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCaptain.m; path = Model/_WBCaptain.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
@@ -153,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				A50E1641189726F4008933A5 /* Private */,
+				48B221B318B03D8600F2DD99 /* WBModels.h */,
 				A50E161918972418008933A5 /* WBCaptain.h */,
 				A50E161A18972418008933A5 /* WBCaptain.m */,
 				A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */,
@@ -290,6 +313,16 @@
 		A5F4772218907ECD00AB3529 /* PlayerProfile */ = {
 			isa = PBXGroup;
 			children = (
+				480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */,
+				480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */,
+				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
+				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
+				48B221B418B1D57B00F2DD99 /* WBPlayersTableViewController.h */,
+				48B221B518B1D57B00F2DD99 /* WBPlayersTableViewController.m */,
+				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
+				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
+				48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */,
+				48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */,
 			);
 			name = PlayerProfile;
 			sourceTree = "<group>";
@@ -297,6 +330,10 @@
 		A5F4772318907EDD00AB3529 /* TeamProfile */ = {
 			isa = PBXGroup;
 			children = (
+				480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */,
+				480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */,
+				48B221BA18B2F6EA00F2DD99 /* WBTeamsTableViewController.h */,
+				48B221BB18B2F6EA00F2DD99 /* WBTeamsTableViewController.m */,
 			);
 			name = TeamProfile;
 			sourceTree = "<group>";
@@ -417,17 +454,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */,
 				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
 				A50E162D18972418008933A5 /* _WBCaptain.m in Sources */,
 				A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */,
+				480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */,
 				A50E162F18972418008933A5 /* _WBMatch.m in Sources */,
 				A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */,
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
+				480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */,
 				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
 				A50E163218972418008933A5 /* _WBResult.m in Sources */,
+				48B221BC18B2F6EA00F2DD99 /* WBTeamsTableViewController.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
 				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
 				A50E163C18972418008933A5 /* WBResult.m in Sources */,
@@ -435,10 +476,13 @@
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
 				A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */,
+				48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
+				480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */,
+				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */,
 				A50E163718972418008933A5 /* WBCaptain.m in Sources */,

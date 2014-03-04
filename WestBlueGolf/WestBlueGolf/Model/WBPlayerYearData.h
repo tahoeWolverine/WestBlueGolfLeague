@@ -1,5 +1,9 @@
 #import "_WBPlayerYearData.h"
 
 @interface WBPlayerYearData : _WBPlayerYearData {}
-// Custom logic goes here.
+
++ (WBPlayerYearData *)createPlayerYearDataForPlayer:(WBPlayer *)player
+							   withStartingHandicap:(NSInteger)startingHandicap
+										   isRookie:(BOOL)isRookie;
+
 @end

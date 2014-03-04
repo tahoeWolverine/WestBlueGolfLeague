@@ -71,9 +71,9 @@ extern const struct WBPlayerFetchedProperties {
 
 
 
-@property (nonatomic, strong) WBResult *results;
+@property (nonatomic, strong) NSSet *results;
 
-//- (BOOL)validateResults:(id*)value_ error:(NSError**)error_;
+- (NSMutableSet*)resultsSet;
 
 
 
@@ -85,9 +85,9 @@ extern const struct WBPlayerFetchedProperties {
 
 
 
-@property (nonatomic, strong) WBPlayerYearData *yearData;
+@property (nonatomic, strong) NSSet *yearData;
 
-//- (BOOL)validateYearData:(id*)value_ error:(NSError**)error_;
+- (NSMutableSet*)yearDataSet;
 
 
 
@@ -101,6 +101,16 @@ extern const struct WBPlayerFetchedProperties {
 - (void)removeMatches:(NSSet*)value_;
 - (void)addMatchesObject:(WBMatch*)value_;
 - (void)removeMatchesObject:(WBMatch*)value_;
+
+- (void)addResults:(NSSet*)value_;
+- (void)removeResults:(NSSet*)value_;
+- (void)addResultsObject:(WBResult*)value_;
+- (void)removeResultsObject:(WBResult*)value_;
+
+- (void)addYearData:(NSSet*)value_;
+- (void)removeYearData:(NSSet*)value_;
+- (void)addYearDataObject:(WBPlayerYearData*)value_;
+- (void)removeYearDataObject:(WBPlayerYearData*)value_;
 
 @end
 
@@ -128,8 +138,8 @@ extern const struct WBPlayerFetchedProperties {
 
 
 
-- (WBResult*)primitiveResults;
-- (void)setPrimitiveResults:(WBResult*)value;
+- (NSMutableSet*)primitiveResults;
+- (void)setPrimitiveResults:(NSMutableSet*)value;
 
 
 
@@ -138,8 +148,8 @@ extern const struct WBPlayerFetchedProperties {
 
 
 
-- (WBPlayerYearData*)primitiveYearData;
-- (void)setPrimitiveYearData:(WBPlayerYearData*)value;
+- (NSMutableSet*)primitiveYearData;
+- (void)setPrimitiveYearData:(NSMutableSet*)value;
 
 
 @end

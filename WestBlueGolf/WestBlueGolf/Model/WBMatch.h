@@ -1,5 +1,9 @@
 #import "_WBMatch.h"
 
 @interface WBMatch : _WBMatch {}
-// Custom logic goes here.
+
++ (WBMatch *)createMatchForTeamMatchup:(WBTeamMatchup *)teamMatchup
+							   player1:(WBPlayer *)player1
+							   player2:(WBPlayer *)player2;
+
 @end

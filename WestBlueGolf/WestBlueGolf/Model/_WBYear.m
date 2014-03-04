@@ -4,6 +4,7 @@
 #import "_WBYear.h"
 
 const struct WBYearAttributes WBYearAttributes = {
+	.value = @"value",
 };
 
 const struct WBYearRelationships WBYearRelationships = {
@@ -40,9 +41,40 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"valueValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"value"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic value;
+
+
+
+- (int16_t)valueValue {
+	NSNumber *result = [self value];
+	return [result shortValue];
+}
+
+- (void)setValueValue:(int16_t)value_ {
+	[self setValue:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveValueValue {
+	NSNumber *result = [self primitiveValue];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveValueValue:(int16_t)value_ {
+	[self setPrimitiveValue:[NSNumber numberWithShort:value_]];
+}
+
 
 
 
