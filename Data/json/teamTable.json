@@ -1,0 +1,52 @@
+[
+  {
+    "TeamID":1,
+    "TeamName":"Noonan!",
+    "Division":"A"
+  },
+  {
+    "TeamID":2,
+    "TeamName":"Golf Gods",
+    "Division":"A"
+  },
+  {
+    "TeamID":3,
+    "TeamName":"Swing Doctors",
+    "Division":"A"
+  },
+  {
+    "TeamID":4,
+    "TeamName":"Double Eagles",
+    "Division":"A"
+  },
+  {
+    "TeamID":5,
+    "TeamName":"Bushwoods Finest",
+    "Division":"A"
+  },
+  {
+    "TeamID":6,
+    "TeamName":"Mulligans",
+    "Division":"A"
+  },
+  {
+    "TeamID":7,
+    "TeamName":"Pinseekers",
+    "Division":"A"
+  },
+  {
+    "TeamID":8,
+    "TeamName":"Kraft Dinner",
+    "Division":"A"
+  },
+  {
+    "TeamID":9,
+    "TeamName":"Missing Links",
+    "Division":"A"
+  },
+  {
+    "TeamID":10,
+    "TeamName":"Earthmovers",
+    "Division":"A"
+  }
+]
