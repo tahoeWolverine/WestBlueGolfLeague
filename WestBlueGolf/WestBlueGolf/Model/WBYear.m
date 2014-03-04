@@ -17,6 +17,10 @@
 	return newYear;
 }
 
+- (void)deleteYear {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

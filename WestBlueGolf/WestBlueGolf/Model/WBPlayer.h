@@ -12,6 +12,8 @@
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam;
 
+- (void)deletePlayer;
+
 - (NSString *)shortName;
 
 @end

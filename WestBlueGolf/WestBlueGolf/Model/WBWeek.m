@@ -23,6 +23,10 @@
 	return newWeek;
 }
 
+- (void)deleteWeek {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

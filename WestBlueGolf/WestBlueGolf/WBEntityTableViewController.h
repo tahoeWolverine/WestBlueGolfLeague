@@ -8,6 +8,8 @@
 
 @interface WBEntityTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
 - (NSString *)cellIdentifier;
 - (NSString *)entityName;
 - (NSString *)sortDescriptor;

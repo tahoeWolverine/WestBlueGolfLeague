@@ -41,6 +41,10 @@
 	return newResult;
 }
 
+- (void)deleteResult {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

@@ -28,6 +28,10 @@
 	return newPlayer;
 }
 
+- (void)deletePlayer {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

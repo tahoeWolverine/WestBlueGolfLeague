@@ -5,6 +5,8 @@
 
 + (WBTeam *)createTeamWithName:(NSString *)name;
 
+- (void)deleteTeam;
+
 - (WBCaptain *)captain;
 
 @end

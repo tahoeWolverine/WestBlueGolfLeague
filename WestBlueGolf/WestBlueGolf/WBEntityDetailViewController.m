@@ -18,8 +18,6 @@
 	NSFetchedResultsController *_fetchedResultsController;
 }
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
 @end
 
 @implementation WBEntityDetailViewController

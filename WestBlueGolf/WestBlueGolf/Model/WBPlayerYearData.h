@@ -6,4 +6,6 @@
 							   withStartingHandicap:(NSInteger)startingHandicap
 										   isRookie:(BOOL)isRookie;
 
+- (void)deleteYearData;
+
 @end

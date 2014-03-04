@@ -12,10 +12,7 @@
 #import "WBProfileTableViewController.h"
 
 @interface WBPlayersTableViewController () {
-	NSFetchedResultsController *_fetchedResultsController;
 }
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 

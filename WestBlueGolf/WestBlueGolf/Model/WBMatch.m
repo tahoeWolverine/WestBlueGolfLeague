@@ -21,6 +21,10 @@
 	return newMatch;
 }
 
+- (void)deleteMatch {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

@@ -17,6 +17,10 @@
 	return newCourse;
 }
 
+- (void)deleteCourse {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

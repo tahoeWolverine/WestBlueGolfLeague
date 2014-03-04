@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
-        <!--Team Table View Controller - Teams-->
+        <!--Teams Table View Controller - Teams-->
         <scene sceneID="Osm-ZH-7O3">
             <objects>
-                <tableViewController id="xYM-oP-PEa" customClass="WBTeamTableViewController" sceneMemberID="viewController">
+                <tableViewController id="xYM-oP-PEa" customClass="WBTeamsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gLu-7D-iH1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -306,7 +306,7 @@
             </objects>
             <point key="canvasLocation" x="632" y="-853"/>
         </scene>
-        <!--Team Profile Table View Controller - Player Profile-->
+        <!--Team Profile Table View Controller - Team Profile-->
         <scene sceneID="6CG-QI-M4d">
             <objects>
                 <tableViewController id="yCe-44-dfb" customClass="WBTeamProfileTableViewController" sceneMemberID="viewController">
@@ -377,7 +377,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Michael" id="d5B-L4-NgD"/>
-                    <navigationItem key="navigationItem" title="Player Profile" id="ur3-Eb-yyJ">
+                    <navigationItem key="navigationItem" title="Team Profile" id="ur3-Eb-yyJ">
                         <barButtonItem key="backBarButtonItem" title="Profiles" id="ZyQ-ZD-QgM"/>
                     </navigationItem>
                     <connections>
@@ -454,7 +454,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Taco" width="210" height="210"/>
         <image name="Taco" width="210" height="210"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

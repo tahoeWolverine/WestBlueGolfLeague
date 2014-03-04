@@ -8,6 +8,8 @@
 					 priorHandicap:(NSInteger)priorHandicap
 							 score:(NSInteger)score;
 
+- (void)deleteResult;
+
 - (WBResult *)opponentResult;
 
 @end

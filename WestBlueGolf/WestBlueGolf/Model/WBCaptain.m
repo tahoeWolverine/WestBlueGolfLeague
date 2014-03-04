@@ -23,4 +23,12 @@
 	return newCaptain;
 }
 
+- (void)deleteCaptain {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
+
 @end

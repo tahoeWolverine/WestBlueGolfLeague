@@ -15,6 +15,10 @@
 	return newTeam;
 }
 
+- (void)deleteTeam {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

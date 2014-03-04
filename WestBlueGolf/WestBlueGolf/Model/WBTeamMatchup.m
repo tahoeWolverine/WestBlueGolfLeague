@@ -20,6 +20,10 @@
 	return newTeamMatchup;
 }
 
+- (void)deleteTeamMatchup {
+	[[[self class] managedObjectContext] deleteObject:self];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

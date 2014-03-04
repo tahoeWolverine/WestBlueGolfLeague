@@ -4,4 +4,6 @@
 
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week;
 
+- (void)deleteTeamMatchup;
+
 @end

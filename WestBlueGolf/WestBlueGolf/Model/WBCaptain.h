@@ -9,4 +9,6 @@
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam;
 
+- (void)deleteCaptain;
+
 @end

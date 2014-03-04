@@ -6,4 +6,6 @@
 						inYear:(WBYear *)year
 					 forCourse:(WBCourse *)course;
 
+- (void)deleteWeek;
+
 @end

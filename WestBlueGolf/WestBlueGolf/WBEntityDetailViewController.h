@@ -10,6 +10,8 @@
 
 @interface WBEntityDetailViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
 @property (weak, nonatomic) NSManagedObject *selectedEntity;
 @property (weak, nonatomic) IBOutlet UILabel *selectedEntityNameLabel;
 
