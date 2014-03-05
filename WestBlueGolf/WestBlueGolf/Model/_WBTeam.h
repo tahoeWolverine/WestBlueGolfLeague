@@ -6,11 +6,12 @@
 
 extern const struct WBTeamAttributes {
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *teamId;
 } WBTeamAttributes;
 
 extern const struct WBTeamRelationships {
 	__unsafe_unretained NSString *championYears;
-	__unsafe_unretained NSString *matches;
+	__unsafe_unretained NSString *matchups;
 	__unsafe_unretained NSString *players;
 } WBTeamRelationships;
 
@@ -20,6 +21,7 @@ extern const struct WBTeamFetchedProperties {
 @class WBYear;
 @class WBTeamMatchup;
 @class WBPlayer;
+
 
 
 
@@ -46,6 +48,20 @@ extern const struct WBTeamFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* teamId;
+
+
+
+@property int16_t teamIdValue;
+- (int16_t)teamIdValue;
+- (void)setTeamIdValue:(int16_t)value_;
+
+//- (BOOL)validateTeamId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSSet *championYears;
 
 - (NSMutableSet*)championYearsSet;
@@ -53,9 +69,9 @@ extern const struct WBTeamFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *matches;
+@property (nonatomic, strong) NSSet *matchups;
 
-- (NSMutableSet*)matchesSet;
+- (NSMutableSet*)matchupsSet;
 
 
 
@@ -77,10 +93,10 @@ extern const struct WBTeamFetchedProperties {
 - (void)addChampionYearsObject:(WBYear*)value_;
 - (void)removeChampionYearsObject:(WBYear*)value_;
 
-- (void)addMatches:(NSSet*)value_;
-- (void)removeMatches:(NSSet*)value_;
-- (void)addMatchesObject:(WBTeamMatchup*)value_;
-- (void)removeMatchesObject:(WBTeamMatchup*)value_;
+- (void)addMatchups:(NSSet*)value_;
+- (void)removeMatchups:(NSSet*)value_;
+- (void)addMatchupsObject:(WBTeamMatchup*)value_;
+- (void)removeMatchupsObject:(WBTeamMatchup*)value_;
 
 - (void)addPlayers:(NSSet*)value_;
 - (void)removePlayers:(NSSet*)value_;
@@ -98,14 +114,23 @@ extern const struct WBTeamFetchedProperties {
 
 
 
+- (NSNumber*)primitiveTeamId;
+- (void)setPrimitiveTeamId:(NSNumber*)value;
+
+- (int16_t)primitiveTeamIdValue;
+- (void)setPrimitiveTeamIdValue:(int16_t)value_;
+
+
+
+
 
 - (NSMutableSet*)primitiveChampionYears;
 - (void)setPrimitiveChampionYears:(NSMutableSet*)value;
 
 
 
-- (NSMutableSet*)primitiveMatches;
-- (void)setPrimitiveMatches:(NSMutableSet*)value;
+- (NSMutableSet*)primitiveMatchups;
+- (void)setPrimitiveMatchups:(NSMutableSet*)value;
 
 
 

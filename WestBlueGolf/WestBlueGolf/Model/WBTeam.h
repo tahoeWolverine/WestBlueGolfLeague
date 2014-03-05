@@ -1,12 +1,11 @@
 #import "_WBTeam.h"
-#import "WBCaptain.h"
 
 @interface WBTeam : _WBTeam {}
 
-+ (WBTeam *)createTeamWithName:(NSString *)name;
++ (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId;
 
 - (void)deleteTeam;
 
-- (WBCaptain *)captain;
++ (WBTeam *)teamWithId:(NSInteger)teamId;
 
 @end

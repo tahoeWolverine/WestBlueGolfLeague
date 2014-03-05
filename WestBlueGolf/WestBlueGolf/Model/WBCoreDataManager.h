@@ -20,4 +20,7 @@
 // NOTE: This method should only be called during app startup/reset!
 - (void)resetManagedObjectContextAndPersistentStore;
 
++ (id)findWithPredicate:(NSPredicate *)predicate forEntity:(NSString *)entityName;
++ (NSFetchRequest *)fetchAllRequestWithEntityName:(NSString *)entityName;
+
 @end

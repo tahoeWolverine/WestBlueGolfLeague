@@ -6,4 +6,6 @@
 
 - (void)deleteTeamMatchup;
 
++ (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week;
+
 @end

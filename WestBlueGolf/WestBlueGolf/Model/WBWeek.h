@@ -4,8 +4,11 @@
 
 + (WBWeek *)createWeekWithDate:(NSDate *)date
 						inYear:(WBYear *)year
-					 forCourse:(WBCourse *)course;
+					 forCourse:(WBCourse *)course
+				   seasonIndex:(NSInteger)seasonIndex;
 
 - (void)deleteWeek;
+
++ (WBWeek *)weekWithId:(NSInteger)weekId;
 
 @end

@@ -7,4 +7,6 @@
 
 - (void)deleteCourse;
 
++ (WBCourse *)courseWithName:(NSString *)courseName;
+
 @end

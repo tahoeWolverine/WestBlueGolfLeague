@@ -10,19 +10,55 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 
+#define wbJsonKeyWeekIndex @"Week"
+#define wbJsonKeyWeekPar @"Par"
+#define wbJsonKeyWeekDate @"Date"
+#define wbJsonKeyWeekCourse @"Course"
+
+#define wbJsonKeyTeamId @"TeamID"
+#define wbJsonKeyTeamName @"TeamName"
+#define wbJsonKeyTeamDivision @"Division" // unused
+
+#define wbJsonKeyUserId @"ID"
+#define wbJsonKeyUserName @"Username"
+#define wbJsonKeyUserPassword @"Password"
+
+#define wbJsonKeyPlayerName @"PlayerName"
+#define wbJsonKeyPlayerTeam @"TeamID"
+#define wbJsonKeyPlayerStartScore @"Week0Score"
+#define wbJsonKeyPlayerIsRookie @"Status"
+
+#define wbJsonKeyMatchComplete @"MatchComplete"
+#define wbJsonKeyMatchId @"MatchID" // unused
+#define wbJsonKeyMatchWeek @"Week"
+#define wbJsonKeyMatchTeam1 @"TeamID1"
+#define wbJsonKeyMatchTeam2 @"TeamID2"
+
+#define wbJsonKeyResultWeek @"Week"
+#define wbJsonKeyResultTeam1 @"TeamID1" // teams are redundant data here because of players
+#define wbJsonKeyResultPlayer1 @"PlayerName1"
+#define wbJsonKeyResultScore1 @"Score1"
+#define wbJsonKeyResultPoints1 @"Points1"
+#define wbJsonKeyResultTeam2 @"TeamID2" // teams are redundant
+#define wbJsonKeyResultPlayer2 @"PlayerName2"
+#define wbJsonKeyResultScore2 @"Score2"
+#define wbJsonKeyResultPoints2 @"Points2"
+
 @implementation WBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 
-	[self createTestData];
+	//[self createTestData];
+	
+	[self loadJsonData];
 	
     return YES;
 }
 
 - (void)createTestData {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
+	/*WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
 	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
 	WBCourse *course = [WBCourse createCourseWithName:@"Gold Front" par:36];
 	WBWeek *week = [WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course];
@@ -54,9 +90,141 @@
 	[WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
 	
 	// Delete the noTeam
+	[noTeam deleteTeam];*/
+	
+	[WBCoreDataManager saveContext];
+}
+
+- (void)loadJsonData {
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" id:0];
+	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
+	
+	// week table
+	NSArray *weekArray = [self jsonFromData:[self fileDataForFilename:@"weekTable"]];
+	
+	for (NSDictionary *elt in weekArray) {
+		NSString *courseName = [elt objectForKey:wbJsonKeyWeekCourse];
+		WBCourse *course = [WBCourse courseWithName:courseName];
+		if (!course) {
+			NSInteger par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
+			course = [WBCourse createCourseWithName:courseName par:par];
+		}
+
+		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
+		[WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course seasonIndex:weekId];
+	}
+	
+	// team table
+	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable"]];
+
+	for (NSDictionary *elt in teamArray) {
+		NSString *teamName = [elt objectForKey:wbJsonKeyTeamName];
+		NSInteger teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
+		[WBTeam createTeamWithName:teamName id:teamId];
+	}
+	
+	// password/user table
+	/*NSArray *captainArray = [self jsonFromData:[self fileDataForFilename:@"passwordTable"]];
+	
+	for (NSDictionary *elt in captainArray) {
+		NSInteger captainId = [[elt objectForKey:wbJsonKeyUserId] integerValue];
+		NSString *captainUsername = [elt objectForKey:wbJsonKeyUserName];
+		NSString *captainPassword = [elt objectForKey:wbJsonKeyUserPassword];
+		// Still need to set full name, handicap, and team from user data
+		[WBCaptain createCaptainWithId:captainId username:captainUsername password:captainPassword name:@"No Name" currentHandicap:99 onTeam:noTeam];
+		
+	}*/
+	
+	// player table
+	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable"]];
+	
+	for (NSDictionary *elt in playerArray) {
+		NSString *playerName = [elt objectForKey:wbJsonKeyPlayerName];
+		NSInteger teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
+		NSInteger currentHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue];
+		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
+		
+		// Rookie/Starting Handi are not yet implemented BOOL isRookie = [elt objectForKey:wbJsonKeyPlayerIsRookie];
+		[WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
+	}
+
+	// match table
+	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable"]];
+	
+	for (NSDictionary *elt in matchArray) {
+		NSInteger weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
+		NSInteger team1Id = [[elt objectForKey:wbJsonKeyMatchTeam1] integerValue];
+		NSInteger team2Id = [[elt objectForKey:wbJsonKeyMatchTeam2] integerValue];
+		BOOL matchComplete = [[elt objectForKey:wbJsonKeyMatchComplete] boolValue];
+		if (!matchComplete) {
+			DLog(@"Incomplete Match in received data");
+			continue;
+		}
+		
+		WBTeam *team1 = [WBTeam teamWithId:team1Id];
+		WBTeam *team2 = [WBTeam teamWithId:team2Id];
+		WBWeek *week = [WBWeek weekWithId:weekId];
+
+		[WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
+	}
+	
+	//TODO: Account for NO SHOW
+	/*// results table
+	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable"]];
+	
+	for (NSDictionary *elt in resultsArray) {
+		NSInteger weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
+		NSString *player1Name = [elt objectForKey:wbJsonKeyResultPlayer1];
+		NSString *player2Name = [elt objectForKey:wbJsonKeyResultPlayer2];
+		NSInteger score1 = [[elt objectForKey:wbJsonKeyResultScore1] integerValue];
+		NSInteger score2 = [[elt objectForKey:wbJsonKeyResultScore2] integerValue];
+		NSInteger points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
+		NSInteger points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
+
+		WBWeek *week = [WBWeek weekWithId:weekId];
+		
+		WBPlayer *player1 = [WBPlayer playerWithName:player1Name];
+		WBPlayer *player2 = [WBPlayer playerWithName:player2Name];
+
+		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:player1.team inWeek:week];
+		
+		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
+		//TODO: HANDICAP CODE to update handicap as a result comes in
+		[WBResult createResultForMatch:match forPlayer:player1 withPoints:points1 priorHandicap:0 score:score1];
+		[WBResult createResultForMatch:match forPlayer:player2 withPoints:points2 priorHandicap:0 score:score2];
+	}*/
+	
+	// Delete the noTeam
 	[noTeam deleteTeam];
 	
 	[WBCoreDataManager saveContext];
+}
+
+- (NSData *)fileDataForFilename:(NSString *)name {
+	NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"json"];
+	return [[NSFileManager defaultManager] contentsAtPath:path];
+}
+
+- (NSArray *)jsonFromData:(NSData *)data {
+	if (data) {
+		NSError *error = nil;
+		id object = [NSJSONSerialization JSONObjectWithData:data
+													options:0
+													  error:&error];
+		
+		if (error) {
+			ALog(@"json was malformed");
+		}
+		
+		if ([object isKindOfClass:[NSArray class]]) {
+			return object;
+		} else {
+			ALog(@"json wasn't an array");
+		}
+	} else {
+		ALog(@"no json data found");
+	}
+	return nil;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {

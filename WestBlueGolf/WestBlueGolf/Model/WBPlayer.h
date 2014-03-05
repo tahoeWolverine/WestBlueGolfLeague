@@ -14,6 +14,8 @@
 
 - (void)deletePlayer;
 
++ (WBPlayer *)playerWithName:(NSString *)name;
+
 - (NSString *)shortName;
 
 @end

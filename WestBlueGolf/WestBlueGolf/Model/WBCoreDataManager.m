@@ -121,4 +121,24 @@
 	}
 }
 
+#pragma mark - Object helper methods
+
++ (id)findWithPredicate:(NSPredicate *)predicate forEntity:(NSString *)entityName {
+	NSFetchRequest *request = [self fetchAllRequestWithEntityName:entityName];
+	[request setPredicate:predicate];
+	
+	NSError *error = nil;
+	NSArray *results = [[[[self class] sharedManager] managedObjectContext] executeFetchRequest:request error:&error];
+	if (error) {
+		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
+	}
+	return results;
+}
+
++ (NSFetchRequest *)fetchAllRequestWithEntityName:(NSString *)entityName {
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	[request setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:[[[self class] sharedManager] managedObjectContext]]];
+	return request;
+}
+
 @end

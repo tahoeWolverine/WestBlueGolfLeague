@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBCaptain.h"
 #import "WBCourse.h"
 #import "WBMatch.h"
 #import "WBPlayer.h"

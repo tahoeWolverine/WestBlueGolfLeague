@@ -21,6 +21,16 @@
 	[[[self class] managedObjectContext] deleteObject:self];
 }
 
++ (WBCourse *)courseWithName:(NSString *)courseName {
+	if (!courseName) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", courseName];
+	NSArray *courses = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	return [courses lastObject];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

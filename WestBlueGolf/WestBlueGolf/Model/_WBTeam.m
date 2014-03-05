@@ -5,11 +5,12 @@
 
 const struct WBTeamAttributes WBTeamAttributes = {
 	.name = @"name",
+	.teamId = @"teamId",
 };
 
 const struct WBTeamRelationships WBTeamRelationships = {
 	.championYears = @"championYears",
-	.matches = @"matches",
+	.matchups = @"matchups",
 	.players = @"players",
 };
 
@@ -42,6 +43,11 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"teamIdValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"teamId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -51,6 +57,32 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 
 @dynamic name;
 
+
+
+
+
+
+@dynamic teamId;
+
+
+
+- (int16_t)teamIdValue {
+	NSNumber *result = [self teamId];
+	return [result shortValue];
+}
+
+- (void)setTeamIdValue:(int16_t)value_ {
+	[self setTeamId:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveTeamIdValue {
+	NSNumber *result = [self primitiveTeamId];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveTeamIdValue:(int16_t)value_ {
+	[self setPrimitiveTeamId:[NSNumber numberWithShort:value_]];
+}
 
 
 
@@ -69,15 +101,15 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 }
 	
 
-@dynamic matches;
+@dynamic matchups;
 
 	
-- (NSMutableSet*)matchesSet {
-	[self willAccessValueForKey:@"matches"];
+- (NSMutableSet*)matchupsSet {
+	[self willAccessValueForKey:@"matchups"];
   
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"matches"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"matchups"];
   
-	[self didAccessValueForKey:@"matches"];
+	[self didAccessValueForKey:@"matchups"];
 	return result;
 }
 	

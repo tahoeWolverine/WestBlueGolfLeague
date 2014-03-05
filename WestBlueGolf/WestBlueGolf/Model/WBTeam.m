@@ -7,9 +7,10 @@
 
 @implementation WBTeam
 
-+ (WBTeam *)createTeamWithName:(NSString *)name {
++ (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId {
 	WBTeam *newTeam = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newTeam.name = name;
+	newTeam.teamIdValue = teamId;
 	
 	[WBCoreDataManager saveContext];
 	return newTeam;
@@ -19,18 +20,14 @@
 	[[[self class] managedObjectContext] deleteObject:self];
 }
 
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
++ (WBTeam *)teamWithId:(NSInteger)teamId {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
+	NSArray *teams = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	return [teams lastObject];
 }
 
-- (WBCaptain *)captain {
-	for (id player in self.players) {
-		if ([player isKindOfClass:[WBCaptain class]]) {
-			return player;
-		}
-	}
-	
-	return nil;
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

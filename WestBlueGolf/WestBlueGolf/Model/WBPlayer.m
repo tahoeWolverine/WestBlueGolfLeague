@@ -32,6 +32,12 @@
 	[[[self class] managedObjectContext] deleteObject:self];
 }
 
++ (WBPlayer *)playerWithName:(NSString *)name {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	return [players lastObject];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
