@@ -12,8 +12,15 @@
 							   player1:(WBPlayer *)player1
 							   player2:(WBPlayer *)player2 {
 	WBMatch *newMatch = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
-	[newMatch addPlayersObject:player1];
-	[newMatch addPlayersObject:player2];
+
+	// When matches only have one player (vs XX No Show XX), it should be ok to only have 1 on match
+	if (player1) {
+		[newMatch addPlayersObject:player1];
+	}
+	
+	if (player2) {
+		[newMatch addPlayersObject:player2];
+	}
 	
 	[teamMatchup addMatchesObject:newMatch];
 	

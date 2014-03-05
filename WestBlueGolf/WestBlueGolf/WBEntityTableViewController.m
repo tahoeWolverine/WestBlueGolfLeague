@@ -97,7 +97,6 @@
     return cell;
 }
 
-
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
 	ALog(@"Derived class did not implement configureCell");

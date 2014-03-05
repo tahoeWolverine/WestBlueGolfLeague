@@ -121,6 +121,10 @@
 	return nil;
 }
 
+- (NSPredicate *)fetchPredicate {
+	return nil;
+}
+
 - (NSString *)selectedEntityName {
 	return nil;
 }
@@ -149,22 +153,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"ProfileResultsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
     
 	[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
-
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
-    WBResult *result = (WBResult *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
-	[resultCell configureCellForResult:result];
+	ALog(@"Derived class did not implement configureCell");
 }
-
 
 #pragma mark - Fetched results controller
 
@@ -178,15 +177,16 @@
         // Create the fetch request for the entity.
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         // Edit the entity name as appropriate.
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"WBResult" inManagedObjectContext:[self managedObjectContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[self managedObjectContext]];
         [fetchRequest setEntity:entity];
 		
-		//ALog(@"No selected player for profile vc");
-		/*NSPredicate *predicate = [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedPlayerName]];
-		[fetchRequest setPredicate:predicate];*/
+		NSPredicate *predicate = [self fetchPredicate];
+		if (predicate) {
+			[fetchRequest setPredicate:predicate];
+		}
         
         // Edit the sort key as appropriate.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"match.teamMatchup.week.date" ascending:YES];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:[self sortDescriptor] ascending:YES];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         
         [fetchRequest setSortDescriptors:sortDescriptors];
@@ -196,7 +196,7 @@
         NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
 																									managedObjectContext:[self managedObjectContext]
 																									  sectionNameKeyPath:nil
-																											   cacheName:@"nil"];
+																											   cacheName:nil];
         aFetchedResultsController.delegate = self;
         _fetchedResultsController = aFetchedResultsController;
     }
@@ -243,16 +243,14 @@
 }
 */
 
-/*
 #pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+ 
+ // In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	// Get the new view controller using [segue destinationViewController].
+	// Pass the selected object to the new view controller.
+	WBEntityDetailViewController *vc = [segue destinationViewController];
+	vc.selectedEntity = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 }
-
- */
 
 @end

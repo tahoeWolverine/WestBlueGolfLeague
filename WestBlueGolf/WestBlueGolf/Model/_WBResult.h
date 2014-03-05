@@ -12,6 +12,7 @@ extern const struct WBResultAttributes {
 
 extern const struct WBResultRelationships {
 	__unsafe_unretained NSString *match;
+	__unsafe_unretained NSString *otherTeam;
 	__unsafe_unretained NSString *player;
 } WBResultRelationships;
 
@@ -19,6 +20,7 @@ extern const struct WBResultFetchedProperties {
 } WBResultFetchedProperties;
 
 @class WBMatch;
+@class WBTeam;
 @class WBPlayer;
 
 
@@ -87,6 +89,13 @@ extern const struct WBResultFetchedProperties {
 
 
 
+@property (nonatomic, strong) WBTeam *otherTeam;
+
+//- (BOOL)validateOtherTeam:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) WBPlayer *player;
 
 //- (BOOL)validatePlayer:(id*)value_ error:(NSError**)error_;
@@ -134,6 +143,11 @@ extern const struct WBResultFetchedProperties {
 
 - (WBMatch*)primitiveMatch;
 - (void)setPrimitiveMatch:(WBMatch*)value;
+
+
+
+- (WBTeam*)primitiveOtherTeam;
+- (void)setPrimitiveOtherTeam:(WBTeam*)value;
 
 
 

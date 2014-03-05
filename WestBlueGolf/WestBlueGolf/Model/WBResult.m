@@ -11,6 +11,7 @@
 
 + (WBResult *)createResultForMatch:(WBMatch *)match
 						 forPlayer:(WBPlayer *)player
+						 otherTeam:(WBTeam *)otherTeam
 						withPoints:(NSInteger)points
 					 priorHandicap:(NSInteger)priorHandicap
 							 score:(NSInteger)score {
@@ -34,6 +35,10 @@
 	newResult.priorHandicapValue = priorHandicap;
 	newResult.scoreValue = score;
 	
+	if (otherTeam) {
+		newResult.otherTeam = otherTeam;
+	}
+	
 	[match addResultsObject:newResult];
 	[player addResultsObject:newResult];
 	
@@ -56,7 +61,6 @@
 			return result;
 		}
 	}
-	ALog(@"Could not find opponent result for WBResult");
 	return nil;
 }
 

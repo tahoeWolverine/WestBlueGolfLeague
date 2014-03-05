@@ -18,16 +18,38 @@
 
 @implementation WBTeamProfileTableViewController
 
+#pragma mark - WBEntityDetailViewController methods to implement
+
 - (NSString *)selectedEntityName {
 	WBTeam *team = (WBTeam *)self.selectedEntity;
 	TRAssert(team, @"No team selected for team profile");
 	return team.name;
 }
 
-#pragma mark - WBEntityDetailViewController methods to implement
+- (NSString *)entityName {
+	return @"WBPlayer";
+}
 
 - (NSString *)sortDescriptor {
-	return @"match.teamMatchup.week.date";
+	//return @"match.teamMatchup.week.date";
+	return @"name";
+}
+
+- (NSPredicate *)fetchPredicate {
+	//return [NSPredicate predicateWithFormat:@"player.team.name = %@", [self selectedEntityName]];
+	return [NSPredicate predicateWithFormat:@"team.name = %@", [self selectedEntityName]];
+}
+
+- (NSString *)cellIdentifier {
+	static NSString *CellIdentifier = @"PlayerListCell";
+	return CellIdentifier;
+}
+
+- (void)configureCell:(UITableViewCell *)cell
+		  atIndexPath:(NSIndexPath *)indexPath {
+	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = player.name;
+	cell.detailTextLabel.text = player.team.name;
 }
 
 @end

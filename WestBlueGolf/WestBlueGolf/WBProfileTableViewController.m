@@ -29,4 +29,15 @@
 	return @"match.teamMatchup.week.date";
 }
 
+- (NSPredicate *)fetchPredicate {
+	return [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedEntityName]];
+}
+
+- (void)configureCell:(UITableViewCell *)cell
+		  atIndexPath:(NSIndexPath *)indexPath {
+    WBResult *result = (WBResult *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
+	[resultCell configureCellForResult:result];
+}
+
 @end

@@ -4,6 +4,7 @@
 
 + (WBResult *)createResultForMatch:(WBMatch *)match
 						 forPlayer:(WBPlayer *)player
+						 otherTeam:(WBTeam *)otherTeam
 						withPoints:(NSInteger)points
 					 priorHandicap:(NSInteger)priorHandicap
 							 score:(NSInteger)score;

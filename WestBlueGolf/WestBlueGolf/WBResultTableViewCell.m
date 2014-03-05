@@ -32,13 +32,15 @@
 	
 	//if (dateString && [dateString characterAtIndex:0] == '0'
 	WBResult *opponentResult = [result opponentResult];
-	self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ vs %@", dateString, [opponentResult.player shortName]];
+	NSString *opponentName = opponentResult ? [opponentResult.player shortName] : @"No Show";
+	self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ vs %@", dateString, opponentName];
 	
 	BOOL win = result.pointsValue > 12;
 	BOOL tie = result.pointsValue == 12;
 	self.winLossLabel.text = win ? @"W" : tie ? @"T" : @"L";
 	self.winLossLabel.textColor = win ? [UIColor greenColor] : tie ? [UIColor blackColor] : [UIColor redColor];
-	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentResult.score];
+	NSNumber *opponentScore = opponentResult.score ?: @0;
+	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
 }
 
 @end

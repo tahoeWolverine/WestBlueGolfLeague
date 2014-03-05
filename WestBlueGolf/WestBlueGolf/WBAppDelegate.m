@@ -95,6 +95,13 @@
 	[WBCoreDataManager saveContext];
 }
 
+// Example: "4/23/2013", total grammar of formatters - @"yyyy-MM-dd HH:mm:ss ZZZ"
+- (NSDate *)dateForString:(NSString *)dateString {
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"MM/dd/yyyy"];
+	return [dateFormatter dateFromString:dateString];
+}
+
 - (void)loadJsonData {
 	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" id:0];
 	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
@@ -111,7 +118,9 @@
 		}
 
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
-		[WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course seasonIndex:weekId];
+		NSString *weekDate = [elt objectForKey:wbJsonKeyWeekDate];
+		NSDate *date = [self dateForString:weekDate];
+		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId];
 	}
 	
 	// team table
@@ -160,39 +169,64 @@
 			DLog(@"Incomplete Match in received data");
 			continue;
 		}
-		
+
+		WBWeek *week = [WBWeek weekWithId:weekId];
 		WBTeam *team1 = [WBTeam teamWithId:team1Id];
 		WBTeam *team2 = [WBTeam teamWithId:team2Id];
-		WBWeek *week = [WBWeek weekWithId:weekId];
 
 		[WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
 	}
 	
 	//TODO: Account for NO SHOW
-	/*// results table
+	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable"]];
 	
 	for (NSDictionary *elt in resultsArray) {
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
+		NSInteger team1Id = [[elt objectForKey:wbJsonKeyResultTeam1] integerValue];
+		NSInteger team2Id = [[elt objectForKey:wbJsonKeyResultTeam2] integerValue];
 		NSString *player1Name = [elt objectForKey:wbJsonKeyResultPlayer1];
 		NSString *player2Name = [elt objectForKey:wbJsonKeyResultPlayer2];
 		NSInteger score1 = [[elt objectForKey:wbJsonKeyResultScore1] integerValue];
 		NSInteger score2 = [[elt objectForKey:wbJsonKeyResultScore2] integerValue];
 		NSInteger points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		NSInteger points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
+		
+		if (weekId == 7 && ([player1Name isEqualToString:@"Brian Martin"] || [player2Name isEqualToString:@"Brian Martin"])) {
+			DLog(@"week 7, brian martin");
+		}
 
 		WBWeek *week = [WBWeek weekWithId:weekId];
 		
 		WBPlayer *player1 = [WBPlayer playerWithName:player1Name];
 		WBPlayer *player2 = [WBPlayer playerWithName:player2Name];
+		if (!player1 || !player2) {
+			DLog(@"Bad Player Results");
+		}
 
-		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:player1.team inWeek:week];
+		WBTeam *team1 = [WBTeam teamWithId:team1Id];
+		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
 		
 		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
 		//TODO: HANDICAP CODE to update handicap as a result comes in
-		[WBResult createResultForMatch:match forPlayer:player1 withPoints:points1 priorHandicap:0 score:score1];
-		[WBResult createResultForMatch:match forPlayer:player2 withPoints:points2 priorHandicap:0 score:score2];
-	}*/
+		if (player1) {
+			WBTeam *otherTeam = nil;
+			if (player1.team.teamIdValue != team1Id) {
+				DLog(@"player 1 not on team 1");
+				otherTeam = team1;
+			}
+			
+			[WBResult createResultForMatch:match forPlayer:player1 otherTeam:otherTeam withPoints:points1 priorHandicap:0 score:score1];
+		}
+		if (player2) {
+			WBTeam *otherTeam = nil;
+			if (player2.team.teamIdValue != team2Id) {
+				DLog(@"player 2 not on team 2");
+				otherTeam = [WBTeam teamWithId:team2Id];
+			}
+			[WBResult createResultForMatch:match forPlayer:player2 otherTeam:otherTeam withPoints:points2 priorHandicap:0 score:score2];
+		}
+	}
 	
 	// Delete the noTeam
 	[noTeam deleteTeam];
