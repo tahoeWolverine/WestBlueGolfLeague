@@ -45,7 +45,7 @@
         <scene sceneID="LsK-4n-dFv">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Gnm-rF-Zp9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Teams" id="Ycz-tA-FcL"/>
+                    <tabBarItem key="tabBarItem" title="Teams" image="UITabBarMostViewedTemplate-Old" id="Ycz-tA-FcL"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ndM-Hg-cMX">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -106,7 +106,7 @@
         <scene sceneID="A1q-fs-fJQ">
             <objects>
                 <navigationController definesPresentationContext="YES" id="q3P-ZD-NsO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Leaderboards" id="SNJ-2d-uRy"/>
+                    <tabBarItem key="tabBarItem" title="Leaderboards" image="UITabBarMostViewedTemplate" id="SNJ-2d-uRy"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pim-yU-Vhe">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -156,7 +156,7 @@
         <scene sceneID="pSO-rk-AjR">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Ggh-be-FB2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Info" id="iLS-sb-nJv"/>
+                    <tabBarItem key="tabBarItem" title="Info" image="UITabBarMoreTemplate" id="iLS-sb-nJv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WT8-Jl-bij">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -224,7 +224,7 @@
         <scene sceneID="cmk-kq-Qb6">
             <objects>
                 <navigationController definesPresentationContext="YES" id="FUd-wH-aky" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Michael" id="93X-nP-Jo8"/>
+                    <tabBarItem key="tabBarItem" title="Michael" image="UITabBarContactsTemplate" id="93X-nP-Jo8"/>
                     <navigationItem key="navigationItem" id="fH0-YY-6xk"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tAc-mW-haJ">
                         <autoresizingMask key="autoresizingMask"/>
@@ -440,7 +440,7 @@
         <scene sceneID="kH8-tc-UH2">
             <objects>
                 <navigationController definesPresentationContext="YES" id="8B3-a8-lxV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Players" id="DJW-BF-bqK"/>
+                    <tabBarItem key="tabBarItem" title="Players" image="UITabBarMostViewedTemplate-Old" id="DJW-BF-bqK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tKL-bf-99q">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -455,8 +455,10 @@
     </scenes>
     <resources>
         <image name="Taco" width="210" height="210"/>
-        <image name="Taco" width="210" height="210"/>
-        <image name="Taco" width="210" height="210"/>
+        <image name="UITabBarContactsTemplate" width="25" height="25"/>
+        <image name="UITabBarMoreTemplate" width="23" height="4"/>
+        <image name="UITabBarMostViewedTemplate" width="23" height="23"/>
+        <image name="UITabBarMostViewedTemplate-Old" width="35" height="21"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -464,6 +466,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDs-2I-fFa"/>
+        <segue reference="Lux-mr-beR"/>
     </inferredMetricsTieBreakers>
 </document>
