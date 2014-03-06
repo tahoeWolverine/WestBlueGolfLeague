@@ -1,12 +1,12 @@
 //
-//  WBPlayersTableViewController.m
+//  WBPlayersDataSource.m
 //  WestBlueGolf
 //
-//  Created by Michael Harlow on 2/16/14.
+//  Created by Mike Harlow on 3/6/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBPlayersTableViewController.h"
+#import "WBPlayersDataSource.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
@@ -20,10 +20,10 @@ typedef enum {
 	WBPlayerSectionPlayers
 } WBPlayerSection;
 
-@interface WBPlayersTableViewController ()
+@interface WBPlayersDataSource ()
 @end
 
-@implementation WBPlayersTableViewController
+@implementation WBPlayersDataSource
 
 #pragma mark - WBEntityTableViewController methods to implement
 

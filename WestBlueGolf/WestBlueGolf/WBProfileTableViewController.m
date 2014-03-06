@@ -16,6 +16,8 @@
 
 @interface WBProfileTableViewController ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
 @property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lowRoundLabel;
@@ -47,6 +49,8 @@
 	self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
 	self.averageScoreLabel.text = [self.selectedPlayer averageScoreString];
 	self.lowNetLabel.text = [self.selectedPlayer lowNetString];
+	
+	[self refreshFavoriteButton];
 }
 
 #pragma mark - WBEntityDetailViewController methods to implement
@@ -76,7 +80,13 @@
 	self.selectedPlayer.favoriteValue = !self.selectedPlayer.favoriteValue;
 	[WBCoreDataManager saveContext];
 	
+	[self refreshFavoriteButton];
+	
 	//[[NSNotificationCenter defaultCenter] postNotificationName:WBFavoriteCreatedNotification object:nil];
+}
+
+- (void)refreshFavoriteButton {
+	self.favoriteButton.image = [UIImage imageNamed:self.selectedPlayer.favoriteValue ? @"UITabBarFavoritesTemplateSelected" : @"UITabBarFavoritesTemplate"];
 }
 
 @end

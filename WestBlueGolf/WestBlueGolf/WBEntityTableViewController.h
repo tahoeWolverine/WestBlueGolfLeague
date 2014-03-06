@@ -6,15 +6,9 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBEntityTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface WBEntityTableViewController : UIViewController
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
-- (NSString *)cellIdentifier;
-- (NSString *)entityName;
-- (NSArray *)sortDescriptorsForFetch;
-- (NSString *)sectionNameKeyPath;
-- (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object;
+@property (strong, nonatomic) IBOutlet UITableView *playersTable;
+@property (strong, nonatomic) IBOutlet UITableView *teamsTable;
 
 @end
