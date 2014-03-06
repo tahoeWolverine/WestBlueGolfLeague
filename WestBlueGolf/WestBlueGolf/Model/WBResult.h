@@ -17,4 +17,6 @@
 - (BOOL)wasTie;
 - (BOOL)wasLoss;
 
+- (NSInteger)netScoreDifference;
+
 @end

@@ -10,9 +10,6 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBResultTableViewCell.h"
-//#import "DHxlsReader.h"
-
-//extern int xls_debug;
 
 @interface WBEntityDetailViewController () {
 	NSFetchedResultsController *_fetchedResultsController;
@@ -48,11 +45,13 @@
 		 */
 		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
-	
-	//NSString *name = [self selectedEntityName];
-	self.selectedEntityNameLabel.text = [self selectedEntityName];
+}
 
-	self.navigationItem.title = self.selectedEntityName;
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+
+	self.selectedEntityNameLabel.text = [self selectedEntityName];	
+	self.navigationItem.title = [self selectedEntityName];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,13 +108,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
     
-	[self configureCell:cell atIndexPath:indexPath];
+	[self configureCell:cell withObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
     
     return cell;
 }
 
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath {
+		   withObject:(NSManagedObject *)object {
 	ALog(@"Derived class did not implement configureCell");
 }
 

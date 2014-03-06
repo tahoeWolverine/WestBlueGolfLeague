@@ -9,11 +9,13 @@
 #import "WBPlayersTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
 
-@interface WBPlayersTableViewController () {
-}
+#define SECTION_KEY @"favorite"
+#define SORT_KEY @"name"
 
+@interface WBPlayersTableViewController ()
 @end
 
 @implementation WBPlayersTableViewController
@@ -29,9 +31,19 @@
 	return @"WBPlayer";
 }
 
+- (NSString *)sectionNameKeyPath {
+	return SECTION_KEY;
+}
+
+- (NSArray *)sortDescriptorsForFetch {
+	NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
+	NSSortDescriptor *nameSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+	return @[sectionSortOrderDescriptor, nameSortOrderDescriptor];
+}
+
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath {
-	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+		   withObject:(NSManagedObject *)object {
+	WBPlayer *player = (WBPlayer *)object;
     cell.textLabel.text = player.name;
 	cell.detailTextLabel.text = player.team.name;
 }

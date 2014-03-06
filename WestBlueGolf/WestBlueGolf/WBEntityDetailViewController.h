@@ -20,6 +20,6 @@
 - (NSArray *)sortDescriptorsForFetch;
 - (NSString *)selectedEntityName;
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath;
+		   withObject:(NSManagedObject *)object;
 
 @end

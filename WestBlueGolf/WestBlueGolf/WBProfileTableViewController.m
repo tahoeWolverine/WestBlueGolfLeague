@@ -9,6 +9,7 @@
 #import "WBProfileTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 #import "WBResultTableViewCell.h"
 
 #define SORT_KEY @"match.teamMatchup.week.date"
@@ -29,23 +30,30 @@
 @implementation WBProfileTableViewController
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
-	
 	self.selectedPlayer = [WBPlayer playerWithName:[self selectedEntityName]];
+	if (!self.selectedPlayer) {
+		self.selectedPlayer = [WBPlayer me];
+	}
+
+	[super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	
 	self.winLossLabel.text = [self.selectedPlayer record];
 	self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
 	self.lowRoundLabel.text = [self.selectedPlayer lowRoundString];
 	self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
 	self.averageScoreLabel.text = [self.selectedPlayer averageScoreString];
-	self.lowNetLabel.text = nil;
+	self.lowNetLabel.text = [self.selectedPlayer lowNetString];
 }
 
 #pragma mark - WBEntityDetailViewController methods to implement
 
 - (NSString *)selectedEntityName {
 	WBPlayer *player = (WBPlayer *)self.selectedEntity;
-	return player ? player.name : @"Michael Harlow";
+	return player ? player.name : [WBPlayer me].name;
 }
 
 - (NSArray *)sortDescriptorsForFetch {
@@ -58,10 +66,17 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath {
-    WBResult *result = (WBResult *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+		   withObject:(NSManagedObject *)object {
+    WBResult *result = (WBResult *)object;
 	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
 	[resultCell configureCellForResult:result];
+}
+
+- (IBAction)favoritePlayer:(UIBarButtonItem *)sender {
+	self.selectedPlayer.favoriteValue = !self.selectedPlayer.favoriteValue;
+	[WBCoreDataManager saveContext];
+	
+	//[[NSNotificationCenter defaultCenter] postNotificationName:WBFavoriteCreatedNotification object:nil];
 }
 
 @end

@@ -12,6 +12,8 @@
     </entity>
     <entity name="WBPlayer" representedClassName="WBPlayer" syncable="YES">
         <attribute name="currentHandicap" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="favorite" attributeType="Boolean" syncable="YES"/>
+        <attribute name="me" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="players" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="results" toMany="YES" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
@@ -60,7 +62,7 @@
     <elements>
         <element name="WBCourse" positionX="-317" positionY="-144" width="128" height="88"/>
         <element name="WBMatch" positionX="7" positionY="-322" width="128" height="88"/>
-        <element name="WBPlayer" positionX="160" positionY="-243" width="128" height="133"/>
+        <element name="WBPlayer" positionX="160" positionY="-243" width="128" height="163"/>
         <element name="WBPlayerYearData" positionX="315" positionY="-198" width="128" height="88"/>
         <element name="WBResult" positionX="315" positionY="-352" width="128" height="133"/>
         <element name="WBTeam" positionX="-2" positionY="-100" width="128" height="133"/>

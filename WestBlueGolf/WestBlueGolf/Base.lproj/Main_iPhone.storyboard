@@ -524,7 +524,13 @@
                             <outlet property="delegate" destination="t0G-8d-uu9" id="3GV-Vb-JdO"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="q6u-QE-GOv"/>
+                    <navigationItem key="navigationItem" id="q6u-QE-GOv">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="X0V-qX-dpU">
+                            <connections>
+                                <action selector="favoritePlayer:" destination="t0G-8d-uu9" id="0ly-9C-irz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="averagePointsLabel" destination="Iwn-tW-SeB" id="EM2-lf-SxW"/>
                         <outlet property="averageScoreLabel" destination="Geq-Ix-m23" id="HWg-OK-gj9"/>

@@ -30,8 +30,8 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath {
-	WBTeam *team = (WBTeam *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+		   withObject:(NSManagedObject *)object {
+	WBTeam *team = (WBTeam *)object;
 	cell.textLabel.text = team.name;
 }
 

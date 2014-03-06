@@ -47,8 +47,8 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell
-		  atIndexPath:(NSIndexPath *)indexPath {
-	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+		   withObject:(NSManagedObject *)object {
+	WBPlayer *player = (WBPlayer *)object;
     cell.textLabel.text = player.name;
 	cell.detailTextLabel.text = player.team.name;
 }

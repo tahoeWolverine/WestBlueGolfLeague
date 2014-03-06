@@ -13,6 +13,8 @@
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam;
 
++ (WBPlayer *)me;
+
 - (void)deletePlayer;
 
 + (WBPlayer *)playerWithName:(NSString *)name;
@@ -25,6 +27,9 @@
 
 - (NSInteger)lowRoundForYear:(WBYear *)year;
 - (NSString *)lowRoundString;
+
+- (NSInteger)lowNetForYear:(WBYear *)year;
+- (NSString *)lowNetString;
 
 - (CGFloat)averagePointsInYear:(WBYear *)year;
 - (NSString *)averagePointsString;

@@ -45,6 +45,7 @@
 		A5F344CA18C7B63E00EBF40A /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C718C7B63E00EBF40A /* rules.html */; };
 		A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */; };
 		A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */; };
+		A5F3455018C9087A00EBF40A /* WBNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F3454F18C9087A00EBF40A /* WBNotifications.m */; };
 		A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E41890769400AB3529 /* CoreGraphics.framework */; };
 		A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
@@ -142,6 +143,8 @@
 		A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBInfoTableViewController.m; sourceTree = "<group>"; };
 		A5F344D018C7D06C00EBF40A /* WBInfoWebviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBInfoWebviewViewController.h; sourceTree = "<group>"; };
 		A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBInfoWebviewViewController.m; sourceTree = "<group>"; };
+		A5F3454E18C9087A00EBF40A /* WBNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBNotifications.h; sourceTree = "<group>"; };
+		A5F3454F18C9087A00EBF40A /* WBNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBNotifications.m; sourceTree = "<group>"; };
 		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -331,6 +334,8 @@
 				A5F477001890769400AB3529 /* Images.xcassets */,
 				A5F476F41890769400AB3529 /* Main_iPhone.storyboard */,
 				A5F476F71890769400AB3529 /* Main_iPad.storyboard */,
+				A5F3454E18C9087A00EBF40A /* WBNotifications.h */,
+				A5F3454F18C9087A00EBF40A /* WBNotifications.m */,
 				A5F476E91890769400AB3529 /* Supporting Files */,
 			);
 			path = WestBlueGolf;
@@ -522,6 +527,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5F3455018C9087A00EBF40A /* WBNotifications.m in Sources */,
 				48B221B618B1D57B00F2DD99 /* WBPlayersTableViewController.m in Sources */,
 				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,

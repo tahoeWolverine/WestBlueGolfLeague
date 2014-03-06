@@ -154,7 +154,12 @@
 		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
 		
 		// Rookie/Starting Handi are not yet implemented BOOL isRookie = [elt objectForKey:wbJsonKeyPlayerIsRookie];
-		[WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
+		WBPlayer *player = [WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
+		
+		if ([playerName isEqualToString:@"Michael Harlow"]) {
+			player.meValue = YES;
+			player.favoriteValue = YES;
+		}
 	}
 
 	// match table
@@ -212,7 +217,7 @@
 				otherTeam = team1;
 			}
 			
-			[WBResult createResultForMatch:match forPlayer:player1 otherTeam:otherTeam withPoints:points1 priorHandicap:0 score:score1];
+			[WBResult createResultForMatch:match forPlayer:player1 otherTeam:otherTeam withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
 		}
 		if (player2) {
 			WBTeam *otherTeam = nil;
@@ -220,7 +225,7 @@
 				DLog(@"player 2 not on team 2");
 				otherTeam = [WBTeam teamWithId:team2Id];
 			}
-			[WBResult createResultForMatch:match forPlayer:player2 otherTeam:otherTeam withPoints:points2 priorHandicap:0 score:score2];
+			[WBResult createResultForMatch:match forPlayer:player2 otherTeam:otherTeam withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
 		}
 	}
 	

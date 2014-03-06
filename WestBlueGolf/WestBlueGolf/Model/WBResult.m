@@ -76,4 +76,8 @@
 	return self.pointsValue < 12.0;
 }
 
+- (NSInteger)netScoreDifference {
+	return self.scoreValue - self.priorHandicapValue;
+}
+
 @end

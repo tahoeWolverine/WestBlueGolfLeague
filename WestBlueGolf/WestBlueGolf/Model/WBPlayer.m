@@ -19,6 +19,8 @@
 	WBPlayer *newPlayer = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newPlayer.name = name;
 	newPlayer.currentHandicapValue = currentHandicap;
+	newPlayer.meValue = NO;
+	newPlayer.favoriteValue = NO;
 	
 	[currentTeam addPlayersObject:newPlayer];
 	return newPlayer;
@@ -35,6 +37,12 @@
 
 - (void)deletePlayer {
 	[[[self class] managedObjectContext] deleteObject:self];
+}
+
++ (WBPlayer *)me {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
+	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	return [players lastObject];
 }
 
 + (WBPlayer *)playerWithName:(NSString *)name {
@@ -102,6 +110,27 @@
 
 - (NSString *)lowRoundString {
 	return [NSString stringWithFormat:@"%ld", (long)[self lowRoundForYear:[WBYear thisYear]]];
+}
+
+- (NSInteger)lowNetForYear:(WBYear *)year {
+	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
+	if (results && results.count > 0) {
+		NSInteger lowNet = 10;
+		for (WBResult *result in results) {
+			NSInteger netScoreDifference = [result netScoreDifference];
+			if (netScoreDifference < lowNet) {
+				lowNet = netScoreDifference;
+			}
+		}
+		
+		return lowNet;
+	} else {
+		return 10;
+	}
+}
+
+- (NSString *)lowNetString {
+	return [NSString stringWithFormat:@"%ld", (long)[self lowNetForYear:[WBYear thisYear]]];
 }
 
 - (CGFloat)averagePointsInYear:(WBYear *)year {

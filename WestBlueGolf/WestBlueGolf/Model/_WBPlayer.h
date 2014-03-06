@@ -6,6 +6,8 @@
 
 extern const struct WBPlayerAttributes {
 	__unsafe_unretained NSString *currentHandicap;
+	__unsafe_unretained NSString *favorite;
+	__unsafe_unretained NSString *me;
 	__unsafe_unretained NSString *name;
 } WBPlayerAttributes;
 
@@ -23,6 +25,8 @@ extern const struct WBPlayerFetchedProperties {
 @class WBResult;
 @class WBTeam;
 @class WBPlayerYearData;
+
+
 
 
 
@@ -49,6 +53,34 @@ extern const struct WBPlayerFetchedProperties {
 - (void)setCurrentHandicapValue:(int16_t)value_;
 
 //- (BOOL)validateCurrentHandicap:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* favorite;
+
+
+
+@property BOOL favoriteValue;
+- (BOOL)favoriteValue;
+- (void)setFavoriteValue:(BOOL)value_;
+
+//- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* me;
+
+
+
+@property BOOL meValue;
+- (BOOL)meValue;
+- (void)setMeValue:(BOOL)value_;
+
+//- (BOOL)validateMe:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -122,6 +154,24 @@ extern const struct WBPlayerFetchedProperties {
 
 - (int16_t)primitiveCurrentHandicapValue;
 - (void)setPrimitiveCurrentHandicapValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitiveFavorite;
+- (void)setPrimitiveFavorite:(NSNumber*)value;
+
+- (BOOL)primitiveFavoriteValue;
+- (void)setPrimitiveFavoriteValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveMe;
+- (void)setPrimitiveMe:(NSNumber*)value;
+
+- (BOOL)primitiveMeValue;
+- (void)setPrimitiveMeValue:(BOOL)value_;
 
 
 
