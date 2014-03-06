@@ -1,7 +1,11 @@
 #import "WBPlayer.h"
 #import "WBCoreDataManager.h"
+#import "WBCourse.h"
+#import "WBMatch.h"
 #import "WBResult.h"
 #import "WBTeam.h"
+#import "WBTeamMatchup.h"
+#import "WBWeek.h"
 
 @interface WBPlayer ()
 
@@ -78,7 +82,73 @@
 - (NSString *)currentHandicapString {
 	NSInteger adjusted = self.currentHandicapValue - 36;
 	BOOL isPositive = adjusted > 0;
-	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", adjusted];
+	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)adjusted];
+}
+
+- (NSInteger)lowRoundForYear:(WBYear *)year {
+	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[WBResult entityName]];
+	[request setPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
+	request.fetchLimit = 1;
+	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
+	
+	NSError *error = nil;
+	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	if (error) {
+		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
+	}
+	
+	return [(WBResult *)[results firstObject] scoreValue];
+}
+
+- (NSString *)lowRoundString {
+	return [NSString stringWithFormat:@"%ld", (long)[self lowRoundForYear:[WBYear thisYear]]];
+}
+
+- (CGFloat)averagePointsInYear:(WBYear *)year {
+	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
+	if (results && results.count > 0) {
+		NSInteger totalPoints = 0;
+		for (WBResult *result in results) {
+			totalPoints += result.pointsValue;
+		}
+	
+		return (CGFloat)totalPoints / (CGFloat)results.count;
+	} else {
+		return 0.0f;
+	}
+}
+
+- (NSString *)averagePointsString {
+	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	fmt.minimumFractionDigits = 1;
+	return [fmt stringFromNumber:[NSNumber numberWithFloat:[self averagePointsInYear:[WBYear thisYear]]]];
+}
+
+- (CGFloat)averageScoreInYear:(WBYear *)year {
+	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
+	if (results && results.count > 0) {
+		NSInteger totalScore = 0;
+		for (WBResult *result in results) {
+			totalScore += (result.scoreValue - result.match.teamMatchup.week.course.parValue);
+		}
+		
+		return (CGFloat)totalScore / (CGFloat)results.count;
+	} else {
+		return 0.0f;
+	}
+}
+
+- (NSString *)averageScoreString {
+	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	fmt.minimumFractionDigits = 1;
+	CGFloat avg = [self averageScoreInYear:[WBYear thisYear]];
+	NSString *decimalString = [fmt stringFromNumber:[NSNumber numberWithFloat:avg]];
+	return[NSString stringWithFormat:@"%@%@", avg > 0 ? @"+" : @"", decimalString];
+}
+
++ (NSArray *)resultsForPlayer:(WBPlayer *)player inYear:(WBYear *)year {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, player];
+	 return [WBCoreDataManager findWithPredicate:predicate forEntity:[WBResult entityName]];
 }
 
 @end

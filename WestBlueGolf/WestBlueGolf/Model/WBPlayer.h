@@ -18,9 +18,18 @@
 + (WBPlayer *)playerWithName:(NSString *)name;
 
 - (NSString *)shortName;
-- (NSString *)record;
-- (NSArray *)recordForYear:(WBYear *)year;
-
 - (NSString *)currentHandicapString;
+
+- (NSArray *)recordForYear:(WBYear *)year;
+- (NSString *)record;
+
+- (NSInteger)lowRoundForYear:(WBYear *)year;
+- (NSString *)lowRoundString;
+
+- (CGFloat)averagePointsInYear:(WBYear *)year;
+- (NSString *)averagePointsString;
+
+- (CGFloat)averageScoreInYear:(WBYear *)year;
+- (NSString *)averageScoreString;
 
 @end

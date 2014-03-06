@@ -35,9 +35,9 @@
 	
 	self.winLossLabel.text = [self.selectedPlayer record];
 	self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
-	self.lowRoundLabel.text = nil;
-	self.averagePointsLabel.text = nil;
-	self.averageScoreLabel.text = nil;
+	self.lowRoundLabel.text = [self.selectedPlayer lowRoundString];
+	self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
+	self.averageScoreLabel.text = [self.selectedPlayer averageScoreString];
 	self.lowNetLabel.text = nil;
 }
 

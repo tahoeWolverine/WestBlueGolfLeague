@@ -191,10 +191,6 @@
 		NSInteger score2 = [[elt objectForKey:wbJsonKeyResultScore2] integerValue];
 		NSInteger points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		NSInteger points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
-		
-		if (weekId == 7 && ([player1Name isEqualToString:@"Brian Martin"] || [player2Name isEqualToString:@"Brian Martin"])) {
-			DLog(@"week 7, brian martin");
-		}
 
 		WBWeek *week = [WBWeek weekWithId:weekId];
 		
