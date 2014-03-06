@@ -11,6 +11,8 @@
 #import "WBModels.h"
 #import "WBEntityDetailViewController.h"
 
+#define SORT_KEY @"name"
+
 @interface WBEntityTableViewController () {
 	NSFetchedResultsController *_fetchedResultsController;
 }
@@ -62,8 +64,9 @@
 	return nil;
 }
 
-- (NSString *)sortDescriptor {
-	return nil;
+- (NSArray *)sortDescriptorsForFetch {
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+	return @[sortOrderDescriptor];
 }
 
 #pragma mark - Table view data source
@@ -117,11 +120,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[self managedObjectContext]];
         [fetchRequest setEntity:entity];
         
-        // Edit the sort key as appropriate.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:[self sortDescriptor] ascending:YES];
-        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-        
-        [fetchRequest setSortDescriptors:sortDescriptors];
+        [fetchRequest setSortDescriptors:[self sortDescriptorsForFetch]];
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".

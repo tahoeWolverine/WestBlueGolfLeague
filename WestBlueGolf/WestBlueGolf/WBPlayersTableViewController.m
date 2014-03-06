@@ -29,10 +29,6 @@
 	return @"WBPlayer";
 }
 
-- (NSString *)sortDescriptor {
-	return @"name";
-}
-
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
 	WBPlayer *player = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:indexPath];

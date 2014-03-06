@@ -40,6 +40,11 @@
 		A59BC3E018C67710003B5350 /* resultsTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DA18C67710003B5350 /* resultsTable.json */; };
 		A59BC3E118C67710003B5350 /* teamTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DB18C67710003B5350 /* teamTable.json */; };
 		A59BC3E218C67710003B5350 /* weekTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DC18C67710003B5350 /* weekTable.json */; };
+		A5F344C818C7B63E00EBF40A /* credits.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C518C7B63E00EBF40A /* credits.html */; };
+		A5F344C918C7B63E00EBF40A /* info.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C618C7B63E00EBF40A /* info.html */; };
+		A5F344CA18C7B63E00EBF40A /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C718C7B63E00EBF40A /* rules.html */; };
+		A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */; };
+		A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */; };
 		A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E41890769400AB3529 /* CoreGraphics.framework */; };
 		A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
@@ -130,6 +135,13 @@
 		A59BC3DA18C67710003B5350 /* resultsTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable.json; sourceTree = "<group>"; };
 		A59BC3DB18C67710003B5350 /* teamTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teamTable.json; sourceTree = "<group>"; };
 		A59BC3DC18C67710003B5350 /* weekTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weekTable.json; sourceTree = "<group>"; };
+		A5F344C518C7B63E00EBF40A /* credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits.html; sourceTree = "<group>"; };
+		A5F344C618C7B63E00EBF40A /* info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = info.html; sourceTree = "<group>"; };
+		A5F344C718C7B63E00EBF40A /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
+		A5F344CD18C7CED300EBF40A /* WBInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBInfoTableViewController.h; sourceTree = "<group>"; };
+		A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBInfoTableViewController.m; sourceTree = "<group>"; };
+		A5F344D018C7D06C00EBF40A /* WBInfoWebviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBInfoWebviewViewController.h; sourceTree = "<group>"; };
+		A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBInfoWebviewViewController.m; sourceTree = "<group>"; };
 		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -234,6 +246,7 @@
 		A59BC3D418C67710003B5350 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A5F344C418C7B63E00EBF40A /* html */,
 				A59BC3D518C67710003B5350 /* json */,
 			);
 			path = Data;
@@ -258,6 +271,16 @@
 				A59BC3DC18C67710003B5350 /* weekTable.json */,
 			);
 			path = 2013;
+			sourceTree = "<group>";
+		};
+		A5F344C418C7B63E00EBF40A /* html */ = {
+			isa = PBXGroup;
+			children = (
+				A5F344C518C7B63E00EBF40A /* credits.html */,
+				A5F344C618C7B63E00EBF40A /* info.html */,
+				A5F344C718C7B63E00EBF40A /* rules.html */,
+			);
+			path = html;
 			sourceTree = "<group>";
 		};
 		A5F476D61890769400AB3529 = {
@@ -380,6 +403,10 @@
 		A5F4772518907EED00AB3529 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				A5F344CD18C7CED300EBF40A /* WBInfoTableViewController.h */,
+				A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */,
+				A5F344D018C7D06C00EBF40A /* WBInfoWebviewViewController.h */,
+				A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -469,10 +496,13 @@
 				A59BC3E218C67710003B5350 /* weekTable.json in Resources */,
 				A5F477011890769400AB3529 /* Images.xcassets in Resources */,
 				A59BC3E018C67710003B5350 /* resultsTable.json in Resources */,
+				A5F344C818C7B63E00EBF40A /* credits.html in Resources */,
 				A5F476F61890769400AB3529 /* Main_iPhone.storyboard in Resources */,
 				A59BC3DE18C67710003B5350 /* passwordTable.json in Resources */,
+				A5F344C918C7B63E00EBF40A /* info.html in Resources */,
 				A5F476ED1890769400AB3529 /* InfoPlist.strings in Resources */,
 				A59BC3DD18C67710003B5350 /* matchTable.json in Resources */,
+				A5F344CA18C7B63E00EBF40A /* rules.html in Resources */,
 				A59BC3E118C67710003B5350 /* teamTable.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,12 +536,14 @@
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
 				A50E163218972418008933A5 /* _WBResult.m in Sources */,
 				48B221BC18B2F6EA00F2DD99 /* WBTeamsTableViewController.m in Sources */,
+				A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
 				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
 				A50E163C18972418008933A5 /* WBResult.m in Sources */,
 				A50E163A18972418008933A5 /* WBPlayer.m in Sources */,
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
+				A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */,
 				A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */,
 				48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,

@@ -30,13 +30,12 @@
 	[dateFormatter setDateFormat:@"M/dd"];
 	NSString *dateString = [dateFormatter stringFromDate:result.match.teamMatchup.week.date];
 	
-	//if (dateString && [dateString characterAtIndex:0] == '0'
 	WBResult *opponentResult = [result opponentResult];
 	NSString *opponentName = opponentResult ? [opponentResult.player shortName] : @"No Show";
 	self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ vs %@", dateString, opponentName];
 	
-	BOOL win = result.pointsValue > 12;
-	BOOL tie = result.pointsValue == 12;
+	BOOL win = [result wasWin];
+	BOOL tie = [result wasTie];
 	self.winLossLabel.text = win ? @"W" : tie ? @"T" : @"L";
 	self.winLossLabel.textColor = win ? [UIColor greenColor] : tie ? [UIColor blackColor] : [UIColor redColor];
 	NSNumber *opponentScore = opponentResult.score ?: @0;

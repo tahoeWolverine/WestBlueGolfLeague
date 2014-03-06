@@ -13,4 +13,8 @@
 
 - (WBResult *)opponentResult;
 
+- (BOOL)wasWin;
+- (BOOL)wasTie;
+- (BOOL)wasLoss;
+
 @end

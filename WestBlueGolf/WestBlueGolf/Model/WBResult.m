@@ -64,4 +64,16 @@
 	return nil;
 }
 
+- (BOOL)wasWin {
+	return self.pointsValue > 12.0;
+}
+
+- (BOOL)wasTie {
+	return self.pointsValue == 12.0;
+}
+
+- (BOOL)wasLoss {
+	return self.pointsValue < 12.0;
+}
+
 @end

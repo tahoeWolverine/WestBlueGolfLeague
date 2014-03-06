@@ -11,8 +11,9 @@
 #import "WBModels.h"
 #import "WBResultTableViewCell.h"
 
-@interface WBTeamProfileTableViewController () {
-}
+#define SORT_KEY @"name" //@"match.teamMatchup.week.date"
+
+@interface WBTeamProfileTableViewController ()
 
 @end
 
@@ -30,9 +31,9 @@
 	return @"WBPlayer";
 }
 
-- (NSString *)sortDescriptor {
-	//return @"match.teamMatchup.week.date";
-	return @"name";
+- (NSArray *)sortDescriptorsForFetch {
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+	return @[sortOrderDescriptor];
 }
 
 - (NSPredicate *)fetchPredicate {

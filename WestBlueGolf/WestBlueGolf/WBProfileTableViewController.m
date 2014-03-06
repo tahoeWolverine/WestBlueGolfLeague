@@ -11,22 +11,46 @@
 #import "WBModels.h"
 #import "WBResultTableViewCell.h"
 
-@interface WBProfileTableViewController () {
-}
+#define SORT_KEY @"match.teamMatchup.week.date"
+
+@interface WBProfileTableViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
+@property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lowRoundLabel;
+@property (weak, nonatomic) IBOutlet UILabel *averagePointsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *averageScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lowNetLabel;
+
+@property (weak, nonatomic) WBPlayer *selectedPlayer;
 
 @end
 
 @implementation WBProfileTableViewController
+
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	
+	self.selectedPlayer = [WBPlayer playerWithName:[self selectedEntityName]];
+	
+	self.winLossLabel.text = [self.selectedPlayer record];
+	self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
+	self.lowRoundLabel.text = nil;
+	self.averagePointsLabel.text = nil;
+	self.averageScoreLabel.text = nil;
+	self.lowNetLabel.text = nil;
+}
+
+#pragma mark - WBEntityDetailViewController methods to implement
 
 - (NSString *)selectedEntityName {
 	WBPlayer *player = (WBPlayer *)self.selectedEntity;
 	return player ? player.name : @"Michael Harlow";
 }
 
-#pragma mark - WBEntityDetailViewController methods to implement
-
-- (NSString *)sortDescriptor {
-	return @"match.teamMatchup.week.date";
+- (NSArray *)sortDescriptorsForFetch {
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:NO];
+	return @[sortOrderDescriptor];
 }
 
 - (NSPredicate *)fetchPredicate {

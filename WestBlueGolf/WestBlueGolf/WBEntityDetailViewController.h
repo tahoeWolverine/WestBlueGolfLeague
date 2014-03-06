@@ -17,7 +17,7 @@
 
 - (NSString *)cellIdentifier;
 - (NSString *)entityName;
-- (NSString *)sortDescriptor;
+- (NSArray *)sortDescriptorsForFetch;
 - (NSString *)selectedEntityName;
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath;

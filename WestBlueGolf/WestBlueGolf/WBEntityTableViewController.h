@@ -12,7 +12,7 @@
 
 - (NSString *)cellIdentifier;
 - (NSString *)entityName;
-- (NSString *)sortDescriptor;
+- (NSArray *)sortDescriptorsForFetch;
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath;
 

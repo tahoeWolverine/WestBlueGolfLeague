@@ -1,4 +1,5 @@
 #import "_WBPlayer.h"
+#import "WBYear.h"
 
 @interface WBPlayer : _WBPlayer {}
 
@@ -17,5 +18,9 @@
 + (WBPlayer *)playerWithName:(NSString *)name;
 
 - (NSString *)shortName;
+- (NSString *)record;
+- (NSArray *)recordForYear:(WBYear *)year;
+
+- (NSString *)currentHandicapString;
 
 @end

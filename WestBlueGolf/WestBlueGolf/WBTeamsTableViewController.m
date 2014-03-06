@@ -29,10 +29,6 @@
 	return @"WBTeam";
 }
 
-- (NSString *)sortDescriptor {
-	return @"name";
-}
-
 - (void)configureCell:(UITableViewCell *)cell
 		  atIndexPath:(NSIndexPath *)indexPath {
 	WBTeam *team = (WBTeam *)[self.fetchedResultsController objectAtIndexPath:indexPath];

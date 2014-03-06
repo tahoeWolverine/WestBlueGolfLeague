@@ -7,4 +7,6 @@
 
 - (void)deleteYear;
 
++ (WBYear *)thisYear;
+
 @end
