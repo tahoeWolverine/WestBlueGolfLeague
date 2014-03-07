@@ -14,6 +14,8 @@
 							onTeam:(WBTeam *)currentTeam;
 
 + (WBPlayer *)me;
+- (void)setPlayerToMe;
+- (void)setPlayerToNotMe;
 
 - (void)deletePlayer;
 

@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)setProfileTabName;
+- (void)setProfileTabPlayer;
 
 @end

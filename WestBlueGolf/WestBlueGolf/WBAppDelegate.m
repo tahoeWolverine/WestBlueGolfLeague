@@ -9,6 +9,7 @@
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBProfileTableViewController.h"
 
 #define PLAYER_ME @"Adam Ahrens"
 
@@ -61,19 +62,22 @@
 		[self loadJsonData];
 	}
 	
-	WBPlayer *me = [WBPlayer playerWithName:PLAYER_ME];
-	me.meValue = YES;
-	me.favoriteValue = YES;
-	[self setProfileTabName];
+	/*WBPlayer *me = [WBPlayer me];
+	if (!me) {
+		me = [WBPlayer playerWithName:PLAYER_ME];
+		[me setPlayerToMe];
+		[WBCoreDataManager saveContext];
+	}
+	[self setProfileTabName];*/
 	
     return YES;
 }
 
-- (void)setProfileTabName {
-	NSString *name = [[WBPlayer me] firstName];
+- (void)setProfileTabPlayer {
+	WBPlayer *me = [WBPlayer me];
 	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
 	UINavigationController *profileTab = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
-	profileTab.tabBarItem.title = name;
+	((WBProfileTableViewController *)profileTab.topViewController).selectedPlayer = me;
 }
 
 - (void)createTestData {

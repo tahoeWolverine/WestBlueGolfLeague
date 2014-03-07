@@ -47,6 +47,15 @@
 	return [players lastObject];
 }
 
+- (void)setPlayerToMe {
+	self.meValue = YES;
+	self.favoriteValue = YES;
+}
+
+- (void)setPlayerToNotMe {
+	self.meValue = NO;
+}
+
 + (WBPlayer *)playerWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
 	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
