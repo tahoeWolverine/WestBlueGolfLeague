@@ -21,6 +21,7 @@
 - (NSString *)cellIdentifier;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptorsForFetch;
+- (NSPredicate *)fetchPredicate;
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object;
 

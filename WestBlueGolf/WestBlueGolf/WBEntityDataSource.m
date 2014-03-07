@@ -65,6 +65,10 @@
 	return nil;
 }
 
+- (NSPredicate *)fetchPredicate {
+	return nil;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -115,6 +119,7 @@
         // Edit the entity name as appropriate.
         NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[self managedObjectContext]];
         [fetchRequest setEntity:entity];
+		[fetchRequest setPredicate:[self fetchPredicate]];
         
         [fetchRequest setSortDescriptors:[self sortDescriptorsForFetch]];
         

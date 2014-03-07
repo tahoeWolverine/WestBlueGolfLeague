@@ -1,5 +1,6 @@
 #import "WBTeam.h"
 #import "WBCoreDataManager.h"
+#import "WBPlayer.h"
 
 @interface WBTeam ()
 
@@ -28,6 +29,10 @@
 
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
+
+- (BOOL)isMyTeam {
+	return [self.players containsObject:[WBPlayer me]];
 }
 
 @end

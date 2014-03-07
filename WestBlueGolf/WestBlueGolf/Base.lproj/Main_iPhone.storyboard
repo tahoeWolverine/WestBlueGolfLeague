@@ -4,6 +4,95 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
+        <!--Week Table View Controller - This Week-->
+        <scene sceneID="bf5-ka-Ffw">
+            <objects>
+                <tableViewController id="EIC-wK-4yO" customClass="WBWeekTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="39x-JE-zCa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MatchupListCell" rowHeight="70" id="Mbe-o6-7tB" customClass="WBMatchupResultCell">
+                                <rect key="frame" x="0.0" y="86" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mbe-o6-7tB" id="d9n-k0-ohU">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Earthmovers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hl0-Dd-3cH">
+                                            <rect key="frame" x="20" y="10" width="150" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bushwoods Finest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rp3-HG-0r4">
+                                            <rect key="frame" x="20" y="39" width="150" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="52 pts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0M-cj-aWw">
+                                            <rect key="frame" x="190" y="10" width="50" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="44 pts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Po8-Nr-8Qh">
+                                            <rect key="frame" x="190" y="39" width="50" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="182" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6e6-V8-4pu">
+                                            <rect key="frame" x="270" y="10" width="30" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="245" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zE4-RB-S4o">
+                                            <rect key="frame" x="270" y="39" width="30" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="team1NameLabel" destination="hl0-Dd-3cH" id="xuT-ui-eUY"/>
+                                    <outlet property="team1PointsLabel" destination="m0M-cj-aWw" id="pjp-cy-hmU"/>
+                                    <outlet property="team1ScoreLabel" destination="6e6-V8-4pu" id="vxs-b4-dmm"/>
+                                    <outlet property="team2NameLabel" destination="Rp3-HG-0r4" id="sx9-3i-HxY"/>
+                                    <outlet property="team2PointsLabel" destination="Po8-Nr-8Qh" id="Jkv-Gy-Yjj"/>
+                                    <outlet property="team2ScoreLabel" destination="zE4-RB-S4o" id="8gB-Tb-U8a"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="This Week" id="KQu-fz-uVv"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kgP-Rk-vcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1055" y="466"/>
+        </scene>
+        <!--Navigation Controller - This Week-->
+        <scene sceneID="raO-iH-pJO">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="geK-Cc-JJD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="This Week" image="UITabBarHistoryTemplate" id="fnl-yk-vXu"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j86-Hr-3bs">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="EIC-wK-4yO" kind="relationship" relationship="rootViewController" id="oqB-eY-XAV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sU1-lB-2E6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="632" y="466"/>
+        </scene>
         <!--Table View Controller - Leaderboards-->
         <scene sceneID="ndi-gm-j9q">
             <objects>
@@ -47,7 +136,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j84-hN-QA0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055" y="474"/>
+            <point key="canvasLocation" x="1055" y="1128"/>
         </scene>
         <!--Navigation Controller - Leaderboards-->
         <scene sceneID="A1q-fs-fJQ">
@@ -63,7 +152,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3u-pQ-s46" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="632" y="474"/>
+            <point key="canvasLocation" x="632" y="1128"/>
         </scene>
         <!--Info Table View Controller - Info-->
         <scene sceneID="xbM-jk-ivc">
@@ -161,7 +250,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fZ-0E-QXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055" y="1129"/>
+            <point key="canvasLocation" x="1055" y="1789"/>
         </scene>
         <!--Info Webview View Controller-->
         <scene sceneID="fdy-w4-wgh">
@@ -198,13 +287,13 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qOn-vC-VtP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="OkO-ga-UQS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1511" y="1129"/>
+            <point key="canvasLocation" x="1481" y="1789"/>
         </scene>
-        <!--Navigation Controller - Info-->
+        <!--Navigation Controller - More-->
         <scene sceneID="pSO-rk-AjR">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Ggh-be-FB2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Info" image="UITabBarMoreTemplate" id="iLS-sb-nJv"/>
+                    <tabBarItem key="tabBarItem" title="More" image="UITabBarMoreTemplate" id="iLS-sb-nJv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WT8-Jl-bij">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -214,7 +303,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRV-VP-pbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="632" y="1129"/>
+            <point key="canvasLocation" x="632" y="1789"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -229,6 +318,7 @@
                     <connections>
                         <segue destination="FUd-wH-aky" kind="relationship" relationship="viewControllers" id="Mab-dm-jDz"/>
                         <segue destination="8B3-a8-lxV" kind="relationship" relationship="viewControllers" id="7tX-n7-elr"/>
+                        <segue destination="geK-Cc-JJD" kind="relationship" relationship="viewControllers" id="4O6-qd-WAw"/>
                         <segue destination="q3P-ZD-NsO" kind="relationship" relationship="viewControllers" id="AWj-qk-d1a"/>
                         <segue destination="Ggh-be-FB2" kind="relationship" relationship="viewControllers" id="JW5-3p-aJZ"/>
                     </connections>
@@ -662,6 +752,7 @@
         <image name="Taco" width="210" height="210"/>
         <image name="UITabBarContactsTemplate" width="25" height="25"/>
         <image name="UITabBarFavoritesTemplate" width="27" height="26"/>
+        <image name="UITabBarHistoryTemplate" width="25" height="25"/>
         <image name="UITabBarMoreTemplate" width="23" height="4"/>
         <image name="UITabBarMostViewedTemplate" width="23" height="23"/>
         <image name="UITabBarMostViewedTemplate-Old" width="35" height="21"/>

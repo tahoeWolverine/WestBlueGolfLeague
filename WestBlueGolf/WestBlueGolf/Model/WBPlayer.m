@@ -22,7 +22,9 @@
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
 	
-	[currentTeam addPlayersObject:newPlayer];
+	if (currentTeam) {
+		[currentTeam addPlayersObject:newPlayer];
+	}
 	return newPlayer;
 }
 
@@ -56,9 +58,13 @@
 }
 
 - (NSString *)shortName {
-	NSString *firstName = [self.name componentsSeparatedByString:@" "][0];
+	NSString *firstName = [self firstName];
 	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
 	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
+}
+
+- (NSString *)firstName {
+	return [self.name componentsSeparatedByString:@" "][0];
 }
 
 - (NSString *)record {
@@ -150,7 +156,8 @@
 - (NSString *)averagePointsString {
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
-	return [fmt stringFromNumber:[NSNumber numberWithFloat:[self averagePointsInYear:[WBYear thisYear]]]];
+	NSNumber *avg = [NSNumber numberWithFloat:[self averagePointsInYear:[WBYear thisYear]]];
+	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
 }
 
 - (CGFloat)averageScoreInYear:(WBYear *)year {

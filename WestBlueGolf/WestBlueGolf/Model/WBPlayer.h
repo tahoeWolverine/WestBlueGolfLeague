@@ -20,6 +20,7 @@
 + (WBPlayer *)playerWithName:(NSString *)name;
 
 - (NSString *)shortName;
+- (NSString *)firstName;
 - (NSString *)currentHandicapString;
 
 - (NSArray *)recordForYear:(WBYear *)year;

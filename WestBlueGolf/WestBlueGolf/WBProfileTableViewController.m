@@ -81,8 +81,6 @@
 	[WBCoreDataManager saveContext];
 	
 	[self refreshFavoriteButton];
-	
-	//[[NSNotificationCenter defaultCenter] postNotificationName:WBFavoriteCreatedNotification object:nil];
 }
 
 - (void)refreshFavoriteButton {

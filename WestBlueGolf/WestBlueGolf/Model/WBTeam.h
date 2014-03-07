@@ -8,4 +8,6 @@
 
 + (WBTeam *)teamWithId:(NSInteger)teamId;
 
+- (BOOL)isMyTeam;
+
 @end

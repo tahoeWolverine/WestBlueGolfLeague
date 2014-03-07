@@ -17,7 +17,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="players" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="results" toMany="YES" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
-        <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="players" inverseEntity="WBTeam" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="players" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="yearData" toMany="YES" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="player" inverseEntity="WBPlayerYearData" syncable="YES"/>
     </entity>
     <entity name="WBPlayerYearData" representedClassName="WBPlayerYearData" syncable="YES">

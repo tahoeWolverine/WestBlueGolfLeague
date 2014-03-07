@@ -10,6 +10,8 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 
+#define PLAYER_ME @"Adam Ahrens"
+
 #define wbJsonKeyWeekIndex @"Week"
 #define wbJsonKeyWeekPar @"Par"
 #define wbJsonKeyWeekDate @"Date"
@@ -48,13 +50,30 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-	[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
+	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
+	[WBCoreDataManager sharedManager];
 
 	//[self createTestData];
 	
-	[self loadJsonData];
+	WBYear *year = [WBYear thisYear];
+	
+	if (!year) {
+		[self loadJsonData];
+	}
+	
+	WBPlayer *me = [WBPlayer playerWithName:PLAYER_ME];
+	me.meValue = YES;
+	me.favoriteValue = YES;
+	[self setProfileTabName];
 	
     return YES;
+}
+
+- (void)setProfileTabName {
+	NSString *name = [[WBPlayer me] firstName];
+	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+	UINavigationController *profileTab = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
+	profileTab.tabBarItem.title = name;
 }
 
 - (void)createTestData {
@@ -153,14 +172,12 @@
 		NSInteger currentHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue];
 		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
 		
-		// Rookie/Starting Handi are not yet implemented BOOL isRookie = [elt objectForKey:wbJsonKeyPlayerIsRookie];
-		WBPlayer *player = [WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
-		
-		if ([playerName isEqualToString:@"Michael Harlow"]) {
-			player.meValue = YES;
-			player.favoriteValue = YES;
-		}
+		//TODO: Rookie/Starting Handi are not yet implemented BOOL isRookie = [elt objectForKey:wbJsonKeyPlayerIsRookie];
+		[WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
 	}
+
+	// Create a player to catch all the no shows
+	[WBPlayer createPlayerWithName:@"xx No Show xx" currentHandicap:25 onTeam:nil];
 
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable"]];

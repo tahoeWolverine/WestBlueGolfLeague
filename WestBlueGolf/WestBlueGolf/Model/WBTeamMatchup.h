@@ -8,4 +8,7 @@
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week;
 
+- (NSString *)totalPointsStringForTeam:(WBTeam *)team;
+- (NSString *)totalScoreStringForTeam:(WBTeam *)team;
+
 @end
