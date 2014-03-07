@@ -9,6 +9,7 @@
 @interface WBEntityDataSource : NSObject <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (assign, nonatomic) BOOL isConnectedToTableView;
 
 @property (nonatomic, weak, readonly) UIViewController *viewController;
 

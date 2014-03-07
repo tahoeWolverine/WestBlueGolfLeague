@@ -8,7 +8,6 @@
 
 @interface WBEntityTableViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *playersTable;
-@property (strong, nonatomic) IBOutlet UITableView *teamsTable;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -15,8 +15,7 @@
 #import "WBTeamsDataSource.h"
 
 @interface WBEntityTableViewController ()
-
-@property (weak, nonatomic) UITableView *currentTable;
+@property (assign, nonatomic) BOOL isInPlayerMode;
 @property (strong, nonatomic) WBPlayersDataSource *playersDataSource;
 @property (strong, nonatomic) WBTeamsDataSource *teamsDataSource;
 
@@ -43,23 +42,53 @@
     
 	self.playersDataSource = [WBPlayersDataSource dataSourceWithViewController:self];
 	self.teamsDataSource = [WBTeamsDataSource dataSourceWithViewController:self];
+
+	// Run an initial switchTables to get into player mode
+	[self switchTables:NO];
+}
+
+- (void)switchTables:(BOOL)reload {
+	if (self.isInPlayerMode) {
 	
-	self.playersTable.dataSource = self.playersDataSource;
-	self.playersTable.delegate = self.playersDataSource;
-	self.teamsTable.dataSource = self.teamsDataSource;
-	self.teamsTable.delegate = self.teamsDataSource;
+		self.tableView.dataSource = self.teamsDataSource;
+		self.tableView.delegate = self.teamsDataSource;
+		self.teamsDataSource.isConnectedToTableView = YES;
+		self.playersDataSource.isConnectedToTableView = NO;
 	
-	self.currentTable = self.playersTable;
+		if ([[self.teamsDataSource.fetchedResultsController fetchedObjects] count] == 0) {
+			[self.teamsDataSource beginFetch];
+		}
+		
+		self.isInPlayerMode = NO;
+	} else {
+		self.tableView.dataSource = self.playersDataSource;
+		self.tableView.delegate = self.playersDataSource;
+		self.teamsDataSource.isConnectedToTableView = NO;
+		self.playersDataSource.isConnectedToTableView = YES;
+
+		if ([[self.playersDataSource.fetchedResultsController fetchedObjects] count] == 0) {
+			[self.playersDataSource beginFetch];
+		}
+		
+		self.isInPlayerMode = YES;
+	}
 	
-    [self.playersDataSource beginFetch];
-    [self.teamsDataSource beginFetch];
-	
-	self.view = self.playersTable;
+	if (reload) {
+		[self.tableView reloadData];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)segmentedControlChanged:(id)sender {
+	UISegmentedControl *control = (UISegmentedControl *)sender;
+	if ((control.selectedSegmentIndex == 0 && !self.isInPlayerMode) ||
+		(control.selectedSegmentIndex == 1 && self.isInPlayerMode)) {
+		[self switchTables:YES];
+	}
 }
 
 #pragma mark - Navigation
@@ -69,7 +98,9 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 	WBEntityDetailViewController *vc = [segue destinationViewController];
-	vc.selectedEntity = [[(WBEntityDataSource *)self.currentTable.dataSource fetchedResultsController] objectAtIndexPath:self.currentTable.indexPathForSelectedRow];
+	vc.selectedEntity = [[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+	
+	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
 @end

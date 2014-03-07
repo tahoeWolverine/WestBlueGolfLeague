@@ -173,7 +173,10 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (UITableView *)tableView {
-	return [(id)self.viewController tableView];
+	if (self.isConnectedToTableView) {
+		return [(id)self.viewController tableView];
+	}
+	return nil;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
@@ -188,7 +191,7 @@
     
     UITableView *tableView = [self tableView];
     
-    switch(type) {
+    switch (type) {
             
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
@@ -223,15 +226,17 @@
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type {
     
-    switch(type) {
+	UITableView *tableView = [self tableView];
+	
+    switch (type) {
             
         case NSFetchedResultsChangeInsert:
-            [[self tableView] insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
                           withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [[self tableView] deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
                           withRowAnimation:UITableViewRowAnimationFade];
             break;
     }

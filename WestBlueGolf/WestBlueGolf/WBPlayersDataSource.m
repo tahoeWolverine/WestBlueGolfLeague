@@ -54,9 +54,9 @@ typedef enum {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	if (section == WBPlayerSectionFavorites) {
+	if ([self.fetchedResultsController.sections count] && section == WBPlayerSectionFavorites) {
 		return @"Favorite Players";
-	} else if (section == WBPlayerSectionPlayers) {
+	} else {
 		return @"All Players";
 	}
 	
