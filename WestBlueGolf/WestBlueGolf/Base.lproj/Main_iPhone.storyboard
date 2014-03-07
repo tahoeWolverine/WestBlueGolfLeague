@@ -750,6 +750,8 @@
     </scenes>
     <resources>
         <image name="Taco" width="210" height="210"/>
+        <image name="Taco" width="210" height="210"/>
+        <image name="Taco" width="210" height="210"/>
         <image name="UITabBarContactsTemplate" width="25" height="25"/>
         <image name="UITabBarFavoritesTemplate" width="27" height="26"/>
         <image name="UITabBarHistoryTemplate" width="25" height="25"/>

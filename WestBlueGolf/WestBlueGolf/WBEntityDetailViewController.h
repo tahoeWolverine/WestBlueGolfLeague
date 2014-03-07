@@ -13,7 +13,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @property (weak, nonatomic) NSManagedObject *selectedEntity;
-@property (weak, nonatomic) IBOutlet UILabel *selectedEntityNameLabel;
 
 - (NSString *)cellIdentifier;
 - (NSString *)entityName;
@@ -21,5 +20,7 @@
 - (NSString *)selectedEntityName;
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object;
+
+- (void)beginFetch;
 
 @end

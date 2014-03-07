@@ -12,7 +12,7 @@
 
 @interface WBProfileTableViewController : WBEntityDetailViewController
 
-@property (weak, nonatomic) WBPlayer *selectedPlayer;
+@property (strong, nonatomic) WBPlayer *selectedPlayer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
 
 - (void)markViewControllerMe;
