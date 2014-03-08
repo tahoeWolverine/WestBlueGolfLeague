@@ -1,6 +1,19 @@
 #import "_WBPlayer.h"
 #import "WBYear.h"
 
+// Leaderboard keys
+#define kLeaderboardPlayerAverageNet @"averageNet"
+#define kLeaderboardPlayerAverageOpponentScore @"averageOpponentScore"
+#define kLeaderboardPlayerAveragePoints @"averagePoints"
+#define kLeaderboardPlayerAverageScore @"averageScore"
+#define kLeaderboardPlayerMaxPoints @"maxPoints"
+#define kLeaderboardPlayerMinNet @"minNet"
+#define kLeaderboardPlayerMinScore @"minScore"
+#define kLeaderboardPlayerTotalImproved @"totalImproved"
+#define kLeaderboardPlayerTotalPoints @"totalPoints"
+#define kLeaderboardPlayerTotalWins @"totalWins"
+#define kLeaderboardPlayerWinLossRatio @"winLossRatio"
+
 @interface WBPlayer : _WBPlayer {}
 
 // Function to be used in each variant of player for creation (does not save context, so as to not trip value requirements)

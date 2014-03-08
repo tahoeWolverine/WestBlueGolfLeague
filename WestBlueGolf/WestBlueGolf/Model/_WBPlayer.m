@@ -11,6 +11,7 @@ const struct WBPlayerAttributes WBPlayerAttributes = {
 };
 
 const struct WBPlayerRelationships WBPlayerRelationships = {
+	.boardData = @"boardData",
 	.matches = @"matches",
 	.results = @"results",
 	.team = @"team",
@@ -152,6 +153,10 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 
 
+
+@dynamic boardData;
+
+	
 
 @dynamic matches;
 

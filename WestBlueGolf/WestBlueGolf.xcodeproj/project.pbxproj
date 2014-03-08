@@ -12,6 +12,22 @@
 		480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */; };
 		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
+		48B54DF418CBD59900F97F8C /* _WBBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DE918CBD59800F97F8C /* _WBBoardData.m */; };
+		48B54DF518CBD59900F97F8C /* _WBLeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DEB18CBD59800F97F8C /* _WBLeaderBoard.m */; };
+		48B54DF618CBD59900F97F8C /* _WBPlayerBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DED18CBD59800F97F8C /* _WBPlayerBoard.m */; };
+		48B54DF718CBD59900F97F8C /* _WBPlayerBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DEF18CBD59800F97F8C /* _WBPlayerBoardData.m */; };
+		48B54DF818CBD59900F97F8C /* _WBTeamBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DF118CBD59800F97F8C /* _WBTeamBoard.m */; };
+		48B54DF918CBD59900F97F8C /* _WBTeamBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DF318CBD59800F97F8C /* _WBTeamBoardData.m */; };
+		48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DFB18CBD5B600F97F8C /* WBBoardData.m */; };
+		48B54E0718CBD5B600F97F8C /* WBLeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DFD18CBD5B600F97F8C /* WBLeaderBoard.m */; };
+		48B54E0818CBD5B600F97F8C /* WBPlayerBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DFF18CBD5B600F97F8C /* WBPlayerBoard.m */; };
+		48B54E0918CBD5B600F97F8C /* WBPlayerBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E0118CBD5B600F97F8C /* WBPlayerBoardData.m */; };
+		48B54E0A18CBD5B600F97F8C /* WBTeamBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E0318CBD5B600F97F8C /* WBTeamBoard.m */; };
+		48B54E0B18CBD5B600F97F8C /* WBTeamBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E0518CBD5B600F97F8C /* WBTeamBoardData.m */; };
+		48B54E0E18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E0D18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m */; };
+		48B54E1118CBD75700F97F8C /* WBTeamBoardListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */; };
+		48B54E1418CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1318CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m */; };
+		48B54E1718CBDA8800F97F8C /* WBTeamBoardDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
 		A50E163018972418008933A5 /* _WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160C18972418008933A5 /* _WBPlayer.m */; };
@@ -91,6 +107,38 @@
 		48B221B318B03D8600F2DD99 /* WBModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBModels.h; sourceTree = "<group>"; };
 		48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBResultTableViewCell.h; sourceTree = "<group>"; };
 		48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBResultTableViewCell.m; sourceTree = "<group>"; };
+		48B54DE818CBD59800F97F8C /* _WBBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBBoardData.h; path = Model/_WBBoardData.h; sourceTree = "<group>"; };
+		48B54DE918CBD59800F97F8C /* _WBBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBBoardData.m; path = Model/_WBBoardData.m; sourceTree = "<group>"; };
+		48B54DEA18CBD59800F97F8C /* _WBLeaderBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBLeaderBoard.h; path = Model/_WBLeaderBoard.h; sourceTree = "<group>"; };
+		48B54DEB18CBD59800F97F8C /* _WBLeaderBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBLeaderBoard.m; path = Model/_WBLeaderBoard.m; sourceTree = "<group>"; };
+		48B54DEC18CBD59800F97F8C /* _WBPlayerBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBPlayerBoard.h; path = Model/_WBPlayerBoard.h; sourceTree = "<group>"; };
+		48B54DED18CBD59800F97F8C /* _WBPlayerBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBPlayerBoard.m; path = Model/_WBPlayerBoard.m; sourceTree = "<group>"; };
+		48B54DEE18CBD59800F97F8C /* _WBPlayerBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBPlayerBoardData.h; path = Model/_WBPlayerBoardData.h; sourceTree = "<group>"; };
+		48B54DEF18CBD59800F97F8C /* _WBPlayerBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBPlayerBoardData.m; path = Model/_WBPlayerBoardData.m; sourceTree = "<group>"; };
+		48B54DF018CBD59800F97F8C /* _WBTeamBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBTeamBoard.h; path = Model/_WBTeamBoard.h; sourceTree = "<group>"; };
+		48B54DF118CBD59800F97F8C /* _WBTeamBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBTeamBoard.m; path = Model/_WBTeamBoard.m; sourceTree = "<group>"; };
+		48B54DF218CBD59800F97F8C /* _WBTeamBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBTeamBoardData.h; path = Model/_WBTeamBoardData.h; sourceTree = "<group>"; };
+		48B54DF318CBD59800F97F8C /* _WBTeamBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBTeamBoardData.m; path = Model/_WBTeamBoardData.m; sourceTree = "<group>"; };
+		48B54DFA18CBD5B600F97F8C /* WBBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBBoardData.h; path = Model/WBBoardData.h; sourceTree = "<group>"; };
+		48B54DFB18CBD5B600F97F8C /* WBBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBBoardData.m; path = Model/WBBoardData.m; sourceTree = "<group>"; };
+		48B54DFC18CBD5B600F97F8C /* WBLeaderBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBLeaderBoard.h; path = Model/WBLeaderBoard.h; sourceTree = "<group>"; };
+		48B54DFD18CBD5B600F97F8C /* WBLeaderBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBLeaderBoard.m; path = Model/WBLeaderBoard.m; sourceTree = "<group>"; };
+		48B54DFE18CBD5B600F97F8C /* WBPlayerBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBPlayerBoard.h; path = Model/WBPlayerBoard.h; sourceTree = "<group>"; };
+		48B54DFF18CBD5B600F97F8C /* WBPlayerBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPlayerBoard.m; path = Model/WBPlayerBoard.m; sourceTree = "<group>"; };
+		48B54E0018CBD5B600F97F8C /* WBPlayerBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBPlayerBoardData.h; path = Model/WBPlayerBoardData.h; sourceTree = "<group>"; };
+		48B54E0118CBD5B600F97F8C /* WBPlayerBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPlayerBoardData.m; path = Model/WBPlayerBoardData.m; sourceTree = "<group>"; };
+		48B54E0218CBD5B600F97F8C /* WBTeamBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBTeamBoard.h; path = Model/WBTeamBoard.h; sourceTree = "<group>"; };
+		48B54E0318CBD5B600F97F8C /* WBTeamBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBTeamBoard.m; path = Model/WBTeamBoard.m; sourceTree = "<group>"; };
+		48B54E0418CBD5B600F97F8C /* WBTeamBoardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBTeamBoardData.h; path = Model/WBTeamBoardData.h; sourceTree = "<group>"; };
+		48B54E0518CBD5B600F97F8C /* WBTeamBoardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBTeamBoardData.m; path = Model/WBTeamBoardData.m; sourceTree = "<group>"; };
+		48B54E0C18CBD69900F97F8C /* WBLeaderBoardListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardListTableViewController.h; sourceTree = "<group>"; };
+		48B54E0D18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardListTableViewController.m; sourceTree = "<group>"; };
+		48B54E0F18CBD75700F97F8C /* WBTeamBoardListDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamBoardListDataSource.h; sourceTree = "<group>"; };
+		48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamBoardListDataSource.m; sourceTree = "<group>"; };
+		48B54E1218CBD9CD00F97F8C /* WBLeaderBoardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardTableViewController.h; sourceTree = "<group>"; };
+		48B54E1318CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardTableViewController.m; sourceTree = "<group>"; };
+		48B54E1518CBDA8800F97F8C /* WBTeamBoardDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamBoardDataSource.h; sourceTree = "<group>"; };
+		48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamBoardDataSource.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
 		A50E160818972418008933A5 /* _WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCourse.m; path = Model/_WBCourse.m; sourceTree = "<group>"; };
 		A50E160918972418008933A5 /* _WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBMatch.h; path = Model/_WBMatch.h; sourceTree = "<group>"; };
@@ -211,21 +259,33 @@
 			isa = PBXGroup;
 			children = (
 				A50E1641189726F4008933A5 /* Private */,
-				48B221B318B03D8600F2DD99 /* WBModels.h */,
+				48B54DFA18CBD5B600F97F8C /* WBBoardData.h */,
+				48B54DFB18CBD5B600F97F8C /* WBBoardData.m */,
 				A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */,
 				A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */,
 				A50E161B18972418008933A5 /* WBCourse.h */,
 				A50E161C18972418008933A5 /* WBCourse.m */,
+				48B54DFC18CBD5B600F97F8C /* WBLeaderBoard.h */,
+				48B54DFD18CBD5B600F97F8C /* WBLeaderBoard.m */,
 				A50E161D18972418008933A5 /* WBMatch.h */,
 				A50E161E18972418008933A5 /* WBMatch.m */,
+				48B221B318B03D8600F2DD99 /* WBModels.h */,
 				A50E161F18972418008933A5 /* WBPlayer.h */,
 				A50E162018972418008933A5 /* WBPlayer.m */,
+				48B54DFE18CBD5B600F97F8C /* WBPlayerBoard.h */,
+				48B54DFF18CBD5B600F97F8C /* WBPlayerBoard.m */,
+				48B54E0018CBD5B600F97F8C /* WBPlayerBoardData.h */,
+				48B54E0118CBD5B600F97F8C /* WBPlayerBoardData.m */,
 				A50E162118972418008933A5 /* WBPlayerYearData.h */,
 				A50E162218972418008933A5 /* WBPlayerYearData.m */,
 				A50E162318972418008933A5 /* WBResult.h */,
 				A50E162418972418008933A5 /* WBResult.m */,
 				A50E162518972418008933A5 /* WBTeam.h */,
 				A50E162618972418008933A5 /* WBTeam.m */,
+				48B54E0218CBD5B600F97F8C /* WBTeamBoard.h */,
+				48B54E0318CBD5B600F97F8C /* WBTeamBoard.m */,
+				48B54E0418CBD5B600F97F8C /* WBTeamBoardData.h */,
+				48B54E0518CBD5B600F97F8C /* WBTeamBoardData.m */,
 				A50E162718972418008933A5 /* WBTeamMatchup.h */,
 				A50E162818972418008933A5 /* WBTeamMatchup.m */,
 				A50E162918972418008933A5 /* WBWeek.h */,
@@ -239,18 +299,30 @@
 		A50E1641189726F4008933A5 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				48B54DE818CBD59800F97F8C /* _WBBoardData.h */,
+				48B54DE918CBD59800F97F8C /* _WBBoardData.m */,
 				A50E160718972418008933A5 /* _WBCourse.h */,
 				A50E160818972418008933A5 /* _WBCourse.m */,
+				48B54DEA18CBD59800F97F8C /* _WBLeaderBoard.h */,
+				48B54DEB18CBD59800F97F8C /* _WBLeaderBoard.m */,
 				A50E160918972418008933A5 /* _WBMatch.h */,
 				A50E160A18972418008933A5 /* _WBMatch.m */,
 				A50E160B18972418008933A5 /* _WBPlayer.h */,
 				A50E160C18972418008933A5 /* _WBPlayer.m */,
+				48B54DEC18CBD59800F97F8C /* _WBPlayerBoard.h */,
+				48B54DED18CBD59800F97F8C /* _WBPlayerBoard.m */,
+				48B54DEE18CBD59800F97F8C /* _WBPlayerBoardData.h */,
+				48B54DEF18CBD59800F97F8C /* _WBPlayerBoardData.m */,
 				A50E160D18972418008933A5 /* _WBPlayerYearData.h */,
 				A50E160E18972418008933A5 /* _WBPlayerYearData.m */,
 				A50E160F18972418008933A5 /* _WBResult.h */,
 				A50E161018972418008933A5 /* _WBResult.m */,
 				A50E161118972418008933A5 /* _WBTeam.h */,
 				A50E161218972418008933A5 /* _WBTeam.m */,
+				48B54DF018CBD59800F97F8C /* _WBTeamBoard.h */,
+				48B54DF118CBD59800F97F8C /* _WBTeamBoard.m */,
+				48B54DF218CBD59800F97F8C /* _WBTeamBoardData.h */,
+				48B54DF318CBD59800F97F8C /* _WBTeamBoardData.m */,
 				A50E161318972418008933A5 /* _WBTeamMatchup.h */,
 				A50E161418972418008933A5 /* _WBTeamMatchup.m */,
 				A50E161518972418008933A5 /* _WBWeek.h */,
@@ -442,6 +514,14 @@
 		A5F4772418907EE500AB3529 /* Leaderboards */ = {
 			isa = PBXGroup;
 			children = (
+				48B54E1518CBDA8800F97F8C /* WBTeamBoardDataSource.h */,
+				48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */,
+				48B54E1218CBD9CD00F97F8C /* WBLeaderBoardTableViewController.h */,
+				48B54E1318CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m */,
+				48B54E0F18CBD75700F97F8C /* WBTeamBoardListDataSource.h */,
+				48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */,
+				48B54E0C18CBD69900F97F8C /* WBLeaderBoardListTableViewController.h */,
+				48B54E0D18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m */,
 			);
 			name = Leaderboards;
 			sourceTree = "<group>";
@@ -572,6 +652,7 @@
 				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
 				A5F345A818CA1ED400EBF40A /* WBMatchupResultDataSource.m in Sources */,
+				48B54E0718CBD5B600F97F8C /* WBLeaderBoard.m in Sources */,
 				A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */,
 				480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */,
 				A50E162F18972418008933A5 /* _WBMatch.m in Sources */,
@@ -582,23 +663,38 @@
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
 				A50E163218972418008933A5 /* _WBResult.m in Sources */,
+				48B54DF618CBD59900F97F8C /* _WBPlayerBoard.m in Sources */,
 				A5F3459718C928DC00EBF40A /* WBEntityDataSource.m in Sources */,
 				A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */,
 				A5F345A218CA1C4500EBF40A /* WBMatchupResultCell.m in Sources */,
+				48B54E1718CBDA8800F97F8C /* WBTeamBoardDataSource.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
+				48B54E0818CBD5B600F97F8C /* WBPlayerBoard.m in Sources */,
 				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
+				48B54E0918CBD5B600F97F8C /* WBPlayerBoardData.m in Sources */,
 				A50E163C18972418008933A5 /* WBResult.m in Sources */,
 				A50E163A18972418008933A5 /* WBPlayer.m in Sources */,
+				48B54DF918CBD59900F97F8C /* _WBTeamBoardData.m in Sources */,
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
+				48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */,
+				48B54E0A18CBD5B600F97F8C /* WBTeamBoard.m in Sources */,
+				48B54E1118CBD75700F97F8C /* WBTeamBoardListDataSource.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
+				48B54DF818CBD59900F97F8C /* _WBTeamBoard.m in Sources */,
 				A5F345AB18CA651F00EBF40A /* WBMeViewController.m in Sources */,
 				A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */,
+				48B54DF718CBD59900F97F8C /* _WBPlayerBoardData.m in Sources */,
+				48B54E1418CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m in Sources */,
 				A5F3459E18C92E8600EBF40A /* WBTeamsDataSource.m in Sources */,
+				48B54DF418CBD59900F97F8C /* _WBBoardData.m in Sources */,
 				A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */,
+				48B54E0E18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m in Sources */,
 				48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */,
+				48B54E0B18CBD5B600F97F8C /* WBTeamBoardData.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F3459B18C92E1C00EBF40A /* WBPlayersDataSource.m in Sources */,
+				48B54DF518CBD59900F97F8C /* _WBLeaderBoard.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
 				480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */,
@@ -743,10 +839,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
 				PRODUCT_NAME = WestBlueGolf;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -757,10 +855,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
 				PRODUCT_NAME = WestBlueGolf;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

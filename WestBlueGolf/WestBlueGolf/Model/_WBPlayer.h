@@ -12,6 +12,7 @@ extern const struct WBPlayerAttributes {
 } WBPlayerAttributes;
 
 extern const struct WBPlayerRelationships {
+	__unsafe_unretained NSString *boardData;
 	__unsafe_unretained NSString *matches;
 	__unsafe_unretained NSString *results;
 	__unsafe_unretained NSString *team;
@@ -21,6 +22,7 @@ extern const struct WBPlayerRelationships {
 extern const struct WBPlayerFetchedProperties {
 } WBPlayerFetchedProperties;
 
+@class WBPlayerBoardData;
 @class WBMatch;
 @class WBResult;
 @class WBTeam;
@@ -92,6 +94,13 @@ extern const struct WBPlayerFetchedProperties {
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
+
+
+
+
+@property (nonatomic, strong) WBPlayerBoardData *boardData;
+
+//- (BOOL)validateBoardData:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -180,6 +189,11 @@ extern const struct WBPlayerFetchedProperties {
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
+
+- (WBPlayerBoardData*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(WBPlayerBoardData*)value;
 
 
 

@@ -10,6 +10,7 @@ extern const struct WBTeamAttributes {
 } WBTeamAttributes;
 
 extern const struct WBTeamRelationships {
+	__unsafe_unretained NSString *boardData;
 	__unsafe_unretained NSString *championYears;
 	__unsafe_unretained NSString *matchups;
 	__unsafe_unretained NSString *players;
@@ -19,6 +20,7 @@ extern const struct WBTeamRelationships {
 extern const struct WBTeamFetchedProperties {
 } WBTeamFetchedProperties;
 
+@class WBTeamBoardData;
 @class WBYear;
 @class WBTeamMatchup;
 @class WBPlayer;
@@ -64,6 +66,13 @@ extern const struct WBTeamFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *boardData;
+
+- (NSMutableSet*)boardDataSet;
+
+
+
+
 @property (nonatomic, strong) NSSet *championYears;
 
 - (NSMutableSet*)championYearsSet;
@@ -96,6 +105,11 @@ extern const struct WBTeamFetchedProperties {
 @end
 
 @interface _WBTeam (CoreDataGeneratedAccessors)
+
+- (void)addBoardData:(NSSet*)value_;
+- (void)removeBoardData:(NSSet*)value_;
+- (void)addBoardDataObject:(WBTeamBoardData*)value_;
+- (void)removeBoardDataObject:(WBTeamBoardData*)value_;
 
 - (void)addChampionYears:(NSSet*)value_;
 - (void)removeChampionYears:(NSSet*)value_;
@@ -135,6 +149,11 @@ extern const struct WBTeamFetchedProperties {
 - (void)setPrimitiveTeamIdValue:(int16_t)value_;
 
 
+
+
+
+- (NSMutableSet*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(NSMutableSet*)value;
 
 
 
