@@ -17,6 +17,9 @@
 - (void)setPlayerToMe;
 - (void)setPlayerToNotMe;
 
++ (WBPlayer *)noShowPlayer;
++ (void)createNoShowPlayer;
+
 - (void)deletePlayer;
 
 + (WBPlayer *)playerWithName:(NSString *)name;
@@ -39,5 +42,8 @@
 
 - (CGFloat)averageScoreInYear:(WBYear *)year;
 - (NSString *)averageScoreString;
+
+- (NSInteger)improvedInYear:(WBYear *)year;
+- (NSString *)improvedString;
 
 @end

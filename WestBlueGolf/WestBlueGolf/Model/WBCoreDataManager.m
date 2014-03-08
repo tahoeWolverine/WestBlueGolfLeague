@@ -38,7 +38,6 @@
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-	
 	NSString *modelPath = [[NSBundle mainBundle] pathForResource:DOMAIN_NAME ofType:MODEL_FILE_EXTENSION];
 	NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:modelPath]];
 	NSPersistentStoreCoordinator *storeCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];

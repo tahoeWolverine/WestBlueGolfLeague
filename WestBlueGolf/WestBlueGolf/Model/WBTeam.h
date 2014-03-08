@@ -10,4 +10,10 @@
 
 - (BOOL)isMyTeam;
 
+- (NSString *)placeString;
+- (NSString *)averagePointsString;
+- (NSString *)record;
+- (NSString *)individualRecord;
+- (NSString *)improvedString;
+
 @end

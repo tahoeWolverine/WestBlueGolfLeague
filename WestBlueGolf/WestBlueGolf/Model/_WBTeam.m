@@ -11,8 +11,8 @@ const struct WBTeamAttributes WBTeamAttributes = {
 const struct WBTeamRelationships WBTeamRelationships = {
 	.championYears = @"championYears",
 	.matchups = @"matchups",
-	.nonTeamResults = @"nonTeamResults",
 	.players = @"players",
+	.results = @"results",
 };
 
 const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
@@ -115,19 +115,6 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 }
 	
 
-@dynamic nonTeamResults;
-
-	
-- (NSMutableSet*)nonTeamResultsSet {
-	[self willAccessValueForKey:@"nonTeamResults"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"nonTeamResults"];
-  
-	[self didAccessValueForKey:@"nonTeamResults"];
-	return result;
-}
-	
-
 @dynamic players;
 
 	
@@ -137,6 +124,19 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"players"];
   
 	[self didAccessValueForKey:@"players"];
+	return result;
+}
+	
+
+@dynamic results;
+
+	
+- (NSMutableSet*)resultsSet {
+	[self willAccessValueForKey:@"results"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"results"];
+  
+	[self didAccessValueForKey:@"results"];
 	return result;
 }
 	

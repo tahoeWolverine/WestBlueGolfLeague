@@ -19,19 +19,18 @@
 
 - (void)configureCellForMatchup:(WBTeamMatchup *)matchup {
 	//DLog(@"%ld", (long)matchup.week.seasonIndexValue);
+
+	NSArray *displayStrings = [matchup displayStrings];
 	
-	NSArray *teams = [matchup.teams allObjects];
-	WBTeam *team1 = teams[0];
-	WBTeam *team2 = teams[1];
+	self.team1NameLabel.text = displayStrings[0];
+	self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+	self.team2NameLabel.text = displayStrings[3];
 	
-	self.team1NameLabel.text = [NSString stringWithFormat:@"%@%@", [team1 isMyTeam] ? @"*" : @"", team1.name];
-	self.team2NameLabel.text = [NSString stringWithFormat:@"%@%@", [team2 isMyTeam] ? @"*" : @"", team2.name];
+	self.team1PointsLabel.text = displayStrings[1];
+	self.team2PointsLabel.text = displayStrings[4];
 	
-	self.team1PointsLabel.text = [matchup totalPointsStringForTeam:team1];
-	self.team2PointsLabel.text = [matchup totalPointsStringForTeam:team2];
-	
-	self.team1ScoreLabel.text = [matchup totalScoreStringForTeam:team1];
-	self.team2ScoreLabel.text = [matchup totalScoreStringForTeam:team2];
+	self.team1ScoreLabel.text = displayStrings[2];
+	self.team2ScoreLabel.text = displayStrings[5];
 }
 
 @end

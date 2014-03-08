@@ -10,6 +10,7 @@ extern const struct WBYearAttributes {
 
 extern const struct WBYearRelationships {
 	__unsafe_unretained NSString *champion;
+	__unsafe_unretained NSString *playerYearData;
 	__unsafe_unretained NSString *weeks;
 } WBYearRelationships;
 
@@ -17,6 +18,7 @@ extern const struct WBYearFetchedProperties {
 } WBYearFetchedProperties;
 
 @class WBTeam;
+@class WBPlayerYearData;
 @class WBWeek;
 
 
@@ -55,6 +57,13 @@ extern const struct WBYearFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *playerYearData;
+
+- (NSMutableSet*)playerYearDataSet;
+
+
+
+
 @property (nonatomic, strong) NSSet *weeks;
 
 - (NSMutableSet*)weeksSet;
@@ -66,6 +75,11 @@ extern const struct WBYearFetchedProperties {
 @end
 
 @interface _WBYear (CoreDataGeneratedAccessors)
+
+- (void)addPlayerYearData:(NSSet*)value_;
+- (void)removePlayerYearData:(NSSet*)value_;
+- (void)addPlayerYearDataObject:(WBPlayerYearData*)value_;
+- (void)removePlayerYearDataObject:(WBPlayerYearData*)value_;
 
 - (void)addWeeks:(NSSet*)value_;
 - (void)removeWeeks:(NSSet*)value_;
@@ -89,6 +103,11 @@ extern const struct WBYearFetchedProperties {
 
 - (WBTeam*)primitiveChampion;
 - (void)setPrimitiveChampion:(WBTeam*)value;
+
+
+
+- (NSMutableSet*)primitivePlayerYearData;
+- (void)setPrimitivePlayerYearData:(NSMutableSet*)value;
 
 
 

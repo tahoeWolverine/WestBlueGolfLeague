@@ -39,34 +39,32 @@
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
-- (NSArray *)otherPlayerResultsForTeam:(WBTeam *)team {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[WBResult entityName]];
-	[request setPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week = %@ && otherTeam = %@", self.week, team]];
-	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"points" ascending:YES]];
+- (NSArray *)displayStrings {
+	// Determine winner/loser, tie is unimportant
+	WBTeam *team1 = self.teams.allObjects[0];
+	WBTeam *team2 = self.teams.allObjects[1];
+	NSInteger team1Points = [self totalPointsForTeam:team1];
+	NSInteger team2Points = [self totalPointsForTeam:team2];
+	WBTeam *winner = (team1Points > team2Points) ? team1 : team2;
+	WBTeam *loser = team1 == winner ? team2 : team1;
 	
-	NSError *error = nil;
-	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
+	NSString *winnerName = [NSString stringWithFormat:@"%@%@", [winner isMyTeam] ? @"*" : @"", winner.name];
+	NSString *winnerPoints = [NSString stringWithFormat:@"%ld pts", (long)(team1 == winner ? team1Points : team2Points)];
+	NSString *winnerScore = [self totalScoreStringForTeam:winner];
+	NSString *loserName = [NSString stringWithFormat:@"%@%@", [loser isMyTeam] ? @"*" : @"", loser.name];
+	NSString *loserPoints = [NSString stringWithFormat:@"%ld pts", (long)(team1 == winner ? team2Points : team1Points)];
+	NSString *loserScore = [self totalScoreStringForTeam:loser];
+	return @[winnerName, winnerPoints, winnerScore, loserName, loserPoints, loserScore];
 }
 
 - (NSInteger)totalPointsForTeam:(WBTeam *)team {
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.player.team == team) {
+			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
 				total += result.pointsValue;
 			}
 		}
-	}
-	
-	// People playing on other teams
-	NSArray *results = [self otherPlayerResultsForTeam:team];
-	
-	for (WBResult *result in results) {
-		total += result.pointsValue;
 	}
 	
 	return total;
@@ -80,17 +78,10 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.player.team == team) {
+			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
 				total += result.scoreValue;
 			}
 		}
-	}
-	
-	// People playing on other teams
-	NSArray *results = [self otherPlayerResultsForTeam:team];
-	
-	for (WBResult *result in results) {
-		total += result.scoreValue;
 	}
 
 	return total;

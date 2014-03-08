@@ -169,19 +169,22 @@
 	
 	// player table
 	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable"]];
-	
+	WBPlayer *player = nil;
 	for (NSDictionary *elt in playerArray) {
 		NSString *playerName = [elt objectForKey:wbJsonKeyPlayerName];
 		NSInteger teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
-		NSInteger currentHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue];
+		NSInteger startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
+		BOOL isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
 		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
 		
-		//TODO: Rookie/Starting Handi are not yet implemented BOOL isRookie = [elt objectForKey:wbJsonKeyPlayerIsRookie];
-		[WBPlayer createPlayerWithName:playerName currentHandicap:currentHandicap onTeam:playerTeam];
+		//TODO: Current/Finishing Handi are not yet implemented
+		player = [WBPlayer createPlayerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
+		
+		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie];
 	}
 
 	// Create a player to catch all the no shows
-	[WBPlayer createPlayerWithName:@"xx No Show xx" currentHandicap:25 onTeam:nil];
+	[WBPlayer createNoShowPlayer];
 
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable"]];
@@ -227,26 +230,27 @@
 		}
 
 		WBTeam *team1 = [WBTeam teamWithId:team1Id];
+		WBTeam *team2 = [WBTeam teamWithId:team2Id];
 		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
 		
 		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
 		//TODO: HANDICAP CODE to update handicap as a result comes in
 		if (player1) {
-			WBTeam *otherTeam = nil;
+			/*WBTeam *otherTeam = nil;
 			if (player1.team.teamIdValue != team1Id) {
 				DLog(@"player 1 not on team 1");
 				otherTeam = team1;
-			}
+			}*/
 			
-			[WBResult createResultForMatch:match forPlayer:player1 otherTeam:otherTeam withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
+			[WBResult createResultForMatch:match forPlayer:player1 team:team1 withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
 		}
 		if (player2) {
-			WBTeam *otherTeam = nil;
+			/*WBTeam *otherTeam = nil;
 			if (player2.team.teamIdValue != team2Id) {
 				DLog(@"player 2 not on team 2");
 				otherTeam = [WBTeam teamWithId:team2Id];
-			}
-			[WBResult createResultForMatch:match forPlayer:player2 otherTeam:otherTeam withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
+			}*/
+			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
 		}
 	}
 	

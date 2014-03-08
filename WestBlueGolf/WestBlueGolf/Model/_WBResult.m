@@ -11,8 +11,8 @@ const struct WBResultAttributes WBResultAttributes = {
 
 const struct WBResultRelationships WBResultRelationships = {
 	.match = @"match",
-	.otherTeam = @"otherTeam",
 	.player = @"player",
+	.team = @"team",
 };
 
 const struct WBResultFetchedProperties WBResultFetchedProperties = {
@@ -148,11 +148,11 @@ const struct WBResultFetchedProperties WBResultFetchedProperties = {
 
 	
 
-@dynamic otherTeam;
+@dynamic player;
 
 	
 
-@dynamic player;
+@dynamic team;
 
 	
 

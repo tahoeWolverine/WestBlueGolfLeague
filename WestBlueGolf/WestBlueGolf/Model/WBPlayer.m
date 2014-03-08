@@ -2,10 +2,14 @@
 #import "WBCoreDataManager.h"
 #import "WBCourse.h"
 #import "WBMatch.h"
+#import "WBPlayerYearData.h"
 #import "WBResult.h"
 #import "WBTeam.h"
 #import "WBTeamMatchup.h"
 #import "WBWeek.h"
+#import "WBYear.h"
+
+#define kNoShowPlayerName @"xx No Show xx"
 
 @interface WBPlayer ()
 
@@ -56,6 +60,14 @@
 	self.meValue = NO;
 }
 
++ (WBPlayer *)noShowPlayer {
+	return [WBPlayer playerWithName:kNoShowPlayerName];
+}
+
++ (void)createNoShowPlayer {
+	[WBPlayer createPlayerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
+}
+
 + (WBPlayer *)playerWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
 	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
@@ -103,9 +115,9 @@
 }
 
 - (NSString *)currentHandicapString {
-	NSInteger adjusted = self.currentHandicapValue - 36;
-	BOOL isPositive = adjusted > 0;
-	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)adjusted];
+	NSInteger handi = self.currentHandicapValue;
+	BOOL isPositive = handi > 0;
+	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)handi];
 }
 
 - (NSInteger)lowRoundForYear:(WBYear *)year {
@@ -188,12 +200,32 @@
 	fmt.minimumFractionDigits = 1;
 	CGFloat avg = [self averageScoreInYear:[WBYear thisYear]];
 	NSString *decimalString = [fmt stringFromNumber:[NSNumber numberWithFloat:avg]];
-	return[NSString stringWithFormat:@"%@%@", avg > 0 ? @"+" : @"", decimalString];
+	return [NSString stringWithFormat:@"%@%@", avg > 0 ? @"+" : @"", decimalString];
 }
 
 + (NSArray *)resultsForPlayer:(WBPlayer *)player inYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, player];
 	 return [WBCoreDataManager findWithPredicate:predicate forEntity:[WBResult entityName]];
+}
+
+- (NSInteger)startingHandicapInYear:(WBYear *)year {
+	for (WBPlayerYearData *data in self.yearData) {
+		if (data.year == year) {
+			return data.startingHandicapValue;
+		}
+	}
+	DLog(@"No data found for player for year %ld", (long)year.valueValue);
+	return INT32_MAX;
+}
+
+- (NSInteger)improvedInYear:(WBYear *)year {
+	NSInteger starting = [self startingHandicapInYear:year];
+	return starting != INT32_MAX ? self.currentHandicapValue - starting : 0;
+}
+
+- (NSString *)improvedString {
+	NSInteger improved = [self improvedInYear:[WBYear thisYear]];
+	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 
 @end

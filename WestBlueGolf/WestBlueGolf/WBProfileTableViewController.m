@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lowRoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel *averagePointsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *averageScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *improvedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lowNetLabel;
 
 @property (assign, nonatomic) BOOL isMeViewController;
@@ -66,14 +66,14 @@
 		self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
 		self.lowRoundLabel.text = [self.selectedPlayer lowRoundString];
 		self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
-		self.averageScoreLabel.text = [self.selectedPlayer averageScoreString];
+		self.improvedLabel.text = [self.selectedPlayer improvedString];
 		self.lowNetLabel.text = [self.selectedPlayer lowNetString];
 	} else {
 		self.winLossLabel.text = @"-";
 		self.handicapLabel.text = @"-";
 		self.lowRoundLabel.text =  @"-";
 		self.averagePointsLabel.text = @"-";
-		self.averageScoreLabel.text = @"-";
+		self.improvedLabel.text = @"-";
 		self.lowNetLabel.text = @"-";
 	}
 

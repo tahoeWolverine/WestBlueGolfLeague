@@ -15,9 +15,30 @@
 
 @interface WBTeamProfileTableViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *averagePointsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
+@property (weak, nonatomic) IBOutlet UILabel *winLossAllLabel;
+@property (weak, nonatomic) IBOutlet UILabel *improvedLabel;
+
 @end
 
 @implementation WBTeamProfileTableViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self refreshTeamHighlights];
+}
+
+- (void)refreshTeamHighlights {
+	WBTeam *team = (WBTeam *)self.selectedEntity;
+	self.placeLabel.text = [team placeString];
+	self.averagePointsLabel.text = [team averagePointsString];
+	self.winLossLabel.text = [team record];
+	self.winLossAllLabel.text = [team individualRecord];
+	self.improvedLabel.text = [team improvedString];
+}
 
 #pragma mark - WBEntityDetailViewController methods to implement
 
@@ -37,7 +58,6 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	//return [NSPredicate predicateWithFormat:@"player.team.name = %@", [self selectedEntityName]];
 	return [NSPredicate predicateWithFormat:@"team.name = %@", [self selectedEntityName]];
 }
 

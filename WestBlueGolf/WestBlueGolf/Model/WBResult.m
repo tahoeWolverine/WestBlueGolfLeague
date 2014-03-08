@@ -1,7 +1,11 @@
 #import "WBResult.h"
 #import "WBCoreDataManager.h"
+#import "WBCourse.h"
 #import "WBMatch.h"
+#import "WBTeam.h"
+#import "WBTeamMatchup.h"
 #import "WBPlayer.h"
+#import "WBWeek.h"
 
 @interface WBResult ()
 
@@ -11,7 +15,7 @@
 
 + (WBResult *)createResultForMatch:(WBMatch *)match
 						 forPlayer:(WBPlayer *)player
-						 otherTeam:(WBTeam *)otherTeam
+							  team:(WBTeam *)team
 						withPoints:(NSInteger)points
 					 priorHandicap:(NSInteger)priorHandicap
 							 score:(NSInteger)score {
@@ -34,13 +38,10 @@
 	newResult.pointsValue = points;
 	newResult.priorHandicapValue = priorHandicap;
 	newResult.scoreValue = score;
-	
-	if (otherTeam) {
-		newResult.otherTeam = otherTeam;
-	}
-	
+
 	[match addResultsObject:newResult];
 	[player addResultsObject:newResult];
+	[team addResultsObject:newResult];
 	
 	[WBCoreDataManager saveContext];
 	return newResult;
@@ -77,7 +78,7 @@
 }
 
 - (NSInteger)netScoreDifference {
-	return self.scoreValue - self.priorHandicapValue;
+	return (self.scoreValue - self.match.teamMatchup.week.course.parValue) - self.priorHandicapValue;
 }
 
 @end

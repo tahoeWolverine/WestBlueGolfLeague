@@ -11,4 +11,6 @@
 - (NSString *)totalPointsStringForTeam:(WBTeam *)team;
 - (NSString *)totalScoreStringForTeam:(WBTeam *)team;
 
+- (NSArray *)displayStrings;
+
 @end

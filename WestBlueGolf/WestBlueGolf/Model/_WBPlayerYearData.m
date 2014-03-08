@@ -4,12 +4,14 @@
 #import "_WBPlayerYearData.h"
 
 const struct WBPlayerYearDataAttributes WBPlayerYearDataAttributes = {
+	.finishingHandicap = @"finishingHandicap",
 	.isRookie = @"isRookie",
 	.startingHandicap = @"startingHandicap",
 };
 
 const struct WBPlayerYearDataRelationships WBPlayerYearDataRelationships = {
 	.player = @"player",
+	.year = @"year",
 };
 
 const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties = {
@@ -41,6 +43,11 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"finishingHandicapValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"finishingHandicap"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"isRookieValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isRookie"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -54,6 +61,32 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic finishingHandicap;
+
+
+
+- (int16_t)finishingHandicapValue {
+	NSNumber *result = [self finishingHandicap];
+	return [result shortValue];
+}
+
+- (void)setFinishingHandicapValue:(int16_t)value_ {
+	[self setFinishingHandicap:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveFinishingHandicapValue {
+	NSNumber *result = [self primitiveFinishingHandicap];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveFinishingHandicapValue:(int16_t)value_ {
+	[self setPrimitiveFinishingHandicap:[NSNumber numberWithShort:value_]];
+}
+
 
 
 
@@ -111,6 +144,10 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 
 
 @dynamic player;
+
+	
+
+@dynamic year;
 
 	
 
