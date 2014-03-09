@@ -11,6 +11,8 @@
 
 - (void)deleteLeaderBoard;
 
++ (NSArray *)fetchAllLeaderBoards;
+
 - (WBBoardData *)winnerData;
 
 @end

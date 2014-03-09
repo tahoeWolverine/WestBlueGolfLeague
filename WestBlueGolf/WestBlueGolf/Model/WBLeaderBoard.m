@@ -26,6 +26,16 @@
 	[[[self class] managedObjectContext] deleteObject:self];
 }
 
++ (NSArray *)fetchAllLeaderBoards {
+	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
+	NSError *error = nil;
+	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	if (error) {
+		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
+	}
+	return results;
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }

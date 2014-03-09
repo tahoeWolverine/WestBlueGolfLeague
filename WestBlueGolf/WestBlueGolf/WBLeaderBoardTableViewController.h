@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
+@class WBLeaderBoard;
+
 @interface WBLeaderBoardTableViewController : UITableViewController
+
+@property (strong, nonatomic) WBLeaderBoard *selectedLeaderboard;
 
 @end

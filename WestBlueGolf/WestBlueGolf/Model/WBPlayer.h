@@ -16,6 +16,9 @@
 #define kLeaderboardPlayerTotalWins @"totalWins"
 #define kLeaderboardPlayerWinLossRatio @"winLossRatio"
 
+#define kLeaderboardPlayerTopPercentage @"topPercentage"
+#define kLeaderboardPlayerTopTenPercentage @"topTenPercentage"
+
 @interface WBPlayer : _WBPlayer {}
 
 // Player specific create function

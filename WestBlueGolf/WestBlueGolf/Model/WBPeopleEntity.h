@@ -2,4 +2,7 @@
 
 @interface WBPeopleEntity : _WBPeopleEntity {}
 
++ (WBPeopleEntity *)baseCreatePeopleWithName:(NSString *)name;
+- (void)deletePlayer;
+
 @end

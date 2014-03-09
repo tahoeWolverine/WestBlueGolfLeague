@@ -11,6 +11,9 @@
 #define kLeaderboardTeamTotalWins @"totalWins"
 #define kLeaderboardTeamWeeklyWinLossRatio @"weeklyWinLossRatio"
 
+#define kLeaderboardTeamTopPercentage @"topPercentage"
+#define kLeaderboardTeamTopFivePercentage @"topFivePercentage"
+
 @interface WBTeam : _WBTeam {}
 
 + (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId;

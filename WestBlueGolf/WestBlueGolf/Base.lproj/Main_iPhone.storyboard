@@ -156,6 +156,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="wQU-Ep-dDb">
                         <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title="Boards" id="PTL-xz-fsF"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="Vs0-s3-omD">
                             <rect key="frame" x="96" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -185,7 +186,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Hat-tX-gIj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LeaderBoardCell" id="Hat-tX-gIj" customClass="WBLeaderBoardCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hat-tX-gIj" id="0K5-dh-5RH">
@@ -213,6 +214,11 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="peopleName" destination="O3Q-bz-bhs" id="Rph-Ap-4gH"/>
+                                    <outlet property="peopleValue" destination="lsi-v9-yo5" id="q9d-bh-naD"/>
+                                    <outlet property="rankLabel" destination="zKe-2r-WEQ" id="A6h-LI-G1f"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

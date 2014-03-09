@@ -60,15 +60,18 @@
 	
 	if (!year) {
 		[self loadJsonData];
-		[self calculateLeaderBoards];
 	}
+
+	[self clearLeaderBoards];
+	[self calculateLeaderBoards];
 	
     return YES;
 }
 
 - (void)calculateLeaderBoards {
 	// Important team boards
-	[WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
+	[WBBoardData createBoardDataForEntity:[WBPlayer playerWithName:@"Michael Harlow"] leaderBoard:board value:745 rank:1];
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:4 isPlayerBoard:NO];
@@ -79,6 +82,8 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio tablePriority:7 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins tablePriority:8 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:9 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:10 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:11 isPlayerBoard:NO];
 	
 	
 	// Important Player leaderboards
@@ -96,6 +101,17 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints tablePriority:10 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints tablePriority:11 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins tablePriority:12 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:13 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:14 isPlayerBoard:YES];
+	
+	[WBCoreDataManager saveContext];
+}
+
+- (void)clearLeaderBoards {
+	NSArray *boards = [WBLeaderBoard fetchAllLeaderBoards];
+	for (WBLeaderBoard *board in boards) {
+		[board deleteLeaderBoard];
+	}
 }
 
 - (void)setProfileTabPlayer {

@@ -8,13 +8,14 @@
 
 #import "WBLeaderBoardDataSource.h"
 #import "WBCoreDataManager.h"
-//#import "WBLeaderBoardCell.h"
+#import "WBLeaderBoardCell.h"
 #import "WBModels.h"
 
 //#define SECTION_KEY
-#define SORT_KEY @"tablePriority"
+#define SORT_KEY @"rank"
 
 @interface WBLeaderBoardDataSource ()
+
 @end
 
 @implementation WBLeaderBoardDataSource
@@ -46,9 +47,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
-	//WBBoardData *data = (WBBoardData *)object;
-	//WBLeaderBoardCell *leaderBoardCell = (WBLeaderBoardCell *)cell;
-	//[leaderBoardCell configureCellForBoardData:data];
+	WBBoardData *data = (WBBoardData *)object;
+	WBLeaderBoardCell *leaderBoardCell = (WBLeaderBoardCell *)cell;
+	[leaderBoardCell configureCellForBoardData:data];
 }
 
 @end

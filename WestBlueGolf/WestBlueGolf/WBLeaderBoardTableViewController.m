@@ -8,6 +8,7 @@
 
 #import "WBLeaderBoardTableViewController.h"
 #import "WBLeaderBoardDataSource.h"
+#import "WBModels.h"
 
 @interface WBLeaderBoardTableViewController ()
 
@@ -26,6 +27,11 @@
 	self.tableView.delegate = self.teamDataSource;
 	
 	[self.teamDataSource beginFetch];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	self.navigationItem.title = self.selectedLeaderboard.name;
 }
 
 - (void)didReceiveMemoryWarning {

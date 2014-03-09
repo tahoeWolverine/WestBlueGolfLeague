@@ -27,6 +27,7 @@
 		48B54E1B18CBE41100F97F8C /* WBLeaderBoardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1A18CBE41100F97F8C /* WBLeaderBoardListCell.m */; };
 		48B54E1E18CBE74100F97F8C /* _WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1D18CBE74100F97F8C /* _WBPeopleEntity.m */; };
 		48B54E2118CBE74F00F97F8C /* WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E2018CBE74F00F97F8C /* WBPeopleEntity.m */; };
+		48B54E2418CCE2CA00F97F8C /* WBLeaderBoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E2318CCE2CA00F97F8C /* WBLeaderBoardCell.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
 		A50E163018972418008933A5 /* _WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160C18972418008933A5 /* _WBPlayer.m */; };
@@ -136,6 +137,8 @@
 		48B54E1D18CBE74100F97F8C /* _WBPeopleEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBPeopleEntity.m; path = Model/_WBPeopleEntity.m; sourceTree = "<group>"; };
 		48B54E1F18CBE74F00F97F8C /* WBPeopleEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBPeopleEntity.h; path = Model/WBPeopleEntity.h; sourceTree = "<group>"; };
 		48B54E2018CBE74F00F97F8C /* WBPeopleEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPeopleEntity.m; path = Model/WBPeopleEntity.m; sourceTree = "<group>"; };
+		48B54E2218CCE2CA00F97F8C /* WBLeaderBoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardCell.h; sourceTree = "<group>"; };
+		48B54E2318CCE2CA00F97F8C /* WBLeaderBoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardCell.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
 		A50E160818972418008933A5 /* _WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCourse.m; path = Model/_WBCourse.m; sourceTree = "<group>"; };
 		A50E160918972418008933A5 /* _WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBMatch.h; path = Model/_WBMatch.h; sourceTree = "<group>"; };
@@ -519,6 +522,8 @@
 			isa = PBXGroup;
 			children = (
 				48B54E1818CBDB1D00F97F8C /* DataSources */,
+				48B54E2218CCE2CA00F97F8C /* WBLeaderBoardCell.h */,
+				48B54E2318CCE2CA00F97F8C /* WBLeaderBoardCell.m */,
 				48B54E1918CBE41100F97F8C /* WBLeaderBoardListCell.h */,
 				48B54E1A18CBE41100F97F8C /* WBLeaderBoardListCell.m */,
 				48B54E0C18CBD69900F97F8C /* WBLeaderBoardListTableViewController.h */,
@@ -703,6 +708,7 @@
 				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A5F345A518CA1E4300EBF40A /* WBWeekTableViewController.m in Sources */,
+				48B54E2418CCE2CA00F97F8C /* WBLeaderBoardCell.m in Sources */,
 				A50E163B18972418008933A5 /* WBPlayerYearData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
