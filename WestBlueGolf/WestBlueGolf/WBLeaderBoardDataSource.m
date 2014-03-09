@@ -1,12 +1,12 @@
 //
-//  WBTeamBoardDataSource.m
+//  WBLeaderBoardDataSource.m
 //  WestBlueGolf
 //
 //  Created by Mike Harlow on 3/6/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBTeamBoardDataSource.h"
+#import "WBLeaderBoardDataSource.h"
 #import "WBCoreDataManager.h"
 //#import "WBLeaderBoardCell.h"
 #import "WBModels.h"
@@ -14,10 +14,10 @@
 //#define SECTION_KEY
 #define SORT_KEY @"tablePriority"
 
-@interface WBTeamBoardDataSource ()
+@interface WBLeaderBoardDataSource ()
 @end
 
-@implementation WBTeamBoardDataSource
+@implementation WBLeaderBoardDataSource
 
 #pragma mark - WBEntityTableViewController methods to implement
 

@@ -21,9 +21,9 @@
 		48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DFB18CBD5B600F97F8C /* WBBoardData.m */; };
 		48B54E0718CBD5B600F97F8C /* WBLeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54DFD18CBD5B600F97F8C /* WBLeaderBoard.m */; };
 		48B54E0E18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E0D18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m */; };
-		48B54E1118CBD75700F97F8C /* WBTeamBoardListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */; };
+		48B54E1118CBD75700F97F8C /* WBLeaderBoardListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1018CBD75700F97F8C /* WBLeaderBoardListDataSource.m */; };
 		48B54E1418CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1318CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m */; };
-		48B54E1718CBDA8800F97F8C /* WBTeamBoardDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */; };
+		48B54E1718CBDA8800F97F8C /* WBLeaderBoardDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1618CBDA8800F97F8C /* WBLeaderBoardDataSource.m */; };
 		48B54E1B18CBE41100F97F8C /* WBLeaderBoardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1A18CBE41100F97F8C /* WBLeaderBoardListCell.m */; };
 		48B54E1E18CBE74100F97F8C /* _WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1D18CBE74100F97F8C /* _WBPeopleEntity.m */; };
 		48B54E2118CBE74F00F97F8C /* WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E2018CBE74F00F97F8C /* WBPeopleEntity.m */; };
@@ -124,12 +124,12 @@
 		48B54DFD18CBD5B600F97F8C /* WBLeaderBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBLeaderBoard.m; path = Model/WBLeaderBoard.m; sourceTree = "<group>"; };
 		48B54E0C18CBD69900F97F8C /* WBLeaderBoardListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardListTableViewController.h; sourceTree = "<group>"; };
 		48B54E0D18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardListTableViewController.m; sourceTree = "<group>"; };
-		48B54E0F18CBD75700F97F8C /* WBTeamBoardListDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamBoardListDataSource.h; sourceTree = "<group>"; };
-		48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamBoardListDataSource.m; sourceTree = "<group>"; };
+		48B54E0F18CBD75700F97F8C /* WBLeaderBoardListDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardListDataSource.h; sourceTree = "<group>"; };
+		48B54E1018CBD75700F97F8C /* WBLeaderBoardListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardListDataSource.m; sourceTree = "<group>"; };
 		48B54E1218CBD9CD00F97F8C /* WBLeaderBoardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardTableViewController.h; sourceTree = "<group>"; };
 		48B54E1318CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardTableViewController.m; sourceTree = "<group>"; };
-		48B54E1518CBDA8800F97F8C /* WBTeamBoardDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamBoardDataSource.h; sourceTree = "<group>"; };
-		48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamBoardDataSource.m; sourceTree = "<group>"; };
+		48B54E1518CBDA8800F97F8C /* WBLeaderBoardDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardDataSource.h; sourceTree = "<group>"; };
+		48B54E1618CBDA8800F97F8C /* WBLeaderBoardDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardDataSource.m; sourceTree = "<group>"; };
 		48B54E1918CBE41100F97F8C /* WBLeaderBoardListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardListCell.h; sourceTree = "<group>"; };
 		48B54E1A18CBE41100F97F8C /* WBLeaderBoardListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardListCell.m; sourceTree = "<group>"; };
 		48B54E1C18CBE74100F97F8C /* _WBPeopleEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBPeopleEntity.h; path = Model/_WBPeopleEntity.h; sourceTree = "<group>"; };
@@ -255,10 +255,10 @@
 		48B54E1818CBDB1D00F97F8C /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				48B54E1518CBDA8800F97F8C /* WBTeamBoardDataSource.h */,
-				48B54E1618CBDA8800F97F8C /* WBTeamBoardDataSource.m */,
-				48B54E0F18CBD75700F97F8C /* WBTeamBoardListDataSource.h */,
-				48B54E1018CBD75700F97F8C /* WBTeamBoardListDataSource.m */,
+				48B54E1518CBDA8800F97F8C /* WBLeaderBoardDataSource.h */,
+				48B54E1618CBDA8800F97F8C /* WBLeaderBoardDataSource.m */,
+				48B54E0F18CBD75700F97F8C /* WBLeaderBoardListDataSource.h */,
+				48B54E1018CBD75700F97F8C /* WBLeaderBoardListDataSource.m */,
 			);
 			name = DataSources;
 			sourceTree = "<group>";
@@ -671,7 +671,7 @@
 				A5F3459718C928DC00EBF40A /* WBEntityDataSource.m in Sources */,
 				A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */,
 				A5F345A218CA1C4500EBF40A /* WBMatchupResultCell.m in Sources */,
-				48B54E1718CBDA8800F97F8C /* WBTeamBoardDataSource.m in Sources */,
+				48B54E1718CBDA8800F97F8C /* WBLeaderBoardDataSource.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
 				48B54E1E18CBE74100F97F8C /* _WBPeopleEntity.m in Sources */,
 				A50E163D18972418008933A5 /* WBTeam.m in Sources */,
@@ -680,7 +680,7 @@
 				48B54DF918CBD59900F97F8C /* _WBTeamBoardData.m in Sources */,
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */,
-				48B54E1118CBD75700F97F8C /* WBTeamBoardListDataSource.m in Sources */,
+				48B54E1118CBD75700F97F8C /* WBLeaderBoardListDataSource.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
 				48B54DF818CBD59900F97F8C /* _WBTeamBoard.m in Sources */,
 				A5F345AB18CA651F00EBF40A /* WBMeViewController.m in Sources */,

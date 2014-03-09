@@ -8,13 +8,13 @@
 
 #import "WBLeaderBoardListTableViewController.h"
 #import "WBLeaderBoardTableViewController.h"
-#import "WBTeamBoardListDataSource.h"
+#import "WBLeaderBoardListDataSource.h"
 
 @interface WBLeaderBoardListTableViewController ()
 
 @property (assign, nonatomic) BOOL isInPlayerMode;
-@property (strong, nonatomic) WBTeamBoardListDataSource *teamDataSource;
-@property (strong, nonatomic) WBTeamBoardListDataSource *playerDataSource;
+@property (strong, nonatomic) WBLeaderBoardListDataSource *teamDataSource;
+@property (strong, nonatomic) WBLeaderBoardListDataSource *playerDataSource;
 
 @end
 
@@ -23,8 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.teamDataSource = [WBTeamBoardListDataSource dataSourceWithViewController:self playerBoard:NO];
-	self.playerDataSource = [WBTeamBoardListDataSource dataSourceWithViewController:self playerBoard:YES];
+	self.teamDataSource = [WBLeaderBoardListDataSource dataSourceWithViewController:self playerBoard:NO];
+	self.playerDataSource = [WBLeaderBoardListDataSource dataSourceWithViewController:self playerBoard:YES];
 	
 	// Run an initial switchTables to get into team mode (setting it to start on player does this)
 	self.isInPlayerMode = YES;

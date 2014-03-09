@@ -1,5 +1,5 @@
 //
-//  WBTeamBoardDataSource.h
+//  WBLeaderBoardDataSource.h
 //  WestBlueGolf
 //
 //  Created by Mike Harlow on 3/6/14.
@@ -8,6 +8,6 @@
 
 #import "WBEntityDataSource.h"
 
-@interface WBTeamBoardDataSource : WBEntityDataSource
+@interface WBLeaderBoardDataSource : WBEntityDataSource
 
 @end

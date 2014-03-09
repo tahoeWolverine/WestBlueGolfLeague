@@ -7,11 +7,11 @@
 //
 
 #import "WBLeaderBoardTableViewController.h"
-#import "WBTeamBoardDataSource.h"
+#import "WBLeaderBoardDataSource.h"
 
 @interface WBLeaderBoardTableViewController ()
 
-@property (strong, nonatomic) WBTeamBoardDataSource *teamDataSource;
+@property (strong, nonatomic) WBLeaderBoardDataSource *teamDataSource;
 
 @end
 
@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.teamDataSource = [WBTeamBoardDataSource dataSourceWithViewController:self];
+	self.teamDataSource = [WBLeaderBoardDataSource dataSourceWithViewController:self];
 
     self.tableView.dataSource = self.teamDataSource;
 	self.tableView.delegate = self.teamDataSource;

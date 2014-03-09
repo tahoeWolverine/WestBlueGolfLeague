@@ -1,12 +1,12 @@
 //
-//  WBTeamBoardListDataSource.m
+//  WBLeaderBoardListDataSource.m
 //  WestBlueGolf
 //
 //  Created by Mike Harlow on 3/6/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBTeamBoardListDataSource.h"
+#import "WBLeaderBoardListDataSource.h"
 #import "WBCoreDataManager.h"
 #import "WBLeaderBoardListCell.h"
 #import "WBModels.h"
@@ -14,13 +14,13 @@
 //#define SECTION_KEY
 #define SORT_KEY @"tablePriority"
 
-@interface WBTeamBoardListDataSource ()
+@interface WBLeaderBoardListDataSource ()
 
 @property (assign, nonatomic) BOOL isPlayerBoard;
 
 @end
 
-@implementation WBTeamBoardListDataSource
+@implementation WBLeaderBoardListDataSource
 
 + (id)dataSourceWithViewController:(UIViewController *)aViewController playerBoard:(BOOL)playerBoard {
 	return [[self alloc] initWithViewController:aViewController playerBoard:playerBoard];
