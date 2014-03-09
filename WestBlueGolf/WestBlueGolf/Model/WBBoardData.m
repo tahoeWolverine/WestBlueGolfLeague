@@ -23,7 +23,7 @@
 	[entity addBoardDataObject:data];
 	[leaderBoard addBoardDataObject:data];
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return data;
 }
 

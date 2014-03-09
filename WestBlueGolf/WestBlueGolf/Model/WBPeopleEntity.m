@@ -9,8 +9,6 @@
 + (WBPeopleEntity *)baseCreatePeopleWithName:(NSString *)name {
 	WBPeopleEntity *newPeople = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newPeople.name = name;
-
-	[WBCoreDataManager saveContext];
 	return newPeople;
 }
 

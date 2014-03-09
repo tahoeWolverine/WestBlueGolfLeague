@@ -43,7 +43,7 @@
 	[player addResultsObject:newResult];
 	[team addResultsObject:newResult];
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newResult;
 }
 

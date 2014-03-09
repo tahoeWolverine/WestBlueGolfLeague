@@ -21,7 +21,7 @@
 	//TODO: Support incomplete matches
 	newTeamMatchup.matchCompleteValue = YES;
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newTeamMatchup;
 }
 

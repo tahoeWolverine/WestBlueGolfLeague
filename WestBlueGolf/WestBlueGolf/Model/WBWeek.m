@@ -20,7 +20,7 @@
 	
 	[course addWeeksObject:newWeek];
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newWeek;
 }
 

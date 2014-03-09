@@ -14,12 +14,10 @@
 @implementation WBTeam
 
 + (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId {
-	//WBTeam *newTeam = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	WBTeam *newTeam = (WBTeam *)[WBPeopleEntity baseCreatePeopleWithName:name];
-	//newTeam.name = name;
 	newTeam.teamIdValue = teamId;
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newTeam;
 }
 

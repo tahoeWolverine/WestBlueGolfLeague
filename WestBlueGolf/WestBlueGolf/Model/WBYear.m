@@ -13,7 +13,7 @@
 	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newYear.valueValue = year;
 	newYear.champion = champion;
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newYear;
 }
 

@@ -20,9 +20,7 @@
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam {
-	//WBPlayer *newPlayer = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	WBPlayer *newPlayer = (WBPlayer *)[WBPeopleEntity baseCreatePeopleWithName:name];
-	//newPlayer.name = name;
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
@@ -31,7 +29,7 @@
 		[currentTeam addPlayersObject:newPlayer];
 	}
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newPlayer;
 }
 

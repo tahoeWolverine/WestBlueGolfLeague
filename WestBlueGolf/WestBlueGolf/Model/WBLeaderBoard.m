@@ -18,7 +18,7 @@
 	newBoard.key = key;
 	newBoard.tablePriorityValue = tablePriority;
 	newBoard.isPlayerBoardValue = isPlayerBoard;
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newBoard;
 }
 

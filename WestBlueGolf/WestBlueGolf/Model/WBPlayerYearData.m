@@ -23,7 +23,7 @@
 	[player addYearDataObject:newData];
 	[year addPlayerYearDataObject:newData];
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newData;
 }
 

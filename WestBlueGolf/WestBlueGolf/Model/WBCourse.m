@@ -13,7 +13,7 @@
 	newCourse.name = name;
 	newCourse.parValue = par;
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 	return newCourse;
 }
 
