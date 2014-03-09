@@ -8,9 +8,8 @@
 
 #import "WBTeamBoardDataSource.h"
 #import "WBCoreDataManager.h"
-//#import "WBMatchupResultCell.h"
+//#import "WBLeaderBoardCell.h"
 #import "WBModels.h"
-//#import "WBProfileTableViewController.h"
 
 //#define SECTION_KEY
 #define SORT_KEY @"tablePriority"
@@ -23,12 +22,12 @@
 #pragma mark - WBEntityTableViewController methods to implement
 
 - (NSString *)cellIdentifier {
-	static NSString *CellIdentifier = @"TeamBoardListCell";
+	static NSString *CellIdentifier = @"LeaderBoardCell";
 	return CellIdentifier;
 }
 
 - (NSString *)entityName {
-	return @"WBTeamBoard";
+	return @"WBBoardData";
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -47,9 +46,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
-	//WBTeamMatchup *matchup = (WBTeamMatchup *)object;
-	//WBMatchupResultCell *resultCell = (WBMatchupResultCell *)cell;
-	//[resultCell configureCellForMatchup:matchup];
+	//WBBoardData *data = (WBBoardData *)object;
+	//WBLeaderBoardCell *leaderBoardCell = (WBLeaderBoardCell *)cell;
+	//[leaderBoardCell configureCellForBoardData:data];
 }
 
 @end

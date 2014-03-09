@@ -2,7 +2,7 @@
 // Make changes to WBTeamBoard.h instead.
 
 #import <CoreData/CoreData.h>
-#import "WBLeaderBoard.h"
+
 
 extern const struct WBTeamBoardAttributes {
 } WBTeamBoardAttributes;
@@ -20,7 +20,7 @@ extern const struct WBTeamBoardFetchedProperties {
 @interface WBTeamBoardID : NSManagedObjectID {}
 @end
 
-@interface _WBTeamBoard : WBLeaderBoard {}
+@interface _WBTeamBoard : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

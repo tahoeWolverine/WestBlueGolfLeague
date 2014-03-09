@@ -2,17 +2,15 @@
 // Make changes to WBPlayer.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBPeopleEntity.h"
 
 extern const struct WBPlayerAttributes {
 	__unsafe_unretained NSString *currentHandicap;
 	__unsafe_unretained NSString *favorite;
 	__unsafe_unretained NSString *me;
-	__unsafe_unretained NSString *name;
 } WBPlayerAttributes;
 
 extern const struct WBPlayerRelationships {
-	__unsafe_unretained NSString *boardData;
 	__unsafe_unretained NSString *matches;
 	__unsafe_unretained NSString *results;
 	__unsafe_unretained NSString *team;
@@ -22,7 +20,6 @@ extern const struct WBPlayerRelationships {
 extern const struct WBPlayerFetchedProperties {
 } WBPlayerFetchedProperties;
 
-@class WBPlayerBoardData;
 @class WBMatch;
 @class WBResult;
 @class WBTeam;
@@ -32,11 +29,10 @@ extern const struct WBPlayerFetchedProperties {
 
 
 
-
 @interface WBPlayerID : NSManagedObjectID {}
 @end
 
-@interface _WBPlayer : NSManagedObject {}
+@interface _WBPlayer : WBPeopleEntity {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -84,23 +80,6 @@ extern const struct WBPlayerFetchedProperties {
 
 //- (BOOL)validateMe:(id*)value_ error:(NSError**)error_;
 
-
-
-
-
-@property (nonatomic, strong) NSString* name;
-
-
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) WBPlayerBoardData *boardData;
-
-//- (BOOL)validateBoardData:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -183,17 +162,6 @@ extern const struct WBPlayerFetchedProperties {
 - (void)setPrimitiveMeValue:(BOOL)value_;
 
 
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
-
-
-
-- (WBPlayerBoardData*)primitiveBoardData;
-- (void)setPrimitiveBoardData:(WBPlayerBoardData*)value;
 
 
 

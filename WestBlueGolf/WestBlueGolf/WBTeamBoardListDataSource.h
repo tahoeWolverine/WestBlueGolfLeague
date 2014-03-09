@@ -10,4 +10,7 @@
 
 @interface WBTeamBoardListDataSource : WBEntityDataSource
 
++ (id)dataSourceWithViewController:(UIViewController *)aViewController playerBoard:(BOOL)playerBoard;
+- (id)initWithViewController:(UIViewController *)aViewController playerBoard:(BOOL)playerBoard;
+
 @end

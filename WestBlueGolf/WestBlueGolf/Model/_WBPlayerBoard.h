@@ -2,7 +2,7 @@
 // Make changes to WBPlayerBoard.h instead.
 
 #import <CoreData/CoreData.h>
-#import "WBLeaderBoard.h"
+
 
 extern const struct WBPlayerBoardAttributes {
 } WBPlayerBoardAttributes;
@@ -20,7 +20,7 @@ extern const struct WBPlayerBoardFetchedProperties {
 @interface WBPlayerBoardID : NSManagedObjectID {}
 @end
 
-@interface _WBPlayerBoard : WBLeaderBoard {}
+@interface _WBPlayerBoard : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

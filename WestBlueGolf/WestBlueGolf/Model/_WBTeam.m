@@ -4,12 +4,10 @@
 #import "_WBTeam.h"
 
 const struct WBTeamAttributes WBTeamAttributes = {
-	.name = @"name",
 	.teamId = @"teamId",
 };
 
 const struct WBTeamRelationships WBTeamRelationships = {
-	.boardData = @"boardData",
 	.championYears = @"championYears",
 	.matchups = @"matchups",
 	.players = @"players",
@@ -57,13 +55,6 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 
 
 
-@dynamic name;
-
-
-
-
-
-
 @dynamic teamId;
 
 
@@ -89,19 +80,6 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 
 
 
-
-@dynamic boardData;
-
-	
-- (NSMutableSet*)boardDataSet {
-	[self willAccessValueForKey:@"boardData"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"boardData"];
-  
-	[self didAccessValueForKey:@"boardData"];
-	return result;
-}
-	
 
 @dynamic championYears;
 

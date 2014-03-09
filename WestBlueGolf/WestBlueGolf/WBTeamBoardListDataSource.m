@@ -8,27 +8,41 @@
 
 #import "WBTeamBoardListDataSource.h"
 #import "WBCoreDataManager.h"
-//#import "WBMatchupResultCell.h"
+#import "WBLeaderBoardListCell.h"
 #import "WBModels.h"
-//#import "WBProfileTableViewController.h"
 
 //#define SECTION_KEY
 #define SORT_KEY @"tablePriority"
 
 @interface WBTeamBoardListDataSource ()
+
+@property (assign, nonatomic) BOOL isPlayerBoard;
+
 @end
 
 @implementation WBTeamBoardListDataSource
 
-#pragma mark - WBEntityTableViewController methods to implement
++ (id)dataSourceWithViewController:(UIViewController *)aViewController playerBoard:(BOOL)playerBoard {
+	return [[self alloc] initWithViewController:aViewController playerBoard:playerBoard];
+}
+
+- (id)initWithViewController:(UIViewController *)aViewController playerBoard:(BOOL)playerBoard {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		self.isPlayerBoard = playerBoard;
+	}
+	return self;
+}
+
+#pragma mark - WBEntityDataSource methods to implement
 
 - (NSString *)cellIdentifier {
-	static NSString *CellIdentifier = @"TeamBoardListCell";
+	static NSString *CellIdentifier = @"LeaderBoardListCell";
 	return CellIdentifier;
 }
 
 - (NSString *)entityName {
-	return @"WBTeamBoard";
+	return @"WBLeaderBoard";
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -36,7 +50,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return nil;
+	return [NSPredicate predicateWithFormat:@"isPlayerBoard = %@", [NSNumber numberWithBool:self.isPlayerBoard]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {
@@ -47,9 +61,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
-	//WBTeamMatchup *matchup = (WBTeamMatchup *)object;
-	//WBMatchupResultCell *resultCell = (WBMatchupResultCell *)cell;
-	//[resultCell configureCellForMatchup:matchup];
+	WBLeaderBoard *leaderBoard = (WBLeaderBoard *)object;
+	WBLeaderBoardListCell *leaderBoardCell = (WBLeaderBoardListCell *)cell;
+	[leaderBoardCell configureCellForLeaderBoard:leaderBoard];
 }
 
 @end

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBLeaderBoardListTableViewController : UITableViewController
+@interface WBLeaderBoardListTableViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

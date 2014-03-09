@@ -60,17 +60,42 @@
 	
 	if (!year) {
 		[self loadJsonData];
+		[self calculateLeaderBoards];
 	}
-	
-	/*WBPlayer *me = [WBPlayer me];
-	if (!me) {
-		me = [WBPlayer playerWithName:PLAYER_ME];
-		[me setPlayerToMe];
-		[WBCoreDataManager saveContext];
-	}
-	[self setProfileTabName];*/
 	
     return YES;
+}
+
+- (void)calculateLeaderBoards {
+	// Important team boards
+	[WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:4 isPlayerBoard:NO];
+	
+	// Extra team boards
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Net Score" key:kLeaderboardTeamAverageNet tablePriority:5 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Average Score" key:kLeaderboardTeamAverageScore tablePriority:6 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio tablePriority:7 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins tablePriority:8 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:9 isPlayerBoard:NO];
+	
+	
+	// Important Player leaderboards
+	[WBLeaderBoard createLeaderBoardWithName:@"Top Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Top Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints tablePriority:4 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio tablePriority:5 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved tablePriority:6 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore tablePriority:7 isPlayerBoard:YES];
+	
+	// Extra Player boards
+	[WBLeaderBoard createLeaderBoardWithName:@"Average Score" key:kLeaderboardPlayerAverageScore tablePriority:8 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Net Score" key:kLeaderboardPlayerAverageNet tablePriority:9 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints tablePriority:10 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints tablePriority:11 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins tablePriority:12 isPlayerBoard:YES];
 }
 
 - (void)setProfileTabPlayer {
@@ -78,44 +103,6 @@
 	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
 	UINavigationController *profileTab = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
 	((WBProfileTableViewController *)profileTab.topViewController).selectedPlayer = me;
-}
-
-- (void)createTestData {
-	/*WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
-	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
-	WBCourse *course = [WBCourse createCourseWithName:@"Gold Front" par:36];
-	WBWeek *week = [WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course];
-	
-	WBTeam *team1 = [WBTeam createTeamWithName:@"Earthmovers"];
-	WBCaptain *captain1 = [WBCaptain createCaptainWithId:1 username:@"dale" password:@"vlasak" name:@"Dale Vlasak" currentHandicap:14 onTeam:team1];
-	WBPlayer *player10 = [WBPlayer createPlayerWithName:@"Michael Harlow" currentHandicap:5 onTeam:team1];
-	WBPlayer *player11 = [WBPlayer createPlayerWithName:@"Tim Wagner" currentHandicap:3 onTeam:team1];
-	WBPlayer *player12 = [WBPlayer createPlayerWithName:@"Andy Norgren" currentHandicap:14 onTeam:team1];
-	
-	WBTeam *team2 = [WBTeam createTeamWithName:@"Swing Doctors"];
-	WBCaptain *captain2 = [WBCaptain createCaptainWithId:2 username:@"nick" password:@"remarke" name:@"Nick Remarke" currentHandicap:11 onTeam:team2];
-	WBPlayer *player20 = [WBPlayer createPlayerWithName:@"Ryan Hunecke" currentHandicap:9 onTeam:team2];
-	WBPlayer *player21 = [WBPlayer createPlayerWithName:@"Jason Meggit" currentHandicap:7 onTeam:team2];
-	WBPlayer *player22 = [WBPlayer createPlayerWithName:@"Nick Brett" currentHandicap:7 onTeam:team2];
-
-	WBTeamMatchup *matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
-	WBMatch *match1 = [WBMatch createMatchForTeamMatchup:matchup player1:player11 player2:player21];
-	[WBResult createResultForMatch:match1 forPlayer:player11 withPoints:18 priorHandicap:3 score:39];
-	[WBResult createResultForMatch:match1 forPlayer:player21 withPoints:6 priorHandicap:7 score:43];
-	WBMatch *match2 = [WBMatch createMatchForTeamMatchup:matchup player1:player10 player2:player22];
-	[WBResult createResultForMatch:match2 forPlayer:player10 withPoints:22 priorHandicap:5 score:41];
-	[WBResult createResultForMatch:match2 forPlayer:player22 withPoints:2 priorHandicap:7 score:43];
-	WBMatch *match3 = [WBMatch createMatchForTeamMatchup:matchup player1:captain1 player2:player20];
-	[WBResult createResultForMatch:match3 forPlayer:captain1 withPoints:15 priorHandicap:14 score:50];
-	[WBResult createResultForMatch:match3 forPlayer:player20 withPoints:9 priorHandicap:7 score:43];
-	WBMatch *match4 = [WBMatch createMatchForTeamMatchup:matchup player1:player12 player2:captain2];
-	[WBResult createResultForMatch:match4 forPlayer:player12 withPoints:12 priorHandicap:14 score:50];
-	[WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
-	
-	// Delete the noTeam
-	[noTeam deleteTeam];*/
-	
-	[WBCoreDataManager saveContext];
 }
 
 // Example: "4/23/2013", total grammar of formatters - @"yyyy-MM-dd HH:mm:ss ZZZ"
@@ -311,6 +298,44 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)createTestData {
+	/*WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
+	 WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
+	 WBCourse *course = [WBCourse createCourseWithName:@"Gold Front" par:36];
+	 WBWeek *week = [WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course];
+	 
+	 WBTeam *team1 = [WBTeam createTeamWithName:@"Earthmovers"];
+	 WBCaptain *captain1 = [WBCaptain createCaptainWithId:1 username:@"dale" password:@"vlasak" name:@"Dale Vlasak" currentHandicap:14 onTeam:team1];
+	 WBPlayer *player10 = [WBPlayer createPlayerWithName:@"Michael Harlow" currentHandicap:5 onTeam:team1];
+	 WBPlayer *player11 = [WBPlayer createPlayerWithName:@"Tim Wagner" currentHandicap:3 onTeam:team1];
+	 WBPlayer *player12 = [WBPlayer createPlayerWithName:@"Andy Norgren" currentHandicap:14 onTeam:team1];
+	 
+	 WBTeam *team2 = [WBTeam createTeamWithName:@"Swing Doctors"];
+	 WBCaptain *captain2 = [WBCaptain createCaptainWithId:2 username:@"nick" password:@"remarke" name:@"Nick Remarke" currentHandicap:11 onTeam:team2];
+	 WBPlayer *player20 = [WBPlayer createPlayerWithName:@"Ryan Hunecke" currentHandicap:9 onTeam:team2];
+	 WBPlayer *player21 = [WBPlayer createPlayerWithName:@"Jason Meggit" currentHandicap:7 onTeam:team2];
+	 WBPlayer *player22 = [WBPlayer createPlayerWithName:@"Nick Brett" currentHandicap:7 onTeam:team2];
+	 
+	 WBTeamMatchup *matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
+	 WBMatch *match1 = [WBMatch createMatchForTeamMatchup:matchup player1:player11 player2:player21];
+	 [WBResult createResultForMatch:match1 forPlayer:player11 withPoints:18 priorHandicap:3 score:39];
+	 [WBResult createResultForMatch:match1 forPlayer:player21 withPoints:6 priorHandicap:7 score:43];
+	 WBMatch *match2 = [WBMatch createMatchForTeamMatchup:matchup player1:player10 player2:player22];
+	 [WBResult createResultForMatch:match2 forPlayer:player10 withPoints:22 priorHandicap:5 score:41];
+	 [WBResult createResultForMatch:match2 forPlayer:player22 withPoints:2 priorHandicap:7 score:43];
+	 WBMatch *match3 = [WBMatch createMatchForTeamMatchup:matchup player1:captain1 player2:player20];
+	 [WBResult createResultForMatch:match3 forPlayer:captain1 withPoints:15 priorHandicap:14 score:50];
+	 [WBResult createResultForMatch:match3 forPlayer:player20 withPoints:9 priorHandicap:7 score:43];
+	 WBMatch *match4 = [WBMatch createMatchForTeamMatchup:matchup player1:player12 player2:captain2];
+	 [WBResult createResultForMatch:match4 forPlayer:player12 withPoints:12 priorHandicap:14 score:50];
+	 [WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
+	 
+	 // Delete the noTeam
+	 [noTeam deleteTeam];*/
+	
+	[WBCoreDataManager saveContext];
 }
 
 @end

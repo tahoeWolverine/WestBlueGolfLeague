@@ -2,15 +2,13 @@
 // Make changes to WBTeam.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBPeopleEntity.h"
 
 extern const struct WBTeamAttributes {
-	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *teamId;
 } WBTeamAttributes;
 
 extern const struct WBTeamRelationships {
-	__unsafe_unretained NSString *boardData;
 	__unsafe_unretained NSString *championYears;
 	__unsafe_unretained NSString *matchups;
 	__unsafe_unretained NSString *players;
@@ -20,7 +18,6 @@ extern const struct WBTeamRelationships {
 extern const struct WBTeamFetchedProperties {
 } WBTeamFetchedProperties;
 
-@class WBTeamBoardData;
 @class WBYear;
 @class WBTeamMatchup;
 @class WBPlayer;
@@ -28,25 +25,14 @@ extern const struct WBTeamFetchedProperties {
 
 
 
-
 @interface WBTeamID : NSManagedObjectID {}
 @end
 
-@interface _WBTeam : NSManagedObject {}
+@interface _WBTeam : WBPeopleEntity {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBTeamID*)objectID;
-
-
-
-
-
-@property (nonatomic, strong) NSString* name;
-
-
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -62,13 +48,6 @@ extern const struct WBTeamFetchedProperties {
 
 //- (BOOL)validateTeamId:(id*)value_ error:(NSError**)error_;
 
-
-
-
-
-@property (nonatomic, strong) NSSet *boardData;
-
-- (NSMutableSet*)boardDataSet;
 
 
 
@@ -106,11 +85,6 @@ extern const struct WBTeamFetchedProperties {
 
 @interface _WBTeam (CoreDataGeneratedAccessors)
 
-- (void)addBoardData:(NSSet*)value_;
-- (void)removeBoardData:(NSSet*)value_;
-- (void)addBoardDataObject:(WBTeamBoardData*)value_;
-- (void)removeBoardDataObject:(WBTeamBoardData*)value_;
-
 - (void)addChampionYears:(NSSet*)value_;
 - (void)removeChampionYears:(NSSet*)value_;
 - (void)addChampionYearsObject:(WBYear*)value_;
@@ -136,12 +110,6 @@ extern const struct WBTeamFetchedProperties {
 @interface _WBTeam (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
-
-
 - (NSNumber*)primitiveTeamId;
 - (void)setPrimitiveTeamId:(NSNumber*)value;
 
@@ -149,11 +117,6 @@ extern const struct WBTeamFetchedProperties {
 - (void)setPrimitiveTeamIdValue:(int16_t)value_;
 
 
-
-
-
-- (NSMutableSet*)primitiveBoardData;
-- (void)setPrimitiveBoardData:(NSMutableSet*)value;
 
 
 

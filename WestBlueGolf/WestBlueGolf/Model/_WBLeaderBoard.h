@@ -5,15 +5,21 @@
 
 
 extern const struct WBLeaderBoardAttributes {
+	__unsafe_unretained NSString *isPlayerBoard;
+	__unsafe_unretained NSString *key;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *tablePriority;
 } WBLeaderBoardAttributes;
 
 extern const struct WBLeaderBoardRelationships {
+	__unsafe_unretained NSString *boardData;
 } WBLeaderBoardRelationships;
 
 extern const struct WBLeaderBoardFetchedProperties {
 } WBLeaderBoardFetchedProperties;
+
+@class WBBoardData;
+
 
 
 
@@ -27,6 +33,30 @@ extern const struct WBLeaderBoardFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBLeaderBoardID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* isPlayerBoard;
+
+
+
+@property BOOL isPlayerBoardValue;
+- (BOOL)isPlayerBoardValue;
+- (void)setIsPlayerBoardValue:(BOOL)value_;
+
+//- (BOOL)validateIsPlayerBoard:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* key;
+
+
+
+//- (BOOL)validateKey:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -56,14 +86,41 @@ extern const struct WBLeaderBoardFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *boardData;
+
+- (NSMutableSet*)boardDataSet;
+
+
+
+
 
 @end
 
 @interface _WBLeaderBoard (CoreDataGeneratedAccessors)
 
+- (void)addBoardData:(NSSet*)value_;
+- (void)removeBoardData:(NSSet*)value_;
+- (void)addBoardDataObject:(WBBoardData*)value_;
+- (void)removeBoardDataObject:(WBBoardData*)value_;
+
 @end
 
 @interface _WBLeaderBoard (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveIsPlayerBoard;
+- (void)setPrimitiveIsPlayerBoard:(NSNumber*)value;
+
+- (BOOL)primitiveIsPlayerBoardValue;
+- (void)setPrimitiveIsPlayerBoardValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveKey;
+- (void)setPrimitiveKey:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveName;
@@ -79,6 +136,11 @@ extern const struct WBLeaderBoardFetchedProperties {
 - (void)setPrimitiveTablePriorityValue:(int16_t)value_;
 
 
+
+
+
+- (NSMutableSet*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(NSMutableSet*)value;
 
 
 @end

@@ -8,7 +8,6 @@ const struct WBPlayerBoardDataAttributes WBPlayerBoardDataAttributes = {
 
 const struct WBPlayerBoardDataRelationships WBPlayerBoardDataRelationships = {
 	.leaderBoard = @"leaderBoard",
-	.player = @"player",
 };
 
 const struct WBPlayerBoardDataFetchedProperties WBPlayerBoardDataFetchedProperties = {
@@ -48,10 +47,6 @@ const struct WBPlayerBoardDataFetchedProperties WBPlayerBoardDataFetchedProperti
 
 
 @dynamic leaderBoard;
-
-	
-
-@dynamic player;
 
 	
 

@@ -1,6 +1,7 @@
 #import "WBPlayerYearData.h"
 #import "WBCoreDataManager.h"
 #import "WBPlayer.h"
+#import "WBYear.h"
 
 @interface WBPlayerYearData ()
 

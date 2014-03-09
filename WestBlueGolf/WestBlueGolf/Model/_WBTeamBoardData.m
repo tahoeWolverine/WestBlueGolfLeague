@@ -8,7 +8,6 @@ const struct WBTeamBoardDataAttributes WBTeamBoardDataAttributes = {
 
 const struct WBTeamBoardDataRelationships WBTeamBoardDataRelationships = {
 	.leaderBoard = @"leaderBoard",
-	.team = @"team",
 };
 
 const struct WBTeamBoardDataFetchedProperties WBTeamBoardDataFetchedProperties = {
@@ -48,10 +47,6 @@ const struct WBTeamBoardDataFetchedProperties WBTeamBoardDataFetchedProperties =
 
 
 @dynamic leaderBoard;
-
-	
-
-@dynamic team;
 
 	
 

@@ -4,9 +4,13 @@
 #import "_WBBoardData.h"
 
 const struct WBBoardDataAttributes WBBoardDataAttributes = {
+	.rank = @"rank",
+	.value = @"value",
 };
 
 const struct WBBoardDataRelationships WBBoardDataRelationships = {
+	.leaderBoard = @"leaderBoard",
+	.peopleEntity = @"peopleEntity",
 };
 
 const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
@@ -38,12 +42,82 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"rankValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"rank"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"valueValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"value"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
 
 
 
+
+@dynamic rank;
+
+
+
+- (int16_t)rankValue {
+	NSNumber *result = [self rank];
+	return [result shortValue];
+}
+
+- (void)setRankValue:(int16_t)value_ {
+	[self setRank:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveRankValue {
+	NSNumber *result = [self primitiveRank];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveRankValue:(int16_t)value_ {
+	[self setPrimitiveRank:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic value;
+
+
+
+- (int16_t)valueValue {
+	NSNumber *result = [self value];
+	return [result shortValue];
+}
+
+- (void)setValueValue:(int16_t)value_ {
+	[self setValue:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveValueValue {
+	NSNumber *result = [self primitiveValue];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveValueValue:(int16_t)value_ {
+	[self setPrimitiveValue:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic leaderBoard;
+
+	
+
+@dynamic peopleEntity;
+
+	
 
 
 

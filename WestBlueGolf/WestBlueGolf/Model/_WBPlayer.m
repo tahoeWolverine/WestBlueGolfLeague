@@ -7,11 +7,9 @@ const struct WBPlayerAttributes WBPlayerAttributes = {
 	.currentHandicap = @"currentHandicap",
 	.favorite = @"favorite",
 	.me = @"me",
-	.name = @"name",
 };
 
 const struct WBPlayerRelationships WBPlayerRelationships = {
-	.boardData = @"boardData",
 	.matches = @"matches",
 	.results = @"results",
 	.team = @"team",
@@ -146,17 +144,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 
 
-
-@dynamic name;
-
-
-
-
-
-
-@dynamic boardData;
-
-	
 
 @dynamic matches;
 

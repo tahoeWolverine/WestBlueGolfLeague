@@ -1,5 +1,16 @@
 #import "_WBLeaderBoard.h"
 
+@class WBPeopleEntity;
+
 @interface WBLeaderBoard : _WBLeaderBoard {}
-// Custom logic goes here.
+
++ (WBLeaderBoard *)createLeaderBoardWithName:(NSString *)name
+										 key:(NSString *)key
+							   tablePriority:(NSInteger)tablePriority
+							   isPlayerBoard:(BOOL)isPlayerBoard;
+
+- (void)deleteLeaderBoard;
+
+- (WBBoardData *)winnerData;
+
 @end

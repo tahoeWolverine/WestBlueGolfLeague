@@ -17,9 +17,9 @@
 
 @implementation WBPlayer
 
-+ (WBPlayer *)baseCreatePlayerWithName:(NSString *)name
-					  currentHandicap:(NSInteger)currentHandicap
-							   onTeam:(WBTeam *)currentTeam {
++ (WBPlayer *)createPlayerWithName:(NSString *)name
+				   currentHandicap:(NSInteger)currentHandicap
+							onTeam:(WBTeam *)currentTeam {
 	WBPlayer *newPlayer = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
 	newPlayer.name = name;
 	newPlayer.currentHandicapValue = currentHandicap;
@@ -29,13 +29,6 @@
 	if (currentTeam) {
 		[currentTeam addPlayersObject:newPlayer];
 	}
-	return newPlayer;
-}
-
-+ (WBPlayer *)createPlayerWithName:(NSString *)name
-				   currentHandicap:(NSInteger)currentHandicap
-							onTeam:(WBTeam *)currentTeam {
-	WBPlayer *newPlayer = [WBPlayer baseCreatePlayerWithName:name currentHandicap:currentHandicap onTeam:currentTeam];
 	
 	[WBCoreDataManager saveContext];
 	return newPlayer;
@@ -43,6 +36,10 @@
 
 - (void)deletePlayer {
 	[[[self class] managedObjectContext] deleteObject:self];
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 + (WBPlayer *)me {
@@ -72,10 +69,6 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
 	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
 	return [players lastObject];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (NSString *)shortName {

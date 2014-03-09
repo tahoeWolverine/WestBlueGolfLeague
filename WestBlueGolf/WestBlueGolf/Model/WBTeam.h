@@ -1,6 +1,7 @@
 #import "_WBTeam.h"
 
 // LeaderBoard keys
+#define kLeaderboardTeamAverageHandicap @"averageHandicap"
 #define kLeaderboardTeamAverageNet @"averageNet"
 #define kLeaderboardTeamAverageOpponentScore @"averageOpponentScore"
 #define kLeaderboardTeamAveragePoints @"averagePoints"
