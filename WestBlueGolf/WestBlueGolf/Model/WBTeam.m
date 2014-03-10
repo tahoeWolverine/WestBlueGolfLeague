@@ -14,10 +14,8 @@
 @implementation WBTeam
 
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId {
-	id obj = [WBPeopleEntity baseCreatePeopleWithName:name entityName:[self entityName]];
-	WBTeam *newTeam = (WBTeam *)obj;
+	WBTeam *newTeam = (WBTeam *)[self createPeopleWithName:name];
 	newTeam.teamIdValue = teamId;
-
 	return newTeam;
 }
 

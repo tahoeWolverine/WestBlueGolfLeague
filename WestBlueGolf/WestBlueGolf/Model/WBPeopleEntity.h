@@ -2,6 +2,6 @@
 
 @interface WBPeopleEntity : _WBPeopleEntity {}
 
-+ (WBPeopleEntity *)baseCreatePeopleWithName:(NSString *)name entityName:(NSString *)entName;
++ (WBPeopleEntity *)createPeopleWithName:(NSString *)name;
 
 @end

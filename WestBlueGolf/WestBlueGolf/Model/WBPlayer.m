@@ -20,7 +20,7 @@
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam {
-	WBPlayer *newPlayer = (WBPlayer *)[WBPeopleEntity baseCreatePeopleWithName:name entityName:[self entityName]];
+	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithName:name];
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;

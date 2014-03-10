@@ -6,8 +6,9 @@
 
 @implementation WBPeopleEntity
 
-+ (WBPeopleEntity *)baseCreatePeopleWithName:(NSString *)name entityName:(NSString *)entName {
-	WBPeopleEntity *newPeople = [NSEntityDescription insertNewObjectForEntityForName:entName inManagedObjectContext:[self context]];
++ (WBPeopleEntity *)createPeopleWithName:(NSString *)name {
+	id entity = [self createEntity];
+	WBPeopleEntity *newPeople = (WBPeopleEntity *)entity;
 	newPeople.name = name;
 	return newPeople;
 }
