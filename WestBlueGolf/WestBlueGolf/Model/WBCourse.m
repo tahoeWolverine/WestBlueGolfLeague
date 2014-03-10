@@ -21,8 +21,8 @@
 	}
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", courseName];
-	NSArray *courses = [WBCoreDataManager findEntity:[self entityName] withPredicate:predicate sorts:nil];
-	return [courses lastObject];
+	NSArray *courses = [WBCourse findWithPredicate:predicate];
+	return [courses firstObject];
 }
 
 @end

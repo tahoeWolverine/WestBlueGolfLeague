@@ -13,7 +13,7 @@
 @implementation WBHandicapManager
 
 - (void)calculateHandicaps {
-	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	NSArray *players = [WBPlayer findAll];
 
 	for (WBPlayer *player in players) {
 		[self calculateHandicapsForPlayer:player];
@@ -39,7 +39,7 @@
 	// Add scores for the season, calculating handicap result by result
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"player = %@", player];
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"match.teamMatchup.week.seasonIndex" ascending:YES]];
-	NSArray *playerResults = [WBCoreDataManager findEntity:[WBResult entityName] withPredicate:pred sorts:sorts];
+	NSArray *playerResults = [WBResult findWithPredicate:pred sortedBy:sorts];
 	for (WBResult *result in playerResults) {
 		result.priorHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 		

@@ -24,8 +24,8 @@
 
 + (WBWeek *)weekWithId:(NSInteger)weekId {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"seasonIndex = %@", [NSNumber numberWithInteger:weekId]];
-	NSArray *weeks = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
-	return [weeks lastObject];
+	NSArray *weeks = [WBWeek findWithPredicate:predicate];
+	return [weeks firstObject];
 }
 
 @end

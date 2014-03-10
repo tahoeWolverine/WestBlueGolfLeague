@@ -121,7 +121,7 @@
 }
 
 #pragma mark - Object helper methods
-
+/*
 + (id)findEntity:(NSString *)entityName withPredicate:(NSPredicate *)predicate sorts:(NSArray *)sorts {
 	NSFetchRequest *request = [self fetchAllRequestWithEntityName:entityName];
 	[request setPredicate:predicate];
@@ -142,6 +142,6 @@
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	[request setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:[[[self class] sharedManager] managedObjectContext]]];
 	return request;
-}
+}*/
 
 @end

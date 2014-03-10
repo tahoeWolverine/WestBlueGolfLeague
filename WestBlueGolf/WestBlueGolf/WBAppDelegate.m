@@ -20,18 +20,16 @@
     // Override point for customization after application launch.
 	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	[WBCoreDataManager sharedManager];
-
-	//[self createTestData];
 	
 	WBYear *year = [WBYear thisYear];
 	
 	if (!year) {
 		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 		[inputManager loadJsonData];
+		
+		WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
+		[handiManager calculateHandicaps];
 	}
-
-	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicaps];
 	
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
 	[boardManager calculateLeaderBoards];

@@ -9,7 +9,7 @@
 							   tablePriority:(NSInteger)tablePriority
 							   isPlayerBoard:(BOOL)isPlayerBoard;
 
-+ (NSArray *)fetchAllLeaderBoards;
++ (NSArray *)findAllLeaderBoards;
 
 - (WBBoardData *)winnerData;
 

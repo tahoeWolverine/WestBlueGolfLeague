@@ -53,11 +53,11 @@
 
 + (WBPlayer *)playerWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
-	NSArray *players = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
-	return [players lastObject];
+	NSArray *players = [WBPlayer findWithPredicate:predicate];
+	return [players firstObject];
 }
 
-+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts {
+/*+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts {
 	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
 	request.sortDescriptors = sorts;
 	NSError *error = nil;
@@ -66,7 +66,7 @@
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}
 	return results;
-}
+}*/
 
 - (NSString *)firstName {
 	return [self.name componentsSeparatedByString:@" "][0];
@@ -80,8 +80,8 @@
 
 + (WBPlayer *)me {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
-	NSArray *players = [WBCoreDataManager findEntity:[self entityName] withPredicate:predicate sorts:nil];
-	return [players lastObject];
+	NSArray *players = [WBPlayer findWithPredicate:predicate];
+	return [players firstObject];
 }
 
 - (NSString *)record {
@@ -99,7 +99,7 @@
 
 - (NSArray *)recordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	NSArray *results = [[WBCoreDataManager class] findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
+	NSArray *results = [WBResult findWithPredicate:predicate];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -124,16 +124,10 @@
 }
 
 - (NSInteger)lowRoundForYear:(WBYear *)year {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[WBResult entityName]];
-	[request setPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
-	request.fetchLimit = 1;
-	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
-	
-	NSError *error = nil;
-	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
+	//TODO: request.fetchLimit = 1;
+	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
+	NSArray *results = [WBResult findWithPredicate:pred sortedBy:sorts];
 	
 	if (!results || results.count == 0) {
 		return 99;
@@ -212,7 +206,7 @@
 
 + (NSArray *)resultsForPlayer:(WBPlayer *)player inYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, player];
-	 return [WBCoreDataManager findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
+	return [WBResult findWithPredicate:predicate];
 }
 
 - (WBPlayerYearData *)yearDataForYear:(WBYear *)year {

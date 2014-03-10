@@ -34,7 +34,7 @@
 + (void)createNoShowPlayer;
 
 + (WBPlayer *)playerWithName:(NSString *)name;
-+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts;
+//+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts;
 
 - (NSString *)shortName;
 - (NSString *)firstName;

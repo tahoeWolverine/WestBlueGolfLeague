@@ -21,8 +21,8 @@
 	return newBoard;
 }
 
-+ (NSArray *)fetchAllLeaderBoards {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
++ (NSArray *)findAllLeaderBoards {
+	NSFetchRequest *request = [self findAll];
 	NSError *error = nil;
 	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
 	if (error) {
@@ -32,18 +32,11 @@
 }
 
 - (WBBoardData *)winnerData {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[WBBoardData entityName]];
-	[request setPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@", self]];
-	request.fetchLimit = 1;
-	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES]];
-	
-	NSError *error = nil;
-	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	
-	
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", self];
+	//TODO: Optimize for single result
+	//request.fetchLimit = 1;
+	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES]];
+	NSArray *results = [WBBoardData findWithPredicate:pred sortedBy:sorts];
 	return [results firstObject];
 }
 

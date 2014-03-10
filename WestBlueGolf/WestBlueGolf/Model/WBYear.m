@@ -17,16 +17,9 @@
 }
 
 + (WBYear *)thisYear {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
-	request.fetchLimit = 1;
-	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]];
-
-	NSError *error = nil;
-	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	return [results lastObject];
+	//TODO: request.fetchLimit = 1;
+	NSArray *results = [WBYear findAllSortedBy:@"value" ascending:NO];
+	return [results firstObject];
 }
 
 @end
