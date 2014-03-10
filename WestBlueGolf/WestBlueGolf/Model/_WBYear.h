@@ -5,6 +5,7 @@
 
 
 extern const struct WBYearAttributes {
+	__unsafe_unretained NSString *isComplete;
 	__unsafe_unretained NSString *value;
 } WBYearAttributes;
 
@@ -23,6 +24,7 @@ extern const struct WBYearFetchedProperties {
 
 
 
+
 @interface WBYearID : NSManagedObjectID {}
 @end
 
@@ -31,6 +33,20 @@ extern const struct WBYearFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBYearID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* isComplete;
+
+
+
+@property BOOL isCompleteValue;
+- (BOOL)isCompleteValue;
+- (void)setIsCompleteValue:(BOOL)value_;
+
+//- (BOOL)validateIsComplete:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -89,6 +105,15 @@ extern const struct WBYearFetchedProperties {
 @end
 
 @interface _WBYear (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveIsComplete;
+- (void)setPrimitiveIsComplete:(NSNumber*)value;
+
+- (BOOL)primitiveIsCompleteValue;
+- (void)setPrimitiveIsCompleteValue:(BOOL)value_;
+
+
 
 
 - (NSNumber*)primitiveValue;

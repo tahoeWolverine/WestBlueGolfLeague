@@ -41,6 +41,8 @@
 - (NSString *)shortName;
 - (NSString *)firstName;
 - (NSString *)currentHandicapString;
+- (NSInteger)startingHandicapInYear:(WBYear *)year;
+- (WBPlayerYearData *)thisYearData;
 
 - (NSArray *)recordForYear:(WBYear *)year;
 - (CGFloat)recordRatioForYear:(WBYear *)year;

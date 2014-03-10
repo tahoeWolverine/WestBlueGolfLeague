@@ -41,12 +41,6 @@
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
-- (NSString *)shortName {
-	NSString *firstName = [self firstName];
-	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
-	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
-}
-
 - (void)setPlayerToMe {
 	self.meValue = YES;
 	self.favoriteValue = YES;
@@ -83,6 +77,12 @@
 
 - (NSString *)firstName {
 	return [self.name componentsSeparatedByString:@" "][0];
+}
+
+- (NSString *)shortName {
+	NSString *firstName = [self firstName];
+	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
+	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
 }
 
 + (WBPlayer *)me {
@@ -222,14 +222,22 @@
 	 return [WBCoreDataManager findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
 }
 
-- (NSInteger)startingHandicapInYear:(WBYear *)year {
+- (WBPlayerYearData *)yearDataForYear:(WBYear *)year {
 	for (WBPlayerYearData *data in self.yearData) {
 		if (data.year == year) {
-			return data.startingHandicapValue;
+			return data;
 		}
 	}
 	DLog(@"No data found for player for year %ld", (long)year.valueValue);
-	return INT32_MAX;
+	return nil;
+}
+
+- (WBPlayerYearData *)thisYearData {
+	return [self yearDataForYear:[WBYear thisYear]];
+}
+
+- (NSInteger)startingHandicapInYear:(WBYear *)year {
+	return [self yearDataForYear:year].startingHandicapValue;
 }
 
 - (NSInteger)improvedInYear:(WBYear *)year {

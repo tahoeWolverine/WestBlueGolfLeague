@@ -8,6 +8,7 @@
 #define kLeaderboardTeamAverageScore @"averageScore"
 #define kLeaderboardTeamIndividualWinLossRatio @"individualWinLossRatio"
 #define kLeaderboardTeamMaxWeekPoints @"maxWeekPoints"
+#define kLeaderboardTeamTotalImproved @"totalImproved"
 #define kLeaderboardTeamTotalWins @"totalWins"
 #define kLeaderboardTeamWeeklyWinLossRatio @"weeklyWinLossRatio"
 
@@ -32,6 +33,7 @@
 - (NSString *)individualRecord;
 - (CGFloat)individualRecordRatioForYear:(WBYear *)year;
 - (NSString *)improvedString;
+- (NSInteger)improvedInYear:(WBYear *)year;
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
 
 @end

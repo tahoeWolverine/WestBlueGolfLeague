@@ -18,9 +18,26 @@
 }
 
 - (void)configureCellForLeaderBoard:(WBLeaderBoard *)leaderBoard {
-	self.winner.text = [leaderBoard winnerData].peopleEntity.name;
+	WBBoardData *data = [leaderBoard winnerData];
+	self.winner.text = data.peopleEntity.name;
 	self.leaderBoardName.text = [leaderBoard name];
-	self.winnerValue.text = [NSString stringWithFormat:@"%@", [leaderBoard winnerData].value];
+	//self.winnerValue.text = [NSString stringWithFormat:@"%@", data.value];
+	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
+	if ([valueNum doubleValue] == 0) {
+		self.winnerValue.text = @"";
+	} else {
+		if (fmod([valueNum doubleValue], 1.0) == 0) {
+			fmt.maximumFractionDigits = 0;
+			self.winnerValue.text = [fmt stringFromNumber:valueNum];
+		} else if (abs([valueNum doubleValue]) >= 1) {
+			fmt.minimumFractionDigits = 2;
+			self.winnerValue.text = [fmt stringFromNumber:valueNum];
+		} else {
+			fmt.minimumFractionDigits = 3;
+			self.winnerValue.text = [NSString stringWithFormat:@"0%@", [fmt stringFromNumber:valueNum]];
+		}
+	}
 }
 
 @end

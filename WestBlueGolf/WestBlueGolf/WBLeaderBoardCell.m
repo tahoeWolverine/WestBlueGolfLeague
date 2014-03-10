@@ -23,7 +23,12 @@
 	
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	NSNumber *avg = [NSNumber numberWithFloat:data.valueValue];
-	if ([avg integerValue] > 1) {
+	if ([avg doubleValue] == 0) {
+		self.peopleValue.text = @"0.0";
+	} else if (fmod([avg doubleValue], 1.0) == 0) {
+		fmt.maximumFractionDigits = 0;
+		self.peopleValue.text = [fmt stringFromNumber:avg];
+	} else if (abs([avg doubleValue]) >= 1) {
 		fmt.minimumFractionDigits = 2;
 		self.peopleValue.text = [fmt stringFromNumber:avg];
 	} else {

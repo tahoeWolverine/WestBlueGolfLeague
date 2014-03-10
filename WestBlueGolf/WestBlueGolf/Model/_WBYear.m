@@ -4,6 +4,7 @@
 #import "_WBYear.h"
 
 const struct WBYearAttributes WBYearAttributes = {
+	.isComplete = @"isComplete",
 	.value = @"value",
 };
 
@@ -42,6 +43,11 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"isCompleteValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isComplete"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"valueValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"value"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -50,6 +56,32 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic isComplete;
+
+
+
+- (BOOL)isCompleteValue {
+	NSNumber *result = [self isComplete];
+	return [result boolValue];
+}
+
+- (void)setIsCompleteValue:(BOOL)value_ {
+	[self setIsComplete:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsCompleteValue {
+	NSNumber *result = [self primitiveIsComplete];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsCompleteValue:(BOOL)value_ {
+	[self setPrimitiveIsComplete:[NSNumber numberWithBool:value_]];
+}
+
 
 
 

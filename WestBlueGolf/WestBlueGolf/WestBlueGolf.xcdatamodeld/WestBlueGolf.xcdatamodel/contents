@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="WBBoardData" representedClassName="WBBoardData" syncable="YES">
         <attribute name="rank" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="value" attributeType="Double" defaultValueString="0" syncable="YES"/>
@@ -72,6 +72,7 @@
         <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="weeks" inverseEntity="WBYear" syncable="YES"/>
     </entity>
     <entity name="WBYear" representedClassName="WBYear" syncable="YES">
+        <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="value" attributeType="Integer 16" minValueString="0" syncable="YES"/>
         <relationship name="champion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="championYears" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="playerYearData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="year" inverseEntity="WBPlayerYearData" syncable="YES"/>
@@ -82,13 +83,13 @@
         <element name="WBCourse" positionX="-317" positionY="-144" width="128" height="88"/>
         <element name="WBLeaderBoard" positionX="153" positionY="212" width="128" height="118"/>
         <element name="WBMatch" positionX="7" positionY="-277" width="128" height="88"/>
+        <element name="WBPeopleEntity" positionX="153" positionY="9" width="128" height="73"/>
         <element name="WBPlayer" positionX="153" positionY="-171" width="128" height="148"/>
         <element name="WBPlayerYearData" positionX="288" positionY="-171" width="128" height="118"/>
         <element name="WBResult" positionX="151" positionY="-322" width="128" height="133"/>
         <element name="WBTeam" positionX="9" positionY="-63" width="128" height="118"/>
         <element name="WBTeamMatchup" positionX="7" positionY="-175" width="128" height="103"/>
         <element name="WBWeek" positionX="-162" positionY="-144" width="128" height="118"/>
-        <element name="WBYear" positionX="-162" positionY="-18" width="128" height="103"/>
-        <element name="WBPeopleEntity" positionX="153" positionY="9" width="128" height="73"/>
+        <element name="WBYear" positionX="-162" positionY="-18" width="128" height="118"/>
     </elements>
 </model>
