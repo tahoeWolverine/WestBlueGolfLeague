@@ -21,13 +21,15 @@
 	WBBoardData *data = [leaderBoard winnerData];
 	self.winner.text = data.peopleEntity.name;
 	self.leaderBoardName.text = [leaderBoard name];
-	//self.winnerValue.text = [NSString stringWithFormat:@"%@", data.value];
+	
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
-	if ([valueNum doubleValue] == 0) {
+	if (!data) {
 		self.winnerValue.text = @"";
 	} else {
-		if (fmod([valueNum doubleValue], 1.0) == 0) {
+		if ([valueNum doubleValue] == 0) {
+			self.winnerValue.text = @"0";
+		} else if (fmod([valueNum doubleValue], 1.0) == 0) {
 			fmt.maximumFractionDigits = 0;
 			self.winnerValue.text = [fmt stringFromNumber:valueNum];
 		} else if (abs([valueNum doubleValue]) >= 1) {

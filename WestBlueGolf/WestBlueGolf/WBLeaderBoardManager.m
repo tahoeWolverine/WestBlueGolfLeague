@@ -113,7 +113,7 @@
 #pragma mark - Player Boards
 
 - (void)calculatePlayerTopScoreBoard {
-	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Top Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Best Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
 	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
 	WBYear *year = [WBYear thisYear];
 	for (WBPlayer *player in players) {
@@ -126,7 +126,7 @@
 }
 
 - (void)calculatePlayerTopNetScoreBoard {
-	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Top Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Best Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
 	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
 	WBYear *year = [WBYear thisYear];
 	for (WBPlayer *player in players) {
