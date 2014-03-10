@@ -9,6 +9,7 @@
 #import "WBLeaderBoardDataSource.h"
 #import "WBCoreDataManager.h"
 #import "WBLeaderBoardCell.h"
+#import "WBLeaderBoardTableViewController.h"
 #import "WBModels.h"
 
 //#define SECTION_KEY
@@ -36,7 +37,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return nil;
+	return [NSPredicate predicateWithFormat:@"leaderBoard = %@", [(WBLeaderBoardTableViewController *)self.viewController selectedLeaderboard]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {

@@ -20,7 +20,7 @@
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam {
-	WBPlayer *newPlayer = (WBPlayer *)[WBPeopleEntity baseCreatePeopleWithName:name];
+	WBPlayer *newPlayer = (WBPlayer *)[WBPeopleEntity baseCreatePeopleWithName:name entityName:[self entityName]];
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
@@ -41,10 +41,10 @@
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
-+ (WBPlayer *)me {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
-	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
-	return [players lastObject];
+- (NSString *)shortName {
+	NSString *firstName = [self firstName];
+	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
+	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
 }
 
 - (void)setPlayerToMe {
@@ -66,18 +66,29 @@
 
 + (WBPlayer *)playerWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
-	NSArray *players = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	NSArray *players = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
 	return [players lastObject];
 }
 
-- (NSString *)shortName {
-	NSString *firstName = [self firstName];
-	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
-	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
++ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts {
+	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
+	request.sortDescriptors = sorts;
+	NSError *error = nil;
+	NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
+	if (error) {
+		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
+	}
+	return results;
 }
 
 - (NSString *)firstName {
 	return [self.name componentsSeparatedByString:@" "][0];
+}
+
++ (WBPlayer *)me {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
+	NSArray *players = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
+	return [players lastObject];
 }
 
 - (NSString *)record {
@@ -88,7 +99,7 @@
 
 - (NSArray *)recordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	NSArray *results = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[WBResult entityName]];
+	NSArray *results = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -197,7 +208,7 @@
 
 + (NSArray *)resultsForPlayer:(WBPlayer *)player inYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, player];
-	 return [WBCoreDataManager findWithPredicate:predicate forEntity:[WBResult entityName]];
+	 return [WBCoreDataManager findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
 }
 
 - (NSInteger)startingHandicapInYear:(WBYear *)year {

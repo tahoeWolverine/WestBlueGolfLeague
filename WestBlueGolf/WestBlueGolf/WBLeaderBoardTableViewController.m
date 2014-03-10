@@ -34,6 +34,10 @@
 	self.navigationItem.title = self.selectedLeaderboard.name;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[NSFetchedResultsController deleteCacheWithName:nil];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

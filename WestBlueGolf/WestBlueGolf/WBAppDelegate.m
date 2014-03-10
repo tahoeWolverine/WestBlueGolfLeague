@@ -70,8 +70,7 @@
 
 - (void)calculateLeaderBoards {
 	// Important team boards
-	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
-	[WBBoardData createBoardDataForEntity:[WBPlayer playerWithName:@"Michael Harlow"] leaderBoard:board value:745 rank:1];
+	[self calculateTeamPointsBoard];
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:4 isPlayerBoard:NO];
@@ -89,7 +88,7 @@
 	// Important Player leaderboards
 	[WBLeaderBoard createLeaderBoardWithName:@"Top Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Top Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
+	[self calculatePlayerHandicapBoard];
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints tablePriority:4 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio tablePriority:5 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved tablePriority:6 isPlayerBoard:YES];
@@ -105,6 +104,42 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:14 isPlayerBoard:YES];
 	
 	[WBCoreDataManager saveContext];
+}
+
+- (void)calculatePlayerHandicapBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	for (WBPlayer *player in players) {
+		[WBBoardData createBoardDataForEntity:player leaderBoard:board value:player.currentHandicapValue rank:0];
+	}
+	
+	[self assignRanksForBoard:board ascending:YES];
+}
+
+- (void)calculateTeamPointsBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
+	NSArray *teams = [WBCoreDataManager findEntity:[WBTeam entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBTeam *team in teams) {
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team totalPointsForYear:year] rank:0];
+	}
+
+	[self assignRanksForBoard:board ascending:NO];
+}
+
+- (void)assignRanksForBoard:(WBLeaderBoard *)board ascending:(BOOL)ascending {
+	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:ascending], [NSSortDescriptor sortDescriptorWithKey:@"peopleEntity.name" ascending:YES]];
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", board];
+	NSArray *data = [WBCoreDataManager findEntity:[WBBoardData entityName] withPredicate:pred sorts:sorts];
+	NSInteger lastValue = INT16_MAX, rank = 0, i = 0;
+	for (WBBoardData *datum in data) {
+		if (lastValue != datum.valueValue) {
+			rank = i + 1;
+			lastValue = datum.valueValue;
+		}
+		datum.rankValue = rank;
+		i++;
+	}
 }
 
 - (void)clearLeaderBoards {
@@ -129,7 +164,7 @@
 }
 
 - (void)loadJsonData {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" id:0];
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
 	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
 	
 	// week table
@@ -155,7 +190,7 @@
 	for (NSDictionary *elt in teamArray) {
 		NSString *teamName = [elt objectForKey:wbJsonKeyTeamName];
 		NSInteger teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
-		[WBTeam createTeamWithName:teamName id:teamId];
+		[WBTeam createTeamWithName:teamName teamId:teamId];
 	}
 	
 	// password/user table

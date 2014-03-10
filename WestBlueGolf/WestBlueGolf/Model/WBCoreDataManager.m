@@ -122,12 +122,16 @@
 
 #pragma mark - Object helper methods
 
-+ (id)findWithPredicate:(NSPredicate *)predicate forEntity:(NSString *)entityName {
++ (id)findEntity:(NSString *)entityName withPredicate:(NSPredicate *)predicate sorts:(NSArray *)sorts {
 	NSFetchRequest *request = [self fetchAllRequestWithEntityName:entityName];
 	[request setPredicate:predicate];
 	
+	if (sorts && sorts.count > 0) {
+		request.sortDescriptors = sorts;
+	}
+	
 	NSError *error = nil;
-	NSArray *results = [[[[self class] sharedManager] managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[[self sharedManager] managedObjectContext] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}

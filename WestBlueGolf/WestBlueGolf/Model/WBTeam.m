@@ -13,8 +13,9 @@
 
 @implementation WBTeam
 
-+ (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId {
-	WBTeam *newTeam = (WBTeam *)[WBPeopleEntity baseCreatePeopleWithName:name];
++ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId {
+	id obj = [WBPeopleEntity baseCreatePeopleWithName:name entityName:[self entityName]];
+	WBTeam *newTeam = (WBTeam *)obj;
 	newTeam.teamIdValue = teamId;
 	
 	//[WBCoreDataManager saveContext];
@@ -25,14 +26,14 @@
 	[[[self class] managedObjectContext] deleteObject:self];
 }
 
-+ (WBTeam *)teamWithId:(NSInteger)teamId {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
-	NSArray *teams = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
-	return [teams lastObject];
-}
-
 + (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
+}
+
++ (WBTeam *)teamWithId:(NSInteger)teamId {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
+	NSArray *teams = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
+	return [teams lastObject];
 }
 
 - (BOOL)isMyTeam {
@@ -43,7 +44,7 @@
 	WBYear *year = [WBYear thisYear];
 	NSInteger teamPoints = [self totalPointsForYear:year];
 	
-	NSArray *teams = [WBCoreDataManager findWithPredicate:Nil forEntity:[[self class] entityName]];
+	NSArray *teams = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:nil sorts:nil];
 	NSInteger points = 0;
 	NSInteger rank = 1;
 	for (WBTeam *team in teams) {
@@ -91,7 +92,7 @@
 
 - (NSArray *)individualRecordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
-	NSArray *results = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[WBResult entityName]];
+	NSArray *results = [[WBCoreDataManager class] findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -117,7 +118,7 @@
 
 - (NSArray *)recordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
-	NSArray *results = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[WBResult entityName]];
+	NSArray *results = [[WBCoreDataManager class] findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;

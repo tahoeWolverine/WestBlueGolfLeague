@@ -27,7 +27,7 @@
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team];
-	NSArray *matchups = [[WBCoreDataManager class] findWithPredicate:predicate forEntity:[[self class] entityName]];
+	NSArray *matchups = [WBCoreDataManager findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
 	return [matchups lastObject];
 }
 

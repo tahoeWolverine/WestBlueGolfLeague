@@ -16,7 +16,7 @@
 
 @interface WBTeam : _WBTeam {}
 
-+ (WBTeam *)createTeamWithName:(NSString *)name id:(NSInteger)teamId;
++ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId;
 
 - (void)deleteTeam;
 
@@ -24,6 +24,7 @@
 
 - (BOOL)isMyTeam;
 
+- (NSInteger)totalPointsForYear:(WBYear *)year;
 - (NSString *)placeString;
 - (NSString *)averagePointsString;
 - (NSString *)record;
