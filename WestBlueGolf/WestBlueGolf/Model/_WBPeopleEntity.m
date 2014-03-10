@@ -4,6 +4,7 @@
 #import "_WBPeopleEntity.h"
 
 const struct WBPeopleEntityAttributes WBPeopleEntityAttributes = {
+	.me = @"me",
 	.name = @"name",
 };
 
@@ -40,9 +41,40 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"meValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"me"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic me;
+
+
+
+- (BOOL)meValue {
+	NSNumber *result = [self me];
+	return [result boolValue];
+}
+
+- (void)setMeValue:(BOOL)value_ {
+	[self setMe:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveMeValue {
+	NSNumber *result = [self primitiveMe];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveMeValue:(BOOL)value_ {
+	[self setPrimitiveMe:[NSNumber numberWithBool:value_]];
+}
+
 
 
 

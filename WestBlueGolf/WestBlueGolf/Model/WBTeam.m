@@ -17,8 +17,7 @@
 	id obj = [WBPeopleEntity baseCreatePeopleWithName:name entityName:[self entityName]];
 	WBTeam *newTeam = (WBTeam *)obj;
 	newTeam.teamIdValue = teamId;
-	
-	//[WBCoreDataManager saveContext];
+
 	return newTeam;
 }
 
@@ -36,8 +35,10 @@
 	return [teams lastObject];
 }
 
-- (BOOL)isMyTeam {
-	return [self.players containsObject:[WBPlayer me]];
++ (WBTeam *)myTeam {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
+	NSArray *teams = [WBCoreDataManager findEntity:[self entityName] withPredicate:predicate sorts:nil];
+	return [teams lastObject];
 }
 
 - (NSInteger)place {

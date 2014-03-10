@@ -28,8 +28,7 @@
 	if (currentTeam) {
 		[currentTeam addPlayersObject:newPlayer];
 	}
-	
-	//[WBCoreDataManager saveContext];
+
 	return newPlayer;
 }
 
@@ -44,10 +43,12 @@
 - (void)setPlayerToMe {
 	self.meValue = YES;
 	self.favoriteValue = YES;
+	self.team.meValue = YES;
 }
 
 - (void)setPlayerToNotMe {
 	self.meValue = NO;
+	self.team.meValue = NO;
 }
 
 + (WBPlayer *)noShowPlayer {
@@ -87,7 +88,7 @@
 
 + (WBPlayer *)me {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
-	NSArray *players = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
+	NSArray *players = [WBCoreDataManager findEntity:[self entityName] withPredicate:predicate sorts:nil];
 	return [players lastObject];
 }
 

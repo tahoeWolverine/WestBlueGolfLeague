@@ -5,6 +5,7 @@
 
 
 extern const struct WBPeopleEntityAttributes {
+	__unsafe_unretained NSString *me;
 	__unsafe_unretained NSString *name;
 } WBPeopleEntityAttributes;
 
@@ -19,6 +20,7 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 
 
+
 @interface WBPeopleEntityID : NSManagedObjectID {}
 @end
 
@@ -27,6 +29,20 @@ extern const struct WBPeopleEntityFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBPeopleEntityID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* me;
+
+
+
+@property BOOL meValue;
+- (BOOL)meValue;
+- (void)setMeValue:(BOOL)value_;
+
+//- (BOOL)validateMe:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -62,6 +78,15 @@ extern const struct WBPeopleEntityFetchedProperties {
 @end
 
 @interface _WBPeopleEntity (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveMe;
+- (void)setPrimitiveMe:(NSNumber*)value;
+
+- (BOOL)primitiveMeValue;
+- (void)setPrimitiveMeValue:(BOOL)value_;
+
+
 
 
 - (NSString*)primitiveName;

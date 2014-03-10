@@ -22,8 +22,7 @@
 - (void)deleteTeam;
 
 + (WBTeam *)teamWithId:(NSInteger)teamId;
-
-- (BOOL)isMyTeam;
++ (WBTeam *)myTeam;
 
 - (NSInteger)totalPointsForYear:(WBYear *)year;
 - (NSString *)placeString;

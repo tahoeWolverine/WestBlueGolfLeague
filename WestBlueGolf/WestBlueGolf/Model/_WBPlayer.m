@@ -6,7 +6,6 @@
 const struct WBPlayerAttributes WBPlayerAttributes = {
 	.currentHandicap = @"currentHandicap",
 	.favorite = @"favorite",
-	.me = @"me",
 };
 
 const struct WBPlayerRelationships WBPlayerRelationships = {
@@ -52,11 +51,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 	}
 	if ([key isEqualToString:@"favoriteValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"favorite"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
-	if ([key isEqualToString:@"meValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"me"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -113,32 +107,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 - (void)setPrimitiveFavoriteValue:(BOOL)value_ {
 	[self setPrimitiveFavorite:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic me;
-
-
-
-- (BOOL)meValue {
-	NSNumber *result = [self me];
-	return [result boolValue];
-}
-
-- (void)setMeValue:(BOOL)value_ {
-	[self setMe:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveMeValue {
-	NSNumber *result = [self primitiveMe];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveMeValue:(BOOL)value_ {
-	[self setPrimitiveMe:[NSNumber numberWithBool:value_]];
 }
 
 

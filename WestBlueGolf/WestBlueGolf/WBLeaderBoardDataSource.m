@@ -12,8 +12,13 @@
 #import "WBLeaderBoardTableViewController.h"
 #import "WBModels.h"
 
-//#define SECTION_KEY
+#define SECTION_KEY @"peopleEntity.me"
 #define SORT_KEY @"rank"
+
+typedef enum {
+	WBLeaderBoardSectionMe,
+	WBLeaderBoardSectionOthers
+} WBLeaderBoardSection;
 
 @interface WBLeaderBoardDataSource ()
 
@@ -33,7 +38,7 @@
 }
 
 - (NSString *)sectionNameKeyPath {
-	return nil;
+	return SECTION_KEY;
 }
 
 - (NSPredicate *)fetchPredicate {
@@ -41,9 +46,9 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	//NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
+	NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sortOrderDescriptor];
+	return @[sectionSortOrderDescriptor, sortOrderDescriptor];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
@@ -51,6 +56,19 @@
 	WBBoardData *data = (WBBoardData *)object;
 	WBLeaderBoardCell *leaderBoardCell = (WBLeaderBoardCell *)cell;
 	[leaderBoardCell configureCellForBoardData:data];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	NSInteger sectionCount = [self.fetchedResultsController.sections count];
+	if (sectionCount == 2) {
+		if (section == WBLeaderBoardSectionMe) {
+			return @"My Rank";
+		} else {
+			return @"Leaderboard Ranks";
+		}
+	}
+	
+	return nil;
 }
 
 @end

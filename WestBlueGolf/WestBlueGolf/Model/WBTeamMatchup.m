@@ -47,11 +47,12 @@
 	NSInteger team2Points = [self totalPointsForTeam:team2];
 	WBTeam *winner = (team1Points > team2Points) ? team1 : team2;
 	WBTeam *loser = team1 == winner ? team2 : team1;
+	WBTeam *myTeam = [WBTeam myTeam];
 	
-	NSString *winnerName = [NSString stringWithFormat:@"%@%@", [winner isMyTeam] ? @"*" : @"", winner.name];
+	NSString *winnerName = [NSString stringWithFormat:@"%@%@", winner == myTeam ? @"*" : @"", winner.name];
 	NSString *winnerPoints = [NSString stringWithFormat:@"%ld pts", (long)(team1 == winner ? team1Points : team2Points)];
 	NSString *winnerScore = [self totalScoreStringForTeam:winner];
-	NSString *loserName = [NSString stringWithFormat:@"%@%@", [loser isMyTeam] ? @"*" : @"", loser.name];
+	NSString *loserName = [NSString stringWithFormat:@"%@%@", loser == myTeam ? @"*" : @"", loser.name];
 	NSString *loserPoints = [NSString stringWithFormat:@"%ld pts", (long)(team1 == winner ? team2Points : team1Points)];
 	NSString *loserScore = [self totalScoreStringForTeam:loser];
 	return @[winnerName, winnerPoints, winnerScore, loserName, loserPoints, loserScore];
