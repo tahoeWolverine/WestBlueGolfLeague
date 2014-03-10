@@ -9,8 +9,6 @@
 							   tablePriority:(NSInteger)tablePriority
 							   isPlayerBoard:(BOOL)isPlayerBoard;
 
-- (void)deleteLeaderBoard;
-
 + (NSArray *)fetchAllLeaderBoards;
 
 - (WBBoardData *)winnerData;

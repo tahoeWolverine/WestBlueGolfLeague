@@ -10,19 +10,10 @@
 
 + (WBYear *)createYearWithValue:(NSInteger)year
 					   champion:(WBTeam *)champion {
-	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newYear.valueValue = year;
 	newYear.champion = champion;
-	//[WBCoreDataManager saveContext];
 	return newYear;
-}
-
-- (void)deleteYear {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 + (WBYear *)thisYear {
@@ -31,7 +22,7 @@
 	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]];
 
 	NSError *error = nil;
-	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}

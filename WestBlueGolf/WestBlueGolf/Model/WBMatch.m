@@ -11,7 +11,7 @@
 + (WBMatch *)createMatchForTeamMatchup:(WBTeamMatchup *)teamMatchup
 							   player1:(WBPlayer *)player1
 							   player2:(WBPlayer *)player2 {
-	WBMatch *newMatch = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBMatch *newMatch = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 
 	// When matches only have one player (vs XX No Show XX), it should be ok to only have 1 on match
 	if (player1) {
@@ -23,17 +23,7 @@
 	}
 	
 	[teamMatchup addMatchesObject:newMatch];
-	
-	//[WBCoreDataManager saveContext];
 	return newMatch;
-}
-
-- (void)deleteMatch {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

@@ -210,7 +210,7 @@
 - (void)clearLeaderBoards {
 	NSArray *boards = [WBLeaderBoard fetchAllLeaderBoards];
 	for (WBLeaderBoard *board in boards) {
-		[board deleteLeaderBoard];
+		[board deleteEntity];
 	}
 }
 

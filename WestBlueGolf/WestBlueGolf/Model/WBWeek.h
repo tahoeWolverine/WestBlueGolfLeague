@@ -7,8 +7,6 @@
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex;
 
-- (void)deleteWeek;
-
 + (WBWeek *)weekWithId:(NSInteger)weekId;
 
 @end

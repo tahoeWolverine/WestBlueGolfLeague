@@ -8,8 +8,6 @@
 									  value:(double)value
 									   rank:(NSInteger)rank;
 
-- (void)deleteBoardData;
-
 - (NSString *)rankString;
 
 @end

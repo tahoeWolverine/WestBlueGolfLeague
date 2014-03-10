@@ -6,6 +6,4 @@
 							   player1:(WBPlayer *)player1
 							   player2:(WBPlayer *)player2;
 
-- (void)deleteMatch;
-
 @end

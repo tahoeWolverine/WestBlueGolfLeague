@@ -13,31 +13,22 @@
 										 key:(NSString *)key
 							   tablePriority:(NSInteger)tablePriority
 							   isPlayerBoard:(BOOL)isPlayerBoard {
-	WBLeaderBoard *newBoard = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBLeaderBoard *newBoard = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newBoard.name = name;
 	newBoard.key = key;
 	newBoard.tablePriorityValue = tablePriority;
 	newBoard.isPlayerBoardValue = isPlayerBoard;
-	//[WBCoreDataManager saveContext];
 	return newBoard;
-}
-
-- (void)deleteLeaderBoard {
-	[[[self class] managedObjectContext] deleteObject:self];
 }
 
 + (NSArray *)fetchAllLeaderBoards {
 	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
 	NSError *error = nil;
-	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}
 	return results;
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (WBBoardData *)winnerData {
@@ -47,7 +38,7 @@
 	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES]];
 	
 	NSError *error = nil;
-	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}

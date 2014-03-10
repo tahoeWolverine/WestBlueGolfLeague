@@ -5,8 +5,6 @@
 + (WBYear *)createYearWithValue:(NSInteger)year
 					   champion:(WBTeam *)champion;
 
-- (void)deleteYear;
-
 + (WBYear *)thisYear;
 
 @end

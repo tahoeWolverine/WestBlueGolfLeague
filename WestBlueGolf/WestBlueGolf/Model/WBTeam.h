@@ -19,8 +19,6 @@
 
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId;
 
-- (void)deleteTeam;
-
 + (WBTeam *)teamWithId:(NSInteger)teamId;
 + (WBTeam *)myTeam;
 

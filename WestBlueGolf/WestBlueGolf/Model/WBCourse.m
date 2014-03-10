@@ -9,16 +9,10 @@
 
 + (WBCourse *)createCourseWithName:(NSString *)name
 							   par:(NSInteger)par {
-	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newCourse.name = name;
 	newCourse.parValue = par;
-	
-	//[WBCoreDataManager saveContext];
 	return newCourse;
-}
-
-- (void)deleteCourse {
-	[[[self class] managedObjectContext] deleteObject:self];
 }
 
 + (WBCourse *)courseWithName:(NSString *)courseName {
@@ -29,10 +23,6 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", courseName];
 	NSArray *courses = [WBCoreDataManager findEntity:[self entityName] withPredicate:predicate sorts:nil];
 	return [courses lastObject];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

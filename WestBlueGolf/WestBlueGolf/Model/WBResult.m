@@ -34,7 +34,7 @@
 		ALog(@"Attempting to add result with points totalling greater than 24");
 	}
 	
-	WBResult *newResult = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBResult *newResult = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newResult.pointsValue = points;
 	newResult.priorHandicapValue = priorHandicap;
 	newResult.scoreValue = score;
@@ -42,17 +42,7 @@
 	[match addResultsObject:newResult];
 	[player addResultsObject:newResult];
 	[team addResultsObject:newResult];
-	
-	//[WBCoreDataManager saveContext];
 	return newResult;
-}
-
-- (void)deleteResult {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (WBResult *)opponentResult {

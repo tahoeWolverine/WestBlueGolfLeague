@@ -7,17 +7,9 @@
 @implementation WBPeopleEntity
 
 + (WBPeopleEntity *)baseCreatePeopleWithName:(NSString *)name entityName:(NSString *)entName {
-	WBPeopleEntity *newPeople = [NSEntityDescription insertNewObjectForEntityForName:entName inManagedObjectContext:[self managedObjectContext]];
+	WBPeopleEntity *newPeople = [NSEntityDescription insertNewObjectForEntityForName:entName inManagedObjectContext:[self context]];
 	newPeople.name = name;
 	return newPeople;
-}
-
-- (void)deletePlayer {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

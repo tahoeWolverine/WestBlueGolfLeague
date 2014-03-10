@@ -101,7 +101,6 @@
 		BOOL isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
 		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
 		
-		//TODO: Current/Finishing Handi are not yet implemented
 		player = [WBPlayer createPlayerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
 		
 		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie];
@@ -129,8 +128,7 @@
 		
 		[WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
 	}
-	
-	//TODO: Account for NO SHOW
+
 	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable"]];
 	
@@ -158,28 +156,16 @@
 		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
 		
 		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
-		//TODO: HANDICAP CODE to update handicap as a result comes in
 		if (player1) {
-			/*WBTeam *otherTeam = nil;
-			 if (player1.team.teamIdValue != team1Id) {
-			 DLog(@"player 1 not on team 1");
-			 otherTeam = team1;
-			 }*/
-			
 			[WBResult createResultForMatch:match forPlayer:player1 team:team1 withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
 		}
 		if (player2) {
-			/*WBTeam *otherTeam = nil;
-			 if (player2.team.teamIdValue != team2Id) {
-			 DLog(@"player 2 not on team 2");
-			 otherTeam = [WBTeam teamWithId:team2Id];
-			 }*/
 			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
 		}
 	}
 	
 	// Delete the noTeam
-	[noTeam deleteTeam];
+	[noTeam deleteEntity];
 	
 	[WBCoreDataManager saveContext];
 }

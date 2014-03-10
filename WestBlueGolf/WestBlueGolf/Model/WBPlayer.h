@@ -33,8 +33,6 @@
 + (WBPlayer *)noShowPlayer;
 + (void)createNoShowPlayer;
 
-- (void)deletePlayer;
-
 + (WBPlayer *)playerWithName:(NSString *)name;
 + (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts;
 

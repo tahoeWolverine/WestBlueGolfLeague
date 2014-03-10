@@ -21,14 +21,6 @@
 	return newTeam;
 }
 
-- (void)deleteTeam {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
-}
-
 + (WBTeam *)teamWithId:(NSInteger)teamId {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
 	NSArray *teams = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];

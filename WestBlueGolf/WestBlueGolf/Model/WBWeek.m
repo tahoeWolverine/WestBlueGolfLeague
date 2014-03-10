@@ -13,29 +13,19 @@
 						inYear:(WBYear *)year
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex {
-	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newWeek.date = date;
 	newWeek.year = year;
 	newWeek.seasonIndexValue = seasonIndex;
 	
 	[course addWeeksObject:newWeek];
-	
-	//[WBCoreDataManager saveContext];
 	return newWeek;
-}
-
-- (void)deleteWeek {
-	[[[self class] managedObjectContext] deleteObject:self];
 }
 
 + (WBWeek *)weekWithId:(NSInteger)weekId {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"seasonIndex = %@", [NSNumber numberWithInteger:weekId]];
 	NSArray *weeks = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
 	return [weeks lastObject];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

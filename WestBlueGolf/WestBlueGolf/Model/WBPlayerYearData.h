@@ -8,6 +8,4 @@
 							  withFinishingHandicap:(NSInteger)finishingHandicap
 										   isRookie:(BOOL)isRookie;
 
-- (void)deleteYearData;
-
 @end

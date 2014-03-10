@@ -32,14 +32,6 @@
 	return newPlayer;
 }
 
-- (void)deletePlayer {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
-}
-
 - (void)setPlayerToMe {
 	self.meValue = YES;
 	self.favoriteValue = YES;
@@ -69,7 +61,7 @@
 	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
 	request.sortDescriptors = sorts;
 	NSError *error = nil;
-	NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[self context] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}
@@ -138,7 +130,7 @@
 	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
 	
 	NSError *error = nil;
-	NSArray *results = [[[self class] managedObjectContext] executeFetchRequest:request error:&error];
+	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
 	if (error) {
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}

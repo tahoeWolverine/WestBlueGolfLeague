@@ -15,24 +15,14 @@
 							   withStartingHandicap:(NSInteger)startingHandicap
 							  withFinishingHandicap:(NSInteger)finishingHandicap
 										   isRookie:(BOOL)isRookie {
-	WBPlayerYearData *newData = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBPlayerYearData *newData = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newData.startingHandicapValue = startingHandicap;
 	newData.finishingHandicapValue = finishingHandicap;
 	newData.isRookieValue = isRookie;
 	
 	[player addYearDataObject:newData];
 	[year addPlayerYearDataObject:newData];
-	
-	//[WBCoreDataManager saveContext];
 	return newData;
-}
-
-- (void)deleteYearData {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 @end

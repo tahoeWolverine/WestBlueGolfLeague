@@ -16,23 +16,13 @@
 		return nil;
 	}
 	
-	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	data.valueValue = value;
 	data.rankValue = rank;
 	
 	[entity addBoardDataObject:data];
 	[leaderBoard addBoardDataObject:data];
-	
-	//[WBCoreDataManager saveContext];
 	return data;
-}
-
-- (void)deleteBoardData {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (NSString *)rankString {

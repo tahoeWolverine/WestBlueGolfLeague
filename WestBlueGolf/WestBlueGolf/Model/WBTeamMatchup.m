@@ -13,15 +13,13 @@
 @implementation WBTeamMatchup
 
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week {
-	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] managedObjectContext]];
+	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newTeamMatchup.week = week;
 	[newTeamMatchup addTeamsObject:team1];
 	[newTeamMatchup addTeamsObject:team2];
 
 	//TODO: Support incomplete matches
 	newTeamMatchup.matchCompleteValue = YES;
-	
-	//[WBCoreDataManager saveContext];
 	return newTeamMatchup;
 }
 
@@ -29,14 +27,6 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team];
 	NSArray *matchups = [WBCoreDataManager findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
 	return [matchups lastObject];
-}
-
-- (void)deleteTeamMatchup {
-	[[[self class] managedObjectContext] deleteObject:self];
-}
-
-+ (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (NSArray *)displayStrings {
