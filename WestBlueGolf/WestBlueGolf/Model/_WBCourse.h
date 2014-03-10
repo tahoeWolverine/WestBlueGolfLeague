@@ -2,7 +2,7 @@
 // Make changes to WBCourse.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBCourseAttributes {
 	__unsafe_unretained NSString *name;
@@ -24,7 +24,7 @@ extern const struct WBCourseFetchedProperties {
 @interface WBCourseID : NSManagedObjectID {}
 @end
 
-@interface _WBCourse : NSManagedObject {}
+@interface _WBCourse : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

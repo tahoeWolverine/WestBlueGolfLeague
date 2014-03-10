@@ -2,7 +2,7 @@
 // Make changes to WBResult.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBResultAttributes {
 	__unsafe_unretained NSString *points;
@@ -30,7 +30,7 @@ extern const struct WBResultFetchedProperties {
 @interface WBResultID : NSManagedObjectID {}
 @end
 
-@interface _WBResult : NSManagedObject {}
+@interface _WBResult : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

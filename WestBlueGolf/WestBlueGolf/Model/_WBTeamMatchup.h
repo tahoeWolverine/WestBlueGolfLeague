@@ -2,7 +2,7 @@
 // Make changes to WBTeamMatchup.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBTeamMatchupAttributes {
 	__unsafe_unretained NSString *matchComplete;
@@ -26,7 +26,7 @@ extern const struct WBTeamMatchupFetchedProperties {
 @interface WBTeamMatchupID : NSManagedObjectID {}
 @end
 
-@interface _WBTeamMatchup : NSManagedObject {}
+@interface _WBTeamMatchup : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

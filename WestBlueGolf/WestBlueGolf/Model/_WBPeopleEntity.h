@@ -2,7 +2,7 @@
 // Make changes to WBPeopleEntity.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBPeopleEntityAttributes {
 	__unsafe_unretained NSString *me;
@@ -24,7 +24,7 @@ extern const struct WBPeopleEntityFetchedProperties {
 @interface WBPeopleEntityID : NSManagedObjectID {}
 @end
 
-@interface _WBPeopleEntity : NSManagedObject {}
+@interface _WBPeopleEntity : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

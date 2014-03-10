@@ -2,7 +2,7 @@
 // Make changes to WBWeek.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBWeekAttributes {
 	__unsafe_unretained NSString *date;
@@ -28,7 +28,7 @@ extern const struct WBWeekFetchedProperties {
 @interface WBWeekID : NSManagedObjectID {}
 @end
 
-@interface _WBWeek : NSManagedObject {}
+@interface _WBWeek : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

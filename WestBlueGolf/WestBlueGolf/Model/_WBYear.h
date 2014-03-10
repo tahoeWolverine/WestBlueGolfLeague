@@ -2,7 +2,7 @@
 // Make changes to WBYear.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBYearAttributes {
 	__unsafe_unretained NSString *isComplete;
@@ -28,7 +28,7 @@ extern const struct WBYearFetchedProperties {
 @interface WBYearID : NSManagedObjectID {}
 @end
 
-@interface _WBYear : NSManagedObject {}
+@interface _WBYear : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

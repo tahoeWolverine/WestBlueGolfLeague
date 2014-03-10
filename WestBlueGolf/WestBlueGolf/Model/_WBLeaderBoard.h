@@ -2,7 +2,7 @@
 // Make changes to WBLeaderBoard.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBLeaderBoardAttributes {
 	__unsafe_unretained NSString *isPlayerBoard;
@@ -28,7 +28,7 @@ extern const struct WBLeaderBoardFetchedProperties {
 @interface WBLeaderBoardID : NSManagedObjectID {}
 @end
 
-@interface _WBLeaderBoard : NSManagedObject {}
+@interface _WBLeaderBoard : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

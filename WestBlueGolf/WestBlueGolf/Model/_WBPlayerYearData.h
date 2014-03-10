@@ -2,7 +2,7 @@
 // Make changes to WBPlayerYearData.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBPlayerYearDataAttributes {
 	__unsafe_unretained NSString *finishingHandicap;
@@ -28,7 +28,7 @@ extern const struct WBPlayerYearDataFetchedProperties {
 @interface WBPlayerYearDataID : NSManagedObjectID {}
 @end
 
-@interface _WBPlayerYearData : NSManagedObject {}
+@interface _WBPlayerYearData : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

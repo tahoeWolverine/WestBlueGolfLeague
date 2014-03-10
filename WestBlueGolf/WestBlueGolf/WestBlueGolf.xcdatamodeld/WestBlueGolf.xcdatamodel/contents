@@ -5,11 +5,17 @@
         <attribute name="value" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <relationship name="leaderBoard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBLeaderBoard" inverseName="boardData" inverseEntity="WBLeaderBoard" syncable="YES"/>
         <relationship name="peopleEntity" maxCount="1" deletionRule="Nullify" destinationEntity="WBPeopleEntity" inverseName="boardData" inverseEntity="WBPeopleEntity" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBCourse" representedClassName="WBCourse" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="par" attributeType="Integer 16" minValueString="0" defaultValueString="36" syncable="YES"/>
         <relationship name="weeks" toMany="YES" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="course" inverseEntity="WBWeek" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBLeaderBoard" representedClassName="WBLeaderBoard" syncable="YES">
         <attribute name="isPlayerBoard" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -17,16 +23,25 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="tablePriority" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="boardData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBBoardData" inverseName="leaderBoard" inverseEntity="WBBoardData" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBMatch" representedClassName="WBMatch" syncable="YES">
         <relationship name="players" toMany="YES" maxCount="2" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="matches" inverseEntity="WBPlayer" syncable="YES"/>
         <relationship name="results" optional="YES" toMany="YES" maxCount="2" deletionRule="Cascade" destinationEntity="WBResult" inverseName="match" inverseEntity="WBResult" syncable="YES"/>
         <relationship name="teamMatchup" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeamMatchup" inverseName="matches" inverseEntity="WBTeamMatchup" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBPeopleEntity" representedClassName="WBPeopleEntity" syncable="YES">
         <attribute name="me" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="boardData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBBoardData" inverseName="peopleEntity" inverseEntity="WBBoardData" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBPlayer" representedClassName="WBPlayer" parentEntity="WBPeopleEntity" syncable="YES">
         <attribute name="currentHandicap" attributeType="Integer 16" syncable="YES"/>
@@ -42,6 +57,9 @@
         <attribute name="startingHandicap" attributeType="Integer 16" syncable="YES"/>
         <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="yearData" inverseEntity="WBPlayer" syncable="YES"/>
         <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="playerYearData" inverseEntity="WBYear" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBResult" representedClassName="WBResult" syncable="YES">
         <attribute name="points" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="24" defaultValueString="0" syncable="YES"/>
@@ -50,6 +68,9 @@
         <relationship name="match" maxCount="1" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="results" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="results" inverseEntity="WBPlayer" syncable="YES"/>
         <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="results" inverseEntity="WBTeam" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBTeam" representedClassName="WBTeam" parentEntity="WBPeopleEntity" syncable="YES">
         <attribute name="teamId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -63,6 +84,9 @@
         <relationship name="matches" optional="YES" toMany="YES" maxCount="4" deletionRule="Cascade" destinationEntity="WBMatch" inverseName="teamMatchup" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="teams" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="matchups" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="teamMatchups" inverseEntity="WBWeek" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBWeek" representedClassName="WBWeek" syncable="YES">
         <attribute name="date" attributeType="Date" syncable="YES"/>
@@ -70,6 +94,9 @@
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="WBCourse" inverseName="weeks" inverseEntity="WBCourse" syncable="YES"/>
         <relationship name="teamMatchups" toMany="YES" deletionRule="Cascade" destinationEntity="WBTeamMatchup" inverseName="week" inverseEntity="WBTeamMatchup" syncable="YES"/>
         <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="weeks" inverseEntity="WBYear" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <entity name="WBYear" representedClassName="WBYear" syncable="YES">
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -77,6 +104,9 @@
         <relationship name="champion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="championYears" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="playerYearData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="year" inverseEntity="WBPlayerYearData" syncable="YES"/>
         <relationship name="weeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBWeek" inverseName="year" inverseEntity="WBWeek" syncable="YES"/>
+        <userInfo>
+            <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
+        </userInfo>
     </entity>
     <elements>
         <element name="WBBoardData" positionX="153" positionY="72" width="128" height="103"/>

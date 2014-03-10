@@ -2,7 +2,7 @@
 // Make changes to WBMatch.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBMatchAttributes {
 } WBMatchAttributes;
@@ -24,7 +24,7 @@ extern const struct WBMatchFetchedProperties {
 @interface WBMatchID : NSManagedObjectID {}
 @end
 
-@interface _WBMatch : NSManagedObject {}
+@interface _WBMatch : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

@@ -2,7 +2,7 @@
 // Make changes to WBBoardData.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "WBManagedObject.h"
 
 extern const struct WBBoardDataAttributes {
 	__unsafe_unretained NSString *rank;
@@ -26,7 +26,7 @@ extern const struct WBBoardDataFetchedProperties {
 @interface WBBoardDataID : NSManagedObjectID {}
 @end
 
-@interface _WBBoardData : NSManagedObject {}
+@interface _WBBoardData : WBManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
