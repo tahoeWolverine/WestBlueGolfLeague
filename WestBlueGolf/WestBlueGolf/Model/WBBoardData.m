@@ -9,7 +9,7 @@
 
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
-									value:(NSInteger)value
+									value:(double)value
 									 rank:(NSInteger)rank {
 	if (!entity) {
 		ALog(@"No people sent to boardData contstructor");

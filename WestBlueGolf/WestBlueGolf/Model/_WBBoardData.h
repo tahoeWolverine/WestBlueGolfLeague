@@ -54,9 +54,9 @@ extern const struct WBBoardDataFetchedProperties {
 
 
 
-@property int16_t valueValue;
-- (int16_t)valueValue;
-- (void)setValueValue:(int16_t)value_;
+@property double valueValue;
+- (double)valueValue;
+- (void)setValueValue:(double)value_;
 
 //- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
 
@@ -100,8 +100,8 @@ extern const struct WBBoardDataFetchedProperties {
 - (NSNumber*)primitiveValue;
 - (void)setPrimitiveValue:(NSNumber*)value;
 
-- (int16_t)primitiveValueValue;
-- (void)setPrimitiveValueValue:(int16_t)value_;
+- (double)primitiveValueValue;
+- (void)setPrimitiveValueValue:(double)value_;
 
 
 

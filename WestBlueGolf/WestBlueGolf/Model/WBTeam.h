@@ -28,7 +28,10 @@
 - (NSString *)placeString;
 - (NSString *)averagePointsString;
 - (NSString *)record;
+- (CGFloat)recordRatioForYear:(WBYear *)year;
 - (NSString *)individualRecord;
+- (CGFloat)individualRecordRatioForYear:(WBYear *)year;
 - (NSString *)improvedString;
+- (CGFloat)averageHandicapForYear:(WBYear *)year;
 
 @end

@@ -18,9 +18,9 @@
 }
 
 - (void)configureCellForLeaderBoard:(WBLeaderBoard *)leaderBoard {
-	self.winner.text = @"Earthmakers";//[leaderBoard winnerData].peopleEntity.name;
+	self.winner.text = [leaderBoard winnerData].peopleEntity.name;
 	self.leaderBoardName.text = [leaderBoard name];
-	self.winnerValue.text = @"900";//[NSString stringWithFormat:@"%@", [leaderBoard winnerData].value];
+	self.winnerValue.text = [NSString stringWithFormat:@"%@", [leaderBoard winnerData].value];
 }
 
 @end

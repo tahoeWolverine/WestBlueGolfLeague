@@ -5,7 +5,7 @@
 
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 								leaderBoard:(WBLeaderBoard *)leaderBoard
-									  value:(NSInteger)value
+									  value:(double)value
 									   rank:(NSInteger)rank;
 
 - (void)deleteBoardData;

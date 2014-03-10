@@ -90,6 +90,13 @@
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }
 
+- (CGFloat)individualRecordRatioForYear:(WBYear *)year {
+	NSArray *record = [self individualRecordForYear:year];
+	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
+	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
+	return totalWins / totalWeeks;
+}
+
 - (NSArray *)individualRecordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
 	NSArray *results = [[WBCoreDataManager class] findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
@@ -114,6 +121,13 @@
 	NSArray *record = [self recordForYear:[WBYear thisYear]];
 	BOOL hasTies = record[2] && [(NSNumber *)record[2] integerValue] != 0;
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
+}
+
+- (CGFloat)recordRatioForYear:(WBYear *)year {
+	NSArray *record = [self recordForYear:year];
+	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
+	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
+	return totalWins / totalWeeks;
 }
 
 - (NSArray *)recordForYear:(WBYear *)year {
@@ -160,6 +174,14 @@
 - (NSString *)improvedString {
 	NSInteger improved = [self improvedInYear:[WBYear thisYear]];
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
+}
+
+- (CGFloat)averageHandicapForYear:(WBYear *)year {
+	NSInteger totalHandicap = 0;
+	for (WBPlayer *player in self.players) {
+		totalHandicap += player.currentHandicapValue;
+	}
+	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
 }
 
 @end

@@ -43,6 +43,7 @@
 - (NSString *)currentHandicapString;
 
 - (NSArray *)recordForYear:(WBYear *)year;
+- (CGFloat)recordRatioForYear:(WBYear *)year;
 - (NSString *)record;
 
 - (NSInteger)lowRoundForYear:(WBYear *)year;

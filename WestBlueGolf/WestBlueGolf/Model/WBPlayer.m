@@ -97,9 +97,16 @@
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }
 
+- (CGFloat)recordRatioForYear:(WBYear *)year {
+	NSArray *record = [self recordForYear:year];
+	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
+	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
+	return totalWeeks > 0 ? totalWins / totalWeeks : 0.0f;
+}
+
 - (NSArray *)recordForYear:(WBYear *)year {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	NSArray *results = [[WBCoreDataManager class] findEntity:[[self class] entityName] withPredicate:predicate sorts:nil];
+	NSArray *results = [[WBCoreDataManager class] findEntity:[WBResult entityName] withPredicate:predicate sorts:nil];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -135,6 +142,10 @@
 		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
 	}
 	
+	if (!results || results.count == 0) {
+		return 99;
+	}
+	
 	return [(WBResult *)[results firstObject] scoreValue];
 }
 
@@ -145,7 +156,7 @@
 - (NSInteger)lowNetForYear:(WBYear *)year {
 	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
 	if (results && results.count > 0) {
-		NSInteger lowNet = 10;
+		NSInteger lowNet = 100;
 		for (WBResult *result in results) {
 			NSInteger netScoreDifference = [result netScoreDifference];
 			if (netScoreDifference < lowNet) {

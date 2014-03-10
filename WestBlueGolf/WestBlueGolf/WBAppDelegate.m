@@ -71,14 +71,14 @@
 - (void)calculateLeaderBoards {
 	// Important team boards
 	[self calculateTeamPointsBoard];
-	[WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
+	[self calculateTeamAverageHandicapBoard];
+	[self calculateTeamWinLossBoard];
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:4 isPlayerBoard:NO];
 	
 	// Extra team boards
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Net Score" key:kLeaderboardTeamAverageNet tablePriority:5 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Score" key:kLeaderboardTeamAverageScore tablePriority:6 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio tablePriority:7 isPlayerBoard:NO];
+	[self calculateTeamIndividualWinLossBoard];
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins tablePriority:8 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:9 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:10 isPlayerBoard:NO];
@@ -86,11 +86,11 @@
 	
 	
 	// Important Player leaderboards
-	[WBLeaderBoard createLeaderBoardWithName:@"Top Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Top Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
+	[self calculatePlayerTopScoreBoard];
+	[self calculatePlayerTopNetScoreBoard];
 	[self calculatePlayerHandicapBoard];
-	[WBLeaderBoard createLeaderBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints tablePriority:4 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio tablePriority:5 isPlayerBoard:YES];
+	[self calculatePlayerAveragePointsBoard];
+	[self calculatePlayerWinLossRatioBoard];
 	[WBLeaderBoard createLeaderBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved tablePriority:6 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore tablePriority:7 isPlayerBoard:YES];
 	
@@ -106,16 +106,6 @@
 	[WBCoreDataManager saveContext];
 }
 
-- (void)calculatePlayerHandicapBoard {
-	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
-	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
-	for (WBPlayer *player in players) {
-		[WBBoardData createBoardDataForEntity:player leaderBoard:board value:player.currentHandicapValue rank:0];
-	}
-	
-	[self assignRanksForBoard:board ascending:YES];
-}
-
 - (void)calculateTeamPointsBoard {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
 	NSArray *teams = [WBCoreDataManager findEntity:[WBTeam entityName] withPredicate:nil sorts:nil];
@@ -127,11 +117,110 @@
 	[self assignRanksForBoard:board ascending:NO];
 }
 
+- (void)calculateTeamAverageHandicapBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
+	NSArray *teams = [WBCoreDataManager findEntity:[WBTeam entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBTeam *team in teams) {
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team averageHandicapForYear:year] rank:0];
+	}
+	
+	[self assignRanksForBoard:board ascending:YES];
+}
+
+- (void)calculateTeamWinLossBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
+	NSArray *teams = [WBCoreDataManager findEntity:[WBTeam entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBTeam *team in teams) {
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team recordRatioForYear:year] rank:0];
+	}
+	
+	[self assignRanksForBoard:board ascending:NO];
+}
+
+- (void)calculateTeamIndividualWinLossBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio tablePriority:7 isPlayerBoard:NO];
+	NSArray *teams = [WBCoreDataManager findEntity:[WBTeam entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBTeam *team in teams) {
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team individualRecordRatioForYear:year] rank:0];
+	}
+	
+	[self assignRanksForBoard:board ascending:NO];
+}
+
+#pragma mark - Player Boards
+
+- (void)calculatePlayerTopScoreBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Top Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBPlayer *player in players) {
+		if (player.results && player.results.count > 0) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player lowRoundForYear:year] rank:0];
+		}
+	}
+	
+	[self assignRanksForBoard:board ascending:YES];
+}
+
+- (void)calculatePlayerTopNetScoreBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Top Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBPlayer *player in players) {
+		if (player.results && player.results.count > 0) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player lowNetForYear:year] rank:0];
+		}
+	}
+	
+	[self assignRanksForBoard:board ascending:YES];
+}
+
+- (void)calculatePlayerHandicapBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	for (WBPlayer *player in players) {
+		if (player.results && player.results.count > 0) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:player.currentHandicapValue rank:0];
+		}
+	}
+	
+	[self assignRanksForBoard:board ascending:YES];
+}
+
+- (void)calculatePlayerAveragePointsBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints tablePriority:4 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBPlayer *player in players) {
+		if (player.results && player.results.count > 0) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player averagePointsInYear:year] rank:0];
+		}
+	}
+	
+	[self assignRanksForBoard:board ascending:NO];
+}
+
+- (void)calculatePlayerWinLossRatioBoard {
+	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio tablePriority:5 isPlayerBoard:YES];
+	NSArray *players = [WBCoreDataManager findEntity:[WBPlayer entityName] withPredicate:nil sorts:nil];
+	WBYear *year = [WBYear thisYear];
+	for (WBPlayer *player in players) {
+		if (player.results && player.results.count > 0) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player recordRatioForYear:year] rank:0];
+		}
+	}
+	
+	[self assignRanksForBoard:board ascending:NO];
+}
+
 - (void)assignRanksForBoard:(WBLeaderBoard *)board ascending:(BOOL)ascending {
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:ascending], [NSSortDescriptor sortDescriptorWithKey:@"peopleEntity.name" ascending:YES]];
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", board];
 	NSArray *data = [WBCoreDataManager findEntity:[WBBoardData entityName] withPredicate:pred sorts:sorts];
-	NSInteger lastValue = INT16_MAX, rank = 0, i = 0;
+	double lastValue = INT16_MAX, rank = 0, i = 0;
 	for (WBBoardData *datum in data) {
 		if (lastValue != datum.valueValue) {
 			rank = i + 1;

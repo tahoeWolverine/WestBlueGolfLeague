@@ -2,7 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="WBBoardData" representedClassName="WBBoardData" syncable="YES">
         <attribute name="rank" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <attribute name="value" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="value" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <relationship name="leaderBoard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBLeaderBoard" inverseName="boardData" inverseEntity="WBLeaderBoard" syncable="YES"/>
         <relationship name="peopleEntity" maxCount="1" deletionRule="Nullify" destinationEntity="WBPeopleEntity" inverseName="boardData" inverseEntity="WBPeopleEntity" syncable="YES"/>
     </entity>

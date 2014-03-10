@@ -20,7 +20,16 @@
 - (void)configureCellForBoardData:(WBBoardData *)data {
 	self.rankLabel.text = [data rankString];
 	self.peopleName.text = data.peopleEntity.name;
-	self.peopleValue.text = [NSString stringWithFormat:@"%@", data.value];
+	
+	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	NSNumber *avg = [NSNumber numberWithFloat:data.valueValue];
+	if ([avg integerValue] > 1) {
+		fmt.minimumFractionDigits = 2;
+		self.peopleValue.text = [fmt stringFromNumber:avg];
+	} else {
+		fmt.minimumFractionDigits = 3;
+		self.peopleValue.text = [NSString stringWithFormat:@"0%@", [fmt stringFromNumber:avg]];
+	}
 }
 
 @end

@@ -89,22 +89,22 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 
 
 
-- (int16_t)valueValue {
+- (double)valueValue {
 	NSNumber *result = [self value];
-	return [result shortValue];
+	return [result doubleValue];
 }
 
-- (void)setValueValue:(int16_t)value_ {
-	[self setValue:[NSNumber numberWithShort:value_]];
+- (void)setValueValue:(double)value_ {
+	[self setValue:[NSNumber numberWithDouble:value_]];
 }
 
-- (int16_t)primitiveValueValue {
+- (double)primitiveValueValue {
 	NSNumber *result = [self primitiveValue];
-	return [result shortValue];
+	return [result doubleValue];
 }
 
-- (void)setPrimitiveValueValue:(int16_t)value_ {
-	[self setPrimitiveValue:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveValueValue:(double)value_ {
+	[self setPrimitiveValue:[NSNumber numberWithDouble:value_]];
 }
 
 

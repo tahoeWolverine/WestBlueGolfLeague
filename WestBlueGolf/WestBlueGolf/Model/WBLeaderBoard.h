@@ -15,6 +15,4 @@
 
 - (WBBoardData *)winnerData;
 
-
-
 @end
