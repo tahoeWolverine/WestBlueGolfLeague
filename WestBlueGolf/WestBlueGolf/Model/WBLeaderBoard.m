@@ -23,11 +23,8 @@
 
 - (WBBoardData *)winnerData {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", self];
-	//TODO: Optimize for single result
-	//request.fetchLimit = 1;
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES]];
-	NSArray *results = [WBBoardData findWithPredicate:pred sortedBy:sorts];
-	return [results firstObject];
+	return (WBBoardData *)[WBBoardData findFirstRecordWithPredicate:pred sortedBy:sorts];
 }
 
 @end

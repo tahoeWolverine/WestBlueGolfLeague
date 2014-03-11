@@ -115,15 +115,14 @@
 
 - (NSInteger)lowRoundForYear:(WBYear *)year {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	//TODO: request.fetchLimit = 1;
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
-	NSArray *results = [WBResult findWithPredicate:pred sortedBy:sorts];
-	
-	if (!results || results.count == 0) {
+	//NSArray *results = [WBResult findWithPredicate:pred sortedBy:sorts];
+	WBResult *result = (WBResult *)[WBResult findFirstRecordWithPredicate:pred sortedBy:sorts];
+	if (!result) {
 		return 99;
 	}
 	
-	return [(WBResult *)[results firstObject] scoreValue];
+	return [result scoreValue];
 }
 
 - (NSString *)lowRoundString {

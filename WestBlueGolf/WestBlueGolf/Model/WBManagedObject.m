@@ -37,8 +37,49 @@
 	return request;
 }
 
-+ (id)findAll {
++ (NSArray *)findAll {
 	NSFetchRequest *request = [self fetchAllRequest];
+	NSError *error = nil;
+	NSArray *results = [[self context] executeFetchRequest:request error:&error];
+	if (error) {
+		[[self dataManager] performSelector:@selector(logError:) withObject:error];
+	}
+	return results;
+}
+
++ (NSArray *)findAllSortedBy:(NSString *)property ascending:(BOOL)asc {
+	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:property ascending:asc];
+	NSArray *sorts = @[descriptor];
+	return [self findWithPredicate:nil sortedBy:sorts fetchLimit:0];
+}
+
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate {
+	return [self findWithPredicate:predicate sortedBy:nil fetchLimit:0];
+}
+
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors {
+	return [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:0];
+}
+
++ (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors {
+	NSArray *results = [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:1];
+	return (WBManagedObject *)[results firstObject];
+}
+
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors fetchLimit:(NSInteger)fetchLimit {
+	NSFetchRequest *request = [self fetchAllRequest];
+	if (fetchLimit > 0) {
+		[request setFetchLimit:fetchLimit];
+	}
+	
+	if (predicate) {
+		[request setPredicate:predicate];
+	}
+	
+	if (sortDescriptors && sortDescriptors.count > 0) {
+		[request setSortDescriptors:sortDescriptors];
+	}
+	
 	NSError *error = nil;
 	NSArray *results = [[self context] executeFetchRequest:request error:&error];
 	if (error) {
@@ -55,44 +96,6 @@
 		[[self dataManager] performSelector:@selector(logError:) withObject:error];
 	}
 	return count;
-}
-
-+ (id)findAllSortedBy:(NSString *)property ascending:(BOOL)asc {
-	NSFetchRequest *request = [self fetchAllRequest];
-	NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:property ascending:asc];
-	[request setSortDescriptors:@[descriptor]];
-	
-	NSError *error = nil;
-	NSArray *results = [[self context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[self dataManager] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
-}
-
-+ (id)findWithPredicate:(NSPredicate *)predicate {
-	NSFetchRequest *request = [self fetchAllRequest];
-	[request setPredicate:predicate];
-	
-	NSError *error = nil;
-	NSArray *results = [[self context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[self dataManager] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
-}
-
-+ (id)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors {
-	NSFetchRequest *request = [self fetchAllRequest];
-	[request setPredicate:predicate];
-	[request setSortDescriptors:sortDescriptors];
-	
-	NSError *error = nil;
-	NSArray *results = [[self context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[self dataManager] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
 }
 
 + (NSUInteger)countWithPredicate:(NSPredicate *)predicate {

@@ -14,11 +14,13 @@
 + (WBManagedObject *)createEntity;
 - (void)deleteEntity;
 
-+ (id)findAll;
++ (NSArray *)findAll;
++ (NSArray *)findAllSortedBy:(NSString *)property ascending:(BOOL)asc;
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate;
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
++ (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
+
 + (NSUInteger)countAll;
-+ (id)findAllSortedBy:(NSString *)property ascending:(BOOL)asc;
-+ (id)findWithPredicate:(NSPredicate *)predicate;
-+ (id)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
 + (NSUInteger)countWithPredicate:(NSPredicate *)predicate;
 
 + (Class)dataManager;

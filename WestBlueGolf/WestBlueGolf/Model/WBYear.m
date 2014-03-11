@@ -17,9 +17,8 @@
 }
 
 + (WBYear *)thisYear {
-	//TODO: request.fetchLimit = 1;
-	NSArray *results = [WBYear findAllSortedBy:@"value" ascending:NO];
-	return [results firstObject];
+	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]];
+	return (WBYear *)[self findFirstRecordWithPredicate:nil sortedBy:sorts];
 }
 
 @end
