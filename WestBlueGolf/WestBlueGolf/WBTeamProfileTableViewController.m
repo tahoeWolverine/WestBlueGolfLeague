@@ -33,11 +33,12 @@
 
 - (void)refreshTeamHighlights {
 	WBTeam *team = (WBTeam *)self.selectedEntity;
-	self.placeLabel.text = [team placeString];
+	WBBoardData *teamRank = [team findTotalPointsBoardData];
+	self.placeLabel.text = [NSString stringWithFormat:@"%@", teamRank.rank];
 	self.averagePointsLabel.text = [team averagePointsString];
 	self.winLossLabel.text = [team record];
 	self.winLossAllLabel.text = [team individualRecord];
-	self.improvedLabel.text = [team improvedString];
+	self.improvedLabel.text = [NSString stringWithFormat:@"%@", [team findImprovedBoardData].rank];
 }
 
 #pragma mark - WBEntityDetailViewController methods to implement

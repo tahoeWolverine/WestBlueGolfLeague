@@ -33,4 +33,9 @@
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
 
+- (WBBoardData *)findTotalPointsBoardData;
+- (WBBoardData *)findHandicapBoardData;
+- (WBBoardData *)findWinLossRatioBoardData;
+- (WBBoardData *)findImprovedBoardData;
+- (WBBoardData *)findIndividualWinLossRatioBoardData;
 @end

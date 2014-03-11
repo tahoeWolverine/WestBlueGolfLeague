@@ -1,4 +1,5 @@
 #import "WBTeam.h"
+#import "WBBoardData.h"
 #import "WBCoreDataManager.h"
 #import "WBMatch.h"
 #import "WBPlayer.h"
@@ -173,6 +174,26 @@
 		totalHandicap += player.currentHandicapValue;
 	}
 	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
+}
+
+- (WBBoardData *)findTotalPointsBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamAveragePoints peopleEntity:self];
+}
+
+- (WBBoardData *)findHandicapBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamAverageHandicap peopleEntity:self];
+}
+
+- (WBBoardData *)findWinLossRatioBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamWeeklyWinLossRatio peopleEntity:self];
+}
+
+- (WBBoardData *)findImprovedBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamTotalImproved peopleEntity:self];
+}
+
+- (WBBoardData *)findIndividualWinLossRatioBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamIndividualWinLossRatio peopleEntity:self];
 }
 
 @end
