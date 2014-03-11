@@ -18,16 +18,33 @@
 	
 	// Important team boards
 	NSArray *teams = [WBTeam findAll];
-	[self calculateTeamPointsBoardWithTeams:teams year:year];
-	[self calculateTeamAverageHandicapBoardWithTeams:teams year:year];
-	[self calculateTeamWinLossBoardWithTeams:teams year:year];
-	[self calculateTeamImprovedBoardWithTeams:teams year:year];
+	
+	[self calculateTeamBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints priority:1 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return (double)[team totalPointsForYear:year];
+	}];
+	
+	[self calculateTeamBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap priority:2 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
+		return [team averageHandicapForYear:year];
+	}];
+	
+	[self calculateTeamBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio priority:3 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return [team recordRatioForYear:year];
+	}];
+	
+	[self calculateTeamBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved priority:4 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
+		return (double)[team improvedInYear:year];
+	}];
+
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:5 isPlayerBoard:NO];
 	
 	// Extra team boards
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Net Score" key:kLeaderboardTeamAverageNet tablePriority:6 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Score" key:kLeaderboardTeamAverageScore tablePriority:7 isPlayerBoard:NO];
-	[self calculateTeamIndividualWinLossBoardWithTeams:teams year:year];
+
+	[self calculateTeamBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio priority:8 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return [team individualRecordRatioForYear:year];
+	}];
+
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins tablePriority:9 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:10 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:11 isPlayerBoard:NO];
@@ -36,12 +53,31 @@
 	
 	// Important Player leaderboards
 	NSArray *players = [WBPlayer findAll];
-	[self calculatePlayerTopScoreBoardWithPlayers:players year:year];
-	[self calculatePlayerTopNetScoreBoardWithPlayers:players year:year];
-	[self calculatePlayerHandicapBoardWithPlayers:players year:year];
-	[self calculatePlayerAveragePointsBoardWithPlayers:players year:year];
-	[self calculatePlayerWinLossRatioBoardWithPlayers:players year:year];
-	[self calculatePlayerImprovedBoardWithPlayers:players year:year];
+
+	[self calculatePlayerBoardWithName:@"Best Score" key:kLeaderboardPlayerMinScore priority:1 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
+		return (double)[player lowRoundForYear:year];
+	}];
+
+	[self calculatePlayerBoardWithName:@"Best Net Score" key:kLeaderboardPlayerMinNet priority:2 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
+		return (double)[player lowNetForYear:year];
+	}];
+
+	[self calculatePlayerBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap priority:3 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
+		return (double)player.currentHandicapValue;
+	}];
+
+	[self calculatePlayerBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints priority:4 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return [player averagePointsInYear:year];
+	}];
+
+	[self calculatePlayerBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio priority:5 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return [player recordRatioForYear:year];
+	}];
+
+	[self calculatePlayerBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved priority:6 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
+		return (double)[player improvedInYear:year];
+	}];
+
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore tablePriority:7 isPlayerBoard:YES];
 	
 	// Extra Player boards
@@ -80,36 +116,6 @@
 	[self assignRanksForBoard:board ascending:ascending];
 }
 
-- (void)calculateTeamPointsBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
-	[self calculateTeamBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints priority:1 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
-		return (double)[team totalPointsForYear:year];
-	}];
-}
-
-- (void)calculateTeamAverageHandicapBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
-	[self calculateTeamBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap priority:2 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
-		return [team averageHandicapForYear:year];
-	}];
-}
-
-- (void)calculateTeamWinLossBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
-	[self calculateTeamBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio priority:3 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
-		return [team recordRatioForYear:year];
-	}];
-}
-
-- (void)calculateTeamImprovedBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
-	[self calculateTeamBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved priority:4 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
-		return (double)[team improvedInYear:year];
-	}];
-}
-
-- (void)calculateTeamIndividualWinLossBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
-	[self calculateTeamBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio priority:8 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
-		return [team individualRecordRatioForYear:year];
-	}];
-}
-
 #pragma mark - Player Boards
 
 - (void)calculatePlayerBoardWithName:(NSString *)name
@@ -136,42 +142,6 @@
 	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:ascending];
-}
-
-- (void)calculatePlayerTopScoreBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Best Score" key:kLeaderboardPlayerMinScore priority:1 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player lowRoundForYear:year];
-	}];
-}
-
-- (void)calculatePlayerTopNetScoreBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Best Net Score" key:kLeaderboardPlayerMinNet priority:2 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player lowNetForYear:year];
-	}];
-}
-
-- (void)calculatePlayerHandicapBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap priority:3 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)player.currentHandicapValue;
-	}];
-}
-
-- (void)calculatePlayerAveragePointsBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints priority:4 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
-		return [player averagePointsInYear:year];
-	}];
-}
-
-- (void)calculatePlayerWinLossRatioBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio priority:5 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
-		return [player recordRatioForYear:year];
-	}];
-}
-
-- (void)calculatePlayerImprovedBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
-	[self calculatePlayerBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved priority:6 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player improvedInYear:year];
-	}];
 }
 
 #pragma mark - Board Helper functions
