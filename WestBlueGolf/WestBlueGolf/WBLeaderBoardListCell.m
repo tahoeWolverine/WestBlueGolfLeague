@@ -18,15 +18,22 @@
 }
 
 - (void)configureCellForLeaderBoard:(WBLeaderBoard *)leaderBoard {
-	WBBoardData *data = [leaderBoard winnerData];
-	self.winner.text = data.peopleEntity.name;
 	self.leaderBoardName.text = [leaderBoard name];
 	
-	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-	NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
-	if (!data) {
+	NSArray *winners = [leaderBoard winnerData];
+	if (winners.count == 0) {
+		self.winner.text = @"";
 		self.winnerValue.text = @"";
 	} else {
+		WBBoardData *data = [winners firstObject];
+		if (winners.count == 1) {
+			self.winner.text = data.peopleEntity.name;
+		} else {
+			self.winner.text = [NSString stringWithFormat:@"%ld Leaders", (long)winners.count];
+		}
+
+		NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+		NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
 		if ([valueNum doubleValue] == 0) {
 			self.winnerValue.text = @"0";
 		} else if (fmod([valueNum doubleValue], 1.0) == 0) {

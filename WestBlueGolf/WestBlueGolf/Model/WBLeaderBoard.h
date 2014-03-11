@@ -9,6 +9,6 @@
 							   tablePriority:(NSInteger)tablePriority
 							   isPlayerBoard:(BOOL)isPlayerBoard;
 
-- (WBBoardData *)winnerData;
+- (NSArray *)winnerData;
 
 @end

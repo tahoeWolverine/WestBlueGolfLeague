@@ -21,10 +21,9 @@
 	return newBoard;
 }
 
-- (WBBoardData *)winnerData {
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", self];
-	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES]];
-	return (WBBoardData *)[WBBoardData findFirstRecordWithPredicate:pred sortedBy:sorts];
+- (NSArray *)winnerData {
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1", self];
+	return [WBBoardData findWithPredicate:pred];
 }
 
 @end
