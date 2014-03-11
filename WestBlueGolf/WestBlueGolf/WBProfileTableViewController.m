@@ -62,12 +62,12 @@
 
 - (void)refreshPlayerHighlights {
 	if (self.selectedPlayer) {
-		self.winLossLabel.text = [self.selectedPlayer record]; //[NSString stringWithFormat:@"%@", [self.selectedPlayer findWinLossBoardData].value];
-		self.handicapLabel.text = [NSString stringWithFormat:@"%@", [self.selectedPlayer findHandicapBoardData].value];
-		self.lowRoundLabel.text = [NSString stringWithFormat:@"%@", [self.selectedPlayer findLowScoreBoardData].value];
-		self.averagePointsLabel.text = [NSString stringWithFormat:@"%@", [self.selectedPlayer findAveragePointsBoardData].value];
-		self.improvedLabel.text = [NSString stringWithFormat:@"%@", [self.selectedPlayer findImprovedBoardData].value];
-		self.lowNetLabel.text = [NSString stringWithFormat:@"%@", [self.selectedPlayer findLowNetBoardData].value];
+		self.winLossLabel.text = [self.selectedPlayer record];
+		self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
+		self.lowRoundLabel.text = [self.selectedPlayer lowRoundString];
+		self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
+		self.improvedLabel.text = [self.selectedPlayer improvedString];
+		self.lowNetLabel.text = [self.selectedPlayer lowNetString];
 	} else {
 		self.winLossLabel.text = @"-";
 		self.handicapLabel.text = @"-";

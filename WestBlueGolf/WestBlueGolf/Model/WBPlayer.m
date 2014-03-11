@@ -126,7 +126,7 @@
 }
 
 - (NSString *)lowRoundString {
-	return [NSString stringWithFormat:@"%ld", (long)[self lowRoundForYear:[WBYear thisYear]]];
+	return [NSString stringWithFormat:@"%@", [self findLowScoreBoardData].value];
 }
 
 - (NSInteger)lowNetForYear:(WBYear *)year {
@@ -147,7 +147,7 @@
 }
 
 - (NSString *)lowNetString {
-	return [NSString stringWithFormat:@"%ld", (long)[self lowNetForYear:[WBYear thisYear]]];
+	return [NSString stringWithFormat:@"%@", [self findLowNetBoardData].value];
 }
 
 - (CGFloat)averagePointsInYear:(WBYear *)year {
@@ -167,7 +167,7 @@
 - (NSString *)averagePointsString {
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
-	NSNumber *avg = [NSNumber numberWithFloat:[self averagePointsInYear:[WBYear thisYear]]];
+	NSNumber *avg = [NSNumber numberWithFloat:[self findAveragePointsBoardData].value.floatValue];
 	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
 }
 
@@ -222,7 +222,7 @@
 }
 
 - (NSString *)improvedString {
-	NSInteger improved = [self improvedInYear:[WBYear thisYear]];
+	NSInteger improved = [self findImprovedBoardData].valueValue;
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 

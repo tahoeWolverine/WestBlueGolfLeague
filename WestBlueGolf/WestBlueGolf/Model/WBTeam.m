@@ -32,7 +32,7 @@
 	return [teams firstObject];
 }
 
-- (NSInteger)place {
+/*- (NSInteger)place {
 	WBYear *year = [WBYear thisYear];
 	NSInteger teamPoints = [self totalPointsForYear:year];
 	
@@ -50,10 +50,10 @@
 		}
 	}
 	return rank;
-}
+}*/
 
 - (NSString *)placeString {
-	NSInteger place = [self place];
+	NSInteger place = [self findTotalPointsBoardData].rankValue;
 	NSString *text = place == 1 ? @"st" : place == 2 ? @"nd" : place == 3 ? @"rd" : @"th";
 	return [NSString stringWithFormat:@"%ld%@", (long)place, text];
 }
@@ -164,7 +164,7 @@
 }
 
 - (NSString *)improvedString {
-	NSInteger improved = [self improvedInYear:[WBYear thisYear]];
+	NSInteger improved = [self findImprovedBoardData].valueValue;
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 
