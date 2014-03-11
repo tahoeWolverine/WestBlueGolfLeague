@@ -23,17 +23,17 @@
 	
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	NSNumber *avg = [NSNumber numberWithFloat:data.valueValue];
-	if ([avg doubleValue] == 0) {
+	if ([avg floatValue] == 0) {
 		self.peopleValue.text = @"0";
-	} else if (fmod([avg doubleValue], 1.0) == 0) {
+	} else if (fmod([avg floatValue], 1.0) == 0) {
 		fmt.maximumFractionDigits = 0;
 		self.peopleValue.text = [fmt stringFromNumber:avg];
-	} else if (abs([avg doubleValue]) >= 1) {
+	} else if (abs([avg floatValue]) >= 1) {
 		fmt.minimumFractionDigits = 2;
 		self.peopleValue.text = [fmt stringFromNumber:avg];
 	} else {
 		fmt.minimumFractionDigits = 3;
-		self.peopleValue.text = [NSString stringWithFormat:@"%@%@", avg.doubleValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:avg]];
+		self.peopleValue.text = [NSString stringWithFormat:@"%@%@", avg.floatValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:avg]];
 	}
 }
 

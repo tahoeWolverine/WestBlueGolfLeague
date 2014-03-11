@@ -11,6 +11,7 @@
 #import "WBYear.h"
 
 #define kNoShowPlayerName @"xx No Show xx"
+#define kNoShowPlayerScore 99.0f
 
 @interface WBPlayer ()
 
@@ -50,6 +51,10 @@
 
 + (void)createNoShowPlayer {
 	[WBPlayer createPlayerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
+}
+
+- (BOOL)isNoShowPlayer {
+	return [self.name isEqualToString:kNoShowPlayerName];
 }
 
 + (WBPlayer *)playerWithName:(NSString *)name {
@@ -217,18 +222,22 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalRoundScore = 0;
+	CGFloat roundCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result scoreDifference];
-		if (value < 99) {
-			totalOpponentScore += value;
-			opponentCount++;
-		}
+		//if (value < 60) {
+			totalRoundScore += value;
+			roundCount++;
+		//}
 	}
 	
-	return totalOpponentScore / opponentCount;
+	if (roundCount == 0) {
+		return 0.0;
+	}
+	
+	return totalRoundScore / roundCount;
 }
 
 - (CGFloat)averageNetScoreForYear:(WBYear *)year {
@@ -237,18 +246,18 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalRoundScore = 0;
+	CGFloat roundCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result netScoreDifference];
-		if (value < 99) {
-			totalOpponentScore += value;
-			opponentCount++;
-		}
+		//if (value < 60) {
+			totalRoundScore += value;
+			roundCount++;
+		//}
 	}
 	
-	return totalOpponentScore / opponentCount;
+	return totalRoundScore / roundCount;
 }
 
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
@@ -257,15 +266,19 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalOpponentScore = 0;
+	CGFloat opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] scoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}
+	}
+	
+	if (opponentCount == 0) {
+		return 0.0;
 	}
 	
 	return totalOpponentScore / opponentCount;
@@ -277,18 +290,38 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalOpponentScore = 0;
+	CGFloat opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] netScoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}
 	}
 	
+	if (opponentCount == 0) {
+		return 0.0;
+	}
+	
 	return totalOpponentScore / opponentCount;
+}
+
+- (NSInteger)mostPointsInMatchForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	NSInteger mostPoints = 0;
+	for (WBResult *result in results) {
+		if (result.pointsValue > mostPoints) {
+			mostPoints = result.pointsValue;
+		}
+	}
+	
+	return mostPoints;
 }
 
 #pragma mark - Leaderboard fetches

@@ -19,6 +19,8 @@
 
 #define kLeaderboardPlayerTopPercentage @"topPercentage"
 #define kLeaderboardPlayerTopTenPercentage @"topTenPercentage"
+#define kLeaderboardPlayerAverageMarginVictory @"averageMarginOfVictory"
+#define kLeaderboardPlayerAverageMarginNetVictory @"averageMarginOfNetVictory"
 
 @interface WBPlayer : _WBPlayer {}
 
@@ -33,9 +35,9 @@
 
 + (WBPlayer *)noShowPlayer;
 + (void)createNoShowPlayer;
+- (BOOL)isNoShowPlayer;
 
 + (WBPlayer *)playerWithName:(NSString *)name;
-//+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts;
 
 - (NSString *)shortName;
 - (NSString *)firstName;
@@ -64,6 +66,8 @@
 - (CGFloat)averageNetScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
+
+- (NSInteger)mostPointsInMatchForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;

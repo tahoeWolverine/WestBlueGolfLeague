@@ -15,6 +15,8 @@
 
 #define kLeaderboardTeamTopPercentage @"topPercentage"
 #define kLeaderboardTeamTopFivePercentage @"topFivePercentage"
+#define kLeaderboardTeamAverageMarginVictory @"averageMarginOfVictory"
+#define kLeaderboardTeamAverageMarginNetVictory @"averageMarginOfNetVictory"
 
 @interface WBTeam : _WBTeam {}
 

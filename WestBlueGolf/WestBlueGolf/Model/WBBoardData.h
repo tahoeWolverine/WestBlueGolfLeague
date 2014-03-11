@@ -5,7 +5,7 @@
 
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 								leaderBoard:(WBLeaderBoard *)leaderBoard
-									  value:(double)value
+									  value:(CGFloat)value
 									   rank:(NSInteger)rank;
 
 - (NSString *)rankString;

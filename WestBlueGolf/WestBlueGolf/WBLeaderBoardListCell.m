@@ -34,12 +34,12 @@
 
 		NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 		NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
-		if ([valueNum doubleValue] == 0) {
+		if ([valueNum floatValue] == 0) {
 			self.winnerValue.text = @"0";
-		} else if (fmod([valueNum doubleValue], 1.0) == 0) {
+		} else if (fmod([valueNum floatValue], 1.0) == 0) {
 			fmt.maximumFractionDigits = 0;
 			self.winnerValue.text = [fmt stringFromNumber:valueNum];
-		} else if (abs([valueNum doubleValue]) >= 1) {
+		} else if (abs([valueNum floatValue]) >= 1) {
 			fmt.minimumFractionDigits = 2;
 			self.winnerValue.text = [fmt stringFromNumber:valueNum];
 		} else {

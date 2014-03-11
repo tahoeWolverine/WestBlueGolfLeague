@@ -188,15 +188,19 @@
 		return 0.0;
 	}
 	
-	double totalScore = 0;
-	double roundCount = 0;
+	CGFloat totalScore = 0;
+	CGFloat roundCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result scoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalScore += value;
 			roundCount++;
 		}
+	}
+	
+	if (roundCount == 0.0 || totalScore == 0.0) {
+		return 63.0;
 	}
 	
 	return totalScore / roundCount;
@@ -208,12 +212,12 @@
 		return 0.0;
 	}
 	
-	double totalScore = 0;
-	double roundCount = 0;
+	CGFloat totalScore = 0;
+	CGFloat roundCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result netScoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalScore += value;
 			roundCount++;
 		}
@@ -228,12 +232,12 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalOpponentScore = 0;
+	CGFloat opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] scoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}
@@ -248,12 +252,12 @@
 		return 0.0;
 	}
 	
-	double totalOpponentScore = 0;
-	double opponentCount = 0;
+	CGFloat totalOpponentScore = 0;
+	CGFloat opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] netScoreDifference];
-		if (value < 99) {
+		if (value < 60) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}

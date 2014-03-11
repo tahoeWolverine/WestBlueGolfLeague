@@ -20,7 +20,7 @@
 	NSArray *teams = [WBTeam findAll];
 	
 	[self calculateTeamBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints priority:1 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
-		return (double)[team totalPointsForYear:year];
+		return (CGFloat)[team totalPointsForYear:year];
 	}];
 	
 	[self calculateTeamBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap priority:2 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
@@ -32,7 +32,7 @@
 	}];
 	
 	[self calculateTeamBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved priority:4 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
-		return (double)[team improvedInYear:year];
+		return (CGFloat)[team improvedInYear:year];
 	}];
 	
 	[self calculateTeamBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore priority:5 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
@@ -60,6 +60,8 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:11 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:12 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:13 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Victory" key:kLeaderboardTeamAverageMarginVictory tablePriority:14 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardTeamAverageMarginNetVictory tablePriority:15 isPlayerBoard:NO];
 	
 	// Triple crown board: Avg Points, Avg Score, Improved
 	
@@ -68,15 +70,15 @@
 	NSArray *players = [WBPlayer findAll];
 
 	[self calculatePlayerBoardWithName:@"Best Score" key:kLeaderboardPlayerMinScore priority:1 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player lowRoundForYear:year];
+		return (CGFloat)[player lowRoundForYear:year];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Best Net Score" key:kLeaderboardPlayerMinNet priority:2 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player lowNetForYear:year];
+		return (CGFloat)[player lowNetForYear:year];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap priority:3 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)player.currentHandicapValue;
+		return (CGFloat)player.currentHandicapValue;
 	}];
 
 	[self calculatePlayerBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints priority:4 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
@@ -88,7 +90,7 @@
 	}];
 
 	[self calculatePlayerBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved priority:6 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
-		return (double)[player improvedInYear:year];
+		return (CGFloat)[player improvedInYear:year];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore priority:7 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
@@ -108,11 +110,16 @@
 		return [player averageNetScoreForYear:year];
 	}];
 
-	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints tablePriority:11 isPlayerBoard:YES];
+	[self calculatePlayerBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints priority:11 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return (CGFloat)[player mostPointsInMatchForYear:year];
+	}];
+
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints tablePriority:12 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins tablePriority:13 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:14 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:15 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory tablePriority:16 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory tablePriority:17 isPlayerBoard:YES];
 	
 	// Triple crown board: Avg Points, Avg Score, Improved
 	
@@ -127,10 +134,10 @@
 							 teams:(NSArray *)teams
 							  year:(WBYear *)year
 						 ascending:(BOOL)ascending
-				  valueCalculation:(double (^) (WBTeam *))valueCalculation {
+				  valueCalculation:(CGFloat (^) (WBTeam *))valueCalculation {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:priority isPlayerBoard:NO];
-	double totalLeagueValue = 0;
-	double value = 0;
+	CGFloat totalLeagueValue = 0;
+	CGFloat value = 0;
 	for (WBTeam *team in teams) {
 		value = valueCalculation(team);
 		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
@@ -138,7 +145,7 @@
 	}
 	
 	// Create league average for board
-	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (CGFloat)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:ascending];
 }
@@ -151,17 +158,19 @@
 							 players:(NSArray *)players
 								year:(WBYear *)year
 						   ascending:(BOOL)ascending
-					valueCalculation:(double (^) (WBPlayer *))valueCalculation {
+					valueCalculation:(CGFloat (^) (WBPlayer *))valueCalculation {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:priority isPlayerBoard:YES];
-	double totalLeagueValue = 0;
-	double value = 0;
-	double playerCount = 0;
+	CGFloat totalLeagueValue = 0;
+	CGFloat value = 0;
+	CGFloat playerCount = 0;
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
 			value = valueCalculation(player);
 			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
-			totalLeagueValue += value;
-			playerCount++;
+			if (![player isNoShowPlayer]) {
+				totalLeagueValue += value;
+				playerCount++;
+			}
 		}
 	}
 	
@@ -177,7 +186,7 @@
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:ascending], [NSSortDescriptor sortDescriptorWithKey:@"peopleEntity.name" ascending:YES]];
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", board];
 	NSArray *data = [WBBoardData findWithPredicate:pred sortedBy:sorts];
-	double lastValue = INT16_MAX, rank = 0, i = 0;
+	CGFloat lastValue = INT16_MAX, rank = 0, i = 0;
 	for (WBBoardData *datum in data) {
 		// Increment rank for each unique value, except when it's the league average (which will have same rank as previous, but not show rank)
 		if ([datum.peopleEntity isLeagueAverage]) {
