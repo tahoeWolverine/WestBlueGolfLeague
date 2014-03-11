@@ -60,50 +60,84 @@
 
 - (void)calculateTeamPointsBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints tablePriority:1 isPlayerBoard:NO];
-	
+	double totalLeagueValue = 0;
+	double value = 0;
 	for (WBTeam *team in teams) {
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team totalPointsForYear:year] rank:0];
+		value = [team totalPointsForYear:year];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		totalLeagueValue += value;
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:NO];
 }
 
 - (void)calculateTeamAverageHandicapBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Average Handicap" key:kLeaderboardTeamAverageHandicap tablePriority:2 isPlayerBoard:NO];
+	double totalLeagueValue = 0;
+	double value = 0;
 
 	for (WBTeam *team in teams) {
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team averageHandicapForYear:year] rank:0];
+		value = [team averageHandicapForYear:year];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		totalLeagueValue += value;
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
 
 - (void)calculateTeamWinLossBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio tablePriority:3 isPlayerBoard:NO];
+	double totalLeagueValue = 0;
+	double value = 0;
 
 	for (WBTeam *team in teams) {
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team recordRatioForYear:year] rank:0];
+		value = [team recordRatioForYear:year];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		totalLeagueValue += value;
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:NO];
 }
 
 - (void)calculateTeamImprovedBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved tablePriority:4 isPlayerBoard:NO];
+	double totalLeagueValue = 0;
+	double value = 0;
 
 	for (WBTeam *team in teams) {
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team improvedInYear:year] rank:0];
+		value = [team improvedInYear:year];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		totalLeagueValue += value;
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
 
 - (void)calculateTeamIndividualWinLossBoardWithTeams:(NSArray *)teams year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio tablePriority:8 isPlayerBoard:NO];
+	double totalLeagueValue = 0;
+	double value = 0;
 
 	for (WBTeam *team in teams) {
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:[team individualRecordRatioForYear:year] rank:0];
+		value = [team individualRecordRatioForYear:year];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		totalLeagueValue += value;
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (double)teams.count) rank:0];
 	
 	[self assignRanksForBoard:board ascending:NO];
 }
@@ -112,72 +146,126 @@
 
 - (void)calculatePlayerTopScoreBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Best Score" key:kLeaderboardPlayerMinScore tablePriority:1 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player lowRoundForYear:year] rank:0];
+			value = [player lowRoundForYear:year];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
 
 - (void)calculatePlayerTopNetScoreBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Best Net Score" key:kLeaderboardPlayerMinNet tablePriority:2 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player lowNetForYear:year] rank:0];
+			value = [player lowNetForYear:year];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
 
 - (void)calculatePlayerHandicapBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap tablePriority:3 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:player.currentHandicapValue rank:0];
+			value = player.currentHandicapValue;
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
 
 - (void)calculatePlayerAveragePointsBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints tablePriority:4 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player averagePointsInYear:year] rank:0];
+			value = [player averagePointsInYear:year];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:NO];
 }
 
 - (void)calculatePlayerWinLossRatioBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio tablePriority:5 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player recordRatioForYear:year] rank:0];
+			value = [player recordRatioForYear:year];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:NO];
 }
 
 - (void)calculatePlayerImprovedBoardWithPlayers:(NSArray *)players year:(WBYear *)year {
 	WBLeaderBoard *board = [WBLeaderBoard createLeaderBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved tablePriority:6 isPlayerBoard:YES];
+	double totalLeagueValue = 0;
+	double value = 0;
+	double playerCount = 0;
 
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:[player improvedInYear:year] rank:0];
+			value = [player improvedInYear:year];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			totalLeagueValue += value;
+			playerCount++;
 		}
 	}
+	
+	// Create league average for board
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
 	
 	[self assignRanksForBoard:board ascending:YES];
 }
@@ -190,6 +278,14 @@
 	NSArray *data = [WBBoardData findWithPredicate:pred sortedBy:sorts];
 	double lastValue = INT16_MAX, rank = 0, i = 0;
 	for (WBBoardData *datum in data) {
+		// Increment rank for each unique value, except when it's the league average (which will have same rank as previous, but not show rank)
+		if ([datum.peopleEntity isLeagueAverage]) {
+			// don't change rank
+			// don't increment i
+			// set the rank for league average to the following rank (it shows up first in the alpha sort)
+			datum.rankValue = rank + 1;
+		}
+		
 		if (lastValue != datum.valueValue) {
 			rank = i + 1;
 			lastValue = datum.valueValue;

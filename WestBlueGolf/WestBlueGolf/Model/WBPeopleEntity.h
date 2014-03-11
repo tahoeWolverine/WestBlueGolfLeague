@@ -4,4 +4,8 @@
 
 + (WBPeopleEntity *)createPeopleWithName:(NSString *)name;
 
++ (WBPeopleEntity *)leagueAverage;
+
+- (BOOL)isLeagueAverage;
+
 @end

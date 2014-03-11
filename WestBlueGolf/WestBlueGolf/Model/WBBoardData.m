@@ -26,6 +26,9 @@
 }
 
 - (NSString *)rankString {
+	if ([self.peopleEntity isLeagueAverage]) {
+		return @"";
+	}
 	return [NSString stringWithFormat:@"#%@", self.rank];
 }
 

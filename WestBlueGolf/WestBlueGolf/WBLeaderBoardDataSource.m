@@ -48,7 +48,8 @@ typedef enum {
 - (NSArray *)sortDescriptorsForFetch {
 	NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sectionSortOrderDescriptor, sortOrderDescriptor];
+	NSSortDescriptor *nameSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"peopleEntity.name" ascending:YES];
+	return @[sectionSortOrderDescriptor, sortOrderDescriptor, nameSortOrderDescriptor];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
