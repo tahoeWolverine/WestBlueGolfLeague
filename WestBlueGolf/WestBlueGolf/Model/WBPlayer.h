@@ -61,6 +61,8 @@
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (NSString *)improvedString;
 
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
+
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;
 - (WBBoardData *)findLowScoreBoardData;

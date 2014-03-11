@@ -32,6 +32,7 @@
 - (NSString *)improvedString;
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;

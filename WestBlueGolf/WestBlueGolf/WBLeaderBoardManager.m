@@ -34,8 +34,10 @@
 	[self calculateTeamBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved priority:4 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
 		return (double)[team improvedInYear:year];
 	}];
-
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore tablePriority:5 isPlayerBoard:NO];
+	
+	[self calculateTeamBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore priority:5 teams:teams year:year ascending:YES valueCalculation:^(WBTeam *team) {
+		return (double)[team averageOpponentScoreForYear:year];
+	}];
 	
 	// Extra team boards
 	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Net Score" key:kLeaderboardTeamAverageNet tablePriority:6 isPlayerBoard:NO];
@@ -49,6 +51,8 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:10 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:11 isPlayerBoard:NO];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:12 isPlayerBoard:NO];
+	
+	// Triple crown board: Avg Points, Avg Score, Improved
 	
 	
 	// Important Player leaderboards
@@ -78,7 +82,9 @@
 		return (double)[player improvedInYear:year];
 	}];
 
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore tablePriority:7 isPlayerBoard:YES];
+	[self calculatePlayerBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore priority:7 players:players year:year ascending:YES valueCalculation:^(WBPlayer *player) {
+		return (double)[player averageOpponentScoreForYear:year];
+	}];
 	
 	// Extra Player boards
 	[WBLeaderBoard createLeaderBoardWithName:@"Average Score" key:kLeaderboardPlayerAverageScore tablePriority:8 isPlayerBoard:YES];
@@ -88,6 +94,8 @@
 	[WBLeaderBoard createLeaderBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins tablePriority:12 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:13 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:14 isPlayerBoard:YES];
+	
+	// Triple crown board: Avg Points, Avg Score, Improved
 	
 	[WBCoreDataManager saveContext];
 }
@@ -158,6 +166,7 @@
 			// don't increment i
 			// set the rank for league average to the following rank (it shows up first in the alpha sort)
 			datum.rankValue = rank + 1;
+			continue;
 		}
 		
 		if (lastValue != datum.valueValue) {

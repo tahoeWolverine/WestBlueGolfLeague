@@ -116,7 +116,6 @@
 - (NSInteger)lowRoundForYear:(WBYear *)year {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
-	//NSArray *results = [WBResult findWithPredicate:pred sortedBy:sorts];
 	WBResult *result = (WBResult *)[WBResult findFirstRecordWithPredicate:pred sortedBy:sorts];
 	if (!result) {
 		return 99;
@@ -225,6 +224,29 @@
 	NSInteger improved = [self findImprovedBoardData].valueValue;
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
+
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
+	NSArray *results = [WBResult findWithPredicate:pred];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result opponentResult].scoreValue;
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+#pragma mark - Leaderboard fetches
 
 - (WBBoardData *)findHandicapBoardData {
 	return [WBBoardData findWithBoardKey:kLeaderboardPlayerHandicap peopleEntity:self];

@@ -176,6 +176,29 @@
 	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
 }
 
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
+	NSArray *results = [WBResult findWithPredicate:pred];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result opponentResult].scoreValue;
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+#pragma mark - Leaderboard fetches
+
 - (WBBoardData *)findTotalPointsBoardData {
 	return [WBBoardData findWithBoardKey:kLeaderboardTeamAveragePoints peopleEntity:self];
 }
