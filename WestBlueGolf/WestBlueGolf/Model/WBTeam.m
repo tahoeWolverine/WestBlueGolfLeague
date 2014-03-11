@@ -1,6 +1,7 @@
 #import "WBTeam.h"
 #import "WBBoardData.h"
 #import "WBCoreDataManager.h"
+#import "WBCourse.h"
 #import "WBMatch.h"
 #import "WBPlayer.h"
 #import "WBResult.h"
@@ -176,9 +177,53 @@
 	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
 }
 
-- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
+- (NSArray *)findResultsForYear:(WBYear *)year {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
-	NSArray *results = [WBResult findWithPredicate:pred];
+	return [WBResult findWithPredicate:pred];
+}
+
+- (CGFloat)averageScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalScore = 0;
+	double roundCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result scoreDifference];
+		if (value < 99) {
+			totalScore += value;
+			roundCount++;
+		}
+	}
+	
+	return totalScore / roundCount;
+}
+
+- (CGFloat)averageNetScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalScore = 0;
+	double roundCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result netScoreDifference];
+		if (value < 99) {
+			totalScore += value;
+			roundCount++;
+		}
+	}
+	
+	return totalScore / roundCount;
+}
+
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -187,7 +232,27 @@
 	double opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
-		value = [result opponentResult].scoreValue;
+		value = [[result opponentResult] scoreDifference];
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+- (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [[result opponentResult] netScoreDifference];
 		if (value < 99) {
 			totalOpponentScore += value;
 			opponentCount++;

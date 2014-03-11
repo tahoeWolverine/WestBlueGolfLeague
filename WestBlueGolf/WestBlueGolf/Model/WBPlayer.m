@@ -129,7 +129,7 @@
 }
 
 - (NSInteger)lowNetForYear:(WBYear *)year {
-	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
+	NSArray *results = [self findResultsForYear:[WBYear thisYear]];
 	if (results && results.count > 0) {
 		NSInteger lowNet = 100;
 		for (WBResult *result in results) {
@@ -150,7 +150,7 @@
 }
 
 - (CGFloat)averagePointsInYear:(WBYear *)year {
-	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
+	NSArray *results = [self findResultsForYear:[WBYear thisYear]];
 	if (results && results.count > 0) {
 		NSInteger totalPoints = 0;
 		for (WBResult *result in results) {
@@ -170,30 +170,16 @@
 	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
 }
 
-- (CGFloat)averageScoreInYear:(WBYear *)year {
-	NSArray *results = [[self class] resultsForPlayer:self inYear:[WBYear thisYear]];
-	if (results && results.count > 0) {
-		NSInteger totalScore = 0;
-		for (WBResult *result in results) {
-			totalScore += (result.scoreValue - result.match.teamMatchup.week.course.parValue);
-		}
-		
-		return (CGFloat)totalScore / (CGFloat)results.count;
-	} else {
-		return 0.0f;
-	}
-}
-
 - (NSString *)averageScoreString {
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
-	CGFloat avg = [self averageScoreInYear:[WBYear thisYear]];
+	CGFloat avg = [self averageScoreForYear:[WBYear thisYear]];
 	NSString *decimalString = [fmt stringFromNumber:[NSNumber numberWithFloat:avg]];
 	return [NSString stringWithFormat:@"%@%@", avg > 0 ? @"+" : @"", decimalString];
 }
 
-+ (NSArray *)resultsForPlayer:(WBPlayer *)player inYear:(WBYear *)year {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, player];
+- (NSArray *)findResultsForYear:(WBYear *)year {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
 	return [WBResult findWithPredicate:predicate];
 }
 
@@ -225,9 +211,8 @@
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 
-- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	NSArray *results = [WBResult findWithPredicate:pred];
+- (CGFloat)averageScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -236,7 +221,67 @@
 	double opponentCount = 0;
 	NSInteger value = 0;
 	for (WBResult *result in results) {
-		value = [result opponentResult].scoreValue;
+		value = [result scoreDifference];
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+- (CGFloat)averageNetScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result netScoreDifference];
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+- (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [[result opponentResult] scoreDifference];
+		if (value < 99) {
+			totalOpponentScore += value;
+			opponentCount++;
+		}
+	}
+	
+	return totalOpponentScore / opponentCount;
+}
+
+- (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	double totalOpponentScore = 0;
+	double opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [[result opponentResult] netScoreDifference];
 		if (value < 99) {
 			totalOpponentScore += value;
 			opponentCount++;

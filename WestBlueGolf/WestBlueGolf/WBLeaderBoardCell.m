@@ -33,7 +33,7 @@
 		self.peopleValue.text = [fmt stringFromNumber:avg];
 	} else {
 		fmt.minimumFractionDigits = 3;
-		self.peopleValue.text = [NSString stringWithFormat:@"0%@", [fmt stringFromNumber:avg]];
+		self.peopleValue.text = [NSString stringWithFormat:@"%@%@", avg.doubleValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:avg]];
 	}
 }
 

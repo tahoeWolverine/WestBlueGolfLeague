@@ -67,8 +67,12 @@
 	return self.pointsValue < 12.0;
 }
 
+- (NSInteger)scoreDifference {
+	return self.scoreValue - self.match.teamMatchup.week.course.parValue;
+}
+
 - (NSInteger)netScoreDifference {
-	return (self.scoreValue - self.match.teamMatchup.week.course.parValue) - self.priorHandicapValue;
+	return [self scoreDifference] - self.priorHandicapValue;
 }
 
 @end

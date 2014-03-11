@@ -4,6 +4,7 @@
 
 // Leaderboard keys
 #define kLeaderboardPlayerAverageNet @"averageNet"
+#define kLeaderboardPlayerAverageOpponentNetScore @"averageOpponentNetScore"
 #define kLeaderboardPlayerAverageOpponentScore @"averageOpponentScore"
 #define kLeaderboardPlayerAveragePoints @"averagePoints"
 #define kLeaderboardPlayerAverageScore @"averageScore"
@@ -55,13 +56,14 @@
 - (CGFloat)averagePointsInYear:(WBYear *)year;
 - (NSString *)averagePointsString;
 
-- (CGFloat)averageScoreInYear:(WBYear *)year;
-- (NSString *)averageScoreString;
-
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (NSString *)improvedString;
 
+- (CGFloat)averageScoreForYear:(WBYear *)year;
+- (NSString *)averageScoreString;
+- (CGFloat)averageNetScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
+- (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;

@@ -3,6 +3,7 @@
 // LeaderBoard keys
 #define kLeaderboardTeamAverageHandicap @"averageHandicap"
 #define kLeaderboardTeamAverageNet @"averageNet"
+#define kLeaderboardTeamAverageOpponentNetScore @"averageOpponentNetScore"
 #define kLeaderboardTeamAverageOpponentScore @"averageOpponentScore"
 #define kLeaderboardTeamAveragePoints @"averagePoints"
 #define kLeaderboardTeamAverageScore @"averageScore"
@@ -32,7 +33,10 @@
 - (NSString *)improvedString;
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
+- (CGFloat)averageScoreForYear:(WBYear *)year;
+- (CGFloat)averageNetScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
+- (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;
