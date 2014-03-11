@@ -29,4 +29,9 @@
 	return [NSString stringWithFormat:@"#%@", self.rank];
 }
 
++ (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity {
+	NSArray *data = [self findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@", key, entity]];
+	return [data firstObject];
+}
+
 @end

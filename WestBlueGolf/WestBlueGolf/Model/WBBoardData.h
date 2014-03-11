@@ -10,4 +10,6 @@
 
 - (NSString *)rankString;
 
++ (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity;
+
 @end

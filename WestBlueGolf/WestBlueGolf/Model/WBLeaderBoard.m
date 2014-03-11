@@ -21,16 +21,6 @@
 	return newBoard;
 }
 
-+ (NSArray *)findAllLeaderBoards {
-	NSFetchRequest *request = [self findAll];
-	NSError *error = nil;
-	NSArray *results = [[[self class] context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
-}
-
 - (WBBoardData *)winnerData {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", self];
 	//TODO: Optimize for single result

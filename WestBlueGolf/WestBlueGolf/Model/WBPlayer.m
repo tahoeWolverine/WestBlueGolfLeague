@@ -1,4 +1,5 @@
 #import "WBPlayer.h"
+#import "WBBoardData.h"
 #import "WBCoreDataManager.h"
 #import "WBCourse.h"
 #import "WBMatch.h"
@@ -56,17 +57,6 @@
 	NSArray *players = [WBPlayer findWithPredicate:predicate];
 	return [players firstObject];
 }
-
-/*+ (NSArray *)fetchAllPlayersWithSorts:(NSArray *)sorts {
-	NSFetchRequest *request = [WBCoreDataManager fetchAllRequestWithEntityName:[[self class] entityName]];
-	request.sortDescriptors = sorts;
-	NSError *error = nil;
-	NSArray *results = [[self context] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
-}*/
 
 - (NSString *)firstName {
 	return [self.name componentsSeparatedByString:@" "][0];
@@ -235,6 +225,30 @@
 - (NSString *)improvedString {
 	NSInteger improved = [self improvedInYear:[WBYear thisYear]];
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
+}
+
+- (WBBoardData *)findHandicapBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerHandicap peopleEntity:self];
+}
+
+- (WBBoardData *)findWinLossBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerWinLossRatio peopleEntity:self];
+}
+
+- (WBBoardData *)findLowScoreBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerMinScore peopleEntity:self];
+}
+
+- (WBBoardData *)findAveragePointsBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerAveragePoints peopleEntity:self];
+}
+
+- (WBBoardData *)findImprovedBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerTotalImproved peopleEntity:self];
+}
+
+- (WBBoardData *)findLowNetBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerMinNet peopleEntity:self];
 }
 
 @end
