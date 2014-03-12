@@ -14,6 +14,7 @@
 #define kLeaderboardPlayerMinScore @"minScore"
 #define kLeaderboardPlayerTotalImproved @"totalImproved"
 #define kLeaderboardPlayerTotalPoints @"totalPoints"
+#define kLeaderboardPlayerTotalRounds @"totalRounds"
 #define kLeaderboardPlayerTotalWins @"totalWins"
 #define kLeaderboardPlayerWinLossRatio @"winLossRatio"
 
@@ -68,6 +69,10 @@
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
 
 - (NSInteger)mostPointsInMatchForYear:(WBYear *)year;
+- (NSInteger)totalPointsForYear:(WBYear *)year;
+
+- (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
+- (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;

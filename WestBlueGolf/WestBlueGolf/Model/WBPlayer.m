@@ -324,6 +324,70 @@
 	return mostPoints;
 }
 
+- (NSInteger)totalPointsForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat totalPoints = 0;
+	for (WBResult *result in results) {
+		totalPoints += result.pointsValue;
+	}
+
+	return totalPoints;
+}
+
+- (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat totalMargin = 0;
+	CGFloat roundCount = 0;
+	NSInteger playerValue = 0, oppValue = 0;
+	for (WBResult *result in results) {
+		playerValue = [result scoreDifference];
+		oppValue = [[result opponentResult] scoreDifference];
+		if (oppValue < 60) {
+			totalMargin += oppValue - playerValue;
+			roundCount++;
+		}
+	}
+	
+	if (roundCount == 0) {
+		return 0.0;
+	}
+	
+	return totalMargin / roundCount;
+}
+
+- (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat totalMargin = 0;
+	CGFloat roundCount = 0;
+	NSInteger playerValue = 0, oppValue = 0;
+	for (WBResult *result in results) {
+		playerValue = [result netScoreDifference];
+		oppValue = [[result opponentResult] netScoreDifference];
+		if (oppValue < 60) {
+			totalMargin += oppValue - playerValue;
+			roundCount++;
+		}
+	}
+	
+	if (roundCount == 0) {
+		return 0.0;
+	}
+	
+	return totalMargin / roundCount;
+}
+
 #pragma mark - Leaderboard fetches
 
 - (WBBoardData *)findHandicapBoardData {

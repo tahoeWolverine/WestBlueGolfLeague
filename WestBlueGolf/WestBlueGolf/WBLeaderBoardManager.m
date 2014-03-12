@@ -113,13 +113,29 @@
 	[self calculatePlayerBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints priority:11 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)[player mostPointsInMatchForYear:year];
 	}];
-
-	[WBLeaderBoard createLeaderBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints tablePriority:12 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins tablePriority:13 isPlayerBoard:YES];
+	
+	[self calculatePlayerBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints priority:12 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return (CGFloat)[player totalPointsForYear:year];
+	}];
+	
+	[self calculatePlayerBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins priority:13 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return (CGFloat)[[player recordForYear:year][0] floatValue];
+	}];
+	
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:14 isPlayerBoard:YES];
 	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:15 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory tablePriority:16 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory tablePriority:17 isPlayerBoard:YES];
+	
+	[self calculatePlayerBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory priority:16 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return [player averageMarginOfVictoryForYear:year];
+	}];
+	
+	[self calculatePlayerBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory priority:17 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return [player averageMarginOfNetVictoryForYear:year];
+	}];
+	
+	[self calculatePlayerBoardWithName:@"Total Rounds" key:kLeaderboardPlayerTotalRounds priority:18 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+		return (CGFloat)([[player recordForYear:year][0] floatValue] + [[player recordForYear:year][1] floatValue] + [[player recordForYear:year][2] floatValue]);
+	}];
 	
 	// Triple crown board: Avg Points, Avg Score, Improved
 	
