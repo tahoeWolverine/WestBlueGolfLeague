@@ -156,12 +156,12 @@
 	CGFloat value = 0;
 	for (WBTeam *team in teams) {
 		value = valueCalculation(team);
-		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0];
+		[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0 year:year];
 		totalLeagueValue += value;
 	}
 	
 	// Create league average for board
-	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (CGFloat)teams.count) rank:0];
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / (CGFloat)teams.count) rank:0 year:year];
 	
 	[self assignRanksForBoard:board ascending:ascending];
 }
@@ -182,7 +182,7 @@
 	for (WBPlayer *player in players) {
 		if (player.results && player.results.count > 0) {
 			value = valueCalculation(player);
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0 year:year];
 			if (![player isNoShowPlayer]) {
 				totalLeagueValue += value;
 				playerCount++;
@@ -191,7 +191,7 @@
 	}
 	
 	// Create league average for board
-	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0];
+	[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverage] leaderBoard:board value:(totalLeagueValue / playerCount) rank:0 year:year];
 	
 	[self assignRanksForBoard:board ascending:ascending];
 }

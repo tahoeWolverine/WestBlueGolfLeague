@@ -9,6 +9,7 @@ const struct WBYearAttributes WBYearAttributes = {
 };
 
 const struct WBYearRelationships WBYearRelationships = {
+	.boardData = @"boardData",
 	.champion = @"champion",
 	.playerYearData = @"playerYearData",
 	.weeks = @"weeks",
@@ -111,6 +112,19 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 
 
 
+
+@dynamic boardData;
+
+	
+- (NSMutableSet*)boardDataSet {
+	[self willAccessValueForKey:@"boardData"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"boardData"];
+  
+	[self didAccessValueForKey:@"boardData"];
+	return result;
+}
+	
 
 @dynamic champion;
 

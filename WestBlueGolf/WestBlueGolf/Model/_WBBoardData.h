@@ -12,6 +12,7 @@ extern const struct WBBoardDataAttributes {
 extern const struct WBBoardDataRelationships {
 	__unsafe_unretained NSString *leaderBoard;
 	__unsafe_unretained NSString *peopleEntity;
+	__unsafe_unretained NSString *year;
 } WBBoardDataRelationships;
 
 extern const struct WBBoardDataFetchedProperties {
@@ -19,6 +20,7 @@ extern const struct WBBoardDataFetchedProperties {
 
 @class WBLeaderBoard;
 @class WBPeopleEntity;
+@class WBYear;
 
 
 
@@ -78,6 +80,13 @@ extern const struct WBBoardDataFetchedProperties {
 
 
 
+@property (nonatomic, strong) WBYear *year;
+
+//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
@@ -114,6 +123,11 @@ extern const struct WBBoardDataFetchedProperties {
 
 - (WBPeopleEntity*)primitivePeopleEntity;
 - (void)setPrimitivePeopleEntity:(WBPeopleEntity*)value;
+
+
+
+- (WBYear*)primitiveYear;
+- (void)setPrimitiveYear:(WBYear*)value;
 
 
 @end

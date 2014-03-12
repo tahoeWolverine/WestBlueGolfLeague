@@ -4,9 +4,10 @@
 @interface WBBoardData : _WBBoardData {}
 
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
-								leaderBoard:(WBLeaderBoard *)leaderBoard
-									  value:(CGFloat)value
-									   rank:(NSInteger)rank;
+							  leaderBoard:(WBLeaderBoard *)leaderBoard
+									value:(CGFloat)value
+									 rank:(NSInteger)rank
+									 year:(WBYear *)year;
 
 - (NSString *)rankString;
 

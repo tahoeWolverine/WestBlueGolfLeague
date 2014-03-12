@@ -11,6 +11,7 @@ const struct WBBoardDataAttributes WBBoardDataAttributes = {
 const struct WBBoardDataRelationships WBBoardDataRelationships = {
 	.leaderBoard = @"leaderBoard",
 	.peopleEntity = @"peopleEntity",
+	.year = @"year",
 };
 
 const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
@@ -116,6 +117,10 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 	
 
 @dynamic peopleEntity;
+
+	
+
+@dynamic year;
 
 	
 

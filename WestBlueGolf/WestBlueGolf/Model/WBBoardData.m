@@ -1,6 +1,7 @@
 #import "WBBoardData.h"
 #import "WBCoreDataManager.h"
 #import "WBLeaderBoard.h"
+#import "WBYear.h"
 
 @interface WBBoardData ()
 @end
@@ -10,7 +11,8 @@
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
 									value:(CGFloat)value
-									 rank:(NSInteger)rank {
+									 rank:(NSInteger)rank
+									 year:(WBYear *)year {
 	if (!entity) {
 		ALog(@"No people sent to boardData contstructor");
 		return nil;
@@ -22,6 +24,7 @@
 	
 	[entity addBoardDataObject:data];
 	[leaderBoard addBoardDataObject:data];
+	[year addBoardDataObject:data];
 	return data;
 }
 
@@ -33,7 +36,7 @@
 }
 
 + (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity {
-	NSArray *data = [self findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@", key, entity]];
+	NSArray *data = [self findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@ && year.value = %@", key, entity, [WBYear thisYear]]];
 	return [data firstObject];
 }
 
