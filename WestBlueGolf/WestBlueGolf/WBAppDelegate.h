@@ -15,5 +15,6 @@
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)setProfileTabPlayer;
+- (BOOL)isProfileTab:(UIViewController *)vc;
 
 @end

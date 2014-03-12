@@ -9,9 +9,8 @@
 #import "WBTeamProfileTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBTeamProfileDataSource.h"
 #import "WBResultTableViewCell.h"
-
-#define SORT_KEY @"name" //@"match.teamMatchup.week.date"
 
 @interface WBTeamProfileTableViewController ()
 
@@ -21,9 +20,18 @@
 @property (weak, nonatomic) IBOutlet UILabel *winLossAllLabel;
 @property (weak, nonatomic) IBOutlet UILabel *improvedLabel;
 
+@property (strong, nonatomic) WBTeamProfileDataSource *dataSource;
+
 @end
 
 @implementation WBTeamProfileTableViewController
+
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	
+	self.dataSource = [WBTeamProfileDataSource dataSourceWithViewController:self];
+	[self.dataSource beginFetch];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -32,7 +40,7 @@
 }
 
 - (void)refreshTeamHighlights {
-	WBTeam *team = (WBTeam *)self.selectedEntity;
+	WBTeam *team = self.dataSource.selectedTeam;
 	self.placeLabel.text = [team placeString];
 	self.averagePointsLabel.text = [team averagePointsString];
 	self.winLossLabel.text = [team record];
@@ -42,35 +50,10 @@
 
 #pragma mark - WBEntityDetailViewController methods to implement
 
-- (NSString *)selectedEntityName {
+/*- (NSString *)selectedEntityName {
 	WBTeam *team = (WBTeam *)self.selectedEntity;
 	TRAssert(team, @"No team selected for team profile");
 	return team.name;
-}
-
-- (NSString *)entityName {
-	return @"WBPlayer";
-}
-
-- (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sortOrderDescriptor];
-}
-
-- (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"team.name = %@", [self selectedEntityName]];
-}
-
-- (NSString *)cellIdentifier {
-	static NSString *CellIdentifier = @"PlayerListCell";
-	return CellIdentifier;
-}
-
-- (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object {
-	WBPlayer *player = (WBPlayer *)object;
-    cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = player.team.name;
-}
+}*/
 
 @end

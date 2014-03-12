@@ -1,14 +1,14 @@
 //
-//  WBEntityDataSource.h
+//  WBSectionDataSource.h
 //  WestBlueGolf
 //
-//  Created by Mike Harlow on 3/6/14.
+//  Created by Mike Harlow on 3/12/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBEntityDataSource : NSObject <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface WBSectionDataSource : NSObject
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+/*@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (assign, nonatomic) BOOL isConnectedToTableView;
 
 @property (nonatomic, weak, readonly) UIViewController *viewController;
@@ -23,8 +23,6 @@
 - (NSArray *)sortDescriptorsForFetch;
 - (NSPredicate *)fetchPredicate;
 - (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object;
-
-- (NSManagedObject *)objectAtIndexPath:(NSIndexPath *)indexPath;
+		   withObject:(NSManagedObject *)object;*/
 
 @end

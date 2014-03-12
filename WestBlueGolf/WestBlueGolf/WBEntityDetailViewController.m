@@ -8,12 +8,15 @@
 
 #import "WBEntityDetailViewController.h"
 #import "WBCoreDataManager.h"
+#import "WBEntityDataSource.h"
 #import "WBModels.h"
 #import "WBResultTableViewCell.h"
 
 @interface WBEntityDetailViewController () {
-	NSFetchedResultsController *_fetchedResultsController;
+	//NSFetchedResultsController *_fetchedResultsController;
 }
+
+@property (strong, nonatomic) WBEntityDataSource *dataSource;
 
 @end
 
@@ -27,17 +30,19 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	self.dataSource = [WBEntityDataSource dataSourceWithViewController:self];
 
-	[self beginFetch];
+	[self.dataSource beginFetch];
 }
-
+/*
 - (void)beginFetch {
     NSError *error = nil;
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
 		[WBCoreDataManager logError:error];
 	}
-}
+}*/
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -74,7 +79,7 @@
 }
 
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger count = [[self.fetchedResultsController sections] count];
     
@@ -107,8 +112,8 @@
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	ALog(@"Derived class did not implement configureCell");
-}
-
+}*/
+/*
 #pragma mark - Fetched results controller
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -142,6 +147,13 @@
     }
 	
 	return _fetchedResultsController;
+}*/
+
+- (void)resetTableAndFetchedResultsController {
+	self.dataSource.fetchedResultsController = nil;
+	[self.dataSource beginFetch];
+	
+	[self.tableView reloadData];
 }
 
 /*
@@ -190,7 +202,7 @@
 	// Get the new view controller using [segue destinationViewController].
 	// Pass the selected object to the new view controller.
 	WBEntityDetailViewController *vc = [segue destinationViewController];
-	vc.selectedEntity = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+	vc.selectedEntity = [self.dataSource objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 }
 
 @end

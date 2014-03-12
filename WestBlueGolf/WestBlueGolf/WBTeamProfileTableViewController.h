@@ -6,8 +6,12 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBEntityDetailViewController.h"
+//#import "WBEntityDetailViewController.h"
 
-@interface WBTeamProfileTableViewController : WBEntityDetailViewController
+@class WBTeam;
+
+@interface WBTeamProfileTableViewController : UITableViewController
+
+@property (strong, nonatomic) WBTeam *selectedTeam;
 
 @end

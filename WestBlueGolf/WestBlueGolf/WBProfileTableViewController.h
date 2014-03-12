@@ -6,20 +6,27 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBEntityDetailViewController.h"
+//#import "WBEntityDetailViewController.h"
 
 @class WBPlayer;
 
-@interface WBProfileTableViewController : WBEntityDetailViewController
+@interface WBProfileTableViewController : UITableViewController
 
-@property (strong, nonatomic) WBPlayer *selectedPlayer;
+//@property (weak, nonatomic) NSManagedObject *selectedEntity;
+//@property (strong, nonatomic) WBPlayer *selectedPlayer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
 
-- (void)markViewControllerMe;
+//- (void)markViewControllerMe;
 
 - (void)refreshPlayerHighlights;
 - (void)refreshFavoriteButton;
 
 - (IBAction)favoritePlayer:(UIBarButtonItem *)sender;
+
+// Fake selectedPlayer property passthrough
+- (WBPlayer *)selectedPlayer;
+- (void)setSelectedPlayer:(WBPlayer *)selectedPlayer;
+
+//- (void)resetTableAndFetchedResultsController;
 
 @end

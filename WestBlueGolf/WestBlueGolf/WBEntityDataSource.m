@@ -10,8 +10,6 @@
 #import "WBCoreDataManager.h"
 #import "WBEntityTableViewController.h"
 
-#define SORT_KEY @"name"
-
 @interface WBEntityDataSource () {
 	NSFetchedResultsController *_fetchedResultsController;
 }
@@ -53,8 +51,7 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sortOrderDescriptor];
+	return nil;
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -130,6 +127,10 @@
     }
 	
 	return _fetchedResultsController;
+}
+
+- (NSManagedObject *)objectAtIndexPath:(NSIndexPath *)indexPath {
+	return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 /*

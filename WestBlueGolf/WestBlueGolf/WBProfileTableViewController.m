@@ -9,11 +9,9 @@
 #import "WBProfileTableViewController.h"
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
+#import "WBMeViewController.h"
 #import "WBModels.h"
-#import "WBNotifications.h"
-#import "WBResultTableViewCell.h"
-
-#define SORT_KEY @"match.teamMatchup.week.date"
+#import "WBProfileDataSource.h"
 
 @interface WBProfileTableViewController () <UIAlertViewDelegate>
 
@@ -24,22 +22,39 @@
 @property (weak, nonatomic) IBOutlet UILabel *improvedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lowNetLabel;
 
-@property (assign, nonatomic) BOOL isMeViewController;
+//@property (assign, nonatomic) BOOL isMeViewController;
+
+@property (strong, nonatomic) WBProfileDataSource *dataSource;
 
 @end
 
 @implementation WBProfileTableViewController
 
-- (void)markViewControllerMe {
+/*- (void)markViewControllerMe {
 	self.isMeViewController = YES;
+}*/
+
+- (BOOL)isMeTab {
+	return [(WBAppDelegate *)[UIApplication sharedApplication].delegate isProfileTab:self];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	if (self) {
+		self.dataSource = [WBProfileDataSource dataSourceWithViewController:self];
+	}
+	return self;
 }
 
 - (void)viewDidLoad {
 	// Important: set the selected player before viewDidLoad so that things render properly, having that information up front
-	self.selectedPlayer = [WBPlayer playerWithName:[self selectedEntityName]];
+	//self.selectedPlayer = [WBPlayer playerWithName:[self selectedEntityName]];
+
+	//self.isMeViewController = !self.selectedPlayer;
 
 	[super viewDidLoad];
 
+	[self.dataSource beginFetch];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,25 +64,34 @@
 	[self refreshFavoriteButton];
 }
 
-- (void)setSelectedPlayer:(WBPlayer *)selectedPlayer {
-	_selectedPlayer = selectedPlayer;
-	if (self.isMeViewController) {
-		self.navigationController.tabBarItem.title = _selectedPlayer ? [_selectedPlayer firstName] : @"You";
-		self.fetchedResultsController = nil;
-		[self beginFetch];
+- (WBPlayer *)selectedPlayer {
+	return self.dataSource.selectedPlayer;
+}
 
-		[self.tableView reloadData];
+- (void)setSelectedPlayer:(WBPlayer *)selectedPlayer {
+	self.dataSource.selectedPlayer = selectedPlayer;
+	if ([self isMeTab]) {
+		self.navigationController.tabBarItem.title = selectedPlayer ? [selectedPlayer firstName] : @"You";
+		[self resetTableAndFetchedResultsController];
 	}
 }
 
+- (void)resetTableAndFetchedResultsController {
+	self.dataSource.fetchedResultsController = nil;
+	[self.dataSource beginFetch];
+	
+	[self.tableView reloadData];
+}
+
 - (void)refreshPlayerHighlights {
-	if (self.selectedPlayer) {
-		self.winLossLabel.text = [self.selectedPlayer record];
-		self.handicapLabel.text = [self.selectedPlayer currentHandicapString];
-		self.lowRoundLabel.text = [self.selectedPlayer lowRoundString];
-		self.averagePointsLabel.text = [self.selectedPlayer averagePointsString];
-		self.improvedLabel.text = [self.selectedPlayer improvedString];
-		self.lowNetLabel.text = [self.selectedPlayer lowNetString];
+	WBPlayer *player = self.selectedPlayer;
+	if (player) {
+		self.winLossLabel.text = [player record];
+		self.handicapLabel.text = [player currentHandicapString];
+		self.lowRoundLabel.text = [player lowRoundString];
+		self.averagePointsLabel.text = [player averagePointsString];
+		self.improvedLabel.text = [player improvedString];
+		self.lowNetLabel.text = [player lowNetString];
 	} else {
 		self.winLossLabel.text = @"-";
 		self.handicapLabel.text = @"-";
@@ -77,11 +101,11 @@
 		self.lowNetLabel.text = @"-";
 	}
 
-	self.navigationItem.title = [self selectedEntityName];
+	self.navigationItem.title = self.selectedPlayer.name ?: @"Find Yourself in Players";
 }
 
 - (void)refreshFavoriteButton {
-	if (self.isMeViewController) {
+	if ([self isMeTab]) {
 		if (self.selectedPlayer) {
 			self.favoriteButton.enabled = YES;
 			self.favoriteButton.image = [UIImage imageNamed:@"UITabBarContactsTemplate"];
@@ -102,7 +126,7 @@
 }
 
 - (IBAction)favoritePlayer:(UIBarButtonItem *)sender {
-	if (self.isMeViewController) {
+	if ([self isMeTab]) {
 		UIAlertView *resetAlert = [[UIAlertView alloc] initWithTitle:@"Remove Profile"
 															 message:@"Are you sure you want to reset your identity in the app?"
 															delegate:self
@@ -124,29 +148,6 @@
 }
 
 #pragma mark - WBEntityDetailViewController methods to implement
-
-- (NSString *)selectedEntityName {
-	WBPlayer *player = (WBPlayer *)self.selectedEntity;
-	self.isMeViewController = !player; // if there is no selectedEntity (aka someone touched an item in a cell), we know we're on the me tab
-	NSString *meName = [WBPlayer me].name;
-	return player ? player.name : meName ?: @"Find Yourself in Players";
-}
-
-- (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:NO];
-	return @[sortOrderDescriptor];
-}
-
-- (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"player.name = %@", [self selectedEntityName]];
-}
-
-- (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object {
-    WBResult *result = (WBResult *)object;
-	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
-	[resultCell configureCellForResult:result];
-}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (buttonIndex > 0) {

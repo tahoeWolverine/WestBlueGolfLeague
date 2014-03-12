@@ -8,19 +8,21 @@
 
 @class NSManagedObject;
 
-@interface WBEntityDetailViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface WBEntityDetailViewController : UITableViewController// <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+//@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @property (weak, nonatomic) NSManagedObject *selectedEntity;
 
-- (NSString *)cellIdentifier;
+/*- (NSString *)cellIdentifier;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptorsForFetch;
 - (NSString *)selectedEntityName;
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object;
 
-- (void)beginFetch;
+- (void)beginFetch;*/
+
+- (void)resetTableAndFetchedResultsController;
 
 @end

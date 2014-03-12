@@ -44,6 +44,12 @@
 	((WBProfileTableViewController *)profileTab.topViewController).selectedPlayer = me;
 }
 
+- (BOOL)isProfileTab:(UIViewController *)vc {
+	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+	UINavigationController *navc = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
+	return vc == navc.topViewController;
+}
+
 - (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
