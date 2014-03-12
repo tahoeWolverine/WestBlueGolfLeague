@@ -171,7 +171,8 @@
 - (NSString *)averagePointsString {
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
-	NSNumber *avg = [NSNumber numberWithFloat:[self findAveragePointsBoardData].value.floatValue];
+	WBBoardData *data = [self findAveragePointsBoardData];
+	NSNumber *avg = [NSNumber numberWithFloat:data.value.floatValue];
 	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
 }
 
@@ -224,13 +225,9 @@
 	
 	CGFloat totalRoundScore = 0;
 	CGFloat roundCount = 0;
-	NSInteger value = 0;
 	for (WBResult *result in results) {
-		value = [result scoreDifference];
-		//if (value < 60) {
-			totalRoundScore += value;
-			roundCount++;
-		//}
+		totalRoundScore += [result scoreDifference];
+		roundCount++;
 	}
 	
 	if (roundCount == 0) {
@@ -248,13 +245,9 @@
 	
 	CGFloat totalRoundScore = 0;
 	CGFloat roundCount = 0;
-	NSInteger value = 0;
 	for (WBResult *result in results) {
-		value = [result netScoreDifference];
-		//if (value < 60) {
-			totalRoundScore += value;
-			roundCount++;
-		//}
+		totalRoundScore += [result netScoreDifference];
+		roundCount++;
 	}
 	
 	return totalRoundScore / roundCount;

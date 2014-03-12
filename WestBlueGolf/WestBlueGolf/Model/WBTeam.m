@@ -266,6 +266,81 @@
 	return totalOpponentScore / opponentCount;
 }
 
+- (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
+	NSArray *results = [WBResult findWithPredicate:predicate];
+
+	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:self.matchups.count];
+	for (NSInteger i = 0; i < self.matchups.count; i++) {
+		weeks[i] = [NSNumber numberWithInteger:0];
+	}
+	
+	NSInteger index = 0;
+	for (WBResult *result in results) {
+		index = result.match.teamMatchup.week.seasonIndexValue - 1;
+		[weeks replaceObjectAtIndex:index withObject:[NSNumber numberWithInteger:[[weeks objectAtIndex:index] integerValue] + result.pointsValue]];
+	}
+	
+	NSInteger maxPoints = 0;
+	for (NSNumber *weekPoints in weeks) {
+		if ([weekPoints integerValue] > maxPoints) {
+			maxPoints = [weekPoints integerValue];
+		}
+	}
+	
+	return maxPoints;
+}
+
+- (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat totalMargin = 0;
+	CGFloat roundCount = 0;
+	NSInteger playerValue = 0, oppValue = 0;
+	for (WBResult *result in results) {
+		playerValue = [result scoreDifference];
+		oppValue = [[result opponentResult] scoreDifference];
+		if (oppValue < 60) {
+			totalMargin += oppValue - playerValue;
+			roundCount++;
+		}
+	}
+	
+	if (roundCount == 0) {
+		return 0.0;
+	}
+	
+	return totalMargin / roundCount;
+}
+
+- (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year {
+	NSArray *results = [self findResultsForYear:year];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat totalMargin = 0;
+	CGFloat roundCount = 0;
+	NSInteger playerValue = 0, oppValue = 0;
+	for (WBResult *result in results) {
+		playerValue = [result netScoreDifference];
+		oppValue = [[result opponentResult] netScoreDifference];
+		if (oppValue < 60) {
+			totalMargin += oppValue - playerValue;
+			roundCount++;
+		}
+	}
+	
+	if (roundCount == 0) {
+		return 0.0;
+	}
+	
+	return totalMargin / roundCount;
+}
+
 #pragma mark - Leaderboard fetches
 
 - (WBBoardData *)findTotalPointsBoardData {

@@ -2,6 +2,8 @@
 
 // LeaderBoard keys
 #define kLeaderboardTeamAverageHandicap @"averageHandicap"
+#define kLeaderboardTeamAverageMarginVictory @"averageMarginOfVictory"
+#define kLeaderboardTeamAverageMarginNetVictory @"averageMarginOfNetVictory"
 #define kLeaderboardTeamAverageNet @"averageNet"
 #define kLeaderboardTeamAverageOpponentNetScore @"averageOpponentNetScore"
 #define kLeaderboardTeamAverageOpponentScore @"averageOpponentScore"
@@ -15,8 +17,8 @@
 
 #define kLeaderboardTeamTopPercentage @"topPercentage"
 #define kLeaderboardTeamTopFivePercentage @"topFivePercentage"
-#define kLeaderboardTeamAverageMarginVictory @"averageMarginOfVictory"
-#define kLeaderboardTeamAverageMarginNetVictory @"averageMarginOfNetVictory"
+#define kLeaderboardTeamTripleCrown @"tripleCrown"
+#define kLeaderboardTeamPlayoffs @"playoffs"
 
 @interface WBTeam : _WBTeam {}
 
@@ -32,6 +34,7 @@
 - (CGFloat)recordRatioForYear:(WBYear *)year;
 - (NSString *)individualRecord;
 - (CGFloat)individualRecordRatioForYear:(WBYear *)year;
+- (NSArray *)individualRecordForYear:(WBYear *)year;
 - (NSString *)improvedString;
 - (NSInteger)improvedInYear:(WBYear *)year;
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
@@ -39,6 +42,10 @@
 - (CGFloat)averageNetScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
+- (NSInteger)mostPointsInWeekForYear:(WBYear *)year;
+
+- (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
+- (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;

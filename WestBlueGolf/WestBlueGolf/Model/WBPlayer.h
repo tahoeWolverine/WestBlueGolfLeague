@@ -23,6 +23,9 @@
 #define kLeaderboardPlayerAverageMarginVictory @"averageMarginOfVictory"
 #define kLeaderboardPlayerAverageMarginNetVictory @"averageMarginOfNetVictory"
 
+#define kLeaderboardPlayerTripleCrown @"tripleCrown"
+#define kLeaderboardPlayerTripleCrown2 @"tripleCrown2"
+
 @interface WBPlayer : _WBPlayer {}
 
 // Player specific create function

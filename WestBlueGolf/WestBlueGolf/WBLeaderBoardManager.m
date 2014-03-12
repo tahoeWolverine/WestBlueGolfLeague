@@ -56,12 +56,26 @@
 		return [team individualRecordRatioForYear:year];
 	}];
 
-	[WBLeaderBoard createLeaderBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins tablePriority:10 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints tablePriority:11 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:12 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:13 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Victory" key:kLeaderboardTeamAverageMarginVictory tablePriority:14 isPlayerBoard:NO];
-	[WBLeaderBoard createLeaderBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardTeamAverageMarginNetVictory tablePriority:15 isPlayerBoard:NO];
+	[self calculateTeamBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins priority:10 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return  (CGFloat)[[team individualRecordForYear:year][0] floatValue];
+	}];
+
+	[self calculateTeamBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints priority:11 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return  (CGFloat)[team mostPointsInWeekForYear:year];
+	}];
+	
+	[self calculateTeamBoardWithName:@"Avg Margin of Victory" key:kLeaderboardTeamAverageMarginVictory priority:12 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return [team averageMarginOfVictoryForYear:year];
+	}];
+	
+	[self calculateTeamBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardTeamAverageMarginNetVictory priority:13 teams:teams year:year ascending:NO valueCalculation:^(WBTeam *team) {
+		return [team averageMarginOfNetVictoryForYear:year];
+	}];
+
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:14 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:15 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Triple Crown" key:kLeaderboardTeamTripleCrown tablePriority:16 isPlayerBoard:NO];
+	[WBLeaderBoard createLeaderBoardWithName:@"Playoffs" key:kLeaderboardTeamPlayoffs tablePriority:17 isPlayerBoard:NO];
 	
 	// Triple crown board: Avg Points, Avg Score, Improved
 	
@@ -122,22 +136,25 @@
 		return (CGFloat)[[player recordForYear:year][0] floatValue];
 	}];
 	
-	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:14 isPlayerBoard:YES];
-	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:15 isPlayerBoard:YES];
-	
-	[self calculatePlayerBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory priority:16 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+	[self calculatePlayerBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory priority:14 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
 		return [player averageMarginOfVictoryForYear:year];
 	}];
 	
-	[self calculatePlayerBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory priority:17 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+	[self calculatePlayerBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory priority:15 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
 		return [player averageMarginOfNetVictoryForYear:year];
 	}];
 	
-	[self calculatePlayerBoardWithName:@"Total Rounds" key:kLeaderboardPlayerTotalRounds priority:18 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
+	[self calculatePlayerBoardWithName:@"Total Rounds" key:kLeaderboardPlayerTotalRounds priority:16 players:players year:year ascending:NO valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)([[player recordForYear:year][0] floatValue] + [[player recordForYear:year][1] floatValue] + [[player recordForYear:year][2] floatValue]);
 	}];
+
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:17 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:18 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Triple Crown" key:kLeaderboardPlayerTripleCrown tablePriority:19 isPlayerBoard:YES];
+	[WBLeaderBoard createLeaderBoardWithName:@"Triple Crown 2" key:kLeaderboardPlayerTripleCrown2 tablePriority:20 isPlayerBoard:YES];
 	
-	// Triple crown board: Avg Points, Avg Score, Improved
+	// Pro Triple crown board: Avg Points, Avg Score, Total Wins
+	// Triple Crown: Avg Points, Avg Net Score, Improved
 	
 	[WBCoreDataManager saveContext];
 }

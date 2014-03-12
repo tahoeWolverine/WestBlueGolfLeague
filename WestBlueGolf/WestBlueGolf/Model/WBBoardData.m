@@ -36,7 +36,7 @@
 }
 
 + (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity {
-	NSArray *data = [self findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@ && year.value = %@", key, entity, [WBYear thisYear]]];
+	NSArray *data = [self findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@ && year = %@", key, entity, [WBYear thisYear]]];
 	return [data firstObject];
 }
 
