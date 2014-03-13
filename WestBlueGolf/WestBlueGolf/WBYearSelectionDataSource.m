@@ -34,14 +34,13 @@
 		   withObject:(NSManagedObject *)object {
 	WBYear *year = (WBYear *)object;
     cell.textLabel.text = [NSString stringWithFormat:@"%@", year.value];
-	[cell setSelected:[WBYear thisYear] == year];
-	cell.accessoryType = cell.isSelected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = [WBYear thisYear] == year ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	WBYear *year = (WBYear *)[self objectAtIndexPath:indexPath];
 	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue];
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	[tableView reloadData];
 }
 
 @end

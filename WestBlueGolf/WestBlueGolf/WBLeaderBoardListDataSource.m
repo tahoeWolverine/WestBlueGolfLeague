@@ -11,7 +11,6 @@
 #import "WBLeaderBoardListCell.h"
 #import "WBModels.h"
 
-//#define SECTION_KEY
 #define SORT_KEY @"tablePriority"
 
 @interface WBLeaderBoardListDataSource ()
@@ -54,7 +53,6 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	//NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
 	return @[sortOrderDescriptor];
 }

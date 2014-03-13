@@ -53,6 +53,10 @@
 	//TODO: Will need a way to calculate this
 	year.isCompleteValue = YES;
 	
+	
+	//WBYear *year2 = [WBYear createYearWithValue:2012 champion:noTeam];
+	//year2.isCompleteValue = YES;
+	
 	// week table
 	NSArray *weekArray = [self jsonFromData:[self fileDataForFilename:@"weekTable"]];
 	
@@ -67,10 +71,6 @@
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		NSString *weekDate = [elt objectForKey:wbJsonKeyWeekDate];
 		NSDate *date = [self dateForString:weekDate];
-		
-		if (weekId == 17) {
-			DLog(@"");
-		}
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId];
 	}
 	

@@ -46,7 +46,7 @@
 }
 
 + (WBPlayer *)playerWithName:(NSString *)name {
-	return [self playerWithName:name];
+	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
 }
 
 + (WBPlayer *)noShowPlayer {
