@@ -22,17 +22,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *improvedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lowNetLabel;
 
-//@property (assign, nonatomic) BOOL isMeViewController;
-
 @property (strong, nonatomic) WBProfileDataSource *dataSource;
 
 @end
 
 @implementation WBProfileTableViewController
-
-/*- (void)markViewControllerMe {
-	self.isMeViewController = YES;
-}*/
 
 - (BOOL)isMeTab {
 	return [(WBAppDelegate *)[UIApplication sharedApplication].delegate isProfileTab:self];
@@ -47,13 +41,11 @@
 }
 
 - (void)viewDidLoad {
-	// Important: set the selected player before viewDidLoad so that things render properly, having that information up front
-	//self.selectedPlayer = [WBPlayer playerWithName:[self selectedEntityName]];
-
-	//self.isMeViewController = !self.selectedPlayer;
-
 	[super viewDidLoad];
 
+	self.tableView.dataSource = self.dataSource;
+	self.tableView.delegate = self.dataSource;
+	
 	[self.dataSource beginFetch];
 }
 

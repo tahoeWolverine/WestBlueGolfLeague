@@ -9,6 +9,7 @@
 #import "WBTeamProfileTableViewController.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBProfileTableViewController.h"
 #import "WBTeamProfileDataSource.h"
 #import "WBResultTableViewCell.h"
 
@@ -26,17 +27,35 @@
 
 @implementation WBTeamProfileTableViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	if (self) {
+		self.dataSource = [WBTeamProfileDataSource dataSourceWithViewController:self];
+	}
+	return self;
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.dataSource = [WBTeamProfileDataSource dataSourceWithViewController:self];
 	[self.dataSource beginFetch];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
+	self.tableView.dataSource = self.dataSource;
+	self.tableView.delegate = self.dataSource;
+	
 	[self refreshTeamHighlights];
+}
+
+- (WBTeam *)selectedTeam {
+	return self.dataSource.selectedTeam;
+}
+
+- (void)setSelectedTeam:(WBTeam *)selectedTeam {
+	self.dataSource.selectedTeam = selectedTeam;
 }
 
 - (void)refreshTeamHighlights {
@@ -46,14 +65,14 @@
 	self.winLossLabel.text = [team record];
 	self.winLossAllLabel.text = [team individualRecord];
 	self.improvedLabel.text = [team improvedString];
+	
+	self.navigationItem.title = self.selectedTeam.name ?: @"No Team Selected";
 }
 
-#pragma mark - WBEntityDetailViewController methods to implement
-
-/*- (NSString *)selectedEntityName {
-	WBTeam *team = (WBTeam *)self.selectedEntity;
-	TRAssert(team, @"No team selected for team profile");
-	return team.name;
-}*/
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	WBProfileTableViewController *vc = [segue destinationViewController];
+	vc.selectedPlayer = (WBPlayer *)[self.dataSource objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+}
 
 @end

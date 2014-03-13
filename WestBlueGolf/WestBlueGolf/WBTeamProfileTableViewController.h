@@ -12,6 +12,7 @@
 
 @interface WBTeamProfileTableViewController : UITableViewController
 
-@property (strong, nonatomic) WBTeam *selectedTeam;
+- (WBTeam *)selectedTeam;
+- (void)setSelectedTeam:(WBTeam *)selectedTeam;
 
 @end

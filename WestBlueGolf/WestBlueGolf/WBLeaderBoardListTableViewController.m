@@ -32,8 +32,6 @@
 }
 
 - (void)switchTables:(BOOL)reload {
-	[NSFetchedResultsController deleteCacheWithName:nil];
-	
 	if (self.isInPlayerMode) {
 		
 		self.tableView.dataSource = self.teamDataSource;
@@ -81,8 +79,6 @@
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 	WBLeaderBoardTableViewController *vc = [segue destinationViewController];
 	vc.selectedLeaderboard = [[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 	

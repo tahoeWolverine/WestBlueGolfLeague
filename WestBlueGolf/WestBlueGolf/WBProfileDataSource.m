@@ -13,39 +13,19 @@
 #define SORT_KEY @"match.teamMatchup.week.date"
 
 @interface WBProfileDataSource () {
-	//WBPlayer *_selectedPlayer;
 }
 
 @end
 
 @implementation WBProfileDataSource
 
-/*- (void)setSelectedPlayer:(WBPlayer *)selectedPlayer {
-	_selectedPlayer = selectedPlayer;
-	if ([self isKindOfClass:[WBMeViewController class]]) {
-		self.navigationController.tabBarItem.title = _selectedPlayer ? [_selectedPlayer firstName] : @"You";
-		[self resetTableAndFetchedResultsController];
-	}
-}*/
-
-/*- (void)setSelectedPlayer:(WBPlayer *)selectedPlayer {
-	_selectedPlayer = selectedPlayer;
-}*/
-
 - (WBPlayer *)selectedPlayer {
 	if (!_selectedPlayer) {
-		_selectedPlayer = [WBPlayer me];//[WBPlayer playerWithName:[self selectedPlayerName]];
+		_selectedPlayer = [WBPlayer me];
 	}
 	
 	return _selectedPlayer;
 }
-
-/*- (NSString *)selectedPlayerName {
-	WBPlayer *player = _selectedPlayer;
-	NSString *meName = [WBPlayer me].name;
-	//TODO: Not quite right
-	return player ? player.name : meName ?: @"Find Yourself in Players";
-}*/
 
 - (NSString *)cellIdentifier {
 	static NSString *CellIdentifier = @"ProfileResultsCell";

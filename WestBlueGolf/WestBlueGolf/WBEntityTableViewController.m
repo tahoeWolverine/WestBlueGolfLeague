@@ -10,7 +10,6 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBEntityDataSource.h"
-//#import "WBEntityDetailViewController.h"
 #import "WBPlayersDataSource.h"
 #import "WBProfileTableViewController.h"
 #import "WBTeamProfileTableViewController.h"
@@ -90,16 +89,13 @@
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-	//WBEntityDetailViewController *vc = [segue destinationViewController];
-	//vc.selectedEntity = [[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 	id vc = [segue destinationViewController];
 	if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
 		WBPlayer *player = [[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 		[(WBProfileTableViewController *)vc setSelectedPlayer:player];
 	} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
-		[(WBTeamProfileTableViewController *)vc setSelectedTeam:[[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow]];
+		WBTeam *team = [[(WBEntityDataSource *)self.tableView.dataSource fetchedResultsController] objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+		[(WBTeamProfileTableViewController *)vc setSelectedTeam:team];
 	}
 	
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
