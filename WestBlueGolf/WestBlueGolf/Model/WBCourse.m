@@ -20,9 +20,7 @@
 		return nil;
 	}
 	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", courseName];
-	NSArray *courses = [WBCourse findWithPredicate:predicate];
-	return [courses firstObject];
+	return (WBCourse *)[WBCourse findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", courseName] sortedBy:nil];
 }
 
 @end

@@ -45,38 +45,24 @@
 	self.team.meValue = NO;
 }
 
++ (WBPlayer *)playerWithName:(NSString *)name {
+	return [self playerWithName:name];
+}
+
 + (WBPlayer *)noShowPlayer {
-	return [WBPlayer playerWithName:kNoShowPlayerName];
+	return [[self class] playerWithName:kNoShowPlayerName];
 }
 
 + (void)createNoShowPlayer {
-	[WBPlayer createPlayerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
+	[[self class] createPlayerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
 }
 
 - (BOOL)isNoShowPlayer {
 	return [self.name isEqualToString:kNoShowPlayerName];
 }
 
-+ (WBPlayer *)playerWithName:(NSString *)name {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
-	NSArray *players = [WBPlayer findWithPredicate:predicate];
-	return [players firstObject];
-}
-
-- (NSString *)firstName {
-	return [self.name componentsSeparatedByString:@" "][0];
-}
-
-- (NSString *)shortName {
-	NSString *firstName = [self firstName];
-	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
-	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
-}
-
 + (WBPlayer *)me {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
-	NSArray *players = [WBPlayer findWithPredicate:predicate];
-	return [players firstObject];
+	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"me = 1"] sortedBy:nil];
 }
 
 - (NSString *)record {
@@ -93,8 +79,7 @@
 }
 
 - (NSArray *)recordForYear:(WBYear *)year {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	NSArray *results = [WBResult findWithPredicate:predicate];
+	NSArray *results = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -185,8 +170,7 @@
 }
 
 - (NSArray *)findResultsForYear:(WBYear *)year {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
-	return [WBResult findWithPredicate:predicate];
+	return [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
 }
 
 - (WBPlayerYearData *)yearDataForYear:(WBYear *)year {

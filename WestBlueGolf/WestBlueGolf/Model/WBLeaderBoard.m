@@ -22,8 +22,7 @@
 }
 
 - (NSArray *)winnerData {
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1", self];
-	return [WBBoardData findWithPredicate:pred];
+	return [WBBoardData findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1", self]];
 }
 
 @end

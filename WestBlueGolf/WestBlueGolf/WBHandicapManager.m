@@ -37,9 +37,8 @@
 	}
 	
 	// Add scores for the season, calculating handicap result by result
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"player = %@", player];
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"match.teamMatchup.week.seasonIndex" ascending:YES]];
-	NSArray *playerResults = [WBResult findWithPredicate:pred sortedBy:sorts];
+	NSArray *playerResults = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"player = %@", player] sortedBy:sorts];
 	for (WBResult *result in playerResults) {
 		result.priorHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 		

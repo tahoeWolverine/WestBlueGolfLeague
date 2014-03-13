@@ -217,8 +217,7 @@
 
 - (void)assignRanksForBoard:(WBLeaderBoard *)board ascending:(BOOL)ascending {
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:ascending], [NSSortDescriptor sortDescriptorWithKey:@"peopleEntity.name" ascending:YES]];
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"leaderBoard = %@", board];
-	NSArray *data = [WBBoardData findWithPredicate:pred sortedBy:sorts];
+	NSArray *data = [WBBoardData findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@", board] sortedBy:sorts];
 	CGFloat lastValue = INT16_MAX, rank = 0, i = 0;
 	for (WBBoardData *datum in data) {
 		// Increment rank for each unique value, except when it's the league average (which will have same rank as previous, but not show rank)

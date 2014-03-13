@@ -34,4 +34,26 @@
 	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
 }
 
+- (void)configureCellForResultsOfTeam:(WBTeam *)team matchup:(WBTeamMatchup *)matchup {
+	if (!matchup) {
+		DLog(@"No results found for team in week");
+		NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setDateFormat:@"M/dd"];
+		NSString *dateString = [dateFormatter stringFromDate:matchup.week.date];
+		self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ Did Not Play", dateString];
+		self.winLossLabel.text = nil;
+		self.scoreLabel.text = nil;
+		return;
+	}
+	
+	NSArray *displayStrings = [matchup displayStringsForTeam:team];
+	BOOL win = [displayStrings[1] isEqualToString:@"W"];
+	BOOL tie = [displayStrings[1] isEqualToString:@"T"];
+	self.winLossLabel.textColor = win ? [UIColor colorWithRed:46.0 / 255.0 green:204.0 / 255.0 blue:113.0 / 255.0 alpha:1.0] : tie ? [UIColor blackColor] : [UIColor redColor];
+	
+	self.dateAndOpponentLabel.text = displayStrings[0];
+	self.winLossLabel.text = displayStrings[1];
+	self.scoreLabel.text = displayStrings[2];
+}
+
 @end

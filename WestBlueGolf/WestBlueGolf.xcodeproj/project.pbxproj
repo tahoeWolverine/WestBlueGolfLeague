@@ -62,6 +62,7 @@
 		A59BC3E018C67710003B5350 /* resultsTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DA18C67710003B5350 /* resultsTable.json */; };
 		A59BC3E118C67710003B5350 /* teamTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DB18C67710003B5350 /* teamTable.json */; };
 		A59BC3E218C67710003B5350 /* weekTable.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DC18C67710003B5350 /* weekTable.json */; };
+		A5AAA57818D2389500AC2912 /* WBMultiFetchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AAA57718D2389500AC2912 /* WBMultiFetchDataSource.m */; };
 		A5F344C818C7B63E00EBF40A /* credits.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C518C7B63E00EBF40A /* credits.html */; };
 		A5F344C918C7B63E00EBF40A /* info.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C618C7B63E00EBF40A /* info.html */; };
 		A5F344CA18C7B63E00EBF40A /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C718C7B63E00EBF40A /* rules.html */; };
@@ -209,6 +210,8 @@
 		A59BC3DA18C67710003B5350 /* resultsTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable.json; sourceTree = "<group>"; };
 		A59BC3DB18C67710003B5350 /* teamTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teamTable.json; sourceTree = "<group>"; };
 		A59BC3DC18C67710003B5350 /* weekTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weekTable.json; sourceTree = "<group>"; };
+		A5AAA57618D2389500AC2912 /* WBMultiFetchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBMultiFetchDataSource.h; sourceTree = "<group>"; };
+		A5AAA57718D2389500AC2912 /* WBMultiFetchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBMultiFetchDataSource.m; sourceTree = "<group>"; };
 		A5F344C518C7B63E00EBF40A /* credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits.html; sourceTree = "<group>"; };
 		A5F344C618C7B63E00EBF40A /* info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = info.html; sourceTree = "<group>"; };
 		A5F344C718C7B63E00EBF40A /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
@@ -371,6 +374,8 @@
 			children = (
 				A5F3459518C928DC00EBF40A /* WBEntityDataSource.h */,
 				A5F3459618C928DC00EBF40A /* WBEntityDataSource.m */,
+				A5AAA57618D2389500AC2912 /* WBMultiFetchDataSource.h */,
+				A5AAA57718D2389500AC2912 /* WBMultiFetchDataSource.m */,
 				A53498E118D0FFAA00D52D84 /* WBSectionDataSource.h */,
 				A53498E218D0FFAA00D52D84 /* WBSectionDataSource.m */,
 			);
@@ -725,6 +730,7 @@
 				A53498E718D10F1600D52D84 /* WBProfileDataSource.m in Sources */,
 				A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */,
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
+				A5AAA57818D2389500AC2912 /* WBMultiFetchDataSource.m in Sources */,
 				480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */,
 				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,

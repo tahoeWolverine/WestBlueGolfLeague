@@ -8,6 +8,9 @@
 
 @class WBResult;
 
+@class WBTeam;
+@class WBTeamMatchup;
+
 @interface WBResultTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *dateAndOpponentLabel;
@@ -15,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
 - (void)configureCellForResult:(WBResult *)result;
+- (void)configureCellForResultsOfTeam:(WBTeam *)team matchup:(WBTeamMatchup *)matchup;
 
 @end

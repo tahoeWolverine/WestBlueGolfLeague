@@ -12,6 +12,7 @@
 #import "WBProfileTableViewController.h"
 
 #define SORT_KEY @"name"
+#define SECTION_KEY @"me"
 
 @implementation WBTeamsDataSource
 
@@ -26,15 +27,31 @@
 	return @"WBTeam";
 }
 
+- (NSString *)sectionNameKeyPath {
+	return SECTION_KEY;
+}
+
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sortOrderDescriptor];
+	NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
+	NSSortDescriptor *nameSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+	return @[sectionSortOrderDescriptor, nameSortOrderDescriptor];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	WBTeam *team = (WBTeam *)object;
 	cell.textLabel.text = team.name;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	NSInteger sectionCount = [self.fetchedResultsController.sections count];
+	if (sectionCount == 2 && section == 0) {
+		return @"My Team";
+	} else {
+		return @"Teams";
+	}
+	
+	return nil;
 }
 
 @end

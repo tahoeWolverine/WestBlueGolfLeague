@@ -6,15 +6,11 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBSectionDataSource : NSObject
+@interface WBSectionDataSource : NSObject <NSFetchedResultsControllerDelegate>
 
-/*@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (assign, nonatomic) BOOL isConnectedToTableView;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic, weak, readonly) UIViewController *viewController;
-
-+ (id)dataSourceWithViewController:(UIViewController *)aViewController;
-- (id)initWithViewController:(UIViewController *)aViewController;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 
 - (void)beginFetch;
 
@@ -23,6 +19,6 @@
 - (NSArray *)sortDescriptorsForFetch;
 - (NSPredicate *)fetchPredicate;
 - (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object;*/
+		   withObject:(NSManagedObject *)object;
 
 @end

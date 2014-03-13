@@ -67,6 +67,10 @@
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		NSString *weekDate = [elt objectForKey:wbJsonKeyWeekDate];
 		NSDate *date = [self dateForString:weekDate];
+		
+		if (weekId == 17) {
+			DLog(@"");
+		}
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId];
 	}
 	

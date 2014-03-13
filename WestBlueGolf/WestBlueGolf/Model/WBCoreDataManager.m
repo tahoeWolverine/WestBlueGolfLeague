@@ -120,28 +120,4 @@
 	}
 }
 
-#pragma mark - Object helper methods
-/*
-+ (id)findEntity:(NSString *)entityName withPredicate:(NSPredicate *)predicate sorts:(NSArray *)sorts {
-	NSFetchRequest *request = [self fetchAllRequestWithEntityName:entityName];
-	[request setPredicate:predicate];
-	
-	if (sorts && sorts.count > 0) {
-		request.sortDescriptors = sorts;
-	}
-	
-	NSError *error = nil;
-	NSArray *results = [[[self sharedManager] managedObjectContext] executeFetchRequest:request error:&error];
-	if (error) {
-		[[WBCoreDataManager class] performSelector:@selector(logError:) withObject:error];
-	}
-	return results;
-}
-
-+ (NSFetchRequest *)fetchAllRequestWithEntityName:(NSString *)entityName {
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	[request setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:[[[self class] sharedManager] managedObjectContext]]];
-	return request;
-}*/
-
 @end

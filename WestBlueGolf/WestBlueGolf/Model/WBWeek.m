@@ -23,9 +23,7 @@
 }
 
 + (WBWeek *)weekWithId:(NSInteger)weekId {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"seasonIndex = %@", [NSNumber numberWithInteger:weekId]];
-	NSArray *weeks = [WBWeek findWithPredicate:predicate];
-	return [weeks firstObject];
+	return (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"seasonIndex = %@", [NSNumber numberWithInteger:weekId]] sortedBy:nil];
 }
 
 @end

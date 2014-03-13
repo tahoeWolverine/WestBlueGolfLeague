@@ -5,6 +5,7 @@
 #import "WBResult.h"
 #import "WBTeam.h"
 #import "WBYear.h"
+#import "WBWeek.h"
 
 @interface WBTeamMatchup ()
 
@@ -24,9 +25,16 @@
 }
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team];
-	NSArray *matchups = [WBTeamMatchup findWithPredicate:predicate];
-	return [matchups firstObject];
+	return (WBTeamMatchup *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team] sortedBy:nil];
+}
+
+- (WBTeam *)opponentTeamOfTeam:(WBTeam *)team {
+	for (WBTeam *aTeam in self.teams) {
+		if (aTeam != team) {
+			return aTeam;
+		}
+	}
+	return nil;
 }
 
 - (NSArray *)displayStrings {
@@ -46,6 +54,25 @@
 	NSString *loserPoints = [NSString stringWithFormat:@"%ld pts", (long)(team1 == winner ? team2Points : team1Points)];
 	NSString *loserScore = [self totalScoreStringForTeam:loser];
 	return @[winnerName, winnerPoints, winnerScore, loserName, loserPoints, loserScore];
+}
+
+- (NSArray *)displayStringsForTeam:(WBTeam *)team {
+	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"M/dd"];
+	NSString *dateString = [dateFormatter stringFromDate:self.week.date];
+	
+	WBTeam *opponent = [self opponentTeamOfTeam:team];
+	NSString *teamScore = [self totalScoreStringForTeam:team];
+	NSString *opponentScore = [self totalScoreStringForTeam:opponent];
+	NSString *titleString = [NSString stringWithFormat:@"%@ vs %@", dateString, [opponent shortName]];
+				
+	NSInteger points = [self totalPointsForTeam:team];
+	BOOL win = points > 48;
+	BOOL tie = points == 48;
+	NSString *winLoss = win ? @"W" : tie ? @"T" : @"L";
+	
+	NSString *scoreString = [NSString stringWithFormat:@"%@-%@", teamScore, opponentScore];
+	return @[titleString, winLoss, scoreString];
 }
 
 - (NSInteger)totalPointsForTeam:(WBTeam *)team {

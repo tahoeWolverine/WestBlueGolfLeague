@@ -27,4 +27,22 @@
 	return [self.name isEqualToString:LEAGUE_AVERAGE_NAME];
 }
 
++ (WBPeopleEntity *)peopleEntityWithName:(NSString *)name {
+	return (WBPeopleEntity *)[WBPeopleEntity findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
+}
+
+- (NSString *)firstName {
+	return [self.name componentsSeparatedByString:@" "][0];
+}
+
+- (NSString *)shortName {
+	NSString *firstName = [self firstName];
+	if ([firstName isEqualToString:self.name]) {
+		return firstName;
+	}
+
+	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
+	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
+}
+
 @end
