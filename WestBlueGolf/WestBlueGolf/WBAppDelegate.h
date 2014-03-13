@@ -17,4 +17,7 @@
 - (void)setProfileTabPlayer;
 - (BOOL)isProfileTab:(UIViewController *)vc;
 
+- (NSInteger)thisYearValue;
+- (void)setThisYearValue:(NSInteger)value;
+
 @end

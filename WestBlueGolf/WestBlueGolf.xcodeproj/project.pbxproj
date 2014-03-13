@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		480C2B5018BAE6570027F051 /* WBEntityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */; };
-		480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */; };
 		480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */; };
 		48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */; };
 		48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */; };
@@ -51,6 +50,8 @@
 		A53498E318D0FFAA00D52D84 /* WBSectionDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E218D0FFAA00D52D84 /* WBSectionDataSource.m */; };
 		A53498E718D10F1600D52D84 /* WBProfileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E618D10F1600D52D84 /* WBProfileDataSource.m */; };
 		A53498EA18D1123600D52D84 /* WBTeamProfileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */; };
+		A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */; };
+		A53498F018D20D1B00D52D84 /* WBYearSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */; };
 		A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */; };
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
@@ -105,8 +106,6 @@
 /* Begin PBXFileReference section */
 		480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityTableViewController.h; sourceTree = "<group>"; };
 		480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityTableViewController.m; sourceTree = "<group>"; };
-		480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBEntityDetailViewController.h; sourceTree = "<group>"; };
-		480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBEntityDetailViewController.m; sourceTree = "<group>"; };
 		480C2B5418BB2A550027F051 /* WBTeamProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileTableViewController.h; sourceTree = "<group>"; };
 		480C2B5518BB2A550027F051 /* WBTeamProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamProfileTableViewController.m; sourceTree = "<group>"; };
 		48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBProfileTableViewController.h; sourceTree = "<group>"; };
@@ -192,6 +191,10 @@
 		A53498E618D10F1600D52D84 /* WBProfileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBProfileDataSource.m; sourceTree = "<group>"; };
 		A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamProfileDataSource.m; sourceTree = "<group>"; };
 		A53498E918D1123600D52D84 /* WBTeamProfileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileDataSource.h; sourceTree = "<group>"; };
+		A53498EB18D2095600D52D84 /* WBYearSelectionDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearSelectionDataSource.h; sourceTree = "<group>"; };
+		A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionDataSource.m; sourceTree = "<group>"; };
+		A53498EE18D20D1B00D52D84 /* WBYearSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearSelectionViewController.h; sourceTree = "<group>"; };
+		A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionViewController.m; sourceTree = "<group>"; };
 		A56F21A718CE0C0900BF5CEE /* WBLeaderBoardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBLeaderBoardManager.h; path = WestBlueGolf/WBLeaderBoardManager.h; sourceTree = SOURCE_ROOT; };
 		A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBLeaderBoardManager.m; path = WestBlueGolf/WBLeaderBoardManager.m; sourceTree = SOURCE_ROOT; };
 		A56F21AA18CE0CFA00BF5CEE /* WBInputDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBInputDataManager.h; path = WestBlueGolf/WBInputDataManager.h; sourceTree = SOURCE_ROOT; };
@@ -368,10 +371,6 @@
 			children = (
 				A5F3459518C928DC00EBF40A /* WBEntityDataSource.h */,
 				A5F3459618C928DC00EBF40A /* WBEntityDataSource.m */,
-				480C2B5118BB11700027F051 /* WBEntityDetailViewController.h */,
-				480C2B5218BB11700027F051 /* WBEntityDetailViewController.m */,
-				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
-				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
 				A53498E118D0FFAA00D52D84 /* WBSectionDataSource.h */,
 				A53498E218D0FFAA00D52D84 /* WBSectionDataSource.m */,
 			);
@@ -549,6 +548,8 @@
 			isa = PBXGroup;
 			children = (
 				A5F3459818C92DFC00EBF40A /* DataSources */,
+				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
+				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
 				A5F345A918CA651F00EBF40A /* WBMeViewController.h */,
 				A5F345AA18CA651F00EBF40A /* WBMeViewController.m */,
 				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
@@ -592,6 +593,10 @@
 				A5F344CE18C7CED300EBF40A /* WBInfoTableViewController.m */,
 				A5F344D018C7D06C00EBF40A /* WBInfoWebviewViewController.h */,
 				A5F344D118C7D06C00EBF40A /* WBInfoWebviewViewController.m */,
+				A53498EB18D2095600D52D84 /* WBYearSelectionDataSource.h */,
+				A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */,
+				A53498EE18D20D1B00D52D84 /* WBYearSelectionViewController.h */,
+				A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -757,11 +762,12 @@
 				48B54E1B18CBE41100F97F8C /* WBLeaderBoardListCell.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,
 				A5F3459B18C92E1C00EBF40A /* WBPlayersDataSource.m in Sources */,
+				A53498F018D20D1B00D52D84 /* WBYearSelectionViewController.m in Sources */,
 				48B54DF518CBD59900F97F8C /* _WBLeaderBoard.m in Sources */,
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
-				480C2B5318BB11700027F051 /* WBEntityDetailViewController.m in Sources */,
 				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
+				A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */,
 				A5F345A518CA1E4300EBF40A /* WBWeekTableViewController.m in Sources */,

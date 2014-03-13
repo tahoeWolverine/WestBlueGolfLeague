@@ -1,4 +1,5 @@
 #import "WBYear.h"
+#import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 #import "WBTeam.h"
 
@@ -17,8 +18,18 @@
 }
 
 + (WBYear *)thisYear {
+	NSInteger selectedValue = [(WBAppDelegate *)[UIApplication sharedApplication].delegate thisYearValue];
+	return [self yearWithValue:selectedValue];
+}
+
++ (WBYear *)newestYear {
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]];
 	return (WBYear *)[self findFirstRecordWithPredicate:nil sortedBy:sorts];
+}
+
++ (WBYear *)yearWithValue:(NSInteger)value {
+	return (WBYear *)[self findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"value = %@", [NSNumber numberWithInteger:value]]
+											   sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]]];
 }
 
 @end

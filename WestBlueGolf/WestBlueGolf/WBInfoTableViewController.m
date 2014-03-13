@@ -8,6 +8,7 @@
 
 #import "WBInfoTableViewController.h"
 #import "WBInfoWebviewViewController.h"
+#import "WBModels.h"
 
 @interface WBInfoTableViewController ()
 
@@ -15,8 +16,7 @@
 
 @implementation WBInfoTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -24,8 +24,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -35,18 +34,60 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell = nil;
+	if (indexPath.row == 4) {
+		cell = [tableView dequeueReusableCellWithIdentifier:@"SelectedYearCell" forIndexPath:indexPath];
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [WBYear thisYear].value];
+	} else {
+		NSString *cellIdentifier = @"BasicInfoCell";
+		if (indexPath.row == 3) {
+			cellIdentifier = @"UrlLinkCell";
+		}
+		cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+		cell.textLabel.text = [self textForCellAtIndex:indexPath.row];
+	}
+    
+    return cell;
+}
+
+- (NSString *)textForCellAtIndex:(NSInteger)index {
+	NSString *text = nil;
+	switch (index) {
+		case 0:
+			text = @"League Rules of Play";
+			break;
+		case 1:
+			text = @"General Information";
+			break;
+		case 2:
+			text = @"Credits";
+			break;
+		case 3:
+			text = @"westbluegolfleague.com";
+			break;
+		default:
+			break;
+	}
+	
+	return text;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.row == 3) {
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://westbluegolfleague.com"]];
-		[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
 }
 
@@ -128,7 +169,8 @@
 	} else if ([cell.textLabel.text isEqualToString:@"Credits"]) {
 		filename = @"credits";
 	} else {
-		ALog(@"unknown info cell touched");
+		// other cells shouldn't bother with this logic
+		return;
 	}
 	
 	WBInfoWebviewViewController *dest = (WBInfoWebviewViewController *)[segue destinationViewController];

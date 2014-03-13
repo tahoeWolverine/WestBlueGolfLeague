@@ -12,11 +12,7 @@
 
 @interface WBProfileTableViewController : UITableViewController
 
-//@property (weak, nonatomic) NSManagedObject *selectedEntity;
-//@property (strong, nonatomic) WBPlayer *selectedPlayer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
-
-//- (void)markViewControllerMe;
 
 - (void)refreshPlayerHighlights;
 - (void)refreshFavoriteButton;
@@ -26,7 +22,5 @@
 // Fake selectedPlayer property passthrough
 - (WBPlayer *)selectedPlayer;
 - (void)setSelectedPlayer:(WBPlayer *)selectedPlayer;
-
-//- (void)resetTableAndFetchedResultsController;
 
 @end

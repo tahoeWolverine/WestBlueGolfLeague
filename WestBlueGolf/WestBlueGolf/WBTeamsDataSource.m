@@ -15,7 +15,7 @@
 
 @implementation WBTeamsDataSource
 
-#pragma mark - WBEntityTableViewController methods to implement
+#pragma mark - WBEntityDataSource methods to implement
 
 - (NSString *)cellIdentifier {
 	static NSString *CellIdentifier = @"TeamListCell";

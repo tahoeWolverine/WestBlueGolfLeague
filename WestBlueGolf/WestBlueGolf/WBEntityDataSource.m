@@ -8,7 +8,6 @@
 
 #import "WBEntityDataSource.h"
 #import "WBCoreDataManager.h"
-#import "WBEntityTableViewController.h"
 
 @interface WBEntityDataSource () {
 	NSFetchedResultsController *_fetchedResultsController;

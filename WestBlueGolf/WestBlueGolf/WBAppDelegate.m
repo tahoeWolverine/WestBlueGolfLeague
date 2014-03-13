@@ -14,18 +14,35 @@
 #import "WBModels.h"
 #import "WBProfileTableViewController.h"
 
+@interface WBAppDelegate ()
+
+@property (assign, nonatomic) NSInteger yearSelection;
+
+@end
+
 @implementation WBAppDelegate
+
+- (NSInteger)thisYearValue {
+	return self.yearSelection;
+}
+
+- (void)setThisYearValue:(NSInteger)value {
+	self.yearSelection = value;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	[WBCoreDataManager sharedManager];
 	
-	WBYear *year = [WBYear thisYear];
+	WBYear *year = [WBYear newestYear];
+	self.yearSelection = year.valueValue;
 	
 	if (!year) {
 		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 		[inputManager loadJsonData];
+
+		self.yearSelection = [WBYear newestYear].valueValue;
 		
 		WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
 		[handiManager calculateHandicaps];
