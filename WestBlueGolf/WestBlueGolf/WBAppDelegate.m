@@ -23,7 +23,7 @@
 @implementation WBAppDelegate
 
 - (NSInteger)thisYearValue {
-	return self.yearSelection;
+	return self.yearSelection ?: 2012;
 }
 
 - (void)setThisYearValue:(NSInteger)value {

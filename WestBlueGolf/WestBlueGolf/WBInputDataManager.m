@@ -48,7 +48,7 @@
 
 - (void)loadJsonData {
 	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-	WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
+	WBYear *year = [WBYear createYearWithValue:2012 champion:noTeam];
 
 	//TODO: Will need a way to calculate this
 	year.isCompleteValue = YES;
@@ -184,7 +184,8 @@
 }
 
 - (NSData *)fileDataForFilename:(NSString *)name {
-	NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"json"];
+	NSString *fileName = [NSString stringWithFormat:@"%@%@", name, [WBYear thisYear].value];
+	NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
 	return [[NSFileManager defaultManager] contentsAtPath:path];
 }
 

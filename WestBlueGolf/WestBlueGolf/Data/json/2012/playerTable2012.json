@@ -3,456 +3,450 @@
     "PlayerName":"Jason Price",
     "TeamID":1,
     "Week0Score":45,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Hank Maurer",
     "TeamID":1,
-    "Week0Score":46,
-    "Status":"OLD"
+    "Week0Score":43,
+    "Status":"old"
   },
   {
     "PlayerName":"Dan Schuster",
     "TeamID":1,
     "Week0Score":49,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Richard Kroening",
     "TeamID":1,
-    "Week0Score":44,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
   },
   {
     "PlayerName":"Gary Daml",
     "TeamID":1,
-    "Week0Score":51,
-    "Status":"OLD"
+    "Week0Score":53,
+    "Status":"old"
   },
   {
     "PlayerName":"Paul Haering",
     "TeamID":1,
     "Week0Score":40,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Bryant Olson ",
-    "TeamID":1,
-    "Week0Score":47,
-    "Status":"NEW"
-  },
-  {
-    "PlayerName":"Ryan LeNoue",
-    "TeamID":1,
-    "Week0Score":40,
-    "Status":"NEW"
+    "Status":"old"
   },
   {
     "PlayerName":"Brad Zilge",
     "TeamID":2,
-    "Week0Score":45,
-    "Status":"OLD"
+    "Week0Score":43,
+    "Status":"new"
   },
   {
     "PlayerName":"Darren Trzynka",
     "TeamID":2,
-    "Week0Score":44,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
     "PlayerName":"Jeff Walberg",
     "TeamID":2,
-    "Week0Score":50,
-    "Status":"OLD"
+    "Week0Score":45,
+    "Status":"old"
   },
   {
     "PlayerName":"Drew Johnson",
     "TeamID":2,
     "Week0Score":39,
-    "Status":"OLD"
+    "Status":"new"
   },
   {
     "PlayerName":"Lee VanGundy",
     "TeamID":2,
-    "Week0Score":45,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
   },
   {
     "PlayerName":"Matt Wendt",
     "TeamID":2,
-    "Week0Score":42,
-    "Status":"OLD"
+    "Week0Score":45,
+    "Status":"old"
   },
   {
     "PlayerName":"Brad Loya",
     "TeamID":2,
-    "Week0Score":45,
-    "Status":"OLD"
+    "Week0Score":42,
+    "Status":"old"
   },
   {
     "PlayerName":"Noah Price",
     "TeamID":3,
-    "Week0Score":47,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"new"
   },
   {
     "PlayerName":"Nick Remarke",
     "TeamID":3,
     "Week0Score":46,
-    "Status":"OLD"
+    "Status":"old"
+  },
+  {
+    "PlayerName":"Donavan Schwartz",
+    "TeamID":3,
+    "Week0Score":56,
+    "Status":"old"
   },
   {
     "PlayerName":"Tim Masso",
     "TeamID":3,
-    "Week0Score":45,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"new"
+  },
+  {
+    "PlayerName":"Ryan Wiegel",
+    "TeamID":3,
+    "Week0Score":48,
+    "Status":"old"
   },
   {
     "PlayerName":"Ryan Hunecke",
     "TeamID":3,
-    "Week0Score":43,
-    "Status":"OLD"
+    "Week0Score":42,
+    "Status":"old"
   },
   {
     "PlayerName":"Jason Meggitt",
     "TeamID":3,
-    "Week0Score":41,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Nick Brett",
-    "TeamID":3,
     "Week0Score":44,
-    "Status":"NEW"
+    "Status":"old"
   },
   {
-    "PlayerName":"Joel Skarp",
+    "PlayerName":"Brendon Ryan",
     "TeamID":3,
-    "Week0Score":48,
-    "Status":"NEW"
+    "Week0Score":47,
+    "Status":"new"
   },
   {
     "PlayerName":"Mike Tierney",
     "TeamID":4,
-    "Week0Score":47,
-    "Status":"OLD"
+    "Week0Score":48,
+    "Status":"old"
   },
   {
     "PlayerName":"Ryan Kinsella",
     "TeamID":4,
-    "Week0Score":49,
-    "Status":"OLD"
+    "Week0Score":48,
+    "Status":"old"
   },
   {
     "PlayerName":"Rob Voith",
     "TeamID":4,
     "Week0Score":46,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Pat McDonald",
     "TeamID":4,
-    "Week0Score":45,
-    "Status":"OLD"
+    "Week0Score":43,
+    "Status":"new"
   },
   {
     "PlayerName":"John Prout",
     "TeamID":4,
-    "Week0Score":42,
-    "Status":"OLD"
+    "Week0Score":40,
+    "Status":"old"
   },
   {
     "PlayerName":"Scott Hanson",
     "TeamID":4,
-    "Week0Score":37,
-    "Status":"OLD"
+    "Week0Score":39,
+    "Status":"old"
   },
   {
     "PlayerName":"Brian Tschida",
     "TeamID":4,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":45,
+    "Status":"old"
   },
   {
     "PlayerName":"Iver Fundaun",
     "TeamID":4,
     "Week0Score":41,
-    "Status":"OLD"
+    "Status":"new"
   },
   {
     "PlayerName":"Don Kamper",
     "TeamID":4,
-    "Week0Score":52,
-    "Status":"OLD"
+    "Week0Score":50,
+    "Status":"new"
+  },
+  {
+    "PlayerName":"Steve Porter",
+    "TeamID":5,
+    "Week0Score":41,
+    "Status":"old"
   },
   {
     "PlayerName":"Perry Coulson",
     "TeamID":5,
-    "Week0Score":49,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
+  },
+  {
+    "PlayerName":"Aaron Rademacher",
+    "TeamID":5,
+    "Week0Score":43,
+    "Status":"old"
+  },
+  {
+    "PlayerName":"Keith Kurpiers",
+    "TeamID":5,
+    "Week0Score":56,
+    "Status":"new"
   },
   {
     "PlayerName":"Pete Mohs",
     "TeamID":5,
+    "Week0Score":48,
+    "Status":"old"
+  },
+  {
+    "PlayerName":"Jim Fees",
+    "TeamID":5,
     "Week0Score":47,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Matt Sinn",
-    "TeamID":5,
-    "Week0Score":55,
-    "Status":"NEW"
-  },
-  {
-    "PlayerName":"Jayson Walberg",
-    "TeamID":5,
-    "Week0Score":39,
-    "Status":"NEW"
+    "Status":"new"
   },
   {
     "PlayerName":"Brian Schwartz",
     "TeamID":5,
-    "Week0Score":48,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Chris Wentzlaff",
-    "TeamID":5,
-    "Week0Score":36,
-    "Status":"NEW"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
     "PlayerName":"Jim Englert",
     "TeamID":6,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
   },
   {
     "PlayerName":"Rick Rowan",
     "TeamID":6,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
   },
   {
     "PlayerName":"Brian Martin",
     "TeamID":6,
-    "Week0Score":38,
-    "Status":"OLD"
+    "Week0Score":41,
+    "Status":"old"
   },
   {
     "PlayerName":"Gary Sole",
     "TeamID":6,
     "Week0Score":42,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Chris Rehfeld",
     "TeamID":6,
-    "Week0Score":44,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
     "PlayerName":"Ben Ferguson",
     "TeamID":6,
-    "Week0Score":46,
-    "Status":"OLD"
+    "Week0Score":44,
+    "Status":"new"
+  },
+  {
+    "PlayerName":"Gary Mukai",
+    "TeamID":6,
+    "Week0Score":41,
+    "Status":"new"
   },
   {
     "PlayerName":"Bill Ronning",
     "TeamID":7,
     "Week0Score":44,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Travis Rager",
     "TeamID":7,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":52,
+    "Status":"old"
   },
   {
     "PlayerName":"Mike Gleiter",
     "TeamID":7,
-    "Week0Score":40,
-    "Status":"OLD"
+    "Week0Score":44,
+    "Status":"old"
   },
   {
     "PlayerName":"Chaz Braxmeier",
     "TeamID":7,
-    "Week0Score":46,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
     "PlayerName":"Andy Madigan",
     "TeamID":7,
-    "Week0Score":42,
-    "Status":"OLD"
+    "Week0Score":46,
+    "Status":"old"
   },
   {
     "PlayerName":"Dave Olenius",
     "TeamID":7,
-    "Week0Score":47,
-    "Status":"OLD"
+    "Week0Score":45,
+    "Status":"old"
   },
   {
     "PlayerName":"Tristan Wilwert",
     "TeamID":7,
-    "Week0Score":46,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Jeff Wynia ",
-    "TeamID":7,
-    "Week0Score":48,
-    "Status":"NEW"
+    "Week0Score":52,
+    "Status":"new"
   },
   {
     "PlayerName":"Evan Stoltz",
     "TeamID":8,
-    "Week0Score":42,
-    "Status":"OLD"
+    "Week0Score":41,
+    "Status":"old"
   },
   {
     "PlayerName":"Mac Noland",
     "TeamID":8,
-    "Week0Score":44,
-    "Status":"OLD"
+    "Week0Score":43,
+    "Status":"old"
   },
   {
     "PlayerName":"Matt Engstrom",
     "TeamID":8,
-    "Week0Score":46,
-    "Status":"OLD"
+    "Week0Score":44,
+    "Status":"old"
   },
   {
     "PlayerName":"Patrick McDonough",
     "TeamID":8,
     "Week0Score":45,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Nick Bjerken",
     "TeamID":8,
     "Week0Score":39,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Brian Kuznia",
     "TeamID":8,
     "Week0Score":39,
-    "Status":"OLD"
+    "Status":"old"
   },
   {
     "PlayerName":"Ivan Kuznia",
     "TeamID":8,
-    "Week0Score":38,
-    "Status":"OLD"
+    "Week0Score":39,
+    "Status":"new"
   },
   {
     "PlayerName":"Mike Bosquez",
     "TeamID":8,
-    "Week0Score":47,
-    "Status":"OLD"
-  },
-  {
-    "PlayerName":"Adam Olsen",
-    "TeamID":8,
-    "Week0Score":44,
-    "Status":"NEW"
+    "Week0Score":45,
+    "Status":"new"
   },
   {
     "PlayerName":"Adam Ahrens",
     "TeamID":9,
-    "Week0Score":54,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"new"
   },
   {
     "PlayerName":"Pat Fermoyle",
     "TeamID":9,
-    "Week0Score":43,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
     "PlayerName":"TR Miller",
     "TeamID":9,
-    "Week0Score":53,
-    "Status":"OLD"
+    "Week0Score":51,
+    "Status":"old"
   },
   {
     "PlayerName":"Brian Frederick",
     "TeamID":9,
-    "Week0Score":54,
-    "Status":"OLD"
+    "Week0Score":55,
+    "Status":"new"
+  },
+  {
+    "PlayerName":"Daniel Schultz",
+    "TeamID":9,
+    "Week0Score":56,
+    "Status":"new"
   },
   {
     "PlayerName":"Brad Smith",
     "TeamID":9,
-    "Week0Score":41,
-    "Status":"OLD"
+    "Week0Score":40,
+    "Status":"old"
   },
   {
     "PlayerName":"Tory Stellick",
     "TeamID":9,
-    "Week0Score":42,
-    "Status":"OLD"
+    "Week0Score":39,
+    "Status":"old"
   },
   {
-    "PlayerName":"Dave Dietsche",
+    "PlayerName":"Brady Augeson",
     "TeamID":9,
-    "Week0Score":42,
-    "Status":"NEW"
-  },
-  {
-    "PlayerName":"Patrick Neuman",
-    "TeamID":9,
-    "Week0Score":48,
-    "Status":"NEW"
+    "Week0Score":53,
+    "Status":"new"
   },
   {
     "PlayerName":"Dale Vlasak",
     "TeamID":10,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":50,
+    "Status":"old"
   },
   {
     "PlayerName":"Aaron L. Johnson",
     "TeamID":10,
     "Week0Score":52,
-    "Status":"OLD"
+    "Status":"new"
   },
   {
     "PlayerName":"Andy Norgren",
     "TeamID":10,
-    "Week0Score":50,
-    "Status":"OLD"
+    "Week0Score":56,
+    "Status":"new"
   },
   {
     "PlayerName":"Tim Wagner",
     "TeamID":10,
-    "Week0Score":41,
-    "Status":"OLD"
+    "Week0Score":42,
+    "Status":"old"
   },
   {
     "PlayerName":"Michael Harlow",
     "TeamID":10,
-    "Week0Score":40,
-    "Status":"OLD"
+    "Week0Score":43,
+    "Status":"old"
   },
   {
     "PlayerName":"Greg Ohrt",
     "TeamID":10,
-    "Week0Score":48,
-    "Status":"OLD"
+    "Week0Score":49,
+    "Status":"new"
   },
   {
     "PlayerName":"Scott Gebhart",
     "TeamID":10,
-    "Week0Score":46,
-    "Status":"OLD"
+    "Week0Score":47,
+    "Status":"old"
   },
   {
-    "PlayerName":"Dan Mule",
+    "PlayerName":"Todd Schneiderhan",
     "TeamID":10,
-    "Week0Score":47,
-    "Status":"NEW"
+    "Week0Score":39,
+    "Status":"old"
   }
 ]
