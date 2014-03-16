@@ -21,7 +21,10 @@
 
 @interface WBMatchupResultDataSource () <V8HorizontalPickerViewDelegate, V8HorizontalPickerViewDataSource>
 
-@property (nonatomic, strong) NSArray *titleArray;
+@property (strong, nonatomic) NSMutableArray *weekTitleArray;
+@property (strong, nonatomic) NSMutableArray *seasonIndexArray;
+
+@property (strong, nonatomic) V8HorizontalPickerView *pickerView;
 
 @end
 
@@ -30,9 +33,42 @@
 - (id)initWithViewController:(UIViewController *)aViewController {
 	self = [super initWithViewController:aViewController];
 	if (self) {
-		self.titleArray = @[@"7/29", @"8/12", @"8/19", @"8/26"];
+		NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:@"year = %@", [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+		self.weekTitleArray = [NSMutableArray array];
+		self.seasonIndexArray = [NSMutableArray array];
+		
+		NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setDateFormat:@"M/dd"];
+		for (WBWeek *week in weeks) {
+			if (week.teamMatchups && week.teamMatchups.count > 0) {
+				[self.weekTitleArray addObject:[dateFormatter stringFromDate:week.date]];
+				[self.seasonIndexArray addObject:week.seasonIndex];
+			}
+		}
 	}
 	return self;
+}
+
+- (V8HorizontalPickerView *)pickerView {
+	if (!_pickerView) {
+		UITableView *tableView = [(UITableViewController *)self.viewController tableView];
+		_pickerView = [[V8HorizontalPickerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, HEADER_HEIGHT)];
+		_pickerView.backgroundColor = [UIColor whiteColor];
+		_pickerView.selectedTextColor = kEmeraldColor;
+		_pickerView.textColor = [UIColor grayColor];
+		_pickerView.delegate = self;
+		_pickerView.dataSource = self;
+		_pickerView.elementFont = [UIFont boldSystemFontOfSize:14.0f];
+		_pickerView.selectionPoint = CGPointMake(ceil(tableView.bounds.size.width / 2), 0);
+		[_pickerView scrollToElement:[self.weekTitleArray count] - 1 animated:NO];
+		
+		// add carat or other view to indicate selected element
+		UIImageView *indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
+		indicator.image = [indicator.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		[indicator setTintColor:kEmeraldColor];
+		_pickerView.selectionIndicatorView = indicator;
+	}
+	return _pickerView;
 }
 
 #pragma mark - WBEntityDataSource methods to implement
@@ -51,7 +87,14 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"week.seasonIndex = 16"];
+	NSInteger seasonIndex = 0;
+	if (self.pickerView) {
+		seasonIndex = [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
+	} else {
+		seasonIndex = [[self.seasonIndexArray lastObject] integerValue];
+	}
+	
+	return [NSPredicate predicateWithFormat:@"week.seasonIndex = %@", [NSNumber numberWithInteger:seasonIndex]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {
@@ -71,38 +114,24 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	V8HorizontalPickerView *view = [[V8HorizontalPickerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, HEADER_HEIGHT)];
-	view.backgroundColor   = [UIColor whiteColor];
-	view.selectedTextColor = kEmeraldColor;
-	view.textColor   = [UIColor grayColor];
-	view.delegate    = self;
-	view.dataSource  = self;
-	view.elementFont = [UIFont boldSystemFontOfSize:14.0f];
-	view.selectionPoint = CGPointMake(ceil(tableView.bounds.size.width / 2), 0);
-	[view scrollToElement:3 animated:NO];
-	
-	// add carat or other view to indicate selected element
-	
-	UIImageView *indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
-	indicator.image = [indicator.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-	[indicator setTintColor:kEmeraldColor];
-	view.selectionIndicatorView = indicator;
-	return view;
+	return self.pickerView;
 }
 
 #pragma mark - HorizontalPickerView DataSource Methods
+
 - (NSInteger)numberOfElementsInHorizontalPickerView:(V8HorizontalPickerView *)picker {
-	return [self.titleArray count];
+	return [self.weekTitleArray count];
 }
 
 #pragma mark - HorizontalPickerView Delegate Methods
+
 - (NSString *)horizontalPickerView:(V8HorizontalPickerView *)picker titleForElementAtIndex:(NSInteger)index {
-	return [self.titleArray objectAtIndex:index];
+	return [self.weekTitleArray objectAtIndex:index];
 }
 
 - (NSInteger)horizontalPickerView:(V8HorizontalPickerView *)picker widthForElementAtIndex:(NSInteger)index {
 	CGSize constrainedSize = CGSizeMake(MAXFLOAT, MAXFLOAT);
-	NSString *text = [self.titleArray objectAtIndex:index];
+	NSString *text = [self.weekTitleArray objectAtIndex:index];
 	NSDictionary *attributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:14.0f]};
 	CGRect textRect = [text boundingRectWithSize:constrainedSize
 										 options:NSStringDrawingUsesLineFragmentOrigin
@@ -112,7 +141,14 @@
 }
 
 - (void)horizontalPickerView:(V8HorizontalPickerView *)picker didSelectElementAtIndex:(NSInteger)index {
-	//self.infoLabel.text = [NSString stringWithFormat:@"Selected index %ld", (long)index];
+	[self resetDataSource];
+}
+
+- (void)resetDataSource {
+	self.fetchedResultsController = nil;
+	[self beginFetch];
+	
+	[[(UITableViewController *)self.viewController tableView] reloadData];
 }
 
 @end
