@@ -23,7 +23,7 @@
 }
 
 + (WBLeaderBoard *)leaderBoardWithName:(NSString *)name key:(NSString *)key tablePriority:(NSInteger)tablePriority isPlayerBoard:(BOOL)isPlayerBoard {
-	WBLeaderBoard *board = (WBLeaderBoard *)[WBLeaderBoard findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"key = %@ && isPlayerBoard = %@", key, [NSNumber numberWithBool:isPlayerBoard]] sortedBy:nil];
+	WBLeaderBoard *board = (WBLeaderBoard *)[WBLeaderBoard findFirstRecordWithFormat:@"key = %@ && isPlayerBoard = %@", key, [NSNumber numberWithBool:isPlayerBoard]];
 	if (!board) {
 		board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:tablePriority isPlayerBoard:isPlayerBoard];
 	}
@@ -31,7 +31,7 @@
 }
 
 - (NSArray *)winnerData {
-	return [WBBoardData findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1 && year = %@", self, [WBYear thisYear]]];
+	return [WBBoardData findWithFormat:@"leaderBoard = %@ && rank = 1 && year = %@", self, [WBYear thisYear]];
 }
 
 @end

@@ -69,6 +69,14 @@
 	return [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:0];
 }
 
++ (WBManagedObject *)findFirstRecordWithFormat:(NSString *)predicateFormat, ... {
+	va_list args;
+	va_start(args, predicateFormat);
+	WBManagedObject *obj = [self findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:predicateFormat arguments:args] sortedBy:nil];
+	va_end(args);
+	return obj;
+}
+
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors {
 	NSArray *results = [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:1];
 	return (WBManagedObject *)[results firstObject];

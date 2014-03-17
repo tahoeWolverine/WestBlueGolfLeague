@@ -16,7 +16,7 @@
 }
 
 + (WBPeopleEntity *)leagueAverage {
-	WBPeopleEntity *avg = (WBPeopleEntity *)[self findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", LEAGUE_AVERAGE_NAME] sortedBy:nil];
+	WBPeopleEntity *avg = (WBPeopleEntity *)[self findFirstRecordWithFormat:@"name = %@", LEAGUE_AVERAGE_NAME];
 	if (!avg) {
 		avg = [WBPeopleEntity createPeopleWithName:LEAGUE_AVERAGE_NAME];
 	}
@@ -28,7 +28,7 @@
 }
 
 + (WBPeopleEntity *)peopleEntityWithName:(NSString *)name {
-	return (WBPeopleEntity *)[WBPeopleEntity findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
+	return (WBPeopleEntity *)[WBPeopleEntity findFirstRecordWithFormat:@"name = %@", name];
 }
 
 - (NSString *)firstName {

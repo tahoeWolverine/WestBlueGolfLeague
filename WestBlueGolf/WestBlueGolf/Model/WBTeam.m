@@ -30,13 +30,11 @@
 }
 
 + (WBTeam *)teamWithId:(NSInteger)teamId {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
-	return (WBTeam *)[[self class] findFirstRecordWithPredicate:predicate sortedBy:nil];
+	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
 }
 
 + (WBTeam *)myTeam {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"me = 1"];
-	return (WBTeam *)[[self class] findFirstRecordWithPredicate:predicate sortedBy:nil];
+	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"me = 1"];
 }
 
 /*- (NSInteger)place {
@@ -95,7 +93,7 @@
 }
 
 - (NSArray *)individualRecordForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self]];
+	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -277,7 +275,7 @@
 }
 
 - (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self]];
+	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
 
 	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:self.matchups.count];
 	for (NSInteger i = 0; i < self.matchups.count; i++) {

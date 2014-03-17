@@ -25,7 +25,7 @@
 }
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week {
-	return (WBTeamMatchup *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team] sortedBy:nil];
+	return (WBTeamMatchup *)[[self class] findFirstRecordWithFormat:@"week = %@ && ANY teams = %@", week, team];
 }
 
 - (WBTeam *)opponentTeamOfTeam:(WBTeam *)team {

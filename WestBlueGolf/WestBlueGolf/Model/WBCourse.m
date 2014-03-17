@@ -16,7 +16,7 @@
 }
 
 + (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par {
-	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
+	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithFormat:@"name = %@", name];
 	if (!course) {
 		course = [WBCourse createCourseWithName:name par:par];
 	}

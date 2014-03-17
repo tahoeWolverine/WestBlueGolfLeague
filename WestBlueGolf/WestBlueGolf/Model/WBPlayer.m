@@ -54,7 +54,7 @@
 }
 
 + (WBPlayer *)playerWithName:(NSString *)name {
-	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
+	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"name = %@", name];
 }
 
 + (WBPlayer *)noShowPlayer {
@@ -70,7 +70,7 @@
 }
 
 + (WBPlayer *)me {
-	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"me = 1"] sortedBy:nil];
+	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"me = 1"];
 }
 
 - (NSString *)record {
@@ -87,7 +87,7 @@
 }
 
 - (NSArray *)recordForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
+	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -186,7 +186,6 @@
 }
 
 - (NSArray *)findResultsForYear:(WBYear *)year {
-	//return [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
 	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
 }
 

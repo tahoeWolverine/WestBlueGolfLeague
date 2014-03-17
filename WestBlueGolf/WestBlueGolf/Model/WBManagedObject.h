@@ -19,6 +19,7 @@
 + (NSArray *)findWithFormat:(NSString *)predicateFormat, ...;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
++ (WBManagedObject *)findFirstRecordWithFormat:(NSString *)predicateFormat, ...;
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
 
 + (NSUInteger)countAll;
