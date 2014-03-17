@@ -9,6 +9,7 @@
 #import "WBInfoTableViewController.h"
 #import "WBInfoWebviewViewController.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 
 @interface WBInfoTableViewController ()
 
@@ -16,12 +17,24 @@
 
 @implementation WBInfoTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(resetYear)
+													 name:WBYearChangedNotification
+												   object:nil];
     }
     return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)viewDidLoad {

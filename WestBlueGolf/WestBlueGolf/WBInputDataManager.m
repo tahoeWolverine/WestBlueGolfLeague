@@ -46,27 +46,20 @@
 
 @implementation WBInputDataManager
 
-- (void)loadJsonData {
+- (void)loadJsonDataForYearValue:(NSInteger)yearValue {
 	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-	WBYear *year = [WBYear createYearWithValue:2012 champion:noTeam];
+	WBYear *year = [WBYear yearWithValue:yearValue champion:noTeam];
 
 	//TODO: Will need a way to calculate this
 	year.isCompleteValue = YES;
 	
-	
-	//WBYear *year2 = [WBYear createYearWithValue:2012 champion:noTeam];
-	//year2.isCompleteValue = YES;
-	
 	// week table
-	NSArray *weekArray = [self jsonFromData:[self fileDataForFilename:@"weekTable"]];
+	NSArray *weekArray = [self jsonFromData:[self fileDataForFilename:@"weekTable" year:year]];
 	
 	for (NSDictionary *elt in weekArray) {
 		NSString *courseName = [elt objectForKey:wbJsonKeyWeekCourse];
-		WBCourse *course = [WBCourse courseWithName:courseName];
-		if (!course) {
-			NSInteger par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
-			course = [WBCourse createCourseWithName:courseName par:par];
-		}
+		NSInteger par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
+		WBCourse *course = [WBCourse courseWithName:courseName par:par];
 		
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		NSString *weekDate = [elt objectForKey:wbJsonKeyWeekDate];
@@ -75,12 +68,12 @@
 	}
 	
 	// team table
-	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable"]];
+	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable" year:year]];
 	
 	for (NSDictionary *elt in teamArray) {
 		NSString *teamName = [elt objectForKey:wbJsonKeyTeamName];
 		NSInteger teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
-		[WBTeam createTeamWithName:teamName teamId:teamId];
+		[WBTeam teamWithName:teamName teamId:teamId];
 	}
 	
 	// password/user table
@@ -96,7 +89,7 @@
 	 }*/
 	
 	// player table
-	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable"]];
+	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable" year:year]];
 	WBPlayer *player = nil;
 	for (NSDictionary *elt in playerArray) {
 		NSString *playerName = [elt objectForKey:wbJsonKeyPlayerName];
@@ -105,16 +98,16 @@
 		BOOL isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
 		WBTeam *playerTeam = [WBTeam teamWithId:teamId];
 		
-		player = [WBPlayer createPlayerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
+		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
 		
 		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie];
 	}
 	
-	// Create a player to catch all the no shows
+	// Create a player to catch all the no shows (ends up being conditional too)
 	[WBPlayer createNoShowPlayer];
 	
 	// match table
-	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable"]];
+	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];
 	
 	for (NSDictionary *elt in matchArray) {
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
@@ -126,7 +119,7 @@
 			continue;
 		}
 		
-		WBWeek *week = [WBWeek weekWithId:weekId];
+		WBWeek *week = [WBWeek weekWithId:weekId inYear:year];
 		WBTeam *team1 = [WBTeam teamWithId:team1Id];
 		WBTeam *team2 = [WBTeam teamWithId:team2Id];
 		
@@ -134,7 +127,7 @@
 	}
 
 	// results table
-	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable"]];
+	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
 	
 	for (NSDictionary *elt in resultsArray) {
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
@@ -147,7 +140,7 @@
 		NSInteger points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		NSInteger points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
 		
-		WBWeek *week = [WBWeek weekWithId:weekId];
+		WBWeek *week = [WBWeek weekWithId:weekId inYear:year];
 		
 		WBPlayer *player1 = [WBPlayer playerWithName:player1Name];
 		WBPlayer *player2 = [WBPlayer playerWithName:player2Name];
@@ -183,8 +176,8 @@
 	return [dateFormatter dateFromString:dateString];
 }
 
-- (NSData *)fileDataForFilename:(NSString *)name {
-	NSString *fileName = [NSString stringWithFormat:@"%@%@", name, [WBYear thisYear].value];
+- (NSData *)fileDataForFilename:(NSString *)name year:(WBYear *)year {
+	NSString *fileName = [NSString stringWithFormat:@"%@%@", name, year.value];
 	NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
 	return [[NSFileManager defaultManager] contentsAtPath:path];
 }

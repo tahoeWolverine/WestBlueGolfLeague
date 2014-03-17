@@ -6,8 +6,11 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
+@class WBYear;
+
 @interface WBLeaderBoardManager : NSObject
 
-- (void)calculateLeaderBoards;
+- (void)calculateLeaderBoardsForYear:(WBYear *)year;
+- (void)clearLeaderBoards;
 
 @end

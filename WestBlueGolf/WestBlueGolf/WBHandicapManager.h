@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
+@class WBYear;
+
 @interface WBHandicapManager : NSObject
 
-- (void)calculateHandicaps;
+- (void)calculateHandicapsForYear:(WBYear *)year;
 
 @end

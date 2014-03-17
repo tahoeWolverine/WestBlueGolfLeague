@@ -42,7 +42,7 @@ typedef enum {
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"leaderBoard = %@", [(WBLeaderBoardTableViewController *)self.viewController selectedLeaderboard]];
+	return [NSPredicate predicateWithFormat:@"leaderBoard = %@ && year = %@", [(WBLeaderBoardTableViewController *)self.viewController selectedLeaderboard], [WBYear thisYear]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {

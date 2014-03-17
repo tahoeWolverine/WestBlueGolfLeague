@@ -83,7 +83,6 @@
 		A5F345A218CA1C4500EBF40A /* WBMatchupResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F345A118CA1C4500EBF40A /* WBMatchupResultCell.m */; };
 		A5F345A518CA1E4300EBF40A /* WBWeekTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F345A418CA1E4300EBF40A /* WBWeekTableViewController.m */; };
 		A5F345A818CA1ED400EBF40A /* WBMatchupResultDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F345A718CA1ED400EBF40A /* WBMatchupResultDataSource.m */; };
-		A5F345AB18CA651F00EBF40A /* WBMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F345AA18CA651F00EBF40A /* WBMeViewController.m */; };
 		A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E21890769400AB3529 /* Foundation.framework */; };
 		A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E41890769400AB3529 /* CoreGraphics.framework */; };
 		A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F476E61890769400AB3529 /* UIKit.framework */; };
@@ -251,8 +250,6 @@
 		A5F345A418CA1E4300EBF40A /* WBWeekTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBWeekTableViewController.m; sourceTree = "<group>"; };
 		A5F345A618CA1ED400EBF40A /* WBMatchupResultDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBMatchupResultDataSource.h; sourceTree = "<group>"; };
 		A5F345A718CA1ED400EBF40A /* WBMatchupResultDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBMatchupResultDataSource.m; sourceTree = "<group>"; };
-		A5F345A918CA651F00EBF40A /* WBMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBMeViewController.h; sourceTree = "<group>"; };
-		A5F345AA18CA651F00EBF40A /* WBMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBMeViewController.m; sourceTree = "<group>"; };
 		A5F476DF1890769400AB3529 /* WestBlueGolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WestBlueGolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F476E21890769400AB3529 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5F476E41890769400AB3529 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -599,8 +596,6 @@
 				A5F3459818C92DFC00EBF40A /* DataSources */,
 				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
 				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
-				A5F345A918CA651F00EBF40A /* WBMeViewController.h */,
-				A5F345AA18CA651F00EBF40A /* WBMeViewController.m */,
 				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
 				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
 				48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */,
@@ -805,7 +800,6 @@
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
 				48B54DF818CBD59900F97F8C /* _WBTeamBoard.m in Sources */,
 				A5CAEE6118D3BC450072F134 /* V8HorizontalPickerView.m in Sources */,
-				A5F345AB18CA651F00EBF40A /* WBMeViewController.m in Sources */,
 				A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */,
 				48B54DF718CBD59900F97F8C /* _WBPlayerBoardData.m in Sources */,
 				48B54E1418CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m in Sources */,

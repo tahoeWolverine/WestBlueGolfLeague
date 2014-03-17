@@ -33,20 +33,37 @@
 - (id)initWithViewController:(UIViewController *)aViewController {
 	self = [super initWithViewController:aViewController];
 	if (self) {
-		NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:@"year = %@", [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
-		self.weekTitleArray = [NSMutableArray array];
-		self.seasonIndexArray = [NSMutableArray array];
+		[self createWeekArrays];
 		
-		NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setDateFormat:@"M/dd"];
-		for (WBWeek *week in weeks) {
-			if (week.teamMatchups && week.teamMatchups.count > 0) {
-				[self.weekTitleArray addObject:[dateFormatter stringFromDate:week.date]];
-				[self.seasonIndexArray addObject:week.seasonIndex];
-			}
-		}
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(resetYear)
+													 name:WBYearChangedNotification
+												   object:nil];
 	}
 	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)createWeekArrays {
+	NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:@"year = %@", [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+	self.weekTitleArray = [NSMutableArray array];
+	self.seasonIndexArray = [NSMutableArray array];
+	
+	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"M/dd"];
+	for (WBWeek *week in weeks) {
+		if (week.teamMatchups && week.teamMatchups.count > 0) {
+			[self.weekTitleArray addObject:[dateFormatter stringFromDate:week.date]];
+			[self.seasonIndexArray addObject:week.seasonIndex];
+		}
+	}
+	
+	/*if (self.weekTitleArray.count == 0) {
+		[self.weekTitleArray addObject:@"No Weeks"];
+	}*/
 }
 
 - (V8HorizontalPickerView *)pickerView {
@@ -88,13 +105,14 @@
 
 - (NSPredicate *)fetchPredicate {
 	NSInteger seasonIndex = 0;
-	if (self.pickerView) {
-		seasonIndex = [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
-	} else {
-		seasonIndex = [[self.seasonIndexArray lastObject] integerValue];
+	if (self.seasonIndexArray && self.seasonIndexArray.count > 0) {
+		if (self.pickerView) {
+			seasonIndex = [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
+		} else {
+			seasonIndex = [[self.seasonIndexArray lastObject] integerValue];
+		}
 	}
-	
-	return [NSPredicate predicateWithFormat:@"week.seasonIndex = %@", [NSNumber numberWithInteger:seasonIndex]];
+	return [NSPredicate predicateWithFormat:@"week.seasonIndex = %@ && week.year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {
@@ -114,6 +132,13 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if (!self.weekTitleArray || self.weekTitleArray.count == 0) {
+		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, HEADER_HEIGHT)];
+		noWeeks.text = @"No Weeks Found";
+		noWeeks.textAlignment = NSTextAlignmentCenter;
+		return noWeeks;
+	}
+	
 	return self.pickerView;
 }
 
@@ -149,6 +174,14 @@
 	[self beginFetch];
 	
 	[[(UITableViewController *)self.viewController tableView] reloadData];
+}
+
+- (void)resetYear {
+	self.weekTitleArray = nil;
+	self.seasonIndexArray = nil;
+	self.pickerView = nil;
+	[self createWeekArrays];
+	[self resetDataSource];
 }
 
 @end

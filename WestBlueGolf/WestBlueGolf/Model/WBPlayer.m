@@ -34,6 +34,14 @@
 	return newPlayer;
 }
 
++ (WBPlayer *)playerWithName:(NSString *)name currentHandicap:(NSInteger)currentHandicap onTeam:(WBTeam *)currentTeam {
+	WBPlayer *player = [[self class] playerWithName:name];
+	if (!player) {
+		player = [[self class] createPlayerWithName:name currentHandicap:currentHandicap onTeam:currentTeam];
+	}
+	return player;
+}
+
 - (void)setPlayerToMe {
 	self.meValue = YES;
 	self.favoriteValue = YES;
@@ -54,7 +62,7 @@
 }
 
 + (void)createNoShowPlayer {
-	[[self class] createPlayerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
+	[[self class] playerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
 }
 
 - (BOOL)isNoShowPlayer {
@@ -99,6 +107,12 @@
 
 - (NSString *)currentHandicapString {
 	NSInteger handi = self.currentHandicapValue;
+	WBYear *thisYear = [WBYear thisYear];
+	WBYear *newestYear = [WBYear newestYear];
+	if (newestYear != thisYear) {
+		handi = [self finishingHandicapInYear:thisYear];
+	}
+	
 	BOOL isPositive = handi > 0;
 	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)handi];
 }
@@ -115,7 +129,8 @@
 }
 
 - (NSString *)lowRoundString {
-	return [NSString stringWithFormat:@"%@", [self findLowScoreBoardData].value];
+	NSNumber *value = [self findLowScoreBoardData].value;
+	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
 }
 
 - (NSInteger)lowNetForYear:(WBYear *)year {
@@ -136,7 +151,8 @@
 }
 
 - (NSString *)lowNetString {
-	return [NSString stringWithFormat:@"%@", [self findLowNetBoardData].value];
+	NSNumber *value = [self findLowNetBoardData].value;
+	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
 }
 
 - (CGFloat)averagePointsInYear:(WBYear *)year {
@@ -170,7 +186,12 @@
 }
 
 - (NSArray *)findResultsForYear:(WBYear *)year {
-	return [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
+	//return [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self]];
+	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+}
+
++ (NSArray *)findAllForYear:(WBYear *)year {
+	return [[self class] findWithFormat:@"ANY yearData.year = %@", year];
 }
 
 - (WBPlayerYearData *)yearDataForYear:(WBYear *)year {
@@ -179,7 +200,7 @@
 			return data;
 		}
 	}
-	DLog(@"No data found for player for year %ld", (long)year.valueValue);
+	DLog(@"No data found for player %@ for year %@", self.name, year.value);
 	return nil;
 }
 
@@ -191,13 +212,19 @@
 	return [self yearDataForYear:year].startingHandicapValue;
 }
 
+- (NSInteger)finishingHandicapInYear:(WBYear *)year {
+	return [self yearDataForYear:year].finishingHandicapValue;
+}
+
 - (NSInteger)improvedInYear:(WBYear *)year {
 	NSInteger starting = [self startingHandicapInYear:year];
-	return starting != INT32_MAX ? self.currentHandicapValue - starting : 0;
+	NSInteger ending = year == [WBYear newestYear] ? self.currentHandicapValue : [self finishingHandicapInYear:year];
+	return starting != INT32_MAX ? ending - starting : 0;
 }
 
 - (NSString *)improvedString {
-	NSInteger improved = [self findImprovedBoardData].valueValue;
+	WBBoardData *data = [self findImprovedBoardData];
+	NSInteger improved = data.valueValue;
 	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 

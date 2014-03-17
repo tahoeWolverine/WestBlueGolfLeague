@@ -9,7 +9,6 @@
 #import "WBProfileTableViewController.h"
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
-#import "WBMeViewController.h"
 #import "WBModels.h"
 #import "WBProfileDataSource.h"
 
@@ -63,9 +62,13 @@
 - (void)setSelectedPlayer:(WBPlayer *)selectedPlayer {
 	self.dataSource.selectedPlayer = selectedPlayer;
 	if ([self isMeTab]) {
-		self.navigationController.tabBarItem.title = selectedPlayer ? [selectedPlayer firstName] : @"You";
+		[self setTabName:selectedPlayer ? [selectedPlayer firstName] : @"You"];
 		[self resetTableAndFetchedResultsController];
 	}
+}
+
+- (void)setTabName:(NSString *)name {
+	self.navigationController.tabBarItem.title = name;
 }
 
 - (void)resetTableAndFetchedResultsController {

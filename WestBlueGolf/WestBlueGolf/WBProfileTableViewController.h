@@ -23,4 +23,6 @@
 - (WBPlayer *)selectedPlayer;
 - (void)setSelectedPlayer:(WBPlayer *)selectedPlayer;
 
+- (void)setTabName:(NSString *)name;
+
 @end

@@ -32,6 +32,7 @@
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
 							onTeam:(WBTeam *)currentTeam;
++ (WBPlayer *)playerWithName:(NSString *)name currentHandicap:(NSInteger)currentHandicap onTeam:(WBTeam *)currentTeam;
 
 + (WBPlayer *)me;
 - (void)setPlayerToMe;
@@ -45,6 +46,8 @@
 
 - (NSString *)currentHandicapString;
 - (NSInteger)startingHandicapInYear:(WBYear *)year;
+- (NSInteger)finishingHandicapInYear:(WBYear *)year;
+- (WBPlayerYearData *)yearDataForYear:(WBYear *)year;
 - (WBPlayerYearData *)thisYearData;
 
 - (NSArray *)recordForYear:(WBYear *)year;
@@ -74,6 +77,9 @@
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
+
+- (NSArray *)findResultsForYear:(WBYear *)year;
++ (NSArray *)findAllForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;

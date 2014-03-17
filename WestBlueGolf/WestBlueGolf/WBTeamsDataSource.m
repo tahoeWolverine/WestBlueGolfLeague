@@ -9,12 +9,36 @@
 #import "WBTeamsDataSource.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
 
 #define SORT_KEY @"name"
 #define SECTION_KEY @"me"
 
 @implementation WBTeamsDataSource
+
+
+- (id)initWithViewController:(UIViewController *)aViewController {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(resetYear)
+													 name:WBYearChangedNotification
+												   object:nil];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	self.fetchedResultsController = nil;
+	[self beginFetch];
+	
+	[[(UITableViewController *)self.viewController tableView] reloadData];
+}
 
 #pragma mark - WBEntityDataSource methods to implement
 
@@ -29,6 +53,10 @@
 
 - (NSString *)sectionNameKeyPath {
 	return SECTION_KEY;
+}
+
+- (NSPredicate *)fetchPredicate {
+	return [NSPredicate predicateWithFormat:@"ANY matchups.week.year = %@", [WBYear thisYear]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {

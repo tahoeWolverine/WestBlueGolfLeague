@@ -9,6 +9,7 @@
 #import "WBLeaderBoardListTableViewController.h"
 #import "WBLeaderBoardTableViewController.h"
 #import "WBLeaderBoardListDataSource.h"
+#import "WBNotifications.h"
 
 @interface WBLeaderBoardListTableViewController ()
 
@@ -23,12 +24,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	// Run an initial switchTables within setupDataSources to get into team mode (setting it to start on player does this)
+	self.isInPlayerMode = YES;
+	
+	[self setupDataSources:NO];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(resetYear)
+												 name:WBYearChangedNotification
+											   object:nil];
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	self.teamDataSource = nil;
+	self.playerDataSource = nil;
+	
+	[self.navigationController popToRootViewControllerAnimated:NO];
+	
+	// Switch the bool to make switching take us back to the current data
+	self.isInPlayerMode = !self.isInPlayerMode;
+	[self setupDataSources:YES];
+}
+
+- (void)setupDataSources:(BOOL)reload {
 	self.teamDataSource = [WBLeaderBoardListDataSource dataSourceWithViewController:self playerBoard:NO];
 	self.playerDataSource = [WBLeaderBoardListDataSource dataSourceWithViewController:self playerBoard:YES];
 	
-	// Run an initial switchTables to get into team mode (setting it to start on player does this)
-	self.isInPlayerMode = YES;
-	[self switchTables:NO];
+	[self switchTables:reload];
 }
 
 - (void)switchTables:(BOOL)reload {

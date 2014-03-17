@@ -25,6 +25,28 @@ typedef enum {
 
 @implementation WBPlayersDataSource
 
+- (id)initWithViewController:(UIViewController *)aViewController {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(resetYear)
+													 name:WBYearChangedNotification
+												   object:nil];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	self.fetchedResultsController = nil;
+	[self beginFetch];
+	
+	[[(UITableViewController *)self.viewController tableView] reloadData];
+}
+
 #pragma mark - WBEntityDataSource methods to implement
 
 - (NSString *)cellIdentifier {
@@ -38,6 +60,10 @@ typedef enum {
 
 - (NSString *)sectionNameKeyPath {
 	return SECTION_KEY;
+}
+
+- (NSPredicate *)fetchPredicate {
+	return [NSPredicate predicateWithFormat:@"ANY yearData.year = %@", [WBYear thisYear]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {

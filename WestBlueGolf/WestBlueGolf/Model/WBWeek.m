@@ -22,8 +22,8 @@
 	return newWeek;
 }
 
-+ (WBWeek *)weekWithId:(NSInteger)weekId {
-	return (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"seasonIndex = %@", [NSNumber numberWithInteger:weekId]] sortedBy:nil];
++ (WBWeek *)weekWithId:(NSInteger)weekId inYear:(WBYear *)year {
+	return (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:weekId], year] sortedBy:nil];
 }
 
 @end

@@ -16,6 +16,7 @@
 
 + (NSArray *)findAll;
 + (NSArray *)findAllSortedBy:(NSString *)property ascending:(BOOL)asc;
++ (NSArray *)findWithFormat:(NSString *)predicateFormat, ...;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;

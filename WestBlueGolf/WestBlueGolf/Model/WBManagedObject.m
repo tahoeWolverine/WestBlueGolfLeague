@@ -53,6 +53,14 @@
 	return [self findWithPredicate:nil sortedBy:sorts fetchLimit:0];
 }
 
++ (NSArray *)findWithFormat:(NSString *)predicateFormat, ... {
+	va_list args;
+	va_start(args, predicateFormat);
+	NSArray *returnArray = [self findWithPredicate:[NSPredicate predicateWithFormat:predicateFormat arguments:args] sortedBy:nil fetchLimit:0];
+	va_end(args);
+	return returnArray;
+}
+
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate {
 	return [self findWithPredicate:predicate sortedBy:nil fetchLimit:0];
 }

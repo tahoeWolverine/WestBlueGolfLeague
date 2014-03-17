@@ -17,6 +17,14 @@
 	return newYear;
 }
 
++ (WBYear *)yearWithValue:(NSInteger)year champion:(WBTeam *)champion {
+	WBYear *aYear = [WBYear yearWithValue:year];
+	if (!aYear) {
+		aYear = [WBYear createYearWithValue:year champion:champion];
+	}
+	return aYear;
+}
+
 + (WBYear *)thisYear {
 	NSInteger selectedValue = [(WBAppDelegate *)[UIApplication sharedApplication].delegate thisYearValue];
 	return [self yearWithValue:selectedValue];

@@ -12,7 +12,10 @@
 #import "WBInputDataManager.h"
 #import "WBLeaderBoardManager.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
+
+#define kDefaultYear 2013
 
 @interface WBAppDelegate ()
 
@@ -23,11 +26,12 @@
 @implementation WBAppDelegate
 
 - (NSInteger)thisYearValue {
-	return self.yearSelection ?: 2012;
+	return self.yearSelection ?: kDefaultYear;
 }
 
 - (void)setThisYearValue:(NSInteger)value {
 	self.yearSelection = value;
+	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedNotification object:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -40,16 +44,30 @@
 	
 	if (!year) {
 		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-		[inputManager loadJsonData];
+		[inputManager loadJsonDataForYearValue:self.thisYearValue];
+		[inputManager loadJsonDataForYearValue:2012];
+		//[inputManager loadJsonDataForYearValue:2011];
 
-		self.yearSelection = [WBYear newestYear].valueValue;
+		// Create dummy 2011
+		WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
+		WBYear *year2 = [WBYear createYearWithValue:2011 champion:noTeam];
+		year2.isCompleteValue = YES;
+		[noTeam deleteEntity];
+		[WBCoreDataManager saveContext];
+		
+		year = [WBYear newestYear];
+		self.yearSelection = year.valueValue;
 		
 		WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-		[handiManager calculateHandicaps];
+		[handiManager calculateHandicapsForYear:year];
+		[handiManager calculateHandicapsForYear:[WBYear yearWithValue:2012]];
 	}
 	
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoards];
+	[boardManager clearLeaderBoards];
+	[boardManager calculateLeaderBoardsForYear:year];
+	[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2012]];
+	[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2011]];
 	
     return YES;
 }

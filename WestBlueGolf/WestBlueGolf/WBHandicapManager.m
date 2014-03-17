@@ -12,33 +12,32 @@
 
 @implementation WBHandicapManager
 
-- (void)calculateHandicaps {
+- (void)calculateHandicapsForYear:(WBYear *)year {
 	NSArray *players = [WBPlayer findAll];
 
 	for (WBPlayer *player in players) {
-		[self calculateHandicapsForPlayer:player];
+		[self calculateHandicapsForPlayer:player year:year];
 	}
 }
 
-- (void)calculateHandicapsForPlayer:(WBPlayer *)player {
-	WBYear *year = [WBYear thisYear];
-	WBPlayer *p = [WBPlayer playerWithName:@"Scott Hanson"];
-	
-	if (player == p) {
-		DLog(@"Me");
-	}
-	
+- (void)calculateHandicapsForPlayer:(WBPlayer *)player year:(WBYear *)year {
 	NSMutableArray *scores = [NSMutableArray array];
 	NSInteger scoreIndex = 4;
 	
 	// Add starting handicap 4 times to backfill based on ~2013 rules
+	WBPlayerYearData *data = [player yearDataForYear:year];
+	if (!data) {
+		DLog(@"Handicap not calculated for %@ in year %@", player.name, year.value);
+		return;
+	}
+	
 	for (NSInteger i = 0; i < 5; i++) {
-		[scores addObject:[NSNumber numberWithInteger:[player startingHandicapInYear:year]]];
+		[scores addObject:data.startingHandicap];
 	}
 	
 	// Add scores for the season, calculating handicap result by result
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"match.teamMatchup.week.seasonIndex" ascending:YES]];
-	NSArray *playerResults = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"player = %@", player] sortedBy:sorts];
+	NSArray *playerResults = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"player = %@ && match.teamMatchup.week.year = %@", player, year] sortedBy:sorts];
 	for (WBResult *result in playerResults) {
 		result.priorHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 		
@@ -50,7 +49,7 @@
 	
 	player.currentHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 	if (year.isCompleteValue) {
-		[player thisYearData].finishingHandicapValue = player.currentHandicapValue;
+		data.finishingHandicapValue = player.currentHandicapValue;
 	}
 }
 

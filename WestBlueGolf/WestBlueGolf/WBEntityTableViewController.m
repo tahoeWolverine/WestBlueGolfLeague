@@ -10,6 +10,7 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBEntityDataSource.h"
+#import "WBNotifications.h"
 #import "WBPlayersDataSource.h"
 #import "WBProfileTableViewController.h"
 #import "WBTeamProfileTableViewController.h"
@@ -34,11 +35,34 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+	[self setupDataSources:NO];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(resetYear)
+												 name:WBYearChangedNotification
+											   object:nil];
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	self.teamsDataSource = nil;
+	self.playersDataSource = nil;
+	
+	[self.navigationController popToRootViewControllerAnimated:NO];
+	
+	// Switch the bool to make switching take us back to the current data
+	self.isInPlayerMode = !self.isInPlayerMode;
+	[self setupDataSources:YES];
+}
+
+- (void)setupDataSources:(BOOL)reload {
 	self.playersDataSource = [WBPlayersDataSource dataSourceWithViewController:self];
 	self.teamsDataSource = [WBTeamsDataSource dataSourceWithViewController:self];
-
-	// Run an initial switchTables to get into player mode
-	[self switchTables:NO];
+	
+	[self switchTables:reload];
 }
 
 - (void)switchTables:(BOOL)reload {

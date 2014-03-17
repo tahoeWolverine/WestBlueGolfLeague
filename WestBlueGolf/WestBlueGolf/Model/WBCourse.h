@@ -5,6 +5,6 @@
 + (WBCourse *)createCourseWithName:(NSString *)name
 							   par:(NSInteger)par;
 
-+ (WBCourse *)courseWithName:(NSString *)courseName;
++ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par;
 
 @end

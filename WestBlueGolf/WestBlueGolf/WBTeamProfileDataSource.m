@@ -33,7 +33,7 @@
 
 - (NSPredicate *)fetchPredicate {
 	//return [NSPredicate predicateWithFormat:@"team = %@", self.selectedTeam];
-	return [NSPredicate predicateWithFormat:@"%@ IN teams", self.selectedTeam];
+	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", self.selectedTeam, [WBYear thisYear]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell

@@ -2,6 +2,7 @@
 #import "WBCoreDataManager.h"
 #import "WBBoardData.h"
 #import "WBPeopleEntity.h"
+#import "WBYear.h"
 
 @interface WBLeaderBoard ()
 
@@ -21,8 +22,16 @@
 	return newBoard;
 }
 
++ (WBLeaderBoard *)leaderBoardWithName:(NSString *)name key:(NSString *)key tablePriority:(NSInteger)tablePriority isPlayerBoard:(BOOL)isPlayerBoard {
+	WBLeaderBoard *board = (WBLeaderBoard *)[WBLeaderBoard findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"key = %@ && isPlayerBoard = %@", key, [NSNumber numberWithBool:isPlayerBoard]] sortedBy:nil];
+	if (!board) {
+		board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:tablePriority isPlayerBoard:isPlayerBoard];
+	}
+	return board;
+}
+
 - (NSArray *)winnerData {
-	return [WBBoardData findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1", self]];
+	return [WBBoardData findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard = %@ && rank = 1 && year = %@", self, [WBYear thisYear]]];
 }
 
 @end

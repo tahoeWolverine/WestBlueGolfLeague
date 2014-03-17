@@ -7,3 +7,4 @@
 //
 
 //extern NSString *const WBFavoriteCreatedNotification;
+extern NSString *const WBYearChangedNotification;

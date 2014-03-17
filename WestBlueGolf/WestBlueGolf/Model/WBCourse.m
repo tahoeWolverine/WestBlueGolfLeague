@@ -15,12 +15,12 @@
 	return newCourse;
 }
 
-+ (WBCourse *)courseWithName:(NSString *)courseName {
-	if (!courseName) {
-		return nil;
++ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par {
+	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil];
+	if (!course) {
+		course = [WBCourse createCourseWithName:name par:par];
 	}
-	
-	return (WBCourse *)[WBCourse findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", courseName] sortedBy:nil];
+	return course;
 }
 
 @end

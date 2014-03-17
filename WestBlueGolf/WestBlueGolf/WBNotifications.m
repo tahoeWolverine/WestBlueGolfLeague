@@ -9,3 +9,4 @@
 #import "WBNotifications.h"
 
 //NSString *const WBFavoriteCreatedNotification = @"wb_favorite_created";
+NSString *const WBYearChangedNotification = @"wb_year_changed";

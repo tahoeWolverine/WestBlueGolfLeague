@@ -23,6 +23,7 @@
 @interface WBTeam : _WBTeam {}
 
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId;
++ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId;
 
 + (WBTeam *)teamWithId:(NSInteger)teamId;
 + (WBTeam *)myTeam;
@@ -46,6 +47,9 @@
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
+
+- (NSArray *)findResultsForYear:(WBYear *)year;
++ (NSArray *)findAllForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;

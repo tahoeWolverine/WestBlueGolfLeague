@@ -7,7 +7,10 @@
 //
 
 #import "WBProfileDataSource.h"
+#import "WBAppDelegate.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
+#import "WBProfileTableViewController.h"
 #import "WBResultTableViewCell.h"
 
 #define SORT_KEY @"match.teamMatchup.week.date"
@@ -19,9 +22,32 @@
 
 @implementation WBProfileDataSource
 
+- (id)initWithViewController:(UIViewController *)aViewController {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(resetYear)
+													 name:WBYearChangedNotification
+												   object:nil];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)resetYear {
+	self.fetchedResultsController = nil;
+	[self beginFetch];
+	
+	[[(UITableViewController *)self.viewController tableView] reloadData];
+}
+
 - (WBPlayer *)selectedPlayer {
 	if (!_selectedPlayer) {
 		_selectedPlayer = [WBPlayer me];
+		[(WBProfileTableViewController *)self.viewController setTabName:_selectedPlayer ? [_selectedPlayer firstName] : @"You"];
 	}
 	
 	return _selectedPlayer;
@@ -42,7 +68,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"player = %@", self.selectedPlayer];
+	return [NSPredicate predicateWithFormat:@"player = %@ && match.teamMatchup.week.year = %@", self.selectedPlayer, [WBYear thisYear]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell

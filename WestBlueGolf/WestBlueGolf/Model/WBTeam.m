@@ -21,6 +21,14 @@
 	return newTeam;
 }
 
++ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId {
+	WBTeam *team = [[self class] teamWithId:teamId];
+	if (!team) {
+		team = [[self class] createTeamWithName:name teamId:teamId];
+	}
+	return team;
+}
+
 + (WBTeam *)teamWithId:(NSInteger)teamId {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
 	return (WBTeam *)[[self class] findFirstRecordWithPredicate:predicate sortedBy:nil];
@@ -58,8 +66,7 @@
 }
 
 - (NSInteger)totalPointsForYear:(WBYear *)year {
-	NSArray *results = self.results.allObjects;
-	NSArray *filtered = [results filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+	NSArray *filtered = [self findResultsForYear:year];
 	NSInteger total = 0;
 	for (WBResult *result in filtered) {
 		total += result.pointsValue;
@@ -119,12 +126,25 @@
 	return totalWins / totalWeeks;
 }
 
+- (NSArray *)findResultsForYear:(WBYear *)year {
+	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+}
+
+- (NSArray *)findMatchupsForYear:(WBYear *)year {
+	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@", year]];
+}
+
++ (NSArray *)findAllForYear:(WBYear *)year {
+	return [[self class] findWithFormat:@"ANY matchups.week.year = %@", year];
+}
+
 - (NSArray *)recordForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self]];
+	NSArray *results = [self findResultsForYear:year];
+	NSInteger numberOfMatchups = [self findMatchupsForYear:year].count;
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
-	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:self.matchups.count];
+	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:numberOfMatchups];
 	for (NSInteger i = 0; i < self.matchups.count; i++) {
 		weeks[i] = [NSNumber numberWithInteger:0];
 	}
@@ -136,7 +156,7 @@
 	}
 	
 	NSInteger value = 0;
-	for (NSInteger i = 0; i < self.matchups.count; i++) {
+	for (NSInteger i = 0; i < numberOfMatchups; i++) {
 		value = [[weeks objectAtIndex:i] integerValue];
 		if (value > 48) {
 			wins++;
@@ -170,10 +190,6 @@
 		totalHandicap += player.currentHandicapValue;
 	}
 	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
-}
-
-- (NSArray *)findResultsForYear:(WBYear *)year {
-	return [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self]];
 }
 
 - (CGFloat)averageScoreForYear:(WBYear *)year {

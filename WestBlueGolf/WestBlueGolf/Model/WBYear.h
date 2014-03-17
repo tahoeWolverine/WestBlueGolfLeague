@@ -5,6 +5,8 @@
 + (WBYear *)createYearWithValue:(NSInteger)year
 					   champion:(WBTeam *)champion;
 
++ (WBYear *)yearWithValue:(NSInteger)year champion:(WBTeam *)champion;
+
 // Calls out to AppDelegate who owns the year selection
 + (WBYear *)thisYear;
 
