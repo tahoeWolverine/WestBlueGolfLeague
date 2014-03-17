@@ -7,7 +7,6 @@
 //
 
 #import "WBAppDelegate.h"
-#import "MBProgressHUD/MBProgressHUD.h"
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -33,6 +32,11 @@
 - (void)setThisYearValue:(NSInteger)value {
 	self.yearSelection = value;
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedNotification object:nil];
+}
+
+- (void)setLoading:(BOOL)loading {
+	_loading = loading;
+	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -76,7 +80,8 @@
 
 		//	dispatch_async(dispatch_get_main_queue(), ^{
 				//[MBProgressHUD hideHUDForView:self.view animated:YES];
-				weakSelf.loading = NO;
+				//weakSelf.loading = NO;
+		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
 		//	});
 		//});
 	}

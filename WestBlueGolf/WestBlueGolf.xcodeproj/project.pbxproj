@@ -27,6 +27,7 @@
 		48B54E1E18CBE74100F97F8C /* _WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E1D18CBE74100F97F8C /* _WBPeopleEntity.m */; };
 		48B54E2118CBE74F00F97F8C /* WBPeopleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E2018CBE74F00F97F8C /* WBPeopleEntity.m */; };
 		48B54E2418CCE2CA00F97F8C /* WBLeaderBoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B54E2318CCE2CA00F97F8C /* WBLeaderBoardCell.m */; };
+		48FDD8DF18D72B9900F64989 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FDD8DA18D72B9900F64989 /* MBProgressHUD.m */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
 		A50E163018972418008933A5 /* _WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160C18972418008933A5 /* _WBPlayer.m */; };
@@ -62,10 +63,7 @@
 		A59BC3E118C67710003B5350 /* teamTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DB18C67710003B5350 /* teamTable2013.json */; };
 		A59BC3E218C67710003B5350 /* weekTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DC18C67710003B5350 /* weekTable2013.json */; };
 		A5AAA57818D2389500AC2912 /* WBMultiFetchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AAA57718D2389500AC2912 /* WBMultiFetchDataSource.m */; };
-		A5CAEE5F18D3BC450072F134 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE5918D3BC450072F134 /* LICENSE */; };
-		A5CAEE6018D3BC450072F134 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE5A18D3BC450072F134 /* README.md */; };
 		A5CAEE6118D3BC450072F134 /* V8HorizontalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CAEE5C18D3BC450072F134 /* V8HorizontalPickerView.m */; };
-		A5CAEE6218D3BC450072F134 /* V8HorizontalPickerView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE5D18D3BC450072F134 /* V8HorizontalPickerView.podspec */; };
 		A5CAEE6A18D3CAB90072F134 /* matchTable2012.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE6518D3CAB90072F134 /* matchTable2012.json */; };
 		A5CAEE6B18D3CAB90072F134 /* playerTable2012.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE6618D3CAB90072F134 /* playerTable2012.json */; };
 		A5CAEE6C18D3CAB90072F134 /* resultsTable2012.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE6718D3CAB90072F134 /* resultsTable2012.json */; };
@@ -153,6 +151,8 @@
 		48B54E2018CBE74F00F97F8C /* WBPeopleEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBPeopleEntity.m; path = Model/WBPeopleEntity.m; sourceTree = "<group>"; };
 		48B54E2218CCE2CA00F97F8C /* WBLeaderBoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardCell.h; sourceTree = "<group>"; };
 		48B54E2318CCE2CA00F97F8C /* WBLeaderBoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardCell.m; sourceTree = "<group>"; };
+		48FDD8D918D72B9900F64989 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		48FDD8DA18D72B9900F64989 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
 		A50E160818972418008933A5 /* _WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCourse.m; path = Model/_WBCourse.m; sourceTree = "<group>"; };
 		A50E160918972418008933A5 /* _WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBMatch.h; path = Model/_WBMatch.h; sourceTree = "<group>"; };
@@ -218,11 +218,8 @@
 		A59BC3DC18C67710003B5350 /* weekTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weekTable2013.json; sourceTree = "<group>"; };
 		A5AAA57618D2389500AC2912 /* WBMultiFetchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBMultiFetchDataSource.h; sourceTree = "<group>"; };
 		A5AAA57718D2389500AC2912 /* WBMultiFetchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBMultiFetchDataSource.m; sourceTree = "<group>"; };
-		A5CAEE5918D3BC450072F134 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		A5CAEE5A18D3BC450072F134 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A5CAEE5B18D3BC450072F134 /* V8HorizontalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V8HorizontalPickerView.h; sourceTree = "<group>"; };
 		A5CAEE5C18D3BC450072F134 /* V8HorizontalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V8HorizontalPickerView.m; sourceTree = "<group>"; };
-		A5CAEE5D18D3BC450072F134 /* V8HorizontalPickerView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = V8HorizontalPickerView.podspec; sourceTree = "<group>"; };
 		A5CAEE5E18D3BC450072F134 /* V8HorizontalPickerViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V8HorizontalPickerViewProtocol.h; sourceTree = "<group>"; };
 		A5CAEE6518D3CAB90072F134 /* matchTable2012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = matchTable2012.json; sourceTree = "<group>"; };
 		A5CAEE6618D3CAB90072F134 /* playerTable2012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playerTable2012.json; sourceTree = "<group>"; };
@@ -306,6 +303,15 @@
 				48B54E1018CBD75700F97F8C /* WBLeaderBoardListDataSource.m */,
 			);
 			name = DataSources;
+			sourceTree = "<group>";
+		};
+		48FDD8D518D72B9900F64989 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				48FDD8D918D72B9900F64989 /* MBProgressHUD.h */,
+				48FDD8DA18D72B9900F64989 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		A50E160418972400008933A5 /* Model */ = {
@@ -447,11 +453,8 @@
 		A5CAEE5818D3BC450072F134 /* V8HorizontalPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				A5CAEE5918D3BC450072F134 /* LICENSE */,
-				A5CAEE5A18D3BC450072F134 /* README.md */,
 				A5CAEE5B18D3BC450072F134 /* V8HorizontalPickerView.h */,
 				A5CAEE5C18D3BC450072F134 /* V8HorizontalPickerView.m */,
-				A5CAEE5D18D3BC450072F134 /* V8HorizontalPickerView.podspec */,
 				A5CAEE5E18D3BC450072F134 /* V8HorizontalPickerViewProtocol.h */,
 			);
 			path = V8HorizontalPickerView;
@@ -538,25 +541,26 @@
 			isa = PBXGroup;
 			children = (
 				A53498E018D0FF1000D52D84 /* Common */,
+				A5F4772518907EED00AB3529 /* Info */,
+				A5F4772418907EE500AB3529 /* Leaderboards */,
+				A50E160418972400008933A5 /* Model */,
 				A5F4772218907ECD00AB3529 /* PlayerProfile */,
 				A5F4772318907EDD00AB3529 /* TeamProfile */,
 				A5F3459F18CA1C2800EBF40A /* ThisWeek */,
-				A5F4772418907EE500AB3529 /* Leaderboards */,
-				A5F4772518907EED00AB3529 /* Info */,
-				A50E160418972400008933A5 /* Model */,
 				A59BC3D418C67710003B5350 /* Data */,
+				A5CAEE5818D3BC450072F134 /* V8HorizontalPickerView */,
+				48FDD8D518D72B9900F64989 /* MBProgressHUD */,
+				A5F476E91890769400AB3529 /* Supporting Files */,
 				A5F476F11890769400AB3529 /* WBAppDelegate.h */,
 				A5F476F21890769400AB3529 /* WBAppDelegate.m */,
 				A52FC24D18A5A324004C9580 /* WBFileSystem.h */,
 				A52FC24E18A5A324004C9580 /* WBFileSystem.m */,
-				A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */,
-				A5F477001890769400AB3529 /* Images.xcassets */,
-				A5F476F41890769400AB3529 /* Main_iPhone.storyboard */,
-				A5F476F71890769400AB3529 /* Main_iPad.storyboard */,
 				A5F3454E18C9087A00EBF40A /* WBNotifications.h */,
 				A5F3454F18C9087A00EBF40A /* WBNotifications.m */,
-				A5CAEE5818D3BC450072F134 /* V8HorizontalPickerView */,
-				A5F476E91890769400AB3529 /* Supporting Files */,
+				A5F477001890769400AB3529 /* Images.xcassets */,
+				A5F476F71890769400AB3529 /* Main_iPad.storyboard */,
+				A5F476F41890769400AB3529 /* Main_iPhone.storyboard */,
+				A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */,
 			);
 			path = WestBlueGolf;
 			sourceTree = "<group>";
@@ -739,10 +743,7 @@
 				A5F476F61890769400AB3529 /* Main_iPhone.storyboard in Resources */,
 				A5F344C918C7B63E00EBF40A /* info.html in Resources */,
 				A5F476ED1890769400AB3529 /* InfoPlist.strings in Resources */,
-				A5CAEE5F18D3BC450072F134 /* LICENSE in Resources */,
-				A5CAEE6218D3BC450072F134 /* V8HorizontalPickerView.podspec in Resources */,
 				A59BC3DD18C67710003B5350 /* matchTable2013.json in Resources */,
-				A5CAEE6018D3BC450072F134 /* README.md in Resources */,
 				A5F344CA18C7B63E00EBF40A /* rules.html in Resources */,
 				A59BC3E118C67710003B5350 /* teamTable2013.json in Resources */,
 			);
@@ -810,6 +811,7 @@
 				48B54E0E18CBD69900F97F8C /* WBLeaderBoardListTableViewController.m in Sources */,
 				48B221B918B1EB2000F2DD99 /* WBResultTableViewCell.m in Sources */,
 				A53498E318D0FFAA00D52D84 /* WBSectionDataSource.m in Sources */,
+				48FDD8DF18D72B9900F64989 /* MBProgressHUD.m in Sources */,
 				A50E163418972418008933A5 /* _WBTeamMatchup.m in Sources */,
 				48B54E1B18CBE41100F97F8C /* WBLeaderBoardListCell.m in Sources */,
 				A50E163018972418008933A5 /* _WBPlayer.m in Sources */,

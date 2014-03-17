@@ -8,3 +8,4 @@
 
 //extern NSString *const WBFavoriteCreatedNotification;
 extern NSString *const WBYearChangedNotification;
+extern NSString *const WBLoadingFinishedNotification;

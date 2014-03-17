@@ -7,9 +7,11 @@
 //
 
 #import "WBProfileTableViewController.h"
+#import "MBProgressHUD/MBProgressHUD.h"
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 #import "WBProfileDataSource.h"
 
 @interface WBProfileTableViewController () <UIAlertViewDelegate>
@@ -35,8 +37,21 @@
 	self = [super initWithCoder:aDecoder];
 	if (self) {
 		self.dataSource = [WBProfileDataSource dataSourceWithViewController:self];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(hideLoadingView)
+													 name:WBLoadingFinishedNotification
+												   object:nil];
 	}
 	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)hideLoadingView {
+	[MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)viewDidLoad {
@@ -53,6 +68,12 @@
 
 	[self refreshPlayerHighlights];
 	[self refreshFavoriteButton];
+	
+	if ([(WBAppDelegate *)[UIApplication sharedApplication].delegate loading]) {
+		/*MBProgressHUD *hud = */[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	} else {
+		[self hideLoadingView];
+	}
 }
 
 - (WBPlayer *)selectedPlayer {
