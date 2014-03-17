@@ -13,6 +13,5 @@
 @interface WBProfileDataSource : WBEntityDataSource
 
 @property (strong, nonatomic) WBPlayer *selectedPlayer;
-//- (NSString *)selectedPlayerName;
 
 @end

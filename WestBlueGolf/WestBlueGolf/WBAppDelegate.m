@@ -7,6 +7,7 @@
 //
 
 #import "WBAppDelegate.h"
+#import "MBProgressHUD/MBProgressHUD.h"
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -39,36 +40,47 @@
 	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	[WBCoreDataManager sharedManager];
 	
-	WBYear *year = [WBYear newestYear];
+	__block WBYear *year = [WBYear newestYear];
 	self.yearSelection = year.valueValue;
+	__block typeof(self) weakSelf = self;
 	
 	if (!year) {
-		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-		[inputManager loadJsonDataForYearValue:self.thisYearValue];
-		[inputManager loadJsonDataForYearValue:2012];
-		//[inputManager loadJsonDataForYearValue:2011];
+		self.loading = YES;
+		//MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	//	dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+			// Do something...
+			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+			[inputManager loadJsonDataForYearValue:self.thisYearValue];
+			[inputManager loadJsonDataForYearValue:2012];
+			//[inputManager loadJsonDataForYearValue:2011];
+			
+			// Create dummy 2011
+			WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
+			WBYear *year2 = [WBYear createYearWithValue:2011 champion:noTeam];
+			year2.isCompleteValue = YES;
+			[noTeam deleteEntity];
+			[WBCoreDataManager saveContext];
+			
+			year = [WBYear newestYear];
+			weakSelf.yearSelection = year.valueValue;
+			
+			WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
+			[handiManager calculateHandicapsForYear:year];
+			[handiManager calculateHandicapsForYear:[WBYear yearWithValue:2012]];
+			
+			WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
+			[boardManager clearLeaderBoards];
+			[boardManager calculateLeaderBoardsForYear:year];
+			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2012]];
+			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2011]];
 
-		// Create dummy 2011
-		WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-		WBYear *year2 = [WBYear createYearWithValue:2011 champion:noTeam];
-		year2.isCompleteValue = YES;
-		[noTeam deleteEntity];
-		[WBCoreDataManager saveContext];
-		
-		year = [WBYear newestYear];
-		self.yearSelection = year.valueValue;
-		
-		WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-		[handiManager calculateHandicapsForYear:year];
-		[handiManager calculateHandicapsForYear:[WBYear yearWithValue:2012]];
+		//	dispatch_async(dispatch_get_main_queue(), ^{
+				//[MBProgressHUD hideHUDForView:self.view animated:YES];
+				weakSelf.loading = NO;
+		//	});
+		//});
 	}
-	
-	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager clearLeaderBoards];
-	[boardManager calculateLeaderBoardsForYear:year];
-	[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2012]];
-	[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2011]];
-	
+
     return YES;
 }
 

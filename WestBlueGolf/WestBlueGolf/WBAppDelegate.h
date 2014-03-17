@@ -15,6 +15,7 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (assign, nonatomic) BOOL loading;
 
 - (void)setProfileTabPlayer;
 - (BOOL)isProfileTab:(UIViewController *)vc;
