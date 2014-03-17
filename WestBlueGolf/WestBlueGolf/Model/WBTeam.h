@@ -48,7 +48,7 @@
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
 
-- (NSArray *)findResultsForYear:(WBYear *)year;
+- (NSArray *)findResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
 + (NSArray *)findAllForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;

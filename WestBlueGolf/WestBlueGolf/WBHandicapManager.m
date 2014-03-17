@@ -16,11 +16,11 @@
 	NSArray *players = [WBPlayer findAll];
 
 	for (WBPlayer *player in players) {
-		[self calculateHandicapsForPlayer:player year:year];
+		[self calculateHandicapsForPlayer:player year:year isNewestYear:year == [WBYear newestYear]];
 	}
 }
 
-- (void)calculateHandicapsForPlayer:(WBPlayer *)player year:(WBYear *)year {
+- (void)calculateHandicapsForPlayer:(WBPlayer *)player year:(WBYear *)year isNewestYear:(BOOL)isNewestYear {
 	NSMutableArray *scores = [NSMutableArray array];
 	NSInteger scoreIndex = 4;
 	
@@ -47,9 +47,12 @@
 		scoreIndex++;
 	}
 	
-	player.currentHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
+	if (isNewestYear) {
+		player.currentHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
+	}
+
 	if (year.isCompleteValue) {
-		data.finishingHandicapValue = player.currentHandicapValue;
+		data.finishingHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 	}
 }
 

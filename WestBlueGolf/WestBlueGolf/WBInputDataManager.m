@@ -142,14 +142,21 @@
 		
 		WBWeek *week = [WBWeek weekWithId:weekId inYear:year];
 		
+		if (team1Id == team2Id) {
+			DLog(@"Match has same team on both sides");
+			week.isBadDataValue = YES;
+		}
+		
 		WBPlayer *player1 = [WBPlayer playerWithName:player1Name];
 		WBPlayer *player2 = [WBPlayer playerWithName:player2Name];
 		if (!player1 || !player2) {
 			DLog(@"Bad Player Results");
+			continue;
 		}
 		
 		WBTeam *team1 = [WBTeam teamWithId:team1Id];
 		WBTeam *team2 = [WBTeam teamWithId:team2Id];
+		
 		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
 		
 		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
@@ -158,6 +165,14 @@
 		}
 		if (player2) {
 			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
+		}
+	}
+	
+	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
+	for (WBWeek *week in year.weeks) {
+		NSArray *matches = [WBMatch findWithFormat:@"teamMatchup.week = %@", week];
+		if (!matches || matches.count == 0) {
+			week.isBadDataValue = YES;
 		}
 	}
 	

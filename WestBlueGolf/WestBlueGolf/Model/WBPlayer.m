@@ -87,7 +87,7 @@
 }
 
 - (NSArray *)recordForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -118,7 +118,7 @@
 }
 
 - (NSInteger)lowRoundForYear:(WBYear *)year {
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@", year, self];
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@ && match.teamMatchup.week.isBadData = 0", year, self];
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
 	WBResult *result = (WBResult *)[WBResult findFirstRecordWithPredicate:pred sortedBy:sorts];
 	if (!result) {
@@ -134,7 +134,7 @@
 }
 
 - (NSInteger)lowNetForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:[WBYear thisYear]];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (results && results.count > 0) {
 		NSInteger lowNet = 100;
 		for (WBResult *result in results) {
@@ -156,7 +156,7 @@
 }
 
 - (CGFloat)averagePointsInYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:[WBYear thisYear]];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (results && results.count > 0) {
 		NSInteger totalPoints = 0;
 		for (WBResult *result in results) {
@@ -185,8 +185,8 @@
 	return [NSString stringWithFormat:@"%@%@", avg > 0 ? @"+" : @"", decimalString];
 }
 
-- (NSArray *)findResultsForYear:(WBYear *)year {
-	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+- (NSArray *)findResultsForYear:(WBYear *)year goodData:(BOOL)goodData {
+	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.isBadData = %@", year, [NSNumber numberWithBool:!goodData]]];
 }
 
 + (NSArray *)findAllForYear:(WBYear *)year {
@@ -228,7 +228,7 @@
 }
 
 - (CGFloat)averageScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -248,7 +248,7 @@
 }
 
 - (CGFloat)averageNetScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -264,7 +264,7 @@
 }
 
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -288,7 +288,7 @@
 }
 
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -312,7 +312,7 @@
 }
 
 - (NSInteger)mostPointsInMatchForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -328,7 +328,7 @@
 }
 
 - (NSInteger)totalPointsForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -342,7 +342,7 @@
 }
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -367,7 +367,7 @@
 }
 
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}

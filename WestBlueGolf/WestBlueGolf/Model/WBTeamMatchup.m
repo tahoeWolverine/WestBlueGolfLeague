@@ -65,11 +65,16 @@
 	NSString *teamScore = [self totalScoreStringForTeam:team];
 	NSString *opponentScore = [self totalScoreStringForTeam:opponent];
 	NSString *titleString = [NSString stringWithFormat:@"%@ vs %@", dateString, [opponent shortName]];
-				
-	NSInteger points = [self totalPointsForTeam:team];
-	BOOL win = points > 48;
-	BOOL tie = points == 48;
-	NSString *winLoss = win ? @"W" : tie ? @"T" : @"L";
+
+	NSString *winLoss = nil;
+	if (!self.week.isBadDataValue) {
+		NSInteger points = [self totalPointsForTeam:team];
+		BOOL win = points > 48;
+		BOOL tie = points == 48;
+		winLoss = win ? @"W" : tie ? @"T" : @"L";
+	} else {
+		winLoss = @"N/A";
+	}
 	
 	NSString *scoreString = [NSString stringWithFormat:@"%@-%@", teamScore, opponentScore];
 	return @[titleString, winLoss, scoreString];

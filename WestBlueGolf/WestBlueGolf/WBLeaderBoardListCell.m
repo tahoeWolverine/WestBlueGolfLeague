@@ -44,7 +44,7 @@
 			self.winnerValue.text = [fmt stringFromNumber:valueNum];
 		} else {
 			fmt.minimumFractionDigits = 3;
-			self.winnerValue.text = [NSString stringWithFormat:@"0%@", [fmt stringFromNumber:valueNum]];
+			self.winnerValue.text = [NSString stringWithFormat:@"%@%@", valueNum.floatValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:valueNum]];
 		}
 	}
 }

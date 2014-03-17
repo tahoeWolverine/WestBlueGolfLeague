@@ -5,6 +5,7 @@
 
 const struct WBWeekAttributes WBWeekAttributes = {
 	.date = @"date",
+	.isBadData = @"isBadData",
 	.seasonIndex = @"seasonIndex",
 };
 
@@ -43,6 +44,11 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"isBadDataValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isBadData"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"seasonIndexValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"seasonIndex"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -57,6 +63,32 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 
 @dynamic date;
 
+
+
+
+
+
+@dynamic isBadData;
+
+
+
+- (BOOL)isBadDataValue {
+	NSNumber *result = [self isBadData];
+	return [result boolValue];
+}
+
+- (void)setIsBadDataValue:(BOOL)value_ {
+	[self setIsBadData:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsBadDataValue {
+	NSNumber *result = [self primitiveIsBadData];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsBadDataValue:(BOOL)value_ {
+	[self setPrimitiveIsBadData:[NSNumber numberWithBool:value_]];
+}
 
 
 

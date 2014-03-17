@@ -2,6 +2,7 @@
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 #import "WBTeam.h"
+#import "WBWeek.h"
 
 @interface WBYear ()
 
@@ -38,6 +39,10 @@
 + (WBYear *)yearWithValue:(NSInteger)value {
 	return (WBYear *)[self findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"value = %@", [NSNumber numberWithInteger:value]]
 											   sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]]];
+}
+
+- (NSInteger)maxSeasonIndex {
+	return [(WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"year = %@", self] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]]] seasonIndexValue];
 }
 
 @end

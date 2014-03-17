@@ -64,7 +64,7 @@
 }
 
 - (NSInteger)totalPointsForYear:(WBYear *)year {
-	NSArray *filtered = [self findResultsForYear:year];
+	NSArray *filtered = [self findResultsForYear:year goodData:YES];
 	NSInteger total = 0;
 	for (WBResult *result in filtered) {
 		total += result.pointsValue;
@@ -75,7 +75,8 @@
 - (NSString *)averagePointsString {
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
-	NSNumber *avg = [NSNumber numberWithFloat:(CGFloat)[self totalPointsForYear:[WBYear thisYear]] / (CGFloat)[self.matchups count]];
+	NSInteger matchupCount = [self findMatchupsForYear:[WBYear thisYear]].count;
+	NSNumber *avg = [NSNumber numberWithFloat:(CGFloat)[self totalPointsForYear:[WBYear thisYear]] / (CGFloat)matchupCount];
 	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
 }
 
@@ -93,7 +94,7 @@
 }
 
 - (NSArray *)individualRecordForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
@@ -124,12 +125,12 @@
 	return totalWins / totalWeeks;
 }
 
-- (NSArray *)findResultsForYear:(WBYear *)year {
-	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+- (NSArray *)findResultsForYear:(WBYear *)year goodData:(BOOL)goodData {
+	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.isBadData = %@", year, [NSNumber numberWithBool:!goodData]]];
 }
 
 - (NSArray *)findMatchupsForYear:(WBYear *)year {
-	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@", year]];
+	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@ && week.isBadData = 0", year]];
 }
 
 + (NSArray *)findAllForYear:(WBYear *)year {
@@ -137,26 +138,31 @@
 }
 
 - (NSArray *)recordForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
-	NSInteger numberOfMatchups = [self findMatchupsForYear:year].count;
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	NSInteger wins = 0;
 	NSInteger losses = 0;
 	NSInteger ties = 0;
-	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:numberOfMatchups];
-	for (NSInteger i = 0; i < self.matchups.count; i++) {
+	NSInteger arraySize = [year maxSeasonIndex];
+	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:arraySize];
+	for (NSInteger i = 0; i < arraySize; i++) {
 		weeks[i] = [NSNumber numberWithInteger:0];
 	}
 	
 	NSInteger index = 0;
 	for (WBResult *result in results) {
 		index = result.match.teamMatchup.week.seasonIndexValue - 1;
+		if (index >= arraySize) {
+			ALog(@"Index out of matchup bounds");
+		}
 		[weeks replaceObjectAtIndex:index withObject:[NSNumber numberWithInteger:[[weeks objectAtIndex:index] integerValue] + result.pointsValue]];
 	}
 	
 	NSInteger value = 0;
-	for (NSInteger i = 0; i < numberOfMatchups; i++) {
+	for (NSInteger i = 0; i < arraySize; i++) {
 		value = [[weeks objectAtIndex:i] integerValue];
-		if (value > 48) {
+		if (value == 0) {
+			//disregard
+		} else if (value > 48) {
 			wins++;
 		} else if (value < 48) {
 			losses++;
@@ -191,7 +197,7 @@
 }
 
 - (CGFloat)averageScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -215,7 +221,7 @@
 }
 
 - (CGFloat)averageNetScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -235,7 +241,7 @@
 }
 
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -255,7 +261,7 @@
 }
 
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -275,10 +281,11 @@
 }
 
 - (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
-	NSArray *results = [WBResult findWithFormat:@"match.teamMatchup.week.year = %@ && team = %@", year, self];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 
-	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:self.matchups.count];
-	for (NSInteger i = 0; i < self.matchups.count; i++) {
+	NSInteger arraySize = [year maxSeasonIndex];
+	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:arraySize];
+	for (NSInteger i = 0; i < arraySize; i++) {
 		weeks[i] = [NSNumber numberWithInteger:0];
 	}
 	
@@ -299,7 +306,7 @@
 }
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}
@@ -324,7 +331,7 @@
 }
 
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year {
-	NSArray *results = [self findResultsForYear:year];
+	NSArray *results = [self findResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
 		return 0.0;
 	}

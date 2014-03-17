@@ -13,4 +13,6 @@
 + (WBYear *)newestYear;
 + (WBYear *)yearWithValue:(NSInteger)value;
 
+- (NSInteger)maxSeasonIndex;
+
 @end

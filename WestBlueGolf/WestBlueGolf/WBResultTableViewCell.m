@@ -27,10 +27,11 @@
 	NSString *opponentName = opponentResult ? [opponentResult.player shortName] : @"No Show";
 	self.dateAndOpponentLabel.text = [NSString stringWithFormat:@"%@ vs %@", dateString, opponentName];
 	
+	BOOL badData = result.match.teamMatchup.week.isBadDataValue;
 	BOOL win = [result wasWin];
 	BOOL tie = [result wasTie];
-	self.winLossLabel.text = win ? @"W" : tie ? @"T" : @"L";
-	self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : [UIColor redColor];
+	self.winLossLabel.text = badData ? @"N/A" : win ? @"W" : tie ? @"T" : @"L";
+	self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : badData ? [UIColor blackColor] : [UIColor redColor];
 	NSNumber *opponentScore = opponentResult.score ?: @0;
 	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
 }
@@ -50,7 +51,8 @@
 	NSArray *displayStrings = [matchup displayStringsForTeam:team];
 	BOOL win = [displayStrings[1] isEqualToString:@"W"];
 	BOOL tie = [displayStrings[1] isEqualToString:@"T"];
-	self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : [UIColor redColor];
+	BOOL loss = [displayStrings[1] isEqualToString:@"L"];
+	self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : loss ? [UIColor redColor] : [UIColor blackColor];
 	
 	self.dateAndOpponentLabel.text = displayStrings[0];
 	self.winLossLabel.text = displayStrings[1];

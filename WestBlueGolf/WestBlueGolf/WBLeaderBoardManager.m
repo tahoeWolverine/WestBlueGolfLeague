@@ -171,7 +171,7 @@
 	CGFloat teamCount = 0;
 	NSArray *results = nil;
 	for (WBTeam *team in teams) {
-		results = [team findResultsForYear:year];
+		results = [team findResultsForYear:year goodData:YES];
 		if (results && results.count > 0) {
 			value = valueCalculation(team);
 			[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value rank:0 year:year];
@@ -203,7 +203,7 @@
 	CGFloat playerCount = 0;
 	NSArray *results = nil;
 	for (WBPlayer *player in players) {
-		results = [player findResultsForYear:year];
+		results = [player findResultsForYear:year goodData:YES];
 		if (results && results.count > 0) {
 			value = valueCalculation(player);
 			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value rank:0 year:year];
