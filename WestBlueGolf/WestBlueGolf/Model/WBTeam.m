@@ -177,10 +177,14 @@
 
 - (NSInteger)improvedInYear:(WBYear *)year {
 	NSInteger totalImproved = 0;
-	for (WBPlayer *player in self.players) {
+	for (WBPlayer *player in [self findPlayersForYear:year]) {
 		totalImproved += [player improvedInYear:year];
 	}
 	return totalImproved;
+}
+
+- (NSArray *)findPlayersForYear:(WBYear *)year {
+	return [self.players.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"ANY yearData.year = %@", year]];
 }
 
 - (NSString *)improvedString {
@@ -190,10 +194,11 @@
 
 - (CGFloat)averageHandicapForYear:(WBYear *)year {
 	NSInteger totalHandicap = 0;
-	for (WBPlayer *player in self.players) {
+	NSArray *players = [self findPlayersForYear:year];
+	for (WBPlayer *player in players) {
 		totalHandicap += player.currentHandicapValue;
 	}
-	return (CGFloat)totalHandicap / (CGFloat)self.players.count;
+	return (CGFloat)totalHandicap / (CGFloat)players.count;
 }
 
 - (CGFloat)averageScoreForYear:(WBYear *)year {
