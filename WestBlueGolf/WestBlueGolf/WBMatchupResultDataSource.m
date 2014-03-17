@@ -112,7 +112,14 @@
 			seasonIndex = [[self.seasonIndexArray lastObject] integerValue];
 		}
 	}
-	return [NSPredicate predicateWithFormat:@"week.seasonIndex = %@ && week.year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
+	
+	WBWeek *week = (WBWeek *)[WBWeek findFirstRecordWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
+	if (week.isBadDataValue) {
+		//TODO: bad data week
+		DLog(@"Week has bad data");
+	}
+	
+	return [NSPredicate predicateWithFormat:@"week = %@", week];
 }
 
 - (NSArray *)sortDescriptorsForFetch {

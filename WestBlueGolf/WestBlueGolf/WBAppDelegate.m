@@ -59,7 +59,7 @@
 			[inputManager loadJsonDataForYearValue:2011];
 			
 			// Create dummy
-			//[self createDummyForYear:2010];
+			[self createDummyForYear:2010];
 		
 			year = [WBYear newestYear];
 			weakSelf.yearSelection = year.valueValue;
@@ -74,7 +74,7 @@
 			[boardManager calculateLeaderBoardsForYear:year];
 			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2012]];
 			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2011]];
-			//[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2010]];
+			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2010]];
 
 		//	dispatch_async(dispatch_get_main_queue(), ^{
 				//[MBProgressHUD hideHUDForView:self.view animated:YES];
