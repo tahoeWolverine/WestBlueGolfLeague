@@ -46,6 +46,15 @@
 
 @implementation WBInputDataManager
 
+- (void)createYears {
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
+	[WBYear createYearWithValue:2013 champion:noTeam];
+	[WBYear createYearWithValue:2012 champion:noTeam];
+	[WBYear createYearWithValue:2011 champion:noTeam];
+	[noTeam deleteEntity];
+	[WBCoreDataManager saveContext];
+}
+
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue {
 	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
 	WBYear *year = [WBYear yearWithValue:yearValue champion:noTeam];

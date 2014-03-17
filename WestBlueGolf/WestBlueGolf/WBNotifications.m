@@ -11,3 +11,4 @@
 //NSString *const WBFavoriteCreatedNotification = @"wb_favorite_created";
 NSString *const WBYearChangedNotification = @"wb_year_changed";
 NSString *const WBLoadingFinishedNotification = @"wb_loading_finished";
+NSString *const WBYearChangedLoadingFinishedNotification = @"wb_year_changed_loading_finished";

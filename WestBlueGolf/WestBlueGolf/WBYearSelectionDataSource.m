@@ -7,12 +7,37 @@
 //
 
 #import "WBYearSelectionDataSource.h"
+#import "MBProgressHUD/MBProgressHUD.h"
 #import "WBAppDelegate.h"
 #import "WBModels.h"
+#import "WBNotifications.h"
 
 #define SORT_KEY @"value"
 
 @implementation WBYearSelectionDataSource
+
+- (id)initWithViewController:(UIViewController *)aViewController {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(hideLoadingView)
+													 name:WBYearChangedNotification
+												   object:nil];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)hideLoadingView {
+	[self performSelector:@selector(hideProgress) withObject:nil afterDelay:3.0];
+}
+
+- (void)hideProgress {
+	[MBProgressHUD hideHUDForView:self.viewController.view animated:YES];
+}
 
 #pragma mark - WBEntityDataSource methods to implement
 
@@ -38,6 +63,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
+	
 	WBYear *year = (WBYear *)[self objectAtIndexPath:indexPath];
 	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue];
 	[tableView reloadData];

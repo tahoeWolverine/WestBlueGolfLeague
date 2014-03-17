@@ -39,52 +39,46 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
 }
 
+- (void)loadAndCalculateForYear:(NSInteger)yearValue {
+	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+	[inputManager loadJsonDataForYearValue:yearValue];
+	WBYear *year = [WBYear yearWithValue:yearValue];
+	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
+	[handiManager calculateHandicapsForYear:year];
+	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
+	[boardManager calculateLeaderBoardsForYear:year];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	[WBCoreDataManager sharedManager];
-	
-	__block WBYear *year = [WBYear newestYear];
+
+	WBYear *year = [WBYear newestYear];
 	self.yearSelection = year.valueValue;
-	__block typeof(self) weakSelf = self;
+	//__block typeof(self) weakSelf = self;
 	
 	if (!year) {
-		self.loading = YES;
-		//MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	//	dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-			// Do something...
-			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-			[inputManager loadJsonDataForYearValue:self.thisYearValue];
-			[inputManager loadJsonDataForYearValue:2012];
-			[inputManager loadJsonDataForYearValue:2011];
-			
-			// Create dummy
-			[self createDummyForYear:2010];
+		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+		[inputManager createYears];
 		
-			year = [WBYear newestYear];
-			weakSelf.yearSelection = year.valueValue;
-
-			WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-			[handiManager calculateHandicapsForYear:year];
-			[handiManager calculateHandicapsForYear:[WBYear yearWithValue:2012]];
-			[handiManager calculateHandicapsForYear:[WBYear yearWithValue:2011]];
-			
-			WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-			[boardManager clearLeaderBoards];
-			[boardManager calculateLeaderBoardsForYear:year];
-			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2012]];
-			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2011]];
-			[boardManager calculateLeaderBoardsForYear:[WBYear yearWithValue:2010]];
-
-		//	dispatch_async(dispatch_get_main_queue(), ^{
-				//[MBProgressHUD hideHUDForView:self.view animated:YES];
-				//weakSelf.loading = NO;
-		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
-		//	});
-		//});
+		[self resetYear];
 	}
+	
+	[self subscribeToNotifications];
 
     return YES;
+}
+
+- (void)resetYear {
+	WBYear *newYear = [WBYear thisYear];
+	if (!newYear.weeks || newYear.weeks.count == 0) {
+		self.loading = YES;
+		[self loadAndCalculateForYear:self.thisYearValue];
+		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
+	}
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
 }
 
 - (void)createDummyForYear:(NSInteger)yearValue {
@@ -115,23 +109,39 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+	[self unsubscribeFromNotfications];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	[self unsubscribeFromNotfications];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	[self subscribeToNotifications];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+	[self subscribeToNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+	[self unsubscribeFromNotfications];
+}
+
+- (void)subscribeToNotifications {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(resetYear)
+												 name:WBYearChangedNotification
+											   object:nil];
+}
+
+- (void)unsubscribeFromNotfications {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

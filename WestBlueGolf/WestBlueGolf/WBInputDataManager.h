@@ -8,6 +8,7 @@
 
 @interface WBInputDataManager : NSObject
 
+- (void)createYears;
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue;
 
 @end
