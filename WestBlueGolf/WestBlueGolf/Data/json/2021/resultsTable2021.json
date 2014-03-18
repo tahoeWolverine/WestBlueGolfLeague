@@ -1,0 +1,45 @@
+[
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Michael Harlow",
+    "Score1":39,
+    "Points1":18,
+    "TeamID2":4,
+    "PlayerName2":"Scott Hanson",
+    "Score2":42,
+    "Points2":6
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Dale Vlasak",
+    "Score1":51,
+    "Points1":9,
+    "TeamID2":4,
+    "PlayerName2":"John Prout",
+    "Score2":42,
+    "Points2":15
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Andy Norgren",
+    "Score1":51,
+    "Points1":8,
+    "TeamID2":4,
+    "PlayerName2":"Rob Voith",
+    "Score2":45,
+    "Points2":16
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Aaron L. Johnson",
+    "Score1":54,
+    "Points1":17,
+    "TeamID2":4,
+    "PlayerName2":"Ryan Kinsella",
+    "Score2":54,
+    "Points2":7
+  }

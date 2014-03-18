@@ -1,0 +1,222 @@
+[
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Michael Harlow",
+    "Score1":39,
+    "Points1":18,
+    "TeamID2":4,
+    "PlayerName2":"Scott Hanson",
+    "Score2":42,
+    "Points2":6
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Dale Vlasak",
+    "Score1":51,
+    "Points1":9,
+    "TeamID2":4,
+    "PlayerName2":"John Prout",
+    "Score2":42,
+    "Points2":15
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Andy Norgren",
+    "Score1":51,
+    "Points1":8,
+    "TeamID2":4,
+    "PlayerName2":"Rob Voith",
+    "Score2":45,
+    "Points2":16
+  },
+  {
+    "Week":1,
+    "TeamID1":10,
+    "PlayerName1":"Aaron L. Johnson",
+    "Score1":54,
+    "Points1":17,
+    "TeamID2":4,
+    "PlayerName2":"Ryan Kinsella",
+    "Score2":54,
+    "Points2":7
+  },
+  {
+    "Week":1,
+    "TeamID1":6,
+    "PlayerName1":"Brian Martin",
+    "Score1":39,
+    "Points1":17,
+    "TeamID2":1,
+    "PlayerName2":"Jason Meggitt",
+    "Score2":44,
+    "Points2":7
+  },
+  {
+    "Week":1,
+    "TeamID1":6,
+    "PlayerName1":"Gary Sole",
+    "Score1":49,
+    "Points1":8,
+    "TeamID2":1,
+    "PlayerName2":"Richard Kroening",
+    "Score2":48,
+    "Points2":16
+  },
+  {
+    "Week":1,
+    "TeamID1":6,
+    "PlayerName1":"Rick Rowan",
+    "Score1":51,
+    "Points1":4,
+    "TeamID2":1,
+    "PlayerName2":"Hank Maurer",
+    "Score2":44,
+    "Points2":20
+  },
+  {
+    "Week":1,
+    "TeamID1":6,
+    "PlayerName1":"Jim Englert",
+    "Score1":53,
+    "Points1":10,
+    "TeamID2":1,
+    "PlayerName2":"Gary Daml",
+    "Score2":56,
+    "Points2":14
+  },
+  {
+    "Week":1,
+    "TeamID1":8,
+    "PlayerName1":"Ivan Kuznia",
+    "Score1":39,
+    "Points1":12,
+    "TeamID2":2,
+    "PlayerName2":"Drew Johnson",
+    "Score2":40,
+    "Points2":12
+  },
+  {
+    "Week":1,
+    "TeamID1":8,
+    "PlayerName1":"Brian Kuznia",
+    "Score1":44,
+    "Points1":8,
+    "TeamID2":2,
+    "PlayerName2":"Brad Zilge",
+    "Score2":46,
+    "Points2":16
+  },
+  {
+    "Week":1,
+    "TeamID1":8,
+    "PlayerName1":"Nick Bjerken",
+    "Score1":41,
+    "Points1":18,
+    "TeamID2":2,
+    "PlayerName2":"Lee VanGundy",
+    "Score2":51,
+    "Points2":6
+  },
+  {
+    "Week":1,
+    "TeamID1":8,
+    "PlayerName1":"Mac Noland",
+    "Score1":45,
+    "Points1":7,
+    "TeamID2":2,
+    "PlayerName2":"Jeff Walberg",
+    "Score2":48,
+    "Points2":17
+  },
+  {
+    "Week":1,
+    "TeamID1":5,
+    "PlayerName1":"Pete Mohs",
+    "Score1":50,
+    "Points1":7,
+    "TeamID2":9,
+    "PlayerName2":"Tory Stellick",
+    "Score2":38,
+    "Points2":17
+  },
+  {
+    "Week":1,
+    "TeamID1":5,
+    "PlayerName1":"Brian Schwartz",
+    "Score1":52,
+    "Points1":14,
+    "TeamID2":9,
+    "PlayerName2":"Dave Dietsche",
+    "Score2":47,
+    "Points2":10
+  },
+  {
+    "Week":1,
+    "TeamID1":5,
+    "PlayerName1":"Perry Coulson",
+    "Score1":52,
+    "Points1":8,
+    "TeamID2":9,
+    "PlayerName2":"Patrick Neuman",
+    "Score2":49,
+    "Points2":16
+  },
+  {
+    "Week":1,
+    "TeamID1":5,
+    "PlayerName1":"Matt Sinn",
+    "Score1":48,
+    "Points1":22,
+    "TeamID2":9,
+    "PlayerName2":"Brian Frederick",
+    "Score2":56,
+    "Points2":2
+  },
+  {
+    "Week":1,
+    "TeamID1":7,
+    "PlayerName1":"Andy Madigan",
+    "Score1":43,
+    "Points1":16,
+    "TeamID2":3,
+    "PlayerName2":"Ryan Hunecke",
+    "Score2":46,
+    "Points2":8
+  },
+  {
+    "Week":1,
+    "TeamID1":7,
+    "PlayerName1":"Bill Ronning",
+    "Score1":47,
+    "Points1":7,
+    "TeamID2":3,
+    "PlayerName2":"Tim Masso",
+    "Score2":46,
+    "Points2":17
+  },
+  {
+    "Week":1,
+    "TeamID1":7,
+    "PlayerName1":"Chaz Braxmeier",
+    "Score1":46,
+    "Points1":19,
+    "TeamID2":3,
+    "PlayerName2":"Noah Price",
+    "Score2":52,
+    "Points2":5
+  },
+  {
+    "Week":1,
+    "TeamID1":7,
+    "PlayerName1":"Tristan Wilwert",
+    "Score1":47,
+    "Points1":18,
+    "TeamID2":3,
+    "PlayerName2":"Joel Skarp",
+    "Score2":51,
+    "Points2":6
+  }
+]
