@@ -10,4 +10,6 @@
 
 @interface WBMatchupResultDataSource : WBEntityDataSource
 
+- (UIView *)tableHeaderViewForTable:(UITableView *)tableView;
+
 @end

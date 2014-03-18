@@ -23,4 +23,17 @@
 	return course;
 }
 
+- (NSString *)shortName {
+	NSString *firstName = [self.name componentsSeparatedByString:@" "][0];
+	if ([firstName isEqualToString:self.name]) {
+		return [firstName substringToIndex:5];
+	}
+
+	NSString *secondName = [self.name componentsSeparatedByString:@" "][1];
+	
+	NSString *shortFirstName = [NSString stringWithFormat:@"%@", [firstName substringToIndex:2]];
+	NSString *shortSecondName = [NSString stringWithFormat:@"%@", [secondName substringToIndex:1]];
+	return [NSString stringWithFormat:@"%@-%@", shortFirstName, shortSecondName];
+}
+
 @end

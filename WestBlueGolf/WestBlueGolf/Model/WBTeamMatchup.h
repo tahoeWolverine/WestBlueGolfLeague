@@ -18,4 +18,7 @@
 - (NSArray *)displayStrings;
 - (NSArray *)displayStringsForTeam:(WBTeam *)team;
 
+- (NSString *)timeLabel;
+- (NSString *)shortTime;
+
 @end

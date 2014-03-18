@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) WBMatchupResultDataSource *dataSource;
 
+@property (weak, nonatomic) IBOutlet UIView *header;
+
 @end
 
 @implementation WBWeekTableViewController
@@ -26,6 +28,8 @@
 	self.tableView.delegate = self.dataSource;
 	
 	[self.dataSource beginFetch];
+	
+	//[self.header addSubview:[self.dataSource tableHeaderViewForTable:self.tableView]];
 }
 
 - (void)didReceiveMemoryWarning {

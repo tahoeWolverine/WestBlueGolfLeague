@@ -73,7 +73,11 @@
 		_pickerView.dataSource = self;
 		_pickerView.elementFont = [UIFont boldSystemFontOfSize:14.0f];
 		_pickerView.selectionPoint = CGPointMake(ceil(tableView.bounds.size.width / 2), 0);
-		[_pickerView scrollToElement:[self.weekTitleArray count] - 1 animated:NO];
+		
+		// Starting element
+		WBWeek *thisWeek = (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"ANY teamMatchups.matchComplete = 0 && year = %@", [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:YES]]];
+		NSInteger index = [self.seasonIndexArray indexOfObject:thisWeek.seasonIndex];
+		[_pickerView scrollToElement:index animated:NO];
 		
 		// add carat or other view to indicate selected element
 		UIImageView *indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
@@ -91,6 +95,11 @@
 	return CellIdentifier;
 }
 
+- (NSString *)incompleteCellIdentifier {
+	static NSString *IncompleteCellIdentifier = @"IncompleteMatchupListCell";
+	return IncompleteCellIdentifier;
+}
+
 - (NSString *)entityName {
 	return @"WBTeamMatchup";
 }
@@ -102,13 +111,14 @@
 - (NSPredicate *)fetchPredicate {
 	NSInteger seasonIndex = 0;
 	if (self.seasonIndexArray && self.seasonIndexArray.count > 0) {
-		if (self.pickerView) {
+		if (self.pickerView && self.pickerView.currentSelectedIndex < 20) {
 			seasonIndex = [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
 		} else {
 			seasonIndex = [[self.seasonIndexArray lastObject] integerValue];
 		}
 	}
 	
+	DLog(@"seasonIndex is %ld", (long)seasonIndex);
 	WBWeek *week = (WBWeek *)[WBWeek findFirstRecordWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
 	if (week.isBadDataValue) {
 		//TODO: bad data week
@@ -123,6 +133,16 @@
 	return @[sortOrderDescriptor];
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+	
+	[self configureCell:cell withObject:matchup];
+    
+    return cell;
+}
+
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	WBTeamMatchup *matchup = (WBTeamMatchup *)object;
@@ -134,7 +154,37 @@
 	return HEADER_HEIGHT;
 }
 
+- (WBWeek *)selectedWeek {
+	return [WBWeek findWeekWithSeasonIndex:[self selectedSeasonIndex] year:[WBYear thisYear]];
+}
+
+- (NSInteger)selectedSeasonIndex {
+	return [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if (!self.weekTitleArray || self.weekTitleArray.count == 0) {
+		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, HEADER_HEIGHT)];
+		noWeeks.text = @"No Weeks Found";
+		noWeeks.textAlignment = NSTextAlignmentCenter;
+		return noWeeks;
+	}
+	
+	return self.pickerView;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+	UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, 44.0f)];
+	UILabel *courseLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0.0, 160.0f, 44.0f)];
+	courseLabel.text = [NSString stringWithFormat:@"Course: %@", [self selectedWeek].course.name];
+	UILabel *matchupsLabel = [[UILabel alloc] initWithFrame:CGRectMake(188.0f, 0.0, 112.0f, 44.0f)];
+	matchupsLabel.text = [NSString stringWithFormat:@"Pairs: %@", [[self selectedWeek] pairingLabel]];
+	[newView addSubview:courseLabel];
+	[newView addSubview:matchupsLabel];
+	return newView;
+}
+
+- (UIView *)tableHeaderViewForTable:(UITableView *)tableView {
 	if (!self.weekTitleArray || self.weekTitleArray.count == 0) {
 		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, HEADER_HEIGHT)];
 		noWeeks.text = @"No Weeks Found";

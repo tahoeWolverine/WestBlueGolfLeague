@@ -15,7 +15,7 @@
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
 
-#define kDefaultYear 2020
+#define kDefaultYear 2027
 
 @interface WBAppDelegate ()
 

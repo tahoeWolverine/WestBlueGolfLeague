@@ -7,4 +7,6 @@
 
 + (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par;
 
+- (NSString *)shortName;
+
 @end

@@ -7,8 +7,19 @@
 #import "WBYear.h"
 #import "WBWeek.h"
 
-@interface WBTeamMatchup ()
+#define TIME_SHORT_FIRST_MATCH	@"3:44pm"
+#define TIME_SHORT_SECOND_MATCH	@"4:00pm"
+#define TIME_SHORT_THIRD_MATCH	@"4:16pm"
+#define TIME_SHORT_FOURTH_MATCH	@"4:32pm"
+#define TIME_SHORT_FIFTH_MATCH	@"4:48pm"
 
+#define TIME_FIRST_MATCH	TIME_SHORT_FIRST_MATCH	@" (3:52)"
+#define TIME_SECOND_MATCH	TIME_SHORT_SECOND_MATCH	@" (4:08)"
+#define TIME_THIRD_MATCH	TIME_SHORT_THIRD_MATCH	@" (4:24)"
+#define TIME_FOURTH_MATCH	TIME_SHORT_FOURTH_MATCH	@" (4:40)"
+#define TIME_FIFTH_MATCH	TIME_SHORT_FIFTH_MATCH	@" (4:56)"
+
+@interface WBTeamMatchup ()
 @end
 
 @implementation WBTeamMatchup
@@ -24,14 +35,15 @@
 	newTeamMatchup.matchCompleteValue = matchComplete;
 	[newTeamMatchup addTeamsObject:team1];
 	[newTeamMatchup addTeamsObject:team2];
-
-	//TODO: Support incomplete matches
-	newTeamMatchup.matchCompleteValue = YES;
 	return newTeamMatchup;
 }
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week {
 	return (WBTeamMatchup *)[[self class] findFirstRecordWithFormat:@"week = %@ && ANY teams = %@", week, team];
+}
+
++ (NSArray *)findMatchupsForWeek:(WBWeek *)week {
+	return [[self class] findWithPredicate:[NSPredicate predicateWithFormat:@"week = %@", week] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
 }
 
 - (WBTeam *)opponentTeamOfTeam:(WBTeam *)team {
@@ -118,6 +130,46 @@
 
 - (NSString *)totalScoreStringForTeam:(WBTeam *)team {
 	return [NSString stringWithFormat:@"%ld", (long)[self totalScoreForTeam:team]];
+}
+
+- (NSString *)timeLabel {
+	NSArray *matchups = [[self class] findMatchupsForWeek:self.week];
+	NSInteger matchIndex = [matchups indexOfObject:self];
+	switch (matchIndex) {
+		case 0:
+			return TIME_FIRST_MATCH;
+		case 1:
+			return TIME_SECOND_MATCH;
+		case 2:
+			return TIME_THIRD_MATCH;
+		case 3:
+			return TIME_FOURTH_MATCH;
+		case 4:
+			return TIME_FIFTH_MATCH;
+		default:
+			break;
+	}
+	return @"";
+}
+
+- (NSString *)shortTime {
+	NSArray *matchups = [[self class] findMatchupsForWeek:self.week];
+	NSInteger matchIndex = [matchups indexOfObject:self];
+	switch (matchIndex) {
+		case 0:
+			return TIME_SHORT_FIRST_MATCH;
+		case 1:
+			return TIME_SHORT_SECOND_MATCH;
+		case 2:
+			return TIME_SHORT_THIRD_MATCH;
+		case 3:
+			return TIME_SHORT_FOURTH_MATCH;
+		case 4:
+			return TIME_SHORT_FIFTH_MATCH;
+		default:
+			break;
+	}
+	return @"";
 }
 
 @end

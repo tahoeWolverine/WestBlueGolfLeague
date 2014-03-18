@@ -26,11 +26,20 @@
 	self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
 	self.team2NameLabel.text = displayStrings[3];
 	
-	self.team1PointsLabel.text = displayStrings[1];
-	self.team2PointsLabel.text = displayStrings[4];
 	
-	self.team1ScoreLabel.text = displayStrings[2];
-	self.team2ScoreLabel.text = displayStrings[5];
+	if (matchup.matchCompleteValue) {
+		self.team1PointsLabel.text = displayStrings[1];
+		self.team2PointsLabel.text = displayStrings[4];
+	
+		self.team1ScoreLabel.text = displayStrings[2];
+		self.team2ScoreLabel.text = displayStrings[5];
+	} else {
+		self.team1PointsLabel.text = [matchup timeLabel];
+		self.team2PointsLabel.text = @"";
+		
+		self.team1ScoreLabel.text = @"";
+		self.team2ScoreLabel.text = @"";
+	}
 }
 
 @end

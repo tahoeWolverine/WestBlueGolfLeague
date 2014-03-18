@@ -9,4 +9,8 @@
 
 + (WBWeek *)weekWithId:(NSInteger)weekId inYear:(WBYear *)year;
 
++ (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year;
+
+- (NSString *)pairingLabel;
+
 @end

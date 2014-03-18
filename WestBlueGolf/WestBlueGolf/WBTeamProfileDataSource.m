@@ -20,6 +20,11 @@
 	return CellIdentifier;
 }
 
+- (NSString *)incompleteCellIdentifier {
+	static NSString *CellIdentifier = @"IncompleteTeamResultsCell"; //@"TeamCell";
+	return CellIdentifier;
+}
+
 - (NSString *)entityName {
 	//return @"WBPlayer";
 	return @"WBTeamMatchup";
@@ -34,6 +39,16 @@
 - (NSPredicate *)fetchPredicate {
 	//return [NSPredicate predicateWithFormat:@"team = %@", self.selectedTeam];
 	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", self.selectedTeam, [WBYear thisYear]];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+	
+	[self configureCell:cell withObject:matchup];
+    
+    return cell;
 }
 
 - (void)configureCell:(UITableViewCell *)cell
