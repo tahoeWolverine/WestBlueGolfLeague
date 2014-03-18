@@ -2,7 +2,11 @@
 
 @interface WBTeamMatchup : _WBTeamMatchup {}
 
-+ (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week;
++ (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1
+										andTeam:(WBTeam *)team2
+										forWeek:(WBWeek *)week
+										matchId:(NSInteger)matchId
+								  matchComplete:(BOOL)matchComplete;
 
 + (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week;
 

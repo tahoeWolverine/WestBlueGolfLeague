@@ -6,6 +6,7 @@
 
 extern const struct WBTeamMatchupAttributes {
 	__unsafe_unretained NSString *matchComplete;
+	__unsafe_unretained NSString *matchId;
 } WBTeamMatchupAttributes;
 
 extern const struct WBTeamMatchupRelationships {
@@ -20,6 +21,7 @@ extern const struct WBTeamMatchupFetchedProperties {
 @class WBMatch;
 @class WBTeam;
 @class WBWeek;
+
 
 
 
@@ -45,6 +47,20 @@ extern const struct WBTeamMatchupFetchedProperties {
 - (void)setMatchCompleteValue:(BOOL)value_;
 
 //- (BOOL)validateMatchComplete:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* matchId;
+
+
+
+@property int16_t matchIdValue;
+- (int16_t)matchIdValue;
+- (void)setMatchIdValue:(int16_t)value_;
+
+//- (BOOL)validateMatchId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -96,6 +112,15 @@ extern const struct WBTeamMatchupFetchedProperties {
 
 - (BOOL)primitiveMatchCompleteValue;
 - (void)setPrimitiveMatchCompleteValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveMatchId;
+- (void)setPrimitiveMatchId:(NSNumber*)value;
+
+- (int16_t)primitiveMatchIdValue;
+- (void)setPrimitiveMatchIdValue:(int16_t)value_;
 
 
 

@@ -82,6 +82,7 @@
     </entity>
     <entity name="WBTeamMatchup" representedClassName="WBTeamMatchup" syncable="YES">
         <attribute name="matchComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="matchId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBMatch" inverseName="teamMatchup" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="teams" toMany="YES" minCount="2" maxCount="2" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="matchups" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="teamMatchups" inverseEntity="WBWeek" syncable="YES"/>
@@ -121,7 +122,7 @@
         <element name="WBPlayerYearData" positionX="288" positionY="-171" width="128" height="118"/>
         <element name="WBResult" positionX="151" positionY="-322" width="128" height="133"/>
         <element name="WBTeam" positionX="9" positionY="-63" width="128" height="118"/>
-        <element name="WBTeamMatchup" positionX="7" positionY="-175" width="128" height="103"/>
+        <element name="WBTeamMatchup" positionX="7" positionY="-175" width="128" height="118"/>
         <element name="WBWeek" positionX="-162" positionY="-189" width="128" height="133"/>
         <element name="WBYear" positionX="-162" positionY="-45" width="128" height="133"/>
     </elements>

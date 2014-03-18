@@ -5,6 +5,7 @@
 
 const struct WBTeamMatchupAttributes WBTeamMatchupAttributes = {
 	.matchComplete = @"matchComplete",
+	.matchId = @"matchId",
 };
 
 const struct WBTeamMatchupRelationships WBTeamMatchupRelationships = {
@@ -47,6 +48,11 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
+	if ([key isEqualToString:@"matchIdValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"matchId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -74,6 +80,32 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 
 - (void)setPrimitiveMatchCompleteValue:(BOOL)value_ {
 	[self setPrimitiveMatchComplete:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic matchId;
+
+
+
+- (int16_t)matchIdValue {
+	NSNumber *result = [self matchId];
+	return [result shortValue];
+}
+
+- (void)setMatchIdValue:(int16_t)value_ {
+	[self setMatchId:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveMatchIdValue {
+	NSNumber *result = [self primitiveMatchId];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveMatchIdValue:(int16_t)value_ {
+	[self setPrimitiveMatchId:[NSNumber numberWithShort:value_]];
 }
 
 

@@ -33,6 +33,7 @@
 #define wbJsonKeyMatchWeek @"Week"
 #define wbJsonKeyMatchTeam1 @"TeamID1"
 #define wbJsonKeyMatchTeam2 @"TeamID2"
+#define wbJsonKeyMatchId @"MatchID"
 
 #define wbJsonKeyResultWeek @"Week"
 #define wbJsonKeyResultTeam1 @"TeamID1" // teams are redundant data here because of players
@@ -52,6 +53,13 @@
 	[WBYear createYearWithValue:2012 champion:noTeam];
 	[WBYear createYearWithValue:2011 champion:noTeam];
 	[WBYear createYearWithValue:2020 champion:noTeam];
+	[WBYear createYearWithValue:2021 champion:noTeam];
+	[WBYear createYearWithValue:2022 champion:noTeam];
+	[WBYear createYearWithValue:2023 champion:noTeam];
+	[WBYear createYearWithValue:2024 champion:noTeam];
+	[WBYear createYearWithValue:2025 champion:noTeam];
+	[WBYear createYearWithValue:2026 champion:noTeam];
+	[WBYear createYearWithValue:2027 champion:noTeam];
 	[noTeam deleteEntity];
 	[WBCoreDataManager saveContext];
 }
@@ -126,6 +134,7 @@
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
 		NSInteger team1Id = [[elt objectForKey:wbJsonKeyMatchTeam1] integerValue];
 		NSInteger team2Id = [[elt objectForKey:wbJsonKeyMatchTeam2] integerValue];
+		NSInteger matchId = [[elt objectForKey:wbJsonKeyMatchId] integerValue];
 		BOOL matchComplete = [[elt objectForKey:wbJsonKeyMatchComplete] boolValue];
 		if (!matchComplete) {
 			DLog(@"Incomplete Match in received data");
@@ -136,12 +145,11 @@
 		team1 = [WBTeam teamWithId:team1Id];
 		team2 = [WBTeam teamWithId:team2Id];
 		
-		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
-		matchup.matchCompleteValue = matchComplete;
+		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete];
 	}
 
 	// results table
-	/*NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
+	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
 	
 	for (NSDictionary *elt in resultsArray) {
 		NSInteger weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
@@ -180,7 +188,7 @@
 		if (player2) {
 			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
 		}
-	}*/
+	}
 	
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
 	for (WBWeek *week in year.weeks) {

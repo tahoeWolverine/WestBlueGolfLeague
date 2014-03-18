@@ -13,9 +13,15 @@
 
 @implementation WBTeamMatchup
 
-+ (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1 andTeam:(WBTeam *)team2 forWeek:(WBWeek *)week {
++ (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1
+										andTeam:(WBTeam *)team2
+										forWeek:(WBWeek *)week
+										matchId:(NSInteger)matchId
+								  matchComplete:(BOOL)matchComplete {
 	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
 	newTeamMatchup.week = week;
+	newTeamMatchup.matchIdValue = matchId;
+	newTeamMatchup.matchCompleteValue = matchComplete;
 	[newTeamMatchup addTeamsObject:team1];
 	[newTeamMatchup addTeamsObject:team2];
 

@@ -15,7 +15,7 @@
 #import "WBProfileTableViewController.h"
 #import "V8HorizontalPickerView.h"
 
-#define SORT_KEY @"matchComplete"
+#define SORT_KEY @"matchId"
 
 #define HEADER_HEIGHT 44.0f
 
@@ -60,10 +60,6 @@
 			[self.seasonIndexArray addObject:week.seasonIndex];
 		}
 	}
-	
-	/*if (self.weekTitleArray.count == 0) {
-		[self.weekTitleArray addObject:@"No Weeks"];
-	}*/
 }
 
 - (V8HorizontalPickerView *)pickerView {
