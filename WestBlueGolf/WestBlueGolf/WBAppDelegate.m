@@ -28,8 +28,10 @@
 }
 
 - (void)setThisYearValue:(NSInteger)value {
-	self.yearSelection = value;
-	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedNotification object:nil];
+	if (value != 0 && value != self.yearSelection) {
+		self.yearSelection = value;
+		[self resetYear];
+	}
 }
 
 - (void)setLoading:(BOOL)loading {
@@ -59,7 +61,6 @@
 	if (reset) {
 		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	}
-	//[WBCoreDataManager sharedManager];
 	
 	WBYear *year = [WBYear newestYear];
 	self.yearSelection = year.valueValue;
@@ -130,14 +131,14 @@
 }
 
 - (void)subscribeToNotifications {
-	[[NSNotificationCenter defaultCenter] addObserver:self
+	/*[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(resetYear)
 												 name:WBYearChangedNotification
-											   object:nil];
+											   object:nil];*/
 }
 
 - (void)unsubscribeFromNotfications {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	//[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

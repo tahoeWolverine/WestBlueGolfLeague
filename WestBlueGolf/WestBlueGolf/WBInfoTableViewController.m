@@ -25,7 +25,7 @@
         // Custom initialization
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(resetYear)
-													 name:WBYearChangedNotification
+													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
     }
     return self;

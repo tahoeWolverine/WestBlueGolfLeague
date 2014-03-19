@@ -10,6 +10,8 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 
+#define wbJsonKeyYearValue @"YearValue"
+
 #define wbJsonKeyWeekIndex @"Week"
 #define wbJsonKeyWeekPar @"Par"
 #define wbJsonKeyWeekDate @"Date"
@@ -49,17 +51,14 @@
 
 - (void)createYears {
 	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-	[WBYear createYearWithValue:2013 champion:noTeam];
-	[WBYear createYearWithValue:2012 champion:noTeam];
-	[WBYear createYearWithValue:2011 champion:noTeam];
-	[WBYear createYearWithValue:2020 champion:noTeam];
-	[WBYear createYearWithValue:2021 champion:noTeam];
-	[WBYear createYearWithValue:2022 champion:noTeam];
-	[WBYear createYearWithValue:2023 champion:noTeam];
-	[WBYear createYearWithValue:2024 champion:noTeam];
-	[WBYear createYearWithValue:2025 champion:noTeam];
-	[WBYear createYearWithValue:2026 champion:noTeam];
-	[WBYear createYearWithValue:2027 champion:noTeam];
+
+	NSArray *yearArray = [self jsonFromData:[self fileDataForFilename:@"yearTable" year:0]];
+	NSInteger yearValue = 0;
+	for (NSDictionary *elt in yearArray) {
+		yearValue = [[elt objectForKey:wbJsonKeyYearValue] integerValue];
+		[WBYear yearWithValue:yearValue champion:noTeam];
+	}
+	
 	[noTeam deleteEntity];
 	[WBCoreDataManager saveContext];
 }
@@ -72,25 +71,34 @@
 	year.isCompleteValue = YES;
 	
 	// week table
-	NSArray *weekArray = [self jsonFromData:[self fileDataForFilename:@"weekTable" year:year]];
+	NSData *weekData = [self fileDataForFilename:@"weekTable" year:year];
+	if (!weekData) {
+		DLog(@"No data for year %ld", (long)yearValue);
+		return;
+	}
+	NSArray *weekArray = [self jsonFromData:weekData];
 	WBCourse *course = nil;
+	NSString *courseName = nil, *weekDate = nil;
+	NSInteger par = 0, weekId = 0;
+	NSDate *date = nil;
 	for (NSDictionary *elt in weekArray) {
-		NSString *courseName = [elt objectForKey:wbJsonKeyWeekCourse];
-		NSInteger par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
+		courseName = [elt objectForKey:wbJsonKeyWeekCourse];
+		par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
 		course = [WBCourse courseWithName:courseName par:par];
 		
-		NSInteger weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
-		NSString *weekDate = [elt objectForKey:wbJsonKeyWeekDate];
-		NSDate *date = [self dateForString:weekDate];
+		weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
+		weekDate = [elt objectForKey:wbJsonKeyWeekDate];
+		date = [self dateForString:weekDate];
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId];
 	}
 	
 	// team table
 	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable" year:year]];
-	
+	NSString *teamName = nil;
+	NSInteger teamId = 0;
 	for (NSDictionary *elt in teamArray) {
-		NSString *teamName = [elt objectForKey:wbJsonKeyTeamName];
-		NSInteger teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
+		teamName = [elt objectForKey:wbJsonKeyTeamName];
+		teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
 		[WBTeam teamWithName:teamName teamId:teamId];
 	}
 	
@@ -110,11 +118,15 @@
 	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable" year:year]];
 	WBTeam *playerTeam = nil;
 	WBPlayer *player = nil;
+	NSString *playerName = nil;
+	NSInteger startingHandicap = 0;
+	teamId = 0;
+	BOOL isRookie = NO;
 	for (NSDictionary *elt in playerArray) {
-		NSString *playerName = [elt objectForKey:wbJsonKeyPlayerName];
-		NSInteger teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
-		NSInteger startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
-		BOOL isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
+		playerName = [elt objectForKey:wbJsonKeyPlayerName];
+		teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
+		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
+		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
 		playerTeam = [WBTeam teamWithId:teamId];
 		
 		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
@@ -130,12 +142,15 @@
 	WBWeek *week = nil;
 	WBTeam *team1 = nil, *team2 = nil;
 	WBTeamMatchup *matchup = nil;
+	NSInteger team1Id = 0, team2Id = 0, matchId = 0;
+	weekId = 0;
+	BOOL matchComplete = NO;
 	for (NSDictionary *elt in matchArray) {
-		NSInteger weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
-		NSInteger team1Id = [[elt objectForKey:wbJsonKeyMatchTeam1] integerValue];
-		NSInteger team2Id = [[elt objectForKey:wbJsonKeyMatchTeam2] integerValue];
-		NSInteger matchId = [[elt objectForKey:wbJsonKeyMatchId] integerValue];
-		BOOL matchComplete = [[elt objectForKey:wbJsonKeyMatchComplete] boolValue];
+		weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
+		team1Id = [[elt objectForKey:wbJsonKeyMatchTeam1] integerValue];
+		team2Id = [[elt objectForKey:wbJsonKeyMatchTeam2] integerValue];
+		matchId = [[elt objectForKey:wbJsonKeyMatchId] integerValue];
+		matchComplete = [[elt objectForKey:wbJsonKeyMatchComplete] boolValue];
 		if (!matchComplete) {
 			DLog(@"Incomplete Match in received data");
 			//continue;
@@ -150,38 +165,42 @@
 
 	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
-	
+	WBPlayer *player1 = nil, *player2 = nil;
+	WBMatch *match = nil;
+	NSString *player1Name = nil, *player2Name = nil;
+	NSInteger score1 = 0, score2 = 0, points1 = 0, points2 = 0;
+	weekId = 0, team1Id = 0, team2Id = 0, week = nil, team1 = nil, team2 = nil, matchup = nil;
 	for (NSDictionary *elt in resultsArray) {
-		NSInteger weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
-		NSInteger team1Id = [[elt objectForKey:wbJsonKeyResultTeam1] integerValue];
-		NSInteger team2Id = [[elt objectForKey:wbJsonKeyResultTeam2] integerValue];
-		NSString *player1Name = [elt objectForKey:wbJsonKeyResultPlayer1];
-		NSString *player2Name = [elt objectForKey:wbJsonKeyResultPlayer2];
-		NSInteger score1 = [[elt objectForKey:wbJsonKeyResultScore1] integerValue];
-		NSInteger score2 = [[elt objectForKey:wbJsonKeyResultScore2] integerValue];
-		NSInteger points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
-		NSInteger points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
+		weekId = [[elt objectForKey:wbJsonKeyResultWeek] integerValue];
+		team1Id = [[elt objectForKey:wbJsonKeyResultTeam1] integerValue];
+		team2Id = [[elt objectForKey:wbJsonKeyResultTeam2] integerValue];
+		player1Name = [elt objectForKey:wbJsonKeyResultPlayer1];
+		player2Name = [elt objectForKey:wbJsonKeyResultPlayer2];
+		score1 = [[elt objectForKey:wbJsonKeyResultScore1] integerValue];
+		score2 = [[elt objectForKey:wbJsonKeyResultScore2] integerValue];
+		points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
+		points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
 		
-		WBWeek *week = [WBWeek weekWithId:weekId inYear:year];
+		week = [WBWeek weekWithId:weekId inYear:year];
 		
 		if (team1Id == team2Id) {
 			DLog(@"Match has same team on both sides");
 			week.isBadDataValue = YES;
 		}
 		
-		WBPlayer *player1 = [WBPlayer playerWithName:player1Name];
-		WBPlayer *player2 = [WBPlayer playerWithName:player2Name];
+		player1 = [WBPlayer playerWithName:player1Name];
+		player2 = [WBPlayer playerWithName:player2Name];
 		if (!player1 || !player2) {
 			DLog(@"Bad Player Results");
 			continue;
 		}
 		
-		WBTeam *team1 = [WBTeam teamWithId:team1Id];
-		WBTeam *team2 = [WBTeam teamWithId:team2Id];
+		team1 = [WBTeam teamWithId:team1Id];
+		team2 = [WBTeam teamWithId:team2Id];
 		
-		WBTeamMatchup *matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
+		matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
 		
-		WBMatch *match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
+		match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
 		if (player1) {
 			[WBResult createResultForMatch:match forPlayer:player1 team:team1 withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
 		}
@@ -191,8 +210,9 @@
 	}
 	
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
+	NSArray *matches = nil;
 	for (WBWeek *week in year.weeks) {
-		NSArray *matches = [WBMatch findWithFormat:@"teamMatchup.week = %@", week];
+		matches = [WBMatch findWithFormat:@"teamMatchup.week = %@", week];
 		if (!matches || matches.count == 0) {
 			DLog(@"week has no matches");
 			week.isBadDataValue = YES;
@@ -215,7 +235,7 @@
 }
 
 - (NSData *)fileDataForFilename:(NSString *)name year:(WBYear *)year {
-	NSString *fileName = [NSString stringWithFormat:@"%@%@", name, year.value];
+	NSString *fileName = [NSString stringWithFormat:@"%@%@", name, year.value > 0 ? year.value : @""];
 	NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
 	return [[NSFileManager defaultManager] contentsAtPath:path];
 }

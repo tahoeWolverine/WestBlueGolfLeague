@@ -68,6 +68,7 @@
 		48FDD93618D81C9100F64989 /* resultsTable2027.json in Resources */ = {isa = PBXBuildFile; fileRef = 48FDD90E18D81C9000F64989 /* resultsTable2027.json */; };
 		48FDD93718D81C9100F64989 /* teamTable2027.json in Resources */ = {isa = PBXBuildFile; fileRef = 48FDD90F18D81C9000F64989 /* teamTable2027.json */; };
 		48FDD93818D81C9100F64989 /* weekTable2027.json in Resources */ = {isa = PBXBuildFile; fileRef = 48FDD91018D81C9000F64989 /* weekTable2027.json */; };
+		48FDD93A18D9D2D300F64989 /* yearTable.json in Resources */ = {isa = PBXBuildFile; fileRef = 48FDD93918D9D2D300F64989 /* yearTable.json */; };
 		A50E162E18972418008933A5 /* _WBCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160818972418008933A5 /* _WBCourse.m */; };
 		A50E162F18972418008933A5 /* _WBMatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160A18972418008933A5 /* _WBMatch.m */; };
 		A50E163018972418008933A5 /* _WBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E160C18972418008933A5 /* _WBPlayer.m */; };
@@ -238,6 +239,7 @@
 		48FDD90E18D81C9000F64989 /* resultsTable2027.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable2027.json; sourceTree = "<group>"; };
 		48FDD90F18D81C9000F64989 /* teamTable2027.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teamTable2027.json; sourceTree = "<group>"; };
 		48FDD91018D81C9000F64989 /* weekTable2027.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weekTable2027.json; sourceTree = "<group>"; };
+		48FDD93918D9D2D300F64989 /* yearTable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yearTable.json; sourceTree = "<group>"; };
 		A50E160718972418008933A5 /* _WBCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBCourse.h; path = Model/_WBCourse.h; sourceTree = "<group>"; };
 		A50E160818972418008933A5 /* _WBCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _WBCourse.m; path = Model/_WBCourse.m; sourceTree = "<group>"; };
 		A50E160918972418008933A5 /* _WBMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _WBMatch.h; path = Model/_WBMatch.h; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				48FDD8FF18D81C9000F64989 /* 2025 */,
 				48FDD90518D81C9000F64989 /* 2026 */,
 				48FDD90B18D81C9000F64989 /* 2027 */,
+				48FDD93918D9D2D300F64989 /* yearTable.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				A5CAEE6D18D3CAB90072F134 /* teamTable2012.json in Resources */,
 				48FDD92F18D81C9100F64989 /* matchTable2026.json in Resources */,
 				A5CAEE6B18D3CAB90072F134 /* playerTable2012.json in Resources */,
+				48FDD93A18D9D2D300F64989 /* yearTable.json in Resources */,
 				48FDD92718D81C9100F64989 /* resultsTable2024.json in Resources */,
 				48FDD93018D81C9100F64989 /* playerTable2026.json in Resources */,
 				48FDD91418D81C9000F64989 /* teamTable2020.json in Resources */,

@@ -21,7 +21,7 @@
 	if (self) {
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(hideLoadingView)
-													 name:WBYearChangedNotification
+													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
 	}
 	return self;
