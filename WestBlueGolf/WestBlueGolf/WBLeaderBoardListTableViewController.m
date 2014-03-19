@@ -48,6 +48,8 @@
 	// Switch the bool to make switching take us back to the current data
 	self.isInPlayerMode = !self.isInPlayerMode;
 	[self setupDataSources:YES];
+	
+	
 }
 
 - (void)setupDataSources:(BOOL)reload {
