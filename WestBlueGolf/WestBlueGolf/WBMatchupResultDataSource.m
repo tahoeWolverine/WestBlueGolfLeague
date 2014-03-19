@@ -159,6 +159,9 @@
 }
 
 - (NSInteger)selectedSeasonIndex {
+	if (self.pickerView.currentSelectedIndex > 20) {
+		return -1;
+	}
 	return [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
 }
 

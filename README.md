@@ -1,4 +1,4 @@
 WestBlueGolfLeague
 ==================
 
-WestBlueGolfLeague site and iPhone app
+WestBlueGolfLeague website and iPhone app

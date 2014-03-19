@@ -15,8 +15,6 @@
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
 
-#define kDefaultYear 2027
-
 @interface WBAppDelegate ()
 
 @property (assign, nonatomic) NSInteger yearSelection;
@@ -26,7 +24,7 @@
 @implementation WBAppDelegate
 
 - (NSInteger)thisYearValue {
-	return self.yearSelection ?: kDefaultYear;
+	return self.yearSelection;
 }
 
 - (void)setThisYearValue:(NSInteger)value {
@@ -50,43 +48,41 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-	//[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
-	[WBCoreDataManager sharedManager];
-
-	WBYear *year = [WBYear newestYear];
-	self.yearSelection = year.valueValue;
-	//__block typeof(self) weakSelf = self;
-	
-	if (!year) {
-		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-		[inputManager createYears];
-		
-		[self resetYear];
-	}
+    [self setupCoreData:NO];
 	
 	[self subscribeToNotifications];
 
     return YES;
 }
 
+- (void)setupCoreData:(BOOL)reset {
+	if (reset) {
+		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
+	}
+	//[WBCoreDataManager sharedManager];
+	
+	WBYear *year = [WBYear newestYear];
+	self.yearSelection = year.valueValue;
+	
+	if (!year) {
+		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+		[inputManager createYears];
+		
+		[self setThisYearValue:[WBYear newestYear].valueValue];
+		
+		[self resetYear];
+	}
+}
+
 - (void)resetYear {
 	WBYear *newYear = [WBYear thisYear];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
 		self.loading = YES;
-		[self loadAndCalculateForYear:self.thisYearValue];
+		[self loadAndCalculateForYear:newYear.valueValue];
 		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
 	}
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
-}
-
-- (void)createDummyForYear:(NSInteger)yearValue {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-	WBYear *year2 = [WBYear createYearWithValue:yearValue champion:noTeam];
-	year2.isCompleteValue = YES;
-	[noTeam deleteEntity];
-	[WBCoreDataManager saveContext];
 }
 
 - (void)setProfileTabPlayer {

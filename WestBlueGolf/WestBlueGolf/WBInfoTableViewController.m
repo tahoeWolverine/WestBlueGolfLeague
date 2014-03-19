@@ -7,6 +7,8 @@
 //
 
 #import "WBInfoTableViewController.h"
+#import "MBProgressHUD/MBProgressHUD.h"
+#import "WBAppDelegate.h"
 #import "WBInfoWebviewViewController.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
@@ -35,6 +37,12 @@
 
 - (void)resetYear {
 	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	
+	[self performSelector:@selector(hideProgress) withObject:nil afterDelay:3.0];
+}
+
+- (void)hideProgress {
+	[MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)viewDidLoad {
@@ -55,7 +63,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 5;
+	return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,6 +75,8 @@
 		NSString *cellIdentifier = @"BasicInfoCell";
 		if (indexPath.row == 3) {
 			cellIdentifier = @"UrlLinkCell";
+		} else if (indexPath.row == 5) {
+			cellIdentifier = @"NormalCell";
 		}
 		cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 		cell.textLabel.text = [self textForCellAtIndex:indexPath.row];
@@ -90,6 +100,10 @@
 		case 3:
 			text = @"westbluegolfleague.com";
 			break;
+		case 5:
+			text = @"Reset Data";
+			break;
+
 		default:
 			break;
 	}
@@ -100,8 +114,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.row == 3) {
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://westbluegolfleague.com"]];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	} else if (indexPath.row == 5) {
+		[(WBAppDelegate *)[UIApplication sharedApplication].delegate setupCoreData:YES];
+		[MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	}
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 /*- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -166,3 +166,11 @@ xcuserdata
 # My Settings
 project.xcworkspace
 project.xcuserdata
+WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb/bin
+WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb/obj
+*.mdf
+*.ldf
+WestBlueGolfLeagueWeb/packages
+WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/bin
+WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/obj
+*.suo

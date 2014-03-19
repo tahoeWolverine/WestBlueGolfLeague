@@ -23,4 +23,6 @@
 - (NSInteger)thisYearValue;
 - (void)setThisYearValue:(NSInteger)value;
 
+- (void)setupCoreData:(BOOL)reset;
+
 @end
