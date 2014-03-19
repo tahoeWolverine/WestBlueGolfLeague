@@ -1,0 +1,14 @@
+﻿@model List<WestBlueGolfLeagueWeb.Models.Player>
+
+@{
+    ViewBag.Title = "Players";
+}
+
+<ul>
+
+@foreach (var player in this.Model)
+{
+    <li>@Html.DisplayFor(p => player.PlayerName)</li>
+}
+
+</ul>

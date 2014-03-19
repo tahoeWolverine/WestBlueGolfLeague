@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestBlueGolfLeagueWeb", "WestBlueGolfLeagueWeb\WestBlueGolfLeagueWeb.csproj", "{DBAB13D4-766B-47F3-9BBD-B02AB6973FA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestBlueGolfLeagueWeb.Tests", "WestBlueGolfLeagueWeb.Tests\WestBlueGolfLeagueWeb.Tests.csproj", "{0F0DBBEC-387F-43EF-8280-29F63A5DE4FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBAB13D4-766B-47F3-9BBD-B02AB6973FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBAB13D4-766B-47F3-9BBD-B02AB6973FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBAB13D4-766B-47F3-9BBD-B02AB6973FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBAB13D4-766B-47F3-9BBD-B02AB6973FA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F0DBBEC-387F-43EF-8280-29F63A5DE4FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F0DBBEC-387F-43EF-8280-29F63A5DE4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F0DBBEC-387F-43EF-8280-29F63A5DE4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F0DBBEC-387F-43EF-8280-29F63A5DE4FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
