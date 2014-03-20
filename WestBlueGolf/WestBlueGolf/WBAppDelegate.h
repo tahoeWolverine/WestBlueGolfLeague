@@ -21,7 +21,7 @@
 - (BOOL)isProfileTab:(UIViewController *)vc;
 
 - (NSInteger)thisYearValue;
-- (void)setThisYearValue:(NSInteger)value;
+- (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc;
 
 - (void)setupCoreData:(BOOL)reset;
 

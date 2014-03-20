@@ -27,10 +27,10 @@
 	return self.yearSelection;
 }
 
-- (void)setThisYearValue:(NSInteger)value {
+- (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
 	if (value != 0 && value != self.yearSelection) {
 		self.yearSelection = value;
-		[self resetYear];
+		[self resetYearInContext:moc];
 	}
 }
 
@@ -39,14 +39,14 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
 }
 
-- (void)loadAndCalculateForYear:(NSInteger)yearValue {
+- (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-	[inputManager loadJsonDataForYearValue:yearValue];
+	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
 	WBYear *year = [WBYear yearWithValue:yearValue];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicapsForYear:year];
+	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoardsForYear:year];
+	[boardManager calculateLeaderBoardsForYear:year moc:moc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -76,11 +76,11 @@
 			
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-			[inputManager createYears];
+			[inputManager createYearsInContext:newMoc];
 			
-			[self setThisYearValue:[WBYear newestYear].valueValue];
+			[self setThisYearValue:[WBYear newestYear].valueValue inContext:newMoc];
 			
-			[self resetYear];
+			[self resetYearInContext:newMoc];
 			
 			// Save and finish
 			NSError *error = nil;
@@ -101,11 +101,11 @@
 	});
 }
 
-- (void)resetYear {
-	WBYear *newYear = [WBYear thisYear];
+- (void)resetYearInContext:(NSManagedObjectContext *)moc {
+	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
 		self.loading = YES;
-		[self loadAndCalculateForYear:newYear.valueValue];
+		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
 		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
 	}
 

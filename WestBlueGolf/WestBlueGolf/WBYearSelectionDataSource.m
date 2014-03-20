@@ -9,6 +9,7 @@
 #import "WBYearSelectionDataSource.h"
 #import "MBProgressHUD/MBProgressHUD.h"
 #import "WBAppDelegate.h"
+#import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 
@@ -66,7 +67,7 @@
 	[MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
 	
 	WBYear *year = (WBYear *)[self objectAtIndexPath:indexPath];
-	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue];
+	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 	[tableView reloadData];
 }
 

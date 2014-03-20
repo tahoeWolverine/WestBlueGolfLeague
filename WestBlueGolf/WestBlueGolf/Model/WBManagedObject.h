@@ -11,7 +11,8 @@
 + (NSManagedObjectContext *)context;
 + (NSFetchRequest *)fetchAllRequest;
 
-+ (WBManagedObject *)createEntity;
+//+ (WBManagedObject *)createEntity;
++ (WBManagedObject *)createEntityInContext:(NSManagedObjectContext *)moc;
 - (void)deleteEntity;
 
 + (NSArray *)findAll;
@@ -19,6 +20,10 @@
 + (NSArray *)findWithFormat:(NSString *)predicateFormat, ...;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate;
 + (NSArray *)findWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate
+					  sortedBy:(NSArray *)sortDescriptors
+					fetchLimit:(NSInteger)fetchLimit
+						   moc:(NSManagedObjectContext *)moc;
 + (WBManagedObject *)findFirstRecordWithFormat:(NSString *)predicateFormat, ...;
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
 

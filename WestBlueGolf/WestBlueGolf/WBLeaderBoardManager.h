@@ -10,7 +10,7 @@
 
 @interface WBLeaderBoardManager : NSObject
 
-- (void)calculateLeaderBoardsForYear:(WBYear *)year;
+- (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc;
 - (void)clearLeaderBoards;
 
 @end

@@ -8,17 +8,17 @@
 
 @implementation WBPeopleEntity
 
-+ (WBPeopleEntity *)createPeopleWithName:(NSString *)name {
-	id entity = [self createEntity];
++ (WBPeopleEntity *)createPeopleWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc {
+	id entity = [self createEntityInContext:moc];
 	WBPeopleEntity *newPeople = (WBPeopleEntity *)entity;
 	newPeople.name = name;
 	return newPeople;
 }
 
-+ (WBPeopleEntity *)leagueAverage {
++ (WBPeopleEntity *)leagueAverageInContext:(NSManagedObjectContext *)moc {
 	WBPeopleEntity *avg = (WBPeopleEntity *)[self findFirstRecordWithFormat:@"name = %@", LEAGUE_AVERAGE_NAME];
 	if (!avg) {
-		avg = [WBPeopleEntity createPeopleWithName:LEAGUE_AVERAGE_NAME];
+		avg = [WBPeopleEntity createPeopleWithName:LEAGUE_AVERAGE_NAME inContext:moc];
 	}
 	return avg;
 }

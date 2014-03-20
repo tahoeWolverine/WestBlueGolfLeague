@@ -49,23 +49,23 @@
 
 @implementation WBInputDataManager
 
-- (void)createYears {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
+- (void)createYearsInContext:(NSManagedObjectContext *)moc {
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0 inContext:moc];
 
 	NSArray *yearArray = [self jsonFromData:[self fileDataForFilename:@"yearTable" year:0]];
 	NSInteger yearValue = 0;
 	for (NSDictionary *elt in yearArray) {
 		yearValue = [[elt objectForKey:wbJsonKeyYearValue] integerValue];
-		[WBYear yearWithValue:yearValue champion:noTeam];
+		[WBYear yearWithValue:yearValue champion:noTeam inContext:moc];
 	}
 	
 	[noTeam deleteEntity];
 	//[WBCoreDataManager saveContext];
 }
 
-- (void)loadJsonDataForYearValue:(NSInteger)yearValue {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0];
-	WBYear *year = [WBYear yearWithValue:yearValue champion:noTeam];
+- (void)loadJsonDataForYearValue:(NSInteger)yearValue fromContext:(NSManagedObjectContext *)moc {
+	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0 inContext:moc];
+	WBYear *year = [WBYear yearWithValue:yearValue champion:noTeam inContext:moc];
 
 	//TODO: Will need a way to calculate this
 	year.isCompleteValue = YES;
@@ -99,7 +99,7 @@
 	for (NSDictionary *elt in teamArray) {
 		teamName = [elt objectForKey:wbJsonKeyTeamName];
 		teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
-		[WBTeam teamWithName:teamName teamId:teamId];
+		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
 	}
 	
 	// password/user table
@@ -129,13 +129,13 @@
 		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
 		playerTeam = [WBTeam teamWithId:teamId];
 		
-		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam];
+		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam inContext:moc];
 		
 		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie];
 	}
 	
 	// Create a player to catch all the no shows (ends up being conditional too)
-	[WBPlayer createNoShowPlayer];
+	[WBPlayer createNoShowPlayerInContext:moc];
 	
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];

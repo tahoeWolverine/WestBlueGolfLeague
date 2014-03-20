@@ -12,7 +12,7 @@
 
 @implementation WBHandicapManager
 
-- (void)calculateHandicapsForYear:(WBYear *)year {
+- (void)calculateHandicapsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
 	NSArray *players = [WBPlayer findAll];
 
 	for (WBPlayer *player in players) {
