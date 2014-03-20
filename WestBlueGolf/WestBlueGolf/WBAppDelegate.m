@@ -51,6 +51,9 @@
     [self setupCoreData:NO];
 	
 	[self subscribeToNotifications];
+	
+	// Fix iOS7.1 tint issue
+	[self.window setTintColor:kEmeraldColor];
 
     return YES;
 }

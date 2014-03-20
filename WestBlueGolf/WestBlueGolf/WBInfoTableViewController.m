@@ -116,6 +116,7 @@
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://westbluegolfleague.com"]];
 	} else if (indexPath.row == 5) {
 		[(WBAppDelegate *)[UIApplication sharedApplication].delegate setupCoreData:YES];
+		[(WBAppDelegate *)[UIApplication sharedApplication].delegate setProfileTabPlayer];
 		[MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
