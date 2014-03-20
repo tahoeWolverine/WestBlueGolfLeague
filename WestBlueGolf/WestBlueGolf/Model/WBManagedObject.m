@@ -21,8 +21,12 @@
 
 #pragma mark - Creation, Deletion
 
-+ (WBManagedObject *)createEntity {
-	return [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[self context]];
+/*+ (WBManagedObject *)createEntity {
+	return [self createEntityInContext:[self context]];
+}*/
+
++ (WBManagedObject *)createEntityInContext:(NSManagedObjectContext *)moc {
+	return [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 }
 
 - (void)deleteEntity {
@@ -32,8 +36,12 @@
 #pragma mark - Fetches
 
 + (NSFetchRequest *)fetchAllRequest {
+	return [self fetchAllRequestForMoc:[self context]];
+}
+
++ (NSFetchRequest *)fetchAllRequestForMoc:(NSManagedObjectContext *)moc {
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	[request setEntity:[NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[self context]]];
+	[request setEntity:[NSEntityDescription entityForName:[self entityName] inManagedObjectContext:moc]];
 	return request;
 }
 
@@ -98,6 +106,31 @@
 	
 	NSError *error = nil;
 	NSArray *results = [[self context] executeFetchRequest:request error:&error];
+	if (error) {
+		[[self dataManager] performSelector:@selector(logError:) withObject:error];
+	}
+	return results;
+}
+
++ (NSArray *)findWithPredicate:(NSPredicate *)predicate
+					  sortedBy:(NSArray *)sortDescriptors
+					fetchLimit:(NSInteger)fetchLimit
+						   moc:(NSManagedObjectContext *)moc {
+	NSFetchRequest *request = [self fetchAllRequestForMoc:moc];
+	if (fetchLimit > 0) {
+		[request setFetchLimit:fetchLimit];
+	}
+	
+	if (predicate) {
+		[request setPredicate:predicate];
+	}
+	
+	if (sortDescriptors && sortDescriptors.count > 0) {
+		[request setSortDescriptors:sortDescriptors];
+	}
+	
+	NSError *error = nil;
+	NSArray *results = [moc executeFetchRequest:request error:&error];
 	if (error) {
 		[[self dataManager] performSelector:@selector(logError:) withObject:error];
 	}

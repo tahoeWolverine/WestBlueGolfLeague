@@ -37,7 +37,7 @@
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(resetYear)
-													 name:WBYearChangedNotification
+													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
 	}
 	return self;
@@ -76,7 +76,12 @@
 		
 		// Starting element
 		WBWeek *thisWeek = (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"ANY teamMatchups.matchComplete = 0 && year = %@", [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:YES]]];
-		NSInteger index = [self.seasonIndexArray indexOfObject:thisWeek.seasonIndex];
+		NSInteger index = -1;
+		if (thisWeek) {
+			index = [self.seasonIndexArray indexOfObject:thisWeek.seasonIndex];
+		} else {
+			index = [self.seasonIndexArray indexOfObject:[self.seasonIndexArray lastObject]];
+		}
 		[_pickerView scrollToElement:index animated:NO];
 		
 		// add carat or other view to indicate selected element
@@ -185,17 +190,6 @@
 	[newView addSubview:courseLabel];
 	[newView addSubview:matchupsLabel];
 	return newView;
-}
-
-- (UIView *)tableHeaderViewForTable:(UITableView *)tableView {
-	if (!self.weekTitleArray || self.weekTitleArray.count == 0) {
-		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, HEADER_HEIGHT)];
-		noWeeks.text = @"No Weeks Found";
-		noWeeks.textAlignment = NSTextAlignmentCenter;
-		return noWeeks;
-	}
-	
-	return self.pickerView;
 }
 
 #pragma mark - HorizontalPickerView DataSource Methods

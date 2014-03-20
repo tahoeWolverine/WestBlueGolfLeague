@@ -27,9 +27,11 @@
 	return self.yearSelection;
 }
 
-- (void)setThisYearValue:(NSInteger)value {
-	self.yearSelection = value;
-	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedNotification object:nil];
+- (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
+	if (value != 0 && value != self.yearSelection) {
+		self.yearSelection = value;
+		[self resetYearInContext:moc];
+	}
 }
 
 - (void)setLoading:(BOOL)loading {
@@ -37,14 +39,14 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
 }
 
-- (void)loadAndCalculateForYear:(NSInteger)yearValue {
+- (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-	[inputManager loadJsonDataForYearValue:yearValue];
+	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
 	WBYear *year = [WBYear yearWithValue:yearValue];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicapsForYear:year];
+	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoardsForYear:year];
+	[boardManager calculateLeaderBoardsForYear:year moc:moc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -62,26 +64,51 @@
 	if (reset) {
 		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	}
-	//[WBCoreDataManager sharedManager];
 	
 	WBYear *year = [WBYear newestYear];
 	self.yearSelection = year.valueValue;
 	
 	if (!year) {
-		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-		[inputManager createYears];
-		
-		[self setThisYearValue:[WBYear newestYear].valueValue];
-		
-		[self resetYear];
+		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
+		dispatch_async(request_queue, ^{
+			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
+			[newMoc setPersistentStoreCoordinator:psc];
+			
+			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			
+			// Background code
+			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+			[inputManager createYearsInContext:newMoc];
+			
+			[self setThisYearValue:[WBYear newestYear].valueValue inContext:newMoc];
+			
+			[self resetYearInContext:newMoc];
+			
+			// Save and finish
+			NSError *error = nil;
+			BOOL success = [newMoc save:&error];
+			if (!success) {
+				DLog(@"Core data error in background %@", [error localizedDescription]);
+			}
+			
+			[[NSNotificationCenter defaultCenter] removeObserver:self];
+		});
+		//dispatch_release(request_queue);
 	}
 }
 
-- (void)resetYear {
-	WBYear *newYear = [WBYear thisYear];
+- (void)mergeChanges:(NSNotification *)notification {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[[[WBCoreDataManager sharedManager] managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
+	});
+}
+
+- (void)resetYearInContext:(NSManagedObjectContext *)moc {
+	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
 		self.loading = YES;
-		[self loadAndCalculateForYear:newYear.valueValue];
+		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
 		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
 	}
 
@@ -133,14 +160,14 @@
 }
 
 - (void)subscribeToNotifications {
-	[[NSNotificationCenter defaultCenter] addObserver:self
+	/*[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(resetYear)
 												 name:WBYearChangedNotification
-											   object:nil];
+											   object:nil];*/
 }
 
 - (void)unsubscribeFromNotfications {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	//[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

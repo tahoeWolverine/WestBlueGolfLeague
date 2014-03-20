@@ -10,6 +10,6 @@
 
 @interface WBHandicapManager : NSObject
 
-- (void)calculateHandicapsForYear:(WBYear *)year;
+- (void)calculateHandicapsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc;
 
 @end

@@ -31,15 +31,19 @@
 // Player specific create function
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
-							onTeam:(WBTeam *)currentTeam;
-+ (WBPlayer *)playerWithName:(NSString *)name currentHandicap:(NSInteger)currentHandicap onTeam:(WBTeam *)currentTeam;
+							onTeam:(WBTeam *)currentTeam
+						 inContext:(NSManagedObjectContext *)moc;
++ (WBPlayer *)playerWithName:(NSString *)name
+			 currentHandicap:(NSInteger)currentHandicap
+					  onTeam:(WBTeam *)currentTeam
+				   inContext:(NSManagedObjectContext *)moc;
 
 + (WBPlayer *)me;
 - (void)setPlayerToMe;
 - (void)setPlayerToNotMe;
 
 + (WBPlayer *)noShowPlayer;
-+ (void)createNoShowPlayer;
++ (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;
 - (BOOL)isNoShowPlayer;
 
 + (WBPlayer *)playerWithName:(NSString *)name;

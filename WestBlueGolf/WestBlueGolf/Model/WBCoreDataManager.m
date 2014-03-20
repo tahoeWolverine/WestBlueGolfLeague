@@ -59,7 +59,7 @@
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext {
-	NSAssert1([NSThread isMainThread], @"%s called with non-main thread!", __FUNCTION__);
+	//NSAssert1([NSThread isMainThread], @"%s called with non-main thread!", __FUNCTION__);
 	if (_managedObjectContext == nil) {
 		_managedObjectContext = [[NSManagedObjectContext alloc] init];
 		[_managedObjectContext setPersistentStoreCoordinator:[self persistentStoreCoordinator]];

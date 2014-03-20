@@ -21,8 +21,9 @@
 
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
-							onTeam:(WBTeam *)currentTeam {
-	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithName:name];
+							onTeam:(WBTeam *)currentTeam
+						 inContext:(NSManagedObjectContext *)moc {
+	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithName:name inContext:moc];
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
@@ -34,10 +35,13 @@
 	return newPlayer;
 }
 
-+ (WBPlayer *)playerWithName:(NSString *)name currentHandicap:(NSInteger)currentHandicap onTeam:(WBTeam *)currentTeam {
++ (WBPlayer *)playerWithName:(NSString *)name
+			 currentHandicap:(NSInteger)currentHandicap
+					  onTeam:(WBTeam *)currentTeam
+				   inContext:(NSManagedObjectContext *)moc {
 	WBPlayer *player = [[self class] playerWithName:name];
 	if (!player) {
-		player = [[self class] createPlayerWithName:name currentHandicap:currentHandicap onTeam:currentTeam];
+		player = [[self class] createPlayerWithName:name currentHandicap:currentHandicap onTeam:currentTeam inContext:moc];
 	}
 	return player;
 }
@@ -61,8 +65,8 @@
 	return [[self class] playerWithName:kNoShowPlayerName];
 }
 
-+ (void)createNoShowPlayer {
-	[[self class] playerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil];
++ (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc {
+	[[self class] playerWithName:kNoShowPlayerName currentHandicap:25 onTeam:nil inContext:moc];
 }
 
 - (BOOL)isNoShowPlayer {

@@ -22,8 +22,8 @@
 
 @interface WBTeam : _WBTeam {}
 
-+ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId;
-+ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId;
++ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
++ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 
 + (WBTeam *)teamWithId:(NSInteger)teamId;
 + (WBTeam *)myTeam;
