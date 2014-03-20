@@ -60,7 +60,7 @@
 	}
 	
 	[noTeam deleteEntity];
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 }
 
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue {
@@ -222,7 +222,7 @@
 	// Delete the noTeam
 	[noTeam deleteEntity];
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 }
 
 #pragma mark - Helper functions
@@ -299,7 +299,7 @@
 	 // Delete the noTeam
 	 [noTeam deleteTeam];*/
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 }
 
 @end

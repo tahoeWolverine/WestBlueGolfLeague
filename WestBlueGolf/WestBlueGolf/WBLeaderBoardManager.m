@@ -153,7 +153,7 @@
 	// Pro Triple crown board: Avg Points, Avg Score, Total Wins
 	// Triple Crown: Avg Points, Avg Net Score, Improved
 	
-	[WBCoreDataManager saveContext];
+	//[WBCoreDataManager saveContext];
 }
 
 #pragma mark - Team Boards

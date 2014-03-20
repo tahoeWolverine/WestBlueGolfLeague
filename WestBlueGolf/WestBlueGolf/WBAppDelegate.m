@@ -66,13 +66,39 @@
 	self.yearSelection = year.valueValue;
 	
 	if (!year) {
-		WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-		[inputManager createYears];
-		
-		[self setThisYearValue:[WBYear newestYear].valueValue];
-		
-		[self resetYear];
+		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
+		dispatch_async(request_queue, ^{
+			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
+			[newMoc setPersistentStoreCoordinator:psc];
+			
+			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			
+			// Background code
+			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+			[inputManager createYears];
+			
+			[self setThisYearValue:[WBYear newestYear].valueValue];
+			
+			[self resetYear];
+			
+			// Save and finish
+			NSError *error = nil;
+			BOOL success = [newMoc save:&error];
+			if (!success) {
+				DLog(@"Core data error in background %@", [error localizedDescription]);
+			}
+			
+			[[NSNotificationCenter defaultCenter] removeObserver:self];
+		});
+		//dispatch_release(request_queue);
 	}
+}
+
+- (void)mergeChanges:(NSNotification *)notification {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[[[WBCoreDataManager sharedManager] managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
+	});
 }
 
 - (void)resetYear {
