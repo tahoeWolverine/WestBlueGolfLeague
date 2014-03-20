@@ -46,7 +46,7 @@
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;
 - (BOOL)isNoShowPlayer;
 
-+ (WBPlayer *)playerWithName:(NSString *)name;
++ (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
 - (NSString *)currentHandicapString;
 - (NSInteger)startingHandicapInYear:(WBYear *)year;

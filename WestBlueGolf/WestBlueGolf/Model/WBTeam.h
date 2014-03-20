@@ -25,7 +25,7 @@
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 + (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 
-+ (WBTeam *)teamWithId:(NSInteger)teamId;
++ (WBTeam *)teamWithId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 + (WBTeam *)myTeam;
 
 - (NSInteger)totalPointsForYear:(WBYear *)year;

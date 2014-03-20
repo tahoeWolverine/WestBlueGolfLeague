@@ -22,14 +22,14 @@
 }
 
 + (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
-	WBTeam *team = [[self class] teamWithId:teamId];
+	WBTeam *team = [[self class] teamWithId:teamId inContext:moc];
 	if (!team) {
 		team = [[self class] createTeamWithName:name teamId:teamId inContext:moc];
 	}
 	return team;
 }
 
-+ (WBTeam *)teamWithId:(NSInteger)teamId {
++ (WBTeam *)teamWithId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
 	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]];
 }
 

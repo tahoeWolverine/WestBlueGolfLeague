@@ -14,8 +14,9 @@
 											   year:(WBYear *)year
 							   withStartingHandicap:(NSInteger)startingHandicap
 							  withFinishingHandicap:(NSInteger)finishingHandicap
-										   isRookie:(BOOL)isRookie {
-	WBPlayerYearData *newData = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+										   isRookie:(BOOL)isRookie
+												moc:(NSManagedObjectContext *)moc {
+	WBPlayerYearData *newData = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newData.startingHandicapValue = startingHandicap;
 	newData.finishingHandicapValue = finishingHandicap;
 	newData.isRookieValue = isRookie;

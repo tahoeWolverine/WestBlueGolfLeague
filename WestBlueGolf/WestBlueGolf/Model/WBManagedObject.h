@@ -13,7 +13,7 @@
 
 //+ (WBManagedObject *)createEntity;
 + (WBManagedObject *)createEntityInContext:(NSManagedObjectContext *)moc;
-- (void)deleteEntity;
+- (void)deleteEntityInContext:(NSManagedObjectContext *)moc;
 
 + (NSArray *)findAll;
 + (NSArray *)findAllSortedBy:(NSString *)property ascending:(BOOL)asc;
@@ -26,6 +26,7 @@
 						   moc:(NSManagedObjectContext *)moc;
 + (WBManagedObject *)findFirstRecordWithFormat:(NSString *)predicateFormat, ...;
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors;
++ (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors moc:(NSManagedObjectContext *)moc;
 
 + (NSUInteger)countAll;
 + (NSUInteger)countWithPredicate:(NSPredicate *)predicate;

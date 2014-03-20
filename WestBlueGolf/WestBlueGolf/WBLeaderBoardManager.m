@@ -249,10 +249,10 @@
 	}
 }
 
-- (void)clearLeaderBoards {
+- (void)clearLeaderBoardsInContext:(NSManagedObjectContext *)moc {
 	NSArray *boards = [WBLeaderBoard findAll];
 	for (WBLeaderBoard *board in boards) {
-		[board deleteEntity];
+		[board deleteEntityInContext:moc];
 	}
 }
 

@@ -28,8 +28,9 @@
 										andTeam:(WBTeam *)team2
 										forWeek:(WBWeek *)week
 										matchId:(NSInteger)matchId
-								  matchComplete:(BOOL)matchComplete {
-	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+								  matchComplete:(BOOL)matchComplete
+											moc:(NSManagedObjectContext *)moc {
+	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newTeamMatchup.week = week;
 	newTeamMatchup.matchIdValue = matchId;
 	newTeamMatchup.matchCompleteValue = matchComplete;
@@ -38,8 +39,8 @@
 	return newTeamMatchup;
 }
 
-+ (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week {
-	return (WBTeamMatchup *)[[self class] findFirstRecordWithFormat:@"week = %@ && ANY teams = %@", week, team];
++ (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week inContext:(NSManagedObjectContext *)moc {
+	return (WBTeamMatchup *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"week = %@ && ANY teams = %@", week, team] sortedBy:nil moc:moc];
 }
 
 + (NSArray *)findMatchupsForWeek:(WBWeek *)week {

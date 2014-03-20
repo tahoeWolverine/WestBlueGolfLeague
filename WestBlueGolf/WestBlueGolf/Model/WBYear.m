@@ -38,9 +38,13 @@
 	return [self yearWithValue:selectedValue inContext:moc];
 }
 
-+ (WBYear *)newestYear {
+- (BOOL)isNewestYear {
+	return self == [[self class] newestYearInContext:self.managedObjectContext];
+}
+
++ (WBYear *)newestYearInContext:(NSManagedObjectContext *)moc {
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]];
-	return (WBYear *)[self findFirstRecordWithPredicate:nil sortedBy:sorts];
+	return (WBYear *)[self findFirstRecordWithPredicate:nil sortedBy:sorts moc:moc];
 }
 
 + (WBYear *)yearWithValue:(NSInteger)value {

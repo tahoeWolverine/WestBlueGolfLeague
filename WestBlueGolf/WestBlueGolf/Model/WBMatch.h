@@ -4,6 +4,7 @@
 
 + (WBMatch *)createMatchForTeamMatchup:(WBTeamMatchup *)teamMatchup
 							   player1:(WBPlayer *)player1
-							   player2:(WBPlayer *)player2;
+							   player2:(WBPlayer *)player2
+								   moc:(NSManagedObjectContext *)moc;
 
 @end

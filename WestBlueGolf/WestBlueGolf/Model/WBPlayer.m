@@ -39,7 +39,7 @@
 			 currentHandicap:(NSInteger)currentHandicap
 					  onTeam:(WBTeam *)currentTeam
 				   inContext:(NSManagedObjectContext *)moc {
-	WBPlayer *player = [[self class] playerWithName:name];
+	WBPlayer *player = [[self class] playerWithName:name inContext:moc];
 	if (!player) {
 		player = [[self class] createPlayerWithName:name currentHandicap:currentHandicap onTeam:currentTeam inContext:moc];
 	}
@@ -57,12 +57,12 @@
 	self.team.meValue = NO;
 }
 
-+ (WBPlayer *)playerWithName:(NSString *)name {
-	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"name = %@", name];
++ (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc {
+	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil moc:moc];
 }
 
 + (WBPlayer *)noShowPlayer {
-	return [[self class] playerWithName:kNoShowPlayerName];
+	return [[self class] playerWithName:kNoShowPlayerName inContext:[[self class] context]];
 }
 
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc {
@@ -112,7 +112,7 @@
 - (NSString *)currentHandicapString {
 	NSInteger handi = self.currentHandicapValue;
 	WBYear *thisYear = [WBYear thisYear];
-	WBYear *newestYear = [WBYear newestYear];
+	WBYear *newestYear = [WBYear newestYearInContext:self.managedObjectContext];
 	if (newestYear != thisYear) {
 		handi = [self finishingHandicapInYear:thisYear];
 	}
@@ -221,7 +221,7 @@
 
 - (NSInteger)improvedInYear:(WBYear *)year {
 	NSInteger starting = [self startingHandicapInYear:year];
-	NSInteger ending = year == [WBYear newestYear] ? self.currentHandicapValue : [self finishingHandicapInYear:year];
+	NSInteger ending = [year isNewestYear] ? self.currentHandicapValue : [self finishingHandicapInYear:year];
 	return starting != INT32_MAX ? ending - starting : 0;
 }
 

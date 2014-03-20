@@ -59,7 +59,7 @@
 		[WBYear yearWithValue:yearValue champion:noTeam inContext:moc];
 	}
 	
-	[noTeam deleteEntity];
+	[noTeam deleteEntityInContext:moc];
 	//[WBCoreDataManager saveContext];
 }
 
@@ -89,7 +89,7 @@
 		weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		weekDate = [elt objectForKey:wbJsonKeyWeekDate];
 		date = [self dateForString:weekDate];
-		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId];
+		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
 	}
 	
 	// team table
@@ -127,11 +127,11 @@
 		teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
 		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
 		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
-		playerTeam = [WBTeam teamWithId:teamId];
+		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
 		
 		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam inContext:moc];
 		
-		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie];
+		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
 	}
 	
 	// Create a player to catch all the no shows (ends up being conditional too)
@@ -156,11 +156,11 @@
 			//continue;
 		}
 		
-		week = [WBWeek weekWithId:weekId inYear:year];
-		team1 = [WBTeam teamWithId:team1Id];
-		team2 = [WBTeam teamWithId:team2Id];
+		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
+		team1 = [WBTeam teamWithId:team1Id inContext:moc];
+		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		
-		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete];
+		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete moc:moc];
 	}
 
 	// results table
@@ -181,38 +181,38 @@
 		points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
 		
-		week = [WBWeek weekWithId:weekId inYear:year];
+		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
 		
 		if (team1Id == team2Id) {
 			DLog(@"Match has same team on both sides");
 			week.isBadDataValue = YES;
 		}
 		
-		player1 = [WBPlayer playerWithName:player1Name];
-		player2 = [WBPlayer playerWithName:player2Name];
+		player1 = [WBPlayer playerWithName:player1Name inContext:moc];
+		player2 = [WBPlayer playerWithName:player2Name inContext:moc];
 		if (!player1 || !player2) {
 			DLog(@"Bad Player Results");
 			continue;
 		}
 		
-		team1 = [WBTeam teamWithId:team1Id];
-		team2 = [WBTeam teamWithId:team2Id];
+		team1 = [WBTeam teamWithId:team1Id inContext:moc];
+		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		
-		matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week];
+		matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week inContext:moc];
 		
-		match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2];
+		match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2 moc:moc];
 		if (player1) {
-			[WBResult createResultForMatch:match forPlayer:player1 team:team1 withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1];
+			[WBResult createResultForMatch:match forPlayer:player1 team:team1 withPoints:points1 priorHandicap:player1.currentHandicapValue score:score1 moc:moc];
 		}
 		if (player2) {
-			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2];
+			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2 moc:moc];
 		}
 	}
 	
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
 	NSArray *matches = nil;
 	for (WBWeek *week in year.weeks) {
-		matches = [WBMatch findWithFormat:@"teamMatchup.week = %@", week];
+		matches = [WBMatch findWithPredicate:[NSPredicate predicateWithFormat:@"teamMatchup.week = %@", week]];
 		if (!matches || matches.count == 0) {
 			DLog(@"week has no matches");
 			week.isBadDataValue = YES;
@@ -220,7 +220,7 @@
 	}
 	
 	// Delete the noTeam
-	[noTeam deleteEntity];
+	[noTeam deleteEntityInContext:moc];
 	
 	//[WBCoreDataManager saveContext];
 }

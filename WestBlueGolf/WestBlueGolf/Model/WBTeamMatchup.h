@@ -6,9 +6,10 @@
 										andTeam:(WBTeam *)team2
 										forWeek:(WBWeek *)week
 										matchId:(NSInteger)matchId
-								  matchComplete:(BOOL)matchComplete;
+								  matchComplete:(BOOL)matchComplete
+											moc:(NSManagedObjectContext *)moc;
 
-+ (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week;
++ (WBTeamMatchup *)matchupForTeam:(WBTeam *)team inWeek:(WBWeek *)week inContext:(NSManagedObjectContext *)moc;
 
 - (WBTeam *)opponentTeamOfTeam:(WBTeam *)team;
 

@@ -14,7 +14,8 @@
 + (WBYear *)thisYear;
 + (WBYear *)thisYearInContext:(NSManagedObjectContext *)moc;
 
-+ (WBYear *)newestYear;
+- (BOOL)isNewestYear;
++ (WBYear *)newestYearInContext:(NSManagedObjectContext *)moc;
 + (WBYear *)yearWithValue:(NSInteger)value;
 
 - (NSInteger)maxSeasonIndex;

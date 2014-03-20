@@ -15,8 +15,9 @@
 - (void)calculateHandicapsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
 	NSArray *players = [WBPlayer findAll];
 
+	BOOL isNewestYear = [year isNewestYear];
 	for (WBPlayer *player in players) {
-		[self calculateHandicapsForPlayer:player year:year isNewestYear:year == [WBYear newestYear]];
+		[self calculateHandicapsForPlayer:player year:year isNewestYear:isNewestYear];
 	}
 }
 

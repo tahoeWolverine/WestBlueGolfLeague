@@ -11,6 +11,6 @@
 @interface WBLeaderBoardManager : NSObject
 
 - (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc;
-- (void)clearLeaderBoards;
+- (void)clearLeaderBoardsInContext:(NSManagedObjectContext *)moc;
 
 @end

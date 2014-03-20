@@ -65,25 +65,26 @@
 		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	}
 	
-	WBYear *year = [WBYear newestYear];
+	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 	self.yearSelection = year.valueValue;
 	
 	if (!year) {
 		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
-		dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
-		dispatch_async(request_queue, ^{
+		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
+		__block typeof(self) weakSelf = self;
+		//dispatch_async(request_queue, ^{
 			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
 			[newMoc setPersistentStoreCoordinator:psc];
 			
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
 			
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 			[inputManager createYearsInContext:newMoc];
 			
-			[self setThisYearValue:[WBYear newestYear].valueValue inContext:newMoc];
+			[weakSelf setThisYearValue:[WBYear newestYearInContext:newMoc].valueValue inContext:newMoc];
 			
-			[self resetYearInContext:newMoc];
+			[weakSelf resetYearInContext:newMoc];
 			
 			// Save and finish
 			NSError *error = nil;
@@ -92,24 +93,24 @@
 				DLog(@"Core data error in background %@", [error localizedDescription]);
 			}
 			
-			[[NSNotificationCenter defaultCenter] removeObserver:self];
-		});
+			//[[NSNotificationCenter defaultCenter] removeObserver:self];
+		//});
 		//dispatch_release(request_queue);
 	}
 }
 
 - (void)mergeChanges:(NSNotification *)notification {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	//dispatch_async(dispatch_get_main_queue(), ^{
 		[[[WBCoreDataManager sharedManager] managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
-	});
+	//});
 }
 
 - (void)resetYearInContext:(NSManagedObjectContext *)moc {
 	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
-		self.loading = YES;
+		//self.loading = YES;
 		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
-		[self performSelector:@selector(setLoading:) withObject:NO afterDelay:3.0];
+		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
@@ -167,7 +168,7 @@
 }
 
 - (void)unsubscribeFromNotfications {
-	//[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

@@ -18,7 +18,8 @@
 							  team:(WBTeam *)team
 						withPoints:(NSInteger)points
 					 priorHandicap:(NSInteger)priorHandicap
-							 score:(NSInteger)score {
+							 score:(NSInteger)score
+							   moc:(NSManagedObjectContext *)moc {
 	BOOL found = NO;
 	for (WBPlayer *p in match.players) {
 		if (player.objectID == p.objectID) {
@@ -34,7 +35,7 @@
 		ALog(@"Attempting to add result with points totalling greater than 24");
 	}
 	
-	WBResult *newResult = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+	WBResult *newResult = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newResult.pointsValue = points;
 	newResult.priorHandicapValue = priorHandicap;
 	newResult.scoreValue = score;

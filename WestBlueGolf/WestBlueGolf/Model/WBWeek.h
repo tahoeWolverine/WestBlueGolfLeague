@@ -5,9 +5,10 @@
 + (WBWeek *)createWeekWithDate:(NSDate *)date
 						inYear:(WBYear *)year
 					 forCourse:(WBCourse *)course
-				   seasonIndex:(NSInteger)seasonIndex;
+				   seasonIndex:(NSInteger)seasonIndex
+					 inContext:(NSManagedObjectContext *)moc;
 
-+ (WBWeek *)weekWithId:(NSInteger)weekId inYear:(WBYear *)year;
++ (WBWeek *)findWeekWithId:(NSInteger)weekId inYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 
 + (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year;
 

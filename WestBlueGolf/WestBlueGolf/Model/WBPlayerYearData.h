@@ -6,6 +6,7 @@
 											   year:(WBYear *)year
 							   withStartingHandicap:(NSInteger)startingHandicap
 							  withFinishingHandicap:(NSInteger)finishingHandicap
-										   isRookie:(BOOL)isRookie;
+										   isRookie:(BOOL)isRookie
+												moc:(NSManagedObjectContext *)moc;
 
 @end

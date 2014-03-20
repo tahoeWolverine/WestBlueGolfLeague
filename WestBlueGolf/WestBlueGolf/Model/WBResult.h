@@ -7,7 +7,8 @@
 							  team:(WBTeam *)team
 						withPoints:(NSInteger)points
 					 priorHandicap:(NSInteger)priorHandicap
-							 score:(NSInteger)score;
+							 score:(NSInteger)score
+							   moc:(NSManagedObjectContext *)moc;
 
 - (WBResult *)opponentResult;
 

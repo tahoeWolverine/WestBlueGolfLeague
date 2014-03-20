@@ -29,8 +29,8 @@
 	return [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 }
 
-- (void)deleteEntity {
-	[[[self class] context] deleteObject:self];
+- (void)deleteEntityInContext:(NSManagedObjectContext *)moc {
+	[moc deleteObject:self];
 }
 
 #pragma mark - Fetches
@@ -87,6 +87,11 @@
 
 + (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors {
 	NSArray *results = [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:1];
+	return (WBManagedObject *)[results firstObject];
+}
+
++ (WBManagedObject *)findFirstRecordWithPredicate:(NSPredicate *)predicate sortedBy:(NSArray *)sortDescriptors moc:(NSManagedObjectContext *)moc {
+	NSArray *results = [self findWithPredicate:predicate sortedBy:sortDescriptors fetchLimit:1 moc:moc];
 	return (WBManagedObject *)[results firstObject];
 }
 
