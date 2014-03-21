@@ -22,7 +22,7 @@
 + (WBYear *)yearWithValue:(NSInteger)year
 				 champion:(WBTeam *)champion
 				inContext:(NSManagedObjectContext *)moc {
-	WBYear *aYear = [WBYear yearWithValue:year];
+	WBYear *aYear = [WBYear yearWithValue:year inContext:moc];
 	if (!aYear) {
 		aYear = [WBYear createYearWithValue:year champion:champion inContext:moc];
 	}
@@ -53,7 +53,7 @@
 
 + (WBYear *)yearWithValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
 	return (WBYear *)[self findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"value = %@", [NSNumber numberWithInteger:value]]
-											   sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]]];
+											   sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]] moc:moc];
 }
 
 - (NSInteger)maxSeasonIndex {

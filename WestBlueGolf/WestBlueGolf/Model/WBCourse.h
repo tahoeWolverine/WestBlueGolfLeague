@@ -3,9 +3,10 @@
 @interface WBCourse : _WBCourse {}
 
 + (WBCourse *)createCourseWithName:(NSString *)name
-							   par:(NSInteger)par;
+							   par:(NSInteger)par
+						 inContext:(NSManagedObjectContext *)moc;
 
-+ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par;
++ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par inContext:(NSManagedObjectContext *)moc;
 
 - (NSString *)shortName;
 

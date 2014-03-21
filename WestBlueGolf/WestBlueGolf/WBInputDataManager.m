@@ -61,6 +61,11 @@
 	
 	[noTeam deleteEntityInContext:moc];
 	//[WBCoreDataManager saveContext];
+	NSError *error = nil;
+	[moc save:&error];
+	if (error) {
+		[WBCoreDataManager logError:error];
+	}
 }
 
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue fromContext:(NSManagedObjectContext *)moc {
@@ -84,7 +89,7 @@
 	for (NSDictionary *elt in weekArray) {
 		courseName = [elt objectForKey:wbJsonKeyWeekCourse];
 		par = [[elt objectForKey:wbJsonKeyWeekPar] integerValue];
-		course = [WBCourse courseWithName:courseName par:par];
+		course = [WBCourse courseWithName:courseName par:par inContext:moc];
 		
 		weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		weekDate = [elt objectForKey:wbJsonKeyWeekDate];
@@ -212,7 +217,7 @@
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
 	NSArray *matches = nil;
 	for (WBWeek *week in year.weeks) {
-		matches = [WBMatch findWithPredicate:[NSPredicate predicateWithFormat:@"teamMatchup.week = %@", week]];
+		matches = [WBMatch findWithPredicate:[NSPredicate predicateWithFormat:@"teamMatchup.week = %@", week] sortedBy:nil fetchLimit:0 moc:moc];
 		if (!matches || matches.count == 0) {
 			DLog(@"week has no matches");
 			week.isBadDataValue = YES;
@@ -223,6 +228,11 @@
 	[noTeam deleteEntityInContext:moc];
 	
 	//[WBCoreDataManager saveContext];
+	NSError *error = nil;
+	[moc save:&error];
+	if (error) {
+		[WBCoreDataManager logError:error];
+	}
 }
 
 #pragma mark - Helper functions

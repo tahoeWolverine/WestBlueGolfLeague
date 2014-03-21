@@ -18,7 +18,7 @@
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
 					 inContext:(NSManagedObjectContext *)moc {
-	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newWeek.date = date;
 	newWeek.year = year;
 	newWeek.seasonIndexValue = seasonIndex;
@@ -32,7 +32,7 @@
 }
 
 + (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year {
-	return (WBWeek *)[WBWeek findFirstRecordWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
+	return (WBWeek *)[WBWeek findFirstRecordWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:seasonIndex], year];
 }
 
 - (NSString *)pairingLabel {

@@ -8,17 +8,18 @@
 @implementation WBCourse
 
 + (WBCourse *)createCourseWithName:(NSString *)name
-							   par:(NSInteger)par {
-	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+							   par:(NSInteger)par
+						 inContext:(NSManagedObjectContext *)moc {
+	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newCourse.name = name;
 	newCourse.parValue = par;
 	return newCourse;
 }
 
-+ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par {
++ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par inContext:(NSManagedObjectContext *)moc {
 	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithFormat:@"name = %@", name];
 	if (!course) {
-		course = [WBCourse createCourseWithName:name par:par];
+		course = [WBCourse createCourseWithName:name par:par inContext:moc];
 	}
 	return course;
 }

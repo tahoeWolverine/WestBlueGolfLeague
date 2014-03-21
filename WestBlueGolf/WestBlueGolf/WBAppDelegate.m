@@ -42,7 +42,7 @@
 - (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
-	WBYear *year = [WBYear yearWithValue:yearValue];
+	WBYear *year = [WBYear yearWithValue:yearValue inContext:moc];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
 	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
