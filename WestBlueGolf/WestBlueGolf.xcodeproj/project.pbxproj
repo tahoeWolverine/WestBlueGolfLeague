@@ -143,6 +143,7 @@
 		A5F477141890769400AB3529 /* WestBlueGolfTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F477131890769400AB3529 /* WestBlueGolfTests.m */; };
 		A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F4771D18907E5E00AB3529 /* CoreData.framework */; };
 		A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */; };
+		D2C274AD18DB56F500CB1B93 /* ProfilePictureCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -359,6 +360,8 @@
 		A5F477131890769400AB3529 /* WestBlueGolfTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WestBlueGolfTests.m; sourceTree = "<group>"; };
 		A5F4771D18907E5E00AB3529 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A5F4772818907F5000AB3529 /* WestBlueGolf.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WestBlueGolf.xcdatamodel; sourceTree = "<group>"; };
+		D2C274AB18DB56F500CB1B93 /* ProfilePictureCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCropperViewController.h; sourceTree = "<group>"; };
+		D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCropperViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -814,6 +817,8 @@
 				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
 				48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */,
 				48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */,
+				D2C274AB18DB56F500CB1B93 /* ProfilePictureCropperViewController.h */,
+				D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */,
 			);
 			name = PlayerProfile;
 			sourceTree = "<group>";
@@ -1077,6 +1082,7 @@
 				A5F476F31890769400AB3529 /* WBAppDelegate.m in Sources */,
 				A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */,
 				48B221B218B034B400F2DD99 /* WBProfileTableViewController.m in Sources */,
+				D2C274AD18DB56F500CB1B93 /* ProfilePictureCropperViewController.m in Sources */,
 				A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */,
 				A50E163918972418008933A5 /* WBMatch.m in Sources */,
 				A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */,

@@ -13,8 +13,9 @@
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileDataSource.h"
+#import "ProfilePictureCropperViewController.h"
 
-@interface WBProfileTableViewController () <UIAlertViewDelegate>
+@interface WBProfileTableViewController () <UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfilePictureCropperViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
 @property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
@@ -24,6 +25,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *lowNetLabel;
 
 @property (strong, nonatomic) WBProfileDataSource *dataSource;
+
+// For selecting profile pictures of Players
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) UIImage *imageSelectedToCrop;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @end
 
@@ -175,6 +181,64 @@
 		[self refreshPlayerHighlights];
 		[self refreshFavoriteButton];
 	}
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)tappedProfileImage:(UITapGestureRecognizer *)sender {
+	// Display Action Sheet for selecting source of image
+	UIActionSheet *imagePickerActionSheet = [[UIActionSheet alloc] initWithTitle:@"Profile Picture Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Library", @"Camera", nil];
+	[imagePickerActionSheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+	
+	// Check if the User selected the Library or Camera as a source
+	if ([buttonTitle isEqualToString:@"Library"] || [buttonTitle isEqualToString:@"Camera"]) {
+		self.imagePickerController = [[UIImagePickerController alloc] init];
+		self.imagePickerController.sourceType = [buttonTitle isEqualToString:@"Library"] ?  UIImagePickerControllerSourceTypePhotoLibrary : UIImagePickerControllerSourceTypeCamera;
+		self.imagePickerController.delegate = self;
+		[self presentViewController:self.imagePickerController animated:YES completion:nil];
+	}
+}
+
+#pragma mark - UIImagePickerController Delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	// User selected an image for their profile. Lets segue to the cropper vc
+	UIImage *selectedImage = info[UIImagePickerControllerOriginalImage];
+	self.imageSelectedToCrop = selectedImage;
+	[self dismissViewControllerAnimated:YES completion:^{
+		[self performSegueWithIdentifier:@"ProfilePictureCropperSegue" sender:self];
+	}];
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	if ([segue.identifier isEqualToString:@"ProfilePictureCropperSegue"]) {
+		ProfilePictureCropperViewController *ppcvc = segue.destinationViewController;
+		ppcvc.delegate = self;
+		ppcvc.imageToCrop = self.imageSelectedToCrop;
+		ppcvc.radius = (int)(self.profileImageView.bounds.size.width / 2.0f);
+		ppcvc.playerName = self.selectedPlayer.name;
+		self.imageSelectedToCrop = nil;
+	}
+}
+
+#pragma mark - ProfilePictureCropperViewControllerDelegate
+
+- (void)profilePictureCropperViewController:(ProfilePictureCropperViewController *)controller croppedImage:(UIImage *)croppedImage {
+	if (croppedImage) {
+		self.profileImageView.image = croppedImage;
+		
+		// Do we want to save the image in Core Data? POST to webservice?
+	}
+	
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
