@@ -13,8 +13,9 @@
 + (WBLeaderBoard *)createLeaderBoardWithName:(NSString *)name
 										 key:(NSString *)key
 							   tablePriority:(NSInteger)tablePriority
-							   isPlayerBoard:(BOOL)isPlayerBoard {
-	WBLeaderBoard *newBoard = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+							   isPlayerBoard:(BOOL)isPlayerBoard
+										 moc:(NSManagedObjectContext *)moc {
+	WBLeaderBoard *newBoard = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newBoard.name = name;
 	newBoard.key = key;
 	newBoard.tablePriorityValue = tablePriority;
@@ -22,10 +23,14 @@
 	return newBoard;
 }
 
-+ (WBLeaderBoard *)leaderBoardWithName:(NSString *)name key:(NSString *)key tablePriority:(NSInteger)tablePriority isPlayerBoard:(BOOL)isPlayerBoard {
++ (WBLeaderBoard *)leaderBoardWithName:(NSString *)name
+								   key:(NSString *)key
+						 tablePriority:(NSInteger)tablePriority
+						 isPlayerBoard:(BOOL)isPlayerBoard
+								   moc:(NSManagedObjectContext *)moc {
 	WBLeaderBoard *board = (WBLeaderBoard *)[WBLeaderBoard findFirstRecordWithFormat:@"key = %@ && isPlayerBoard = %@", key, [NSNumber numberWithBool:isPlayerBoard]];
 	if (!board) {
-		board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:tablePriority isPlayerBoard:isPlayerBoard];
+		board = [WBLeaderBoard createLeaderBoardWithName:name key:key tablePriority:tablePriority isPlayerBoard:isPlayerBoard moc:moc];
 	}
 	return board;
 }

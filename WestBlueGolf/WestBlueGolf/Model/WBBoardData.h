@@ -7,7 +7,8 @@
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
 									value:(CGFloat)value
 									 rank:(NSInteger)rank
-									 year:(WBYear *)year;
+									 year:(WBYear *)year
+									  moc:(NSManagedObjectContext *)moc;
 
 - (NSString *)rankString;
 

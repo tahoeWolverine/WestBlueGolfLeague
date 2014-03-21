@@ -165,6 +165,12 @@
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		
+		/*if (!team1 || !team2) {
+			DLog(@"Team not found!");
+		} else {
+			DLog(@"Teams found!");
+		}*/
+		
 		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete moc:moc];
 	}
 

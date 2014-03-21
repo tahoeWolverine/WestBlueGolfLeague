@@ -12,13 +12,14 @@
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
 									value:(CGFloat)value
 									 rank:(NSInteger)rank
-									 year:(WBYear *)year {
+									 year:(WBYear *)year
+									  moc:(NSManagedObjectContext *)moc {
 	if (!entity) {
 		ALog(@"No people sent to boardData contstructor");
 		return nil;
 	}
 	
-	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:[[self class] context]];
+	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	data.valueValue = value;
 	data.rankValue = rank;
 	

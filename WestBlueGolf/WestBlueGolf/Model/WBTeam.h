@@ -28,6 +28,9 @@
 + (WBTeam *)teamWithId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 + (WBTeam *)myTeam;
 
++ (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
+- (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
+
 - (NSInteger)totalPointsForYear:(WBYear *)year;
 - (NSString *)placeString;
 - (NSString *)averagePointsString;
@@ -47,9 +50,6 @@
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
-
-- (NSArray *)findResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
-+ (NSArray *)findAllForYear:(WBYear *)year;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;

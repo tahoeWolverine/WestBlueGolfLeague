@@ -13,7 +13,7 @@
 @implementation WBHandicapManager
 
 - (void)calculateHandicapsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
-	NSArray *players = [WBPlayer findAll];
+	NSArray *players = [WBPlayer findAllForYear:year inContext:moc];
 
 	BOOL isNewestYear = [year isNewestYear];
 	for (WBPlayer *player in players) {
@@ -32,7 +32,7 @@
 	NSInteger scoreIndex = 4;
 	
 	// Add starting handicap 4 times to backfill based on ~2013 rules
-	WBPlayerYearData *data = [player yearDataForYear:year];
+	WBPlayerYearData *data = [player filterYearDataForYear:year];
 	if (!data) {
 		DLog(@"Handicap not calculated for %@ in year %@", player.name, year.value);
 		return;
@@ -44,7 +44,7 @@
 	
 	// Add scores for the season, calculating handicap result by result
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"match.teamMatchup.week.seasonIndex" ascending:YES]];
-	NSArray *playerResults = [WBResult findWithPredicate:[NSPredicate predicateWithFormat:@"player = %@ && match.teamMatchup.week.year = %@", player, year] sortedBy:sorts];
+	NSArray *playerResults = [player filterResultsForYear:year goodData:NO sorts:sorts];
 	for (WBResult *result in playerResults) {
 		result.priorHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 		

@@ -72,6 +72,7 @@
 		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
 		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
 		__block typeof(self) weakSelf = self;
+		DLog(@"Processing Started");
 		//dispatch_async(request_queue, ^{
 			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
 			[newMoc setPersistentStoreCoordinator:psc];
@@ -84,7 +85,7 @@
 			
 			[weakSelf setThisYearValue:[WBYear newestYearInContext:newMoc].valueValue inContext:newMoc];
 			
-			[weakSelf resetYearInContext:newMoc];
+			//[weakSelf resetYearInContext:newMoc];
 			
 			// Save and finish
 			NSError *error = nil;
@@ -94,15 +95,15 @@
 			}
 			
 			//[[NSNotificationCenter defaultCenter] removeObserver:self];
+			
 		//});
-		//dispatch_release(request_queue);
 	}
 }
 
 - (void)mergeChanges:(NSNotification *)notification {
-	//dispatch_async(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		[[[WBCoreDataManager sharedManager] managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
-	//});
+	});
 }
 
 - (void)resetYearInContext:(NSManagedObjectContext *)moc {

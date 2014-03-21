@@ -57,7 +57,7 @@
 }
 
 - (NSInteger)maxSeasonIndex {
-	return [(WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"year = %@", self] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]]] seasonIndexValue];
+	return [[self.weeks sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]]][0] seasonIndexValue];
 }
 
 @end

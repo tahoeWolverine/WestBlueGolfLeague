@@ -123,7 +123,7 @@
 		}
 	}
 	
-	DLog(@"seasonIndex is %ld", (long)seasonIndex);
+	//DLog(@"seasonIndex is %ld", (long)seasonIndex);
 	WBWeek *week = (WBWeek *)[WBWeek findFirstRecordWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:seasonIndex], [WBYear thisYear]];
 	if (week.isBadDataValue) {
 		//TODO: bad data week

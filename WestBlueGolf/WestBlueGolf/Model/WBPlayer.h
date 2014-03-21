@@ -48,17 +48,21 @@
 
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
-- (NSString *)currentHandicapString;
++ (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
+- (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
+- (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData sorts:(NSArray *)sorts;
+- (WBPlayerYearData *)filterYearDataForYear:(WBYear *)year;
+- (WBPlayerYearData *)thisYearData;
 - (NSInteger)startingHandicapInYear:(WBYear *)year;
 - (NSInteger)finishingHandicapInYear:(WBYear *)year;
-- (WBPlayerYearData *)yearDataForYear:(WBYear *)year;
-- (WBPlayerYearData *)thisYearData;
+
+- (NSString *)currentHandicapString;
 
 - (NSArray *)recordForYear:(WBYear *)year;
 - (CGFloat)recordRatioForYear:(WBYear *)year;
 - (NSString *)record;
 
-- (NSInteger)lowRoundForYear:(WBYear *)year;
+- (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSString *)lowRoundString;
 
 - (NSInteger)lowNetForYear:(WBYear *)year;
@@ -81,9 +85,6 @@
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
-
-- (NSArray *)findResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
-+ (NSArray *)findAllForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;
