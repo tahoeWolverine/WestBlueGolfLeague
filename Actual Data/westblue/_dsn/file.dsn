@@ -1,0 +1,13 @@
+------------- file.dsn ------- 
+[ODBC] 
+DRIVER=Microsoft Access Driver (*.mdb) 
+ReadOnly=0 
+UserCommitSync=Yes 
+Threads=3 
+SafeTransactions=0 
+PageTimeout=5 
+MaxScanRows=8 
+MaxBufferSize=512 
+ImplicitCommitSync=Yes 
+FIL=MS Access 
+DriverId=25

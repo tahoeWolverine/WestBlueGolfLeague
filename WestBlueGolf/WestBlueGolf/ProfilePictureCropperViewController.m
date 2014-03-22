@@ -29,9 +29,11 @@
 	[super viewDidLoad];
 	
 	self.imageView.image = self.imageToCrop;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	self.scrollView.minimumZoomScale = 0.45;
 	self.scrollView.maximumZoomScale = 1.5;
 	self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor darkGrayColor];
 	
 	// Add a transparent layer with a cutout hole
 	UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.view.bounds];
@@ -64,8 +66,8 @@
 }
 
 - (IBAction)croppedImage:(id)sender {
-	//NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    //NSString *path = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", self.playerName]];
+	NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *path = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", self.playerName]];
 	
 	// Remove the fill layer
 	[self.fillLayer removeFromSuperlayer];
@@ -80,13 +82,14 @@
 	// Add the fill layer back
 	[self.view.layer addSublayer:self.fillLayer];
 	CGFloat scale = renderedImage.scale;
-	CGRect frame = CGRectMake(self.circleFrame.origin.x * scale, self.circleFrame.origin.y * scale , 100 * scale, 100 * scale);
+    CGFloat side = self.radius * 2;
+	CGRect frame = CGRectMake(self.circleFrame.origin.x * scale, self.circleFrame.origin.y * scale , side * scale, side * scale);
 	CGImageRef imageRef = CGImageCreateWithImageInRect(renderedImage.CGImage, frame);
     UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
 	
     // save the image
-    //NSData *data = UIImagePNGRepresentation(croppedImage);
-    //[data writeToFile:path atomically:YES];
+    NSData *data = UIImagePNGRepresentation(croppedImage);
+    [data writeToFile:path atomically:YES];
 	
 	// Pass to the delegate
 	[self.delegate profilePictureCropperViewController:self croppedImage:croppedImage];
@@ -105,13 +108,9 @@
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
 	CGFloat zoomScale = scrollView.zoomScale;
-	if (zoomScale < 1.0) {
-		CGFloat inset = 120 / zoomScale;
-		inset = floorf(inset);
-		self.scrollView.contentInset = UIEdgeInsetsMake(inset, inset, inset, inset);
-	} else {
-		self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-	}
+    CGFloat inset = 120 / zoomScale;
+    inset = floorf(inset);
+    self.scrollView.contentInset = UIEdgeInsetsMake(inset, inset, inset, inset);
 }
 
 @end
