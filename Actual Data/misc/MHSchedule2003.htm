@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title></title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio.NET 7.0">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<script language="javascript">
+			var printable = false;
+			
+			function fnOnLoad()
+			{
+				// Set the which player's name should be
+				// highlighted by default
+				fnSelect('None');
+			}
+			
+			function fnSelect(sPlayer)
+			{
+				var oButton = window.document.getElementById(sPlayer + 'Button');
+				if (oButton.checked == false)
+					oButton.checked = true;
+				var oSpans = window.document.getElementsByTagName('SPAN');
+				for (var i=0; i<oSpans.length; i++)
+				{
+					 if (oSpans[i].className == "clsNormal" ||
+						oSpans[i].className == "clsSelected" || 
+						oSpans[i].className == "clsSelectedPrintable")
+					 {
+						if (oSpans[i].innerText == sPlayer && printable)
+							oSpans[i].className = "clsSelectedPrintable";
+						else if (oSpans[i].innerText == sPlayer)
+							oSpans[i].className = "clsSelected";
+						else
+							oSpans[i].className = "clsNormal";
+					 }
+				}
+			}
+			
+			function fnMakePrintable()
+			{
+				printable = true;
+				printButton.style.display = "none";
+				selectPlayerRow.style.display = "none";
+				mainTable.borderColor = "black";
+				window.document.body.className = "clsBodyPrintable";
+				var oRows = window.document.getElementsByTagName('tr');
+				for (var i=0; i<oRows.length; i++)
+				{
+					 if (oRows[i].className == "clsHeaderRow")
+						oRows[i].className = "clsHeaderRowPrintable";
+				}
+				var oSpans = window.document.getElementsByTagName('SPAN');
+				for (var i=0; i<oSpans.length; i++)
+				{
+					 if (oSpans[i].className == "clsSelected")
+						oSpans[i].className = "clsSelectedPrintable";
+				}
+			}
+		</script>
+		<style>
+			.clsBody
+			{
+				FONT-FAMILY: Tahoma;
+				FONT-SIZE: 11pt;
+				COLOR: black;
+			}
+			.clsNormal
+			{
+			}
+			.clsSelected
+			{
+				FONT-WEIGHT: bold;
+				COLOR: #d00000;
+			}
+			.clsHeaderRow
+			{
+				FONT-WEIGHT: bold;
+				COLOR: white;
+				BACKGROUND-COLOR: #669999;
+			}
+			.clsPlayerRow
+			{
+			}
+			.clsHeader
+			{
+				FONT-SIZE: 14pt;
+				FONT-WEIGHT: bold;		
+			}
+			.clsFooter
+			{
+				FONT-SIZE: 10pt;
+			}
+			.clsSelectPlayerLabel
+			{
+				FONT-WEIGHT: bolder;
+			}
+			.clsAlternate
+			{
+				FONT-SIZE: 7pt;
+			}
+			.clsButton
+			{
+				FONT-SIZE: 9pt;
+				COLOR: black;
+			}
+			.clsBodyPrintable
+			{
+				FONT-FAMILY: Tahoma;
+				FONT-SIZE: 11pt;
+				COLOR: black;
+			}
+			.clsHeaderRowPrintable
+			{
+				FONT-WEIGHT: bold;
+				COLOR: black;
+				BACKGROUND-COLOR: white;
+			}
+			.clsSelectedPrintable
+			{
+				COLOR: black;
+				FONT-WEIGHT: bold;
+			}
+		</style>
+	</head>
+	<body onload="fnOnLoad()" class="clsBody">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr class="clsHeader" height="30px" valign="top">
+				<td align="center">2003 Golf Schedule</td>
+			</tr>
+			<tr id="selectPlayerRow" height="40px" valign="middle">
+				<td>
+					<span class="clsSelectPlayerLabel">Select player to highlight:</span> <input id="NoneButton" type="radio" name="radioGroup" value="None" onclick="fnSelect('None')">None
+					<input id="JoelButton" type="radio" name="radioGroup" value="Joel" onclick="fnSelect('Joel')">Joel
+					<input id="MattButton" type="radio" name="radioGroup" value="Matt" onclick="fnSelect('Matt')">Matt
+					<input id="DarrenButton" type="radio" name="radioGroup" value="Darren" onclick="fnSelect('Darren')">Darren
+					<input id="LeeButton" type="radio" name="radioGroup" value="Lee" onclick="fnSelect('Lee')">Lee
+					<input id="DougButton" type="radio" name="radioGroup" value="Doug" onclick="fnSelect('Doug')">Doug
+					<input id="JeffButton" type="radio" name="radioGroup" value="Jeff" onclick="fnSelect('Jeff')">Jeff
+					<input id="ChrisButton" type="radio" name="radioGroup" value="Chris" onclick="fnSelect('Chris')">Chris
+				</td>
+			</tr>
+		</table>
+		<table id="mainTable" border="1px" bordercolor="black" cellpadding="0" cellspacing="0" width="100%">
+			<tr height="20px" class="clsHeaderRow">
+				<td width="25%">&nbsp;April 28 - 4:44</td>
+				<td width="25%">&nbsp;May 5 - 5:12</td>
+				<td width="25%">&nbsp;May 12 - 4:30</td>
+				<td width="25%">&nbsp;May 19 - 4:44</td>
+			</tr>
+			<tr height="20px" class="clsPlayerRow">
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Chris</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Chris</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+			</tr>
+			<tr height="20px" class="clsHeaderRow">
+				<td>&nbsp;June 2 - 4:30</td>
+				<td>&nbsp;June 9 - 4:58</td>
+				<td>&nbsp;June 16 - 4:58</td>
+				<td>&nbsp;June 23 - 4:58</td>
+			</tr>
+			<tr height="20px" class="clsPlayerRow">
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Chris</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Joel</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+			</tr>
+			<tr height="20px" class="clsHeaderRow">
+				<td>&nbsp;June 30 - 5:12</td>
+				<td>&nbsp;July 7 - 4:44</td>
+				<td>&nbsp;July 14 - 4:44</td>
+				<td>&nbsp;July 21 - 5:12</td>
+			</tr>
+			<tr height="20px" class="clsPlayerRow">
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Chris</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Chris</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Chris</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+			</tr>
+			<tr height="20px" class="clsHeaderRow">
+				<td>&nbsp;July 28 - 4:30</td>
+				<td>&nbsp;August 4 - 4:58</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr height="20px" class="clsPlayerRow">
+				<td>
+					&nbsp;<span class="clsNormal">Joel</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Darren</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Jeff</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>
+					&nbsp;<span class="clsNormal">Jeff</span><br>
+					&nbsp;<span class="clsNormal">Doug</span><br>
+					&nbsp;<span class="clsNormal">Matt</span><br>
+					&nbsp;<span class="clsNormal">Lee</span><br>
+					&nbsp;<span class="clsNormal">Joel</span><span class="clsAlternate"> (Alternate)</span>
+				</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+		<table class="clsFooter" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr height="30px" valign="middle">
+				<td align="right"><input id="printButton" type="button" onclick="fnMakePrintable()" value="Printable Version" class="clsButton"></td>
+			</tr>
+			<tr height="20px">
+				<td>August 11 - Playoffs</td>
+			</tr>
+			<tr height="20px">
+				<td>August 18 - Playoffs</td>
+			</tr>
+			<tr height="20px">
+				<td>August 25 - Playoffs</td>
+			</tr>
+			<tr height="10px">
+				<td>&nbsp;</td>
+			</tr>
+			<tr height="20px">
+				<td>September 6 - Year End Scramble</td>
+			</tr>
+		</table>
+	</body>
+</html>
