@@ -24,8 +24,7 @@
 
 @implementation ProfilePictureCropperViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	self.imageView.image = self.imageToCrop;
@@ -58,8 +57,7 @@
 	[self.view.layer addSublayer:self.fillLayer];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.scrollView.contentSize = self.imageToCrop.size;
 	self.imageView.frame = CGRectMake(0, 0, self.imageToCrop.size.width, self.imageToCrop.size.height);
@@ -72,7 +70,7 @@
 	// Remove the fill layer
 	[self.fillLayer removeFromSuperlayer];
 	
-	//Clipping the Image
+	// Clipping the Image
 	UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, YES, 0.0);
 	[self.view drawViewHierarchyInRect:self.view.frame afterScreenUpdates:YES];
 	

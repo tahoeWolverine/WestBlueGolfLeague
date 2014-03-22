@@ -12,3 +12,4 @@
 //NSString *const WBYearChangedNotification = @"wb_year_changed";
 NSString *const WBLoadingFinishedNotification = @"wb_loading_finished";
 NSString *const WBYearChangedLoadingFinishedNotification = @"wb_year_changed_loading_finished";
+NSString *const WBProfilePhotoAddedNotification = @"wb_profile_photo_added";
