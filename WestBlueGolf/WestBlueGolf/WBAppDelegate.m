@@ -69,30 +69,32 @@
 	self.yearSelection = year.valueValue;
 	
 	if (!year) {
-		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		//NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
 		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
 		__block typeof(self) weakSelf = self;
 		DLog(@"Processing Started");
 		//dispatch_async(request_queue, ^{
-			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
-			[newMoc setPersistentStoreCoordinator:psc];
+			//NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
+			//[newMoc setPersistentStoreCoordinator:psc];
 			
-			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			//[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
 			
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-			[inputManager createYearsInContext:newMoc];
+			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]]; //newMoc];
+			[WBCoreDataManager saveContext];
 			
-			[weakSelf setThisYearValue:[WBYear newestYearInContext:newMoc].valueValue inContext:newMoc];
+			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 			
 			//[weakSelf resetYearInContext:newMoc];
 			
 			// Save and finish
-			NSError *error = nil;
+			/*NSError *error = nil;
 			BOOL success = [newMoc save:&error];
 			if (!success) {
 				DLog(@"Core data error in background %@", [error localizedDescription]);
-			}
+			}*/
+			
 			
 			//[[NSNotificationCenter defaultCenter] removeObserver:self];
 			
@@ -110,7 +112,25 @@
 	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
 		//self.loading = YES;
-		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
+		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
+		__block typeof(self) weakSelf = self;
+		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		
+		DLog(@"Processing Started");
+		//dispatch_async(request_queue, ^{
+			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
+			[newMoc setPersistentStoreCoordinator:psc];
+			
+			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			
+			[self loadAndCalculateForYear:newYear.valueValue moc:moc];
+			
+			NSError *error = nil;
+			BOOL success = [newMoc save:&error];
+			if (!success) {
+				DLog(@"Core data error in background %@", [error localizedDescription]);
+			}
+		//});
 		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}
 

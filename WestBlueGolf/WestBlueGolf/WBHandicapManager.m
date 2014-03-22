@@ -55,6 +55,7 @@
 	}
 	
 	if (isNewestYear) {
+		// This might need to change to support players that aren't playing this year; what's their current handicap?
 		player.currentHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 	}
 

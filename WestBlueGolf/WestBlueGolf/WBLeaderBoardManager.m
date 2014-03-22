@@ -89,7 +89,7 @@
 	}];
 
 	[self calculatePlayerBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap priority:3 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
-		return (CGFloat)player.currentHandicapValue;
+		return (CGFloat)[player finishingHandicapInYear:year];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints priority:4 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
@@ -210,6 +210,9 @@
 	CGFloat playerCount = 0;
 	NSArray *results = nil;
 	for (WBPlayer *player in players) {
+		if ([player.name isEqualToString:@"Jesse Larson"]) {
+			DLog(@"Jesse");
+		}
 		results = [player filterResultsForYear:year goodData:YES];
 		if (results && results.count > 0) {
 			value = valueCalculation(player);
