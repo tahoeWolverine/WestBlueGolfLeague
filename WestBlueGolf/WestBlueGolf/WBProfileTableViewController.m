@@ -67,6 +67,15 @@
 	self.tableView.delegate = self.dataSource;
 	
 	[self.dataSource beginFetch];
+    
+    self.profileImageView.layer.borderColor = self.view.tintColor.CGColor;
+    self.profileImageView.layer.borderWidth = 4.0f;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.size.width / 2.0f;
+    self.profileImageView.clipsToBounds = YES;
+    
+    // Check if we have the profile image
+    UIImage *profileImage = [self fetchImageForPlayer:self.selectedPlayer];
+    self.profileImageView.image = profileImage ? profileImage : nil; // or set default
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -223,7 +232,7 @@
 		ProfilePictureCropperViewController *ppcvc = segue.destinationViewController;
 		ppcvc.delegate = self;
 		ppcvc.imageToCrop = self.imageSelectedToCrop;
-		ppcvc.radius = (int)(self.profileImageView.bounds.size.width / 2.0f);
+		ppcvc.radius = (int)(self.profileImageView.bounds.size.width);
 		ppcvc.playerName = self.selectedPlayer.name;
 		self.imageSelectedToCrop = nil;
 	}
@@ -234,11 +243,18 @@
 - (void)profilePictureCropperViewController:(ProfilePictureCropperViewController *)controller croppedImage:(UIImage *)croppedImage {
 	if (croppedImage) {
 		self.profileImageView.image = croppedImage;
-		
-		// Do we want to save the image in Core Data? POST to webservice?
 	}
 	
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Profile Image Fetching
+
+- (UIImage *)fetchImageForPlayer:(WBPlayer *)player {
+    NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *getImagePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", player.name]];
+    UIImage *image = [UIImage imageWithContentsOfFile:getImagePath];
+    return image;
 }
 
 @end
