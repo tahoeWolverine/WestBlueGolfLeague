@@ -174,3 +174,5 @@ WestBlueGolfLeagueWeb/packages
 WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/bin
 WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/obj
 *.suo
+AccessDataMigration/AccessExport/bin
+AccessDataMigration/AccessExport/obj
