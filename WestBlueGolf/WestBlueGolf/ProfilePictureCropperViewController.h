@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Adam Ahrens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class ProfilePictureCropperViewController;
 
 @protocol ProfilePictureCropperViewControllerDelegate <NSObject>

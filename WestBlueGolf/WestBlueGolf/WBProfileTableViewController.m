@@ -48,8 +48,22 @@
 												 selector:@selector(hideLoadingView)
 													 name:WBLoadingFinishedNotification
 												   object:nil];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(photoAdded:)
+													 name:WBProfilePhotoAddedNotification
+												   object:nil];
 	}
 	return self;
+}
+
+- (void)photoAdded:(NSNotification *)notification {
+	if (notification.object) {
+		WBPlayer *player = (WBPlayer *)notification.object;
+		if ([player.name isEqualToString:self.selectedPlayer.name]) {
+			[self setupProfileImageView];
+		}
+	}
 }
 
 - (void)dealloc {
@@ -67,15 +81,6 @@
 	self.tableView.delegate = self.dataSource;
 	
 	[self.dataSource beginFetch];
-    
-    self.profileImageView.layer.borderColor = self.view.tintColor.CGColor;
-    self.profileImageView.layer.borderWidth = 4.0f;
-    self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.size.width / 2.0f;
-    self.profileImageView.clipsToBounds = YES;
-    
-    // Check if we have the profile image
-    UIImage *profileImage = [self fetchImageForPlayer:self.selectedPlayer];
-    self.profileImageView.image = profileImage ? profileImage : nil; // or set default
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,6 +94,17 @@
 	} else {
 		[self hideLoadingView];
 	}
+}
+
+- (void)setupProfileImageView {
+	self.profileImageView.layer.borderColor = self.view.tintColor.CGColor;
+    self.profileImageView.layer.borderWidth = 4.0f;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.size.width / 2.0f;
+    self.profileImageView.clipsToBounds = YES;
+    
+    // Check if we have the profile image
+    UIImage *profileImage = [self fetchImageForPlayer:self.selectedPlayer];
+    self.profileImageView.image = profileImage ? profileImage : nil; // or set default
 }
 
 - (WBPlayer *)selectedPlayer {
@@ -133,6 +149,9 @@
 	}
 
 	self.navigationItem.title = self.selectedPlayer.name ?: @"Find Yourself in Players";
+	
+	// Refresh profile image
+	[self setupProfileImageView];
 }
 
 - (void)refreshFavoriteButton {
@@ -181,8 +200,13 @@
 #pragma mark - WBEntityDetailViewController methods to implement
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if ([alertView.title isEqualToString:@"No Player"]) {
+		return;
+	}
+	
 	if (buttonIndex > 0) {
 		[self.selectedPlayer setPlayerToNotMe];
+		
 		[WBCoreDataManager saveContext];
 	
 		self.selectedPlayer = nil;
@@ -195,6 +219,20 @@
 #pragma mark - IBAction Methods
 
 - (IBAction)tappedProfileImage:(UITapGestureRecognizer *)sender {
+	if (!self.selectedPlayer || [self.selectedPlayer.name isEqualToString:@""]) {
+		UIAlertView *noPlayerAlert = [[UIAlertView alloc] initWithTitle:@"No Player"
+																message:@"You can only add a profile photo once you've selected yourself from the players list"
+															   delegate:self
+													  cancelButtonTitle:@"Ok"
+													  otherButtonTitles:nil];
+		[noPlayerAlert show];
+		return;
+	}
+	
+	if (![self isMeTab]) {
+		return;
+	}
+	
 	// Display Action Sheet for selecting source of image
 	UIActionSheet *imagePickerActionSheet = [[UIActionSheet alloc] initWithTitle:@"Profile Picture Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Library", @"Camera", nil];
 	[imagePickerActionSheet showInView:self.view];
@@ -227,6 +265,10 @@
 
 #pragma mark - Segue
 
+/*- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+	return YES;
+}*/
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"ProfilePictureCropperSegue"]) {
 		ProfilePictureCropperViewController *ppcvc = segue.destinationViewController;
@@ -245,6 +287,9 @@
 		self.profileImageView.image = croppedImage;
 	}
 	
+	// Notify all other VCs that a photo has been taken, so they can update
+	[[NSNotificationCenter defaultCenter] postNotificationName:WBProfilePhotoAddedNotification object:self.selectedPlayer];
+	
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -254,6 +299,9 @@
     NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *getImagePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", player.name]];
     UIImage *image = [UIImage imageWithContentsOfFile:getImagePath];
+	if (!image) {
+		image = [UIImage imageNamed:@"UITabBarContactsTemplate"];
+	}
     return image;
 }
 
