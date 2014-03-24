@@ -103,7 +103,7 @@
 
 - (void)setupProfileImageView {
 	self.profileImageView.layer.borderColor = self.view.tintColor.CGColor;
-    self.profileImageView.layer.borderWidth = 4.0f;
+    self.profileImageView.layer.borderWidth = 2.0f;
     self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.size.width / 2.0f;
     self.profileImageView.clipsToBounds = YES;
     
