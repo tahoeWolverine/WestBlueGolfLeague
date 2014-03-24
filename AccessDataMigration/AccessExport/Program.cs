@@ -197,10 +197,18 @@ namespace AccessExport
                             }
                         }
 
-                        cmd.CommandText = "SELECT * FROM ResultsTable";
                         //
                         //  TODO: Results table
                         //
+                        cmd.CommandText = "SELECT * FROM ResultsTable";
+                        using (var resultsReader = cmd.ExecuteReader())
+                        {
+                            while (resultsReader.Read())
+                            {
+
+                            }
+                        }
+
 
                         connection.Close();
                     }
