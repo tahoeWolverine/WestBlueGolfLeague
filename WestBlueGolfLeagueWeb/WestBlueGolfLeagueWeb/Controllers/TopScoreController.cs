@@ -15,7 +15,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         // GET: /TopScore/
         public ActionResult Index()
         {
-            var players = context.Players;
+            var players = context.Players.Where(x => x.Week0Score == 10);
 
             return View(players.ToList());
         }
