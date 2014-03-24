@@ -50,7 +50,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self setupCoreData:NO];
+	//[self setupCoreData:NO];
 	
 	[self subscribeToNotifications];
 	
@@ -82,7 +82,7 @@
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]]; //newMoc];
-			[WBCoreDataManager saveContext];
+			[WBCoreDataManager saveMainContext];
 			
 			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 			
@@ -111,7 +111,7 @@
 - (void)resetYearInContext:(NSManagedObjectContext *)moc {
 	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
-		//self.loading = YES;
+		self.loading = YES;
 		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
 		__block typeof(self) weakSelf = self;
 		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
@@ -125,11 +125,9 @@
 			
 			[self loadAndCalculateForYear:newYear.valueValue moc:moc];
 			
-			NSError *error = nil;
-			BOOL success = [newMoc save:&error];
-			if (!success) {
-				DLog(@"Core data error in background %@", [error localizedDescription]);
-			}
+			[WBCoreDataManager saveContext:moc];
+			
+			[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 		//});
 		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}

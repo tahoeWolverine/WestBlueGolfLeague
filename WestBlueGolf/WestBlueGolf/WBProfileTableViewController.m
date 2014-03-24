@@ -81,6 +81,11 @@
 	self.tableView.delegate = self.dataSource;
 	
 	[self.dataSource beginFetch];
+	
+	// Try to pull the first data for the app
+	if ([self isMeTab] && ![WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]]) {
+		[(WBAppDelegate *)[UIApplication sharedApplication].delegate setupCoreData:YES];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,7 +109,14 @@
     
     // Check if we have the profile image
     UIImage *profileImage = [self fetchImageForPlayer:self.selectedPlayer];
-    self.profileImageView.image = profileImage ? profileImage : nil; // or set default
+	if (profileImage) {
+		self.profileImageView.image = profileImage;
+	} else {
+		UIImage *contacts = [UIImage imageNamed:@"UITabBarContactsTemplate"];
+		UIImage *defaultImage = [contacts imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		self.profileImageView.image = defaultImage;
+		[self.profileImageView setTintColor:kEmeraldColor];
+	}
 }
 
 - (WBPlayer *)selectedPlayer {
@@ -187,7 +199,7 @@
 		WBPlayer *me = [WBPlayer me];
 		if (!me) {
 			[self.selectedPlayer setPlayerToMe];
-			[WBCoreDataManager saveContext];
+			[WBCoreDataManager saveMainContext];
 			[(WBAppDelegate *)[UIApplication sharedApplication].delegate setProfileTabPlayer];
 		} else {
 			self.selectedPlayer.favoriteValue = !self.selectedPlayer.favoriteValue;
@@ -207,7 +219,7 @@
 	if (buttonIndex > 0) {
 		[self.selectedPlayer setPlayerToNotMe];
 		
-		[WBCoreDataManager saveContext];
+		[WBCoreDataManager saveMainContext];
 	
 		self.selectedPlayer = nil;
 	
@@ -298,11 +310,7 @@
 - (UIImage *)fetchImageForPlayer:(WBPlayer *)player {
     NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *getImagePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", player.name]];
-    UIImage *image = [UIImage imageWithContentsOfFile:getImagePath];
-	if (!image) {
-		image = [UIImage imageNamed:@"UITabBarContactsTemplate"];
-	}
-    return image;
+    return [UIImage imageWithContentsOfFile:getImagePath];
 }
 
 @end

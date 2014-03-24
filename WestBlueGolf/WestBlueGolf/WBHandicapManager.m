@@ -20,11 +20,7 @@
 		[self calculateHandicapsForPlayer:player year:year isNewestYear:isNewestYear];
 	}
 	
-	NSError *error = nil;
-	[moc save:&error];
-	if (error) {
-		[WBCoreDataManager logError:error];
-	}
+	[WBCoreDataManager saveContext:moc];
 }
 
 - (void)calculateHandicapsForPlayer:(WBPlayer *)player year:(WBYear *)year isNewestYear:(BOOL)isNewestYear {

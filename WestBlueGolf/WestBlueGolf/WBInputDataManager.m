@@ -61,11 +61,7 @@
 	
 	[noTeam deleteEntityInContext:moc];
 	//[WBCoreDataManager saveContext];
-	NSError *error = nil;
-	[moc save:&error];
-	if (error) {
-		[WBCoreDataManager logError:error];
-	}
+	[WBCoreDataManager saveContext:moc];
 }
 
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue fromContext:(NSManagedObjectContext *)moc {
@@ -97,6 +93,9 @@
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
 	}
 	
+	
+	[WBCoreDataManager saveContext:moc];
+	
 	// team table
 	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable" year:year]];
 	NSString *teamName = nil;
@@ -106,6 +105,9 @@
 		teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
 		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
 	}
+	
+	
+	[WBCoreDataManager saveContext:moc];
 	
 	// password/user table
 	/*NSArray *captainArray = [self jsonFromData:[self fileDataForFilename:@"passwordTable"]];
@@ -141,6 +143,9 @@
 	
 	// Create a player to catch all the no shows (ends up being conditional too)
 	[WBPlayer createNoShowPlayerInContext:moc];
+	
+	
+	[WBCoreDataManager saveContext:moc];
 	
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];
@@ -228,11 +233,7 @@
 	[noTeam deleteEntityInContext:moc];
 	
 	//[WBCoreDataManager saveContext];
-	NSError *error = nil;
-	[moc save:&error];
-	if (error) {
-		[WBCoreDataManager logError:error];
-	}
+	[WBCoreDataManager saveContext:moc];
 }
 
 #pragma mark - Helper functions

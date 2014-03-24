@@ -154,11 +154,7 @@
 	// Triple Crown: Avg Points, Avg Net Score, Improved
 	
 	//[WBCoreDataManager saveContext];
-	NSError *error = nil;
-	[moc save:&error];
-	if (error) {
-		[WBCoreDataManager logError:error];
-	}
+	[WBCoreDataManager saveContext:moc];
 }
 
 #pragma mark - Team Boards

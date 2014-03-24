@@ -156,6 +156,7 @@
 }
 
 - (NSString *)currentHandicapString {
+	TRAssert(self.managedObjectContext, @"No mananged object context in currentHandicapString");
 	NSInteger handi = self.currentHandicapValue;
 	WBYear *thisYear = [WBYear thisYear];
 	WBYear *newestYear = [WBYear newestYearInContext:self.managedObjectContext];

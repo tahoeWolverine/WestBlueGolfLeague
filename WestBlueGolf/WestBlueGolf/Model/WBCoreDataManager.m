@@ -112,11 +112,19 @@
 	_managedObjectContext = nil;
 }
 
-+ (void)saveContext {
++ (void)saveMainContext {
 	NSError *error = nil;
 	[[[self sharedManager] managedObjectContext] save:&error];
 	if (error) {
 		[self logError:error];
+	}
+}
+
++ (void)saveContext:(NSManagedObjectContext *)moc {
+	NSError *error = nil;
+	[moc save:&error];
+	if (error) {
+		[WBCoreDataManager logError:error];
 	}
 }
 

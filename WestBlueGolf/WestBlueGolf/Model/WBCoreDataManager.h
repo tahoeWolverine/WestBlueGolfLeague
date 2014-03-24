@@ -10,7 +10,8 @@
 
 + (id)sharedManager;
 + (void)logError:(NSError *)error;
-+ (void)saveContext;
++ (void)saveMainContext;
++ (void)saveContext:(NSManagedObjectContext *)moc;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)resetCoreDataStack;
