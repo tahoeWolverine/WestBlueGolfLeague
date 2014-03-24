@@ -33,7 +33,7 @@
 	if ([self.peopleEntity isLeagueAverage]) {
 		return @"";
 	}
-	return [NSString stringWithFormat:@"#%@", self.rank];
+	return [NSString stringWithFormat:@"%@", self.rank];
 }
 
 + (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity {

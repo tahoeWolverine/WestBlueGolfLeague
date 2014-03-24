@@ -54,6 +54,10 @@
 	
 	[self subscribeToNotifications];
 	
+	// Setup year (could be preference of some kind, but for now, newest)
+	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	self.yearSelection = year.valueValue;
+	
 	// Fix iOS7.1 tint issue
 	[self.window setTintColor:kEmeraldColor];
 
