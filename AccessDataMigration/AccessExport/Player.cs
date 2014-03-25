@@ -12,5 +12,6 @@ namespace AccessExport
         public Team Team { get; set; }
         public string Name { get; set; }
         public int CurrentHandicap { get; set; }
+        public bool ValidPlayer { get; set; }
     }
 }

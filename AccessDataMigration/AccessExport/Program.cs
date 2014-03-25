@@ -9,6 +9,21 @@ namespace AccessExport
 {
     class Program
     {
+        private static Player GetProperInvalidPlayer(string playerName, Player noShow, Player nonLeague)
+        {
+            if (playerName.ToLowerInvariant().Contains("xx") || playerName.ToLowerInvariant().Contains("no show"))
+            {
+                return noShow;
+            }
+
+            if (playerName.ToLowerInvariant().Contains("non-league sub"))
+            {
+                return nonLeague;
+            }
+
+            return null;
+        }
+
         static void Main(string[] args)
         {
             // 99 - 08
@@ -25,7 +40,10 @@ namespace AccessExport
                 weekIndex = 1,
                 yearIndex = 1,
                 yearDataIndex = 1,
-                teamMatchupIndex = 1;
+                teamMatchupIndex = 1,
+                playerIndex = 1,
+                matchupIndex = 1,
+                resultIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
             Dictionary<int, Week> weekNewIndexToWeek = new Dictionary<int, Week>();
@@ -33,6 +51,16 @@ namespace AccessExport
             Dictionary<int, Year> yearIdToYear = new Dictionary<int, Year>();
             Dictionary<int, Year> yearValueToYear = new Dictionary<int, Year>();
             Dictionary<int, TeamMatchup> teamMatchupIdMatchup = new Dictionary<int, TeamMatchup>();
+            ICollection<MatchUp> allMatchUps = new List<MatchUp>();
+            ICollection<Result> allResults = new List<Result>();
+
+            // Add fake team and fake players (these will be used later)
+            var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
+
+            var noShowPlayer = new Player { Name = "No Show", CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = false, Team = teamOfLostPlayers };
+            namesToPlayers[noShowPlayer.Name] = noShowPlayer;
+            var nonLeagueSub = new Player { Name = "Non-League Sub", CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = false, Team = teamOfLostPlayers };
+            namesToPlayers[nonLeagueSub.Name] = nonLeagueSub;
 
             for (int year = 1999; year < lastYear; year++)
             {
@@ -106,16 +134,26 @@ namespace AccessExport
                                 var teamId = teamReader.GetInt32(0);
                                 var teamName = teamReader.GetString(1);
 
+                                if (string.Equals(teamName, "Mentally Handicapped", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    teamName = "Golf Gods";
+                                }
+
                                 Team team = null;
 
                                 if (!teamNameToTeam.TryGetValue(teamName, out team))
                                 {
-                                    team = new Team() { Name = teamName, Id = teamIndex++ };
+                                    team = new Team() { Name = teamName, Id = teamIndex++, ValidTeam = true };
                                     teamNameToTeam.Add(teamName, team);
                                 }
 
                                 teamIdToTeam.Add(teamId, team);
                             }
+                        }
+                        // Add our dummy team :\
+                        if (!teamIdToTeam.ContainsKey(0) && !teamIdToTeam.ContainsKey(99))
+                        {
+                            teamIdToTeam[0] = teamIdToTeam[99] = teamOfLostPlayers;
                         }
                         
                         // Players
@@ -130,7 +168,7 @@ namespace AccessExport
                                 Player player = null;
                                 if (!namesToPlayers.TryGetValue(playerName, out player))
                                 {
-                                    player = new Player { Name = playerName, CurrentHandicap = 0 };
+                                    player = new Player { Name = playerName, CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = true };
                                     namesToPlayers[playerName] = player;
                                     setOfPlayers.Add(playerName);
                                 }
@@ -143,27 +181,7 @@ namespace AccessExport
                             }
                         }
 
-                        // Results
-                        cmd.CommandText = "SELECT * FROM ResultsTable";
-                        using (var resultsTableReader = cmd.ExecuteReader())
-                        {
-                            while (resultsTableReader.Read())
-                            {
-                                var player1 = resultsTableReader.GetString(2);
-                                var player2 = resultsTableReader.GetString(6);
-
-                                if (!setOfPlayers.Contains(player1))
-                                {
-                                    Console.WriteLine("player missing: " + player1);
-                                }
-
-                                if (!setOfPlayers.Contains(player2))
-                                {
-                                    Console.WriteLine("player missing: " + player2);
-                                }
-                            }
-                        }
-
+                        // Matches
                         cmd.CommandText = "SELECT * FROM MatchTable";
                         using (var matchReader = cmd.ExecuteReader())
                         {
@@ -188,27 +206,122 @@ namespace AccessExport
                                 int team1Id = typeof(string) == team1IdType ? Convert.ToInt32(matchReader.GetString(3)) : matchReader.GetInt32(3);
                                 int team2Id = typeof(string) == team2IdType ? Convert.ToInt32(matchReader.GetString(4)) : matchReader.GetInt32(4);
 
-                                // TODO: What to do with this? Some values are DBNull in the database
-                                // Are null entries equalivalent of "false"?
-                                // string matchComplete = matchReader.GetString(0); 
+                                // TODO/NOTE: Treating null as "false".  Change if it should be treated as true.
+                                bool matchComplete = matchReader[0].GetType() == DBNull.Value.GetType() || string.Equals(matchReader.GetString(0), "N", StringComparison.OrdinalIgnoreCase) ? false : true; 
 
-                                var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = true, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id] };
+                                var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id] };
                                 teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                             }
                         }
 
-                        //
-                        //  TODO: Results table
-                        //
+                        // Results
                         cmd.CommandText = "SELECT * FROM ResultsTable";
                         using (var resultsReader = cmd.ExecuteReader())
                         {
                             while (resultsReader.Read())
                             {
+                                var weekId = resultsReader.GetInt32(0);
+                                var team1Id = resultsReader.GetInt32(1);
+                                var score1 = resultsReader.GetInt32(3);
+                                var points1 = resultsReader.GetInt32(4);
+                                var team2Id = resultsReader.GetInt32(5);
+                                var score2 = resultsReader.GetInt32(7);
+                                var points2 = resultsReader.GetInt32(8);
+                                var player1Name = resultsReader.GetString(2);
+                                var player2Name = resultsReader.GetString(6);
 
+                                // TODO: Can we throw this out?  It doesn't seem to make sense
+                                if (team1Id == team2Id)
+                                {
+                                    //Console.WriteLine("bad datas in results");
+                                    continue;
+                                }
+
+                                Player player1 = null;
+                                Player player2 = null;
+
+                                if (!setOfPlayers.Contains(player1Name))
+                                {
+                                    Console.WriteLine("player missing: " + player1Name);
+                                }
+
+                                if (!setOfPlayers.Contains(player2Name))
+                                {
+                                    Console.WriteLine("player missing: " + player2Name);
+                                }
+
+                                if (!namesToPlayers.TryGetValue(player1Name, out player1)) 
+                                {
+                                    var invalidPlayer = GetProperInvalidPlayer(player1Name, noShowPlayer, nonLeagueSub);
+
+                                    // this is a special 2011
+                                    if (invalidPlayer == null)
+                                    {
+                                        if (year != 2011)
+                                        {
+                                            throw new InvalidOperationException("invalid player found in year not 2011: " + player1Name);
+                                        }
+
+                                        invalidPlayer = new Player { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                    }
+
+                                    player1 = invalidPlayer;
+                                }
+
+                                if (!namesToPlayers.TryGetValue(player2Name, out player2))
+                                {
+                                    var invalidPlayer = GetProperInvalidPlayer(player2Name, noShowPlayer, nonLeagueSub);
+
+                                    // this is a special 2011
+                                    if (invalidPlayer == null)
+                                    {
+                                        if (year != 2011)
+                                        {
+                                            throw new InvalidOperationException("invalid player found in year not 2011: " + player2Name);
+                                        }
+
+                                        invalidPlayer = new Player { Name = player2Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                    }
+
+                                    player2 = invalidPlayer;
+                                }
+
+                                // okay, now that we have valid players, continue on.
+                                Team team1 = teamIdToTeam[team1Id];
+
+                                if (!teamIdToTeam.ContainsKey(team2Id))
+                                {
+                                    Console.WriteLine("Where is dis team: " + team2Id);
+                                }
+
+                                Team team2 = teamIdToTeam[team2Id];
+                                Week week = weekTempIdToWeek[weekId];
+
+                                // Team matchups should be unique based on team ID and week ID for a year.
+                                var teamMatchups = teamMatchupIdMatchup.Values.Where(t => (t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) && t.Week.TempId == weekId);
+
+                                if (weekId == 0)
+                                {
+                                    Console.WriteLine("could not find matchup.");
+                                    continue;
+                                }
+                                else if (teamMatchups.Count() == 0)
+                                {
+                                    throw new InvalidOperationException("Should've found a team matchup... " + Convert.ToString(team1Id) + " " + Convert.ToString(weekId));
+                                }
+
+                                var teamMatchup = teamMatchups.First();
+
+                                MatchUp matchup = new MatchUp { Id = matchupIndex++, TeamMatchup = teamMatchup, Player1 = player1, Player2 = player2 };
+                                allMatchUps.Add(matchup);
+
+                                Result player1Result = new Result { Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
+                                allResults.Add(player1Result);
+
+                                Result player2Result = new Result { Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
+                                allResults.Add(player2Result);
                             }
                         }
-
 
                         connection.Close();
                     }

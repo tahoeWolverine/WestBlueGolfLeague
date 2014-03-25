@@ -10,5 +10,7 @@ namespace AccessExport
     {
         public string Name { get; set; }
         public int Id { get; set; }
+
+        public bool ValidTeam { get; set; }
     }
 }

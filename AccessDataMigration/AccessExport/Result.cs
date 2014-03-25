@@ -12,5 +12,6 @@ namespace AccessExport
         public int Points { get; set; }
         public MatchUp Matchup { get; set; }
         public int Id { get; set; }
+        public Player Player { get; set; }
     }
 }
