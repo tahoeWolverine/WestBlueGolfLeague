@@ -41,17 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Course.cs" />
-    <Compile Include="MatchUp.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\MatchUp.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="MySqlGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Result.cs" />
-    <Compile Include="Team.cs" />
-    <Compile Include="TeamMatchup.cs" />
-    <Compile Include="Week.cs" />
-    <Compile Include="Year.cs" />
-    <Compile Include="YearData.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\Team.cs" />
+    <Compile Include="Entities\TeamMatchup.cs" />
+    <Compile Include="Entities\Week.cs" />
+    <Compile Include="Entities\Year.cs" />
+    <Compile Include="Entities\YearData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
