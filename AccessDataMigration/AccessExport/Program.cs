@@ -101,7 +101,7 @@ namespace AccessExport
 
                                 if (year < 2009)
                                 {
-                                    courseName = "UNKNOWN";
+                                    courseName = Convert.ToString(year) + " Course";
                                 }
                                 else
                                 {
@@ -164,11 +164,27 @@ namespace AccessExport
                             {
                                 string playerName = reader.GetString(0);
                                 int playersTeam = reader.GetInt32(1);
+                                int startingHandicap = 0;
+                                bool isRookie = false;
+
+                                // If the year is before 2009, we'll update the handicaps later
+                                if (year >= 2009)
+                                {
+                                    int week0Score = reader.GetInt32(2);
+                                    startingHandicap = week0Score - 36;
+                                }
+
+                                // If we have player status, then set the rookie value based on status.  
+                                // Otherwise, everyone is assumed a veteran.
+                                if (year >= 2011) {
+                                    var status = reader.GetString(3);
+                                    isRookie = string.Equals(status, "new", StringComparison.OrdinalIgnoreCase) ? true : false;
+                                }
 
                                 Player player = null;
                                 if (!namesToPlayers.TryGetValue(playerName, out player))
                                 {
-                                    player = new Player { Name = playerName, CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = true };
+                                    player = new Player { Name = playerName, CurrentHandicap = startingHandicap, Id = playerIndex++, ValidPlayer = true };
                                     namesToPlayers[playerName] = player;
                                     setOfPlayers.Add(playerName);
                                 }
@@ -177,7 +193,7 @@ namespace AccessExport
                                 // the last team associated with the player will be their current team.
                                 player.Team = teamIdToTeam[playersTeam];
 
-                                YearData yearData = new YearData { Player = player, Rookie = false, StartingHandicap = 0, FinishingHandicap = 0, Year = yearValueToYear[year], Id = yearDataIndex++ };
+                                YearData yearData = new YearData { Player = player, Rookie = isRookie, StartingHandicap = startingHandicap, FinishingHandicap = startingHandicap, Year = yearValueToYear[year], Id = yearDataIndex++ };
                             }
                         }
 

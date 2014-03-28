@@ -8,5 +8,9 @@ namespace AccessExport
 {
     class MySqlGenerator
     {
+        public string Generate(DataModel dataModel)
+        {
+            return string.Empty;
+        }
     }
 }
