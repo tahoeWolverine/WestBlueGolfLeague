@@ -24,7 +24,7 @@ namespace AccessExport
             return null;
         }
 
-        static void Main(string[] args)
+        private static DataModel CreateDataModel()
         {
             // 99 - 08
             // 09 - 11 - added week 0 score to players, added course name to week
@@ -53,6 +53,7 @@ namespace AccessExport
             Dictionary<int, TeamMatchup> teamMatchupIdMatchup = new Dictionary<int, TeamMatchup>();
             ICollection<MatchUp> allMatchUps = new List<MatchUp>();
             ICollection<Result> allResults = new List<Result>();
+            ICollection<YearData> yearDatas = new List<YearData>();
 
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
@@ -194,6 +195,7 @@ namespace AccessExport
                                 player.Team = teamIdToTeam[playersTeam];
 
                                 YearData yearData = new YearData { Player = player, Rookie = isRookie, StartingHandicap = startingHandicap, FinishingHandicap = startingHandicap, Year = yearValueToYear[year], Id = yearDataIndex++ };
+                                yearDatas.Add(yearData);
                             }
                         }
 
@@ -278,6 +280,7 @@ namespace AccessExport
                                             throw new InvalidOperationException("invalid player found in year not 2011: " + player1Name);
                                         }
 
+                                        // TODO: AGerber - Index these players/track them.  Currently they are not being added to the DB.  This nees to happennnn
                                         invalidPlayer = new Player { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
                                     }
 
@@ -341,12 +344,37 @@ namespace AccessExport
 
                         connection.Close();
                     }
+
+
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message + "\r\n" + e.StackTrace);
+                    throw new Exception("wat", e);
                 }
             }
+
+            return new DataModel
+            {
+                Teams = new List<Team>(teamNameToTeam.Values) { teamOfLostPlayers },
+                Years = yearValueToYear.Values,
+                Players = new List<Player>(namesToPlayers.Values),
+                MatchUp = allMatchUps,
+                TeamMatchup = teamMatchupIdMatchup.Values,
+                Weeks = weekNewIndexToWeek.Values,
+                YearDatas = yearDatas,
+                Results = allResults,
+                Courses = courseNameToCourse.Values,
+            };
+        }
+
+        static void Main(string[] args)
+        {
+            var dataModel = CreateDataModel();
+
+            var mysqlGenerator = new MySqlGenerator();
+
+            Console.WriteLine(mysqlGenerator.Generate(dataModel));
         }
     }
 }

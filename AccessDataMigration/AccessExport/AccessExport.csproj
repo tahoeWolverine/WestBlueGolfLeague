@@ -43,8 +43,11 @@
   <ItemGroup>
     <Compile Include="DataModel.cs" />
     <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\LeaderBoard.cs" />
+    <Compile Include="Entities\LeaderBoardData.cs" />
     <Compile Include="Entities\MatchUp.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="FluentMySqlInsert.cs" />
     <Compile Include="MySqlGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
