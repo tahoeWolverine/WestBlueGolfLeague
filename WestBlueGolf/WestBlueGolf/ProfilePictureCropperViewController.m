@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIView *cutoutView;
 
 @property (nonatomic) CGRect circleFrame;
 @property (nonatomic) CGFloat circleRadius;
@@ -54,7 +55,7 @@
 	self.fillLayer.fillRule = kCAFillRuleEvenOdd;
 	self.fillLayer.fillColor = [UIColor blackColor].CGColor;
 	self.fillLayer.opacity = 0.75;
-	[self.view.layer addSublayer:self.fillLayer];
+	[self.cutoutView.layer addSublayer:self.fillLayer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

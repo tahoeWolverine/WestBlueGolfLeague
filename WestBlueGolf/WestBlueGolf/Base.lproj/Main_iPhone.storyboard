@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -765,6 +765,11 @@
                                     </imageView>
                                 </subviews>
                             </scrollView>
+                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bA7-Fd-wHp" userLabel="CircleCutout">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7v-zL-JoW">
                                 <rect key="frame" x="20" y="20" width="80" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -792,11 +797,16 @@
                         <constraints>
                             <constraint firstItem="3qz-77-0O7" firstAttribute="top" secondItem="GrD-Vk-1TE" secondAttribute="bottom" id="AAe-fs-psV"/>
                             <constraint firstItem="e7v-zL-JoW" firstAttribute="leading" secondItem="ORM-Uh-TD1" secondAttribute="leading" constant="20" id="F51-uh-bLo"/>
+                            <constraint firstItem="bA7-Fd-wHp" firstAttribute="leading" secondItem="ORM-Uh-TD1" secondAttribute="leading" id="GyC-30-Ntn"/>
+                            <constraint firstAttribute="trailing" secondItem="bA7-Fd-wHp" secondAttribute="trailing" id="LWC-Lr-X2B"/>
+                            <constraint firstItem="Wso-hu-MNM" firstAttribute="top" secondItem="bA7-Fd-wHp" secondAttribute="bottom" id="YBp-Uf-WZp"/>
+                            <constraint firstItem="bA7-Fd-wHp" firstAttribute="top" secondItem="ORM-Uh-TD1" secondAttribute="top" id="ZB2-xU-SAZ"/>
                             <constraint firstAttribute="trailing" secondItem="3qz-77-0O7" secondAttribute="trailing" constant="20" id="eWs-dM-zQO"/>
                             <constraint firstItem="e7v-zL-JoW" firstAttribute="top" secondItem="GrD-Vk-1TE" secondAttribute="bottom" id="yzF-sd-DsF"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cutoutView" destination="bA7-Fd-wHp" id="Q5I-9R-dRl"/>
                         <outlet property="imageView" destination="xok-hV-mzB" id="v9k-Ih-H7D"/>
                         <outlet property="scrollView" destination="9sH-KF-idq" id="Jca-KX-gi0"/>
                     </connections>
@@ -1161,6 +1171,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDs-2I-fFa"/>
+        <segue reference="cNn-hW-qBo"/>
     </inferredMetricsTieBreakers>
 </document>
