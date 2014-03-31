@@ -7,6 +7,7 @@
 //
 
 #import "WBEntityDataSource.h"
+#import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 
 @interface WBEntityDataSource () {
@@ -32,6 +33,10 @@
 }
 
 - (void)beginFetch {
+	if ([(WBAppDelegate *)[UIApplication sharedApplication].delegate loading]) {
+		return;
+	}
+	
 	NSError *error = nil;
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -64,6 +69,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	if ([(WBAppDelegate *)[UIApplication sharedApplication].delegate loading]) {
+		return 0;
+	}
+	
     NSInteger count = [[self.fetchedResultsController sections] count];
     
 	if (count == 0) {

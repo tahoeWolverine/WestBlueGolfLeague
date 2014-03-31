@@ -71,6 +71,10 @@
 }
 
 - (void)hideLoadingView {
+	[self performSelectorOnMainThread:@selector(hideLoadingViewOnMainThread) withObject:nil waitUntilDone:NO];
+}
+
+- (void)hideLoadingViewOnMainThread {
 	[MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
