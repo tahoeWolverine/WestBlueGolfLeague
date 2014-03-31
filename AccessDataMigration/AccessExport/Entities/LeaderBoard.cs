@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccessExport
+namespace AccessExport.Entities
 {
-    class Player
+    class LeaderBoard
     {
         public int Id { get; set; }
-        public Team Team { get; set; }
         public string Name { get; set; }
-        public int CurrentHandicap { get; set; }
+        public bool IsPlayerBoard { get; set; }
+        public int Priority { get; set; }
+        public string Key { get; set; }
     }
 }

@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class Team
+    class Player
     {
-        public string Name { get; set; }
         public int Id { get; set; }
+        public Team Team { get; set; }
+        public string Name { get; set; }
+        public int CurrentHandicap { get; set; }
+        public bool ValidPlayer { get; set; }
     }
 }

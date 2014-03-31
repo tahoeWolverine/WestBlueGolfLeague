@@ -37,7 +37,9 @@
 
 - (void)setLoading:(BOOL)loading {
 	_loading = loading;
-	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
+	if (!loading) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
+	}
 }
 
 - (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
@@ -52,6 +54,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//[self setupCoreData:NO];
+	self.loading = YES;
 	
 	[self subscribeToNotifications];
 	
