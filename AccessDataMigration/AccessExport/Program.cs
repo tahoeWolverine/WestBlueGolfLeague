@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace AccessExport
             const int lastYear = 2014;
 
             Dictionary<string, Player> namesToPlayers = new Dictionary<string, Player>();
+            ICollection<Player> extraInvalidPlayers = new List<Player>();
             HashSet<string> setOfPlayers = new HashSet<string>();
 
             int teamIndex = 1,
@@ -74,8 +76,8 @@ namespace AccessExport
 
                 string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=..\..\..\..\Actual Data\access_db\golf" + yearStr.Substring(2) + ".mdb";
 
-                try
-                {
+                /*try
+                {*/
                     using (connection = new OdbcConnection(connectionString))
                     {
                         connection.Open();
@@ -194,6 +196,9 @@ namespace AccessExport
                                 // the last team associated with the player will be their current team.
                                 player.Team = teamIdToTeam[playersTeam];
 
+                                // For years after 2009, current handicap will be updated when processing results.
+                                player.CurrentHandicap = startingHandicap;
+
                                 YearData yearData = new YearData { Player = player, Rookie = isRookie, StartingHandicap = startingHandicap, FinishingHandicap = startingHandicap, Year = yearValueToYear[year], Id = yearDataIndex++ };
                                 yearDatas.Add(yearData);
                             }
@@ -280,8 +285,8 @@ namespace AccessExport
                                             throw new InvalidOperationException("invalid player found in year not 2011: " + player1Name);
                                         }
 
-                                        // TODO: AGerber - Index these players/track them.  Currently they are not being added to the DB.  This nees to happennnn
                                         invalidPlayer = new Player { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                        extraInvalidPlayers.Add(invalidPlayer);
                                     }
 
                                     player1 = invalidPlayer;
@@ -300,6 +305,7 @@ namespace AccessExport
                                         }
 
                                         invalidPlayer = new Player { Name = player2Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                        extraInvalidPlayers.Add(invalidPlayer);
                                     }
 
                                     player2 = invalidPlayer;
@@ -321,7 +327,33 @@ namespace AccessExport
 
                                 if (weekId == 0)
                                 {
-                                    Console.WriteLine("could not find matchup.");
+                                    // Take player1 and player2 and set their current handicaps
+
+                                    int player1Handicap = score1 - 36;
+                                    int player2Handicap = score2 - 36;
+                                    
+                                    var player1YearDatas = yearDatas.Where(y => y.Player.Id == player1.Id && y.Year.Value == year);
+                                    var player2YearDatas = yearDatas.Where(y => y.Player.Id == player2.Id && y.Year.Value == year);
+                                   
+                                    // Some folks show up in the results table for week 0 even though they aren't valid 
+                                    // for the year... if that makes sense.  In this case, we'll just throw out the handicap value.
+                                    if (player1.ValidPlayer && team1Id != 99) 
+                                    {
+                                        // current handicap for a player will be overwritten with each year we pass.
+                                        // So, eventually the last year iteration that will be seen will replace the current handicap 
+                                        // with the correct value.
+                                        player1.CurrentHandicap = player1Handicap;
+                                        var player1YearDataForThisYear = player1YearDatas.First();
+                                        player1YearDataForThisYear.StartingHandicap = player1YearDataForThisYear.FinishingHandicap = player1Handicap;
+                                    }
+
+                                    if (player2.ValidPlayer && team2Id != 99) {
+                                        player2.CurrentHandicap = player2Handicap;
+                                        var player2YearDataForThisYear = player2YearDatas.First();
+                                        player2YearDataForThisYear.StartingHandicap = player2YearDataForThisYear.FinishingHandicap = player2Handicap;
+                                    }
+
+                                    // Console.WriteLine("could not find matchup.");
                                     continue;
                                 }
                                 else if (teamMatchups.Count() == 0)
@@ -346,19 +378,19 @@ namespace AccessExport
                     }
 
 
-                }
+                /*}
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message + "\r\n" + e.StackTrace);
                     throw new Exception("wat", e);
-                }
+                }*/
             }
 
             return new DataModel
             {
                 Teams = new List<Team>(teamNameToTeam.Values) { teamOfLostPlayers },
                 Years = yearValueToYear.Values,
-                Players = new List<Player>(namesToPlayers.Values),
+                Players = namesToPlayers.Values.Concat(extraInvalidPlayers).ToList(),
                 MatchUp = allMatchUps,
                 TeamMatchup = teamMatchupIdMatchup.Values,
                 Weeks = weekNewIndexToWeek.Values,

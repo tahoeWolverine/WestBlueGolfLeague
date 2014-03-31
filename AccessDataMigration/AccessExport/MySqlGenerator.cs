@@ -12,6 +12,11 @@ namespace AccessExport
         {
             StringBuilder sb = new StringBuilder();
 
+            // begin our transaction
+            sb.Append("SET autocommit=0;\n");
+            sb.Append("START TRANSACTION;\n");
+            
+
             // Create teams first
             var teamInserts = dataModel.Teams.Select(t => this.GetTeamInsert(t));
             sb.Append(string.Join("\n", teamInserts));
@@ -23,6 +28,8 @@ namespace AccessExport
             sb.Append(string.Join("\n", players));
 
             sb.Append("\n\n\n");
+            sb.Append("COMMIT;\n");
+            
 
             return sb.ToString();
         }
