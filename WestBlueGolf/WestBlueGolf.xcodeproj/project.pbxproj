@@ -94,6 +94,7 @@
 		A53498EA18D1123600D52D84 /* WBTeamProfileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */; };
 		A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */; };
 		A53498F018D20D1B00D52D84 /* WBYearSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */; };
+		A56B7FD118E9EA8600416719 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A56B7FD018E9EA8600416719 /* AFNetworking.framework */; };
 		A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */; };
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
@@ -291,6 +292,7 @@
 		A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionDataSource.m; sourceTree = "<group>"; };
 		A53498EE18D20D1B00D52D84 /* WBYearSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearSelectionViewController.h; sourceTree = "<group>"; };
 		A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionViewController.m; sourceTree = "<group>"; };
+		A56B7FD018E9EA8600416719 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = WestBlueGolf/Frameworks/AFNetworking.framework; sourceTree = "<group>"; };
 		A56F21A718CE0C0900BF5CEE /* WBLeaderBoardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBLeaderBoardManager.h; path = WestBlueGolf/WBLeaderBoardManager.h; sourceTree = SOURCE_ROOT; };
 		A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBLeaderBoardManager.m; path = WestBlueGolf/WBLeaderBoardManager.m; sourceTree = SOURCE_ROOT; };
 		A56F21AA18CE0CFA00BF5CEE /* WBInputDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBInputDataManager.h; path = WestBlueGolf/WBInputDataManager.h; sourceTree = SOURCE_ROOT; };
@@ -370,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */,
+				A56B7FD118E9EA8600416719 /* AFNetworking.framework in Frameworks */,
 				A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */,
 				A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */,
 				A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */,
@@ -741,6 +744,7 @@
 		A5F476E11890769400AB3529 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A56B7FD018E9EA8600416719 /* AFNetworking.framework */,
 				A5F4771D18907E5E00AB3529 /* CoreData.framework */,
 				A5F476E21890769400AB3529 /* Foundation.framework */,
 				A5F476E41890769400AB3529 /* CoreGraphics.framework */,
@@ -1226,6 +1230,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
@@ -1242,6 +1250,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";

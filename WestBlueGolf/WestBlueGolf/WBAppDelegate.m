@@ -7,6 +7,7 @@
 //
 
 #import "WBAppDelegate.h"
+#import "AFNetworking/AFNetworking.h"
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -118,25 +119,48 @@
 		self.loading = YES;
 		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
 		__block typeof(self) weakSelf = self;
-		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		//NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
 		
 		DLog(@"Processing Started");
 		//dispatch_async(request_queue, ^{
-			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
-			[newMoc setPersistentStoreCoordinator:psc];
+			//NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+			//[newMoc setPersistentStoreCoordinator:psc];
 			
-			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			//[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:moc];
 			
-			[self loadAndCalculateForYear:newYear.valueValue moc:moc];
+			[weakSelf loadAndCalculateForYear:newYear.valueValue moc:moc];
 			
 			[WBCoreDataManager saveContext:moc];
 			
-			[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+			[weakSelf performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 		//});
 		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
+}
+
+- (void)callWebservice {
+	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
+	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+	
+	operation.responseSerializer = [AFJSONResponseSerializer serializer];
+	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"Completed: %@", responseObject);
+		//dispatch_async(dispatch_get_main_queue(), ^{
+		//self.ghEvents = responseObject;
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			//[self.tableView reloadData];
+			//[self.refreshControl endRefreshing];
+			[self resetYearInContext:[WBCoreDataManager sharedManager]];
+		}];
+		
+		//});
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		NSLog(@"Failed");
+	}];
+	[operation start];
 }
 
 - (void)setProfileTabPlayer {
