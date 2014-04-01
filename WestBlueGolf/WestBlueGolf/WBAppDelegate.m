@@ -31,7 +31,8 @@
 - (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
 	if (value != 0 && value != self.yearSelection) {
 		self.yearSelection = value;
-		[self resetYearInContext:moc];
+		//[self resetYearInContext:moc];
+		[self callWebservice];
 	}
 }
 
@@ -135,7 +136,8 @@
 			
 			[WBCoreDataManager saveContext:moc];
 			
-			[weakSelf performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+			//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+			weakSelf.loading = NO;
 		//});
 		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}
@@ -150,18 +152,18 @@
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"Completed: %@", responseObject);
+		DLog(@"Dummy request Completed: %@", responseObject);
 		//dispatch_async(dispatch_get_main_queue(), ^{
 		//self.ghEvents = responseObject;
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			//[self.tableView reloadData];
 			//[self.refreshControl endRefreshing];
-			[self resetYearInContext:[WBCoreDataManager sharedManager]];
+			[self resetYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 		}];
 		
 		//});
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		NSLog(@"Failed");
+		DLog(@"Failed");
 	}];
 	[operation start];
 }
