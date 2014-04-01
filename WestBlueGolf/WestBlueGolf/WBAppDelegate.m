@@ -36,7 +36,9 @@
 
 - (void)setLoading:(BOOL)loading {
 	_loading = loading;
-	[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
+	if (!loading) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:WBLoadingFinishedNotification object:nil];
+	}
 }
 
 - (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
@@ -51,6 +53,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//[self setupCoreData:NO];
+	self.loading = YES;
 	
 	[self subscribeToNotifications];
 	
@@ -118,20 +121,22 @@
 		self.loading = YES;
 		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
 		__block typeof(self) weakSelf = self;
-		NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
+		//NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
 		
 		DLog(@"Processing Started");
 		//dispatch_async(request_queue, ^{
-			NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
-			[newMoc setPersistentStoreCoordinator:psc];
+			//NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
+			//[newMoc setPersistentStoreCoordinator:psc];
+		//NSManagedObjectContext *newMoc = [[WBCoreDataManager sharedManager] managedObjectContext];
 			
-			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
+			[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:moc];
 			
 			[self loadAndCalculateForYear:newYear.valueValue moc:moc];
 			
 			[WBCoreDataManager saveContext:moc];
 			
-			[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+			//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+			weakSelf.loading = NO;
 		//});
 		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
 	}
