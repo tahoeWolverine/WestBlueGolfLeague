@@ -13,5 +13,6 @@ namespace AccessExport
         public MatchUp Matchup { get; set; }
         public int Id { get; set; }
         public Player Player { get; set; }
+        public int PriorHandicap { get; set; }
     }
 }
