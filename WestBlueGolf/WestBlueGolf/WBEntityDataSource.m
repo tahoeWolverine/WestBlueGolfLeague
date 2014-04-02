@@ -69,10 +69,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	if ([(WBAppDelegate *)[UIApplication sharedApplication].delegate loading]) {
-		return 0;
-	}
-	
     NSInteger count = [[self.fetchedResultsController sections] count];
     
 	if (count == 0) {

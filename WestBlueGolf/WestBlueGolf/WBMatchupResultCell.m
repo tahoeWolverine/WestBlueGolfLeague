@@ -23,7 +23,9 @@
 	NSArray *displayStrings = [matchup displayStrings];
 	
 	self.team1NameLabel.text = displayStrings[0];
-	self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+	if (matchup.matchCompleteValue) {
+		self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+	}
 	self.team2NameLabel.text = displayStrings[3];
 	
 	

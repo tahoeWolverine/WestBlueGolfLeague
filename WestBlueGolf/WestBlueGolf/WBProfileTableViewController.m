@@ -85,11 +85,6 @@
 	self.tableView.delegate = self.dataSource;
 	
 	[self.dataSource beginFetch];
-	
-	// Try to pull the first data for the app
-	if ([self isMeTab] && ![WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]]) {
-		[(WBAppDelegate *)[UIApplication sharedApplication].delegate setupCoreData:YES];
-	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {

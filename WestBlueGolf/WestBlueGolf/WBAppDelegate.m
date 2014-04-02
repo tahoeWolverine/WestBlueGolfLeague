@@ -24,6 +24,30 @@
 
 @implementation WBAppDelegate
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	//[self setupCoreData:NO];
+	
+	[self subscribeToNotifications];
+	
+	// Setup year (could be preference of some kind, but for now, newest)
+	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	if (!year) {
+		self.loading = YES;
+		
+		// Try to pull the first data for the app
+		[self setupCoreData:YES];
+	}
+	
+	self.yearSelection = year.valueValue;
+	
+	// Fix iOS7.1 tint issue
+	[self.window setTintColor:kEmeraldColor];
+	
+    return YES;
+}
+
+#pragma mark - Important properties
+
 - (NSInteger)thisYearValue {
 	return self.yearSelection;
 }
@@ -31,8 +55,7 @@
 - (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
 	if (value != 0 && value != self.yearSelection) {
 		self.yearSelection = value;
-		//[self resetYearInContext:moc];
-		[self callWebservice];
+		[self dummyYearDataCall];
 	}
 }
 
@@ -43,6 +66,8 @@
 	}
 }
 
+#pragma mark - Data calls
+
 - (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
@@ -51,22 +76,7 @@
 	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
 	[boardManager calculateLeaderBoardsForYear:year moc:moc];
-}
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	//[self setupCoreData:NO];
-	self.loading = YES;
-	
-	[self subscribeToNotifications];
-	
-	// Setup year (could be preference of some kind, but for now, newest)
-	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-	self.yearSelection = year.valueValue;
-	
-	// Fix iOS7.1 tint issue
-	[self.window setTintColor:kEmeraldColor];
-
-    return YES;
+	[WBCoreDataManager saveContext:moc];
 }
 
 - (void)setupCoreData:(BOOL)reset {
@@ -78,90 +88,58 @@
 	self.yearSelection = year.valueValue;
 	
 	if (!year) {
-		//NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
-		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
-		__block typeof(self) weakSelf = self;
 		DLog(@"Processing Started");
-		//dispatch_async(request_queue, ^{
-			//NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] init];
-			//[newMoc setPersistentStoreCoordinator:psc];
-			
-			//[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:newMoc];
-			
-			// Background code
-			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]]; //newMoc];
-			[WBCoreDataManager saveMainContext];
-			
-			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-			
-			//[weakSelf resetYearInContext:newMoc];
-			
-			// Save and finish
-			/*NSError *error = nil;
-			BOOL success = [newMoc save:&error];
-			if (!success) {
-				DLog(@"Core data error in background %@", [error localizedDescription]);
-			}*/
-			
-			
-			//[[NSNotificationCenter defaultCenter] removeObserver:self];
-			
-		//});
+		[self dummyYearsCall];
 	}
-}
-
-- (void)mergeChanges:(NSNotification *)notification {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[[[WBCoreDataManager sharedManager] managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
-	});
 }
 
 - (void)resetYearInContext:(NSManagedObjectContext *)moc {
 	WBYear *newYear = [WBYear thisYearInContext:moc];
 	if (!newYear.weeks || newYear.weeks.count == 0) {
 		self.loading = YES;
-		//dispatch_queue_t request_queue = dispatch_queue_create("com.westbluegolfleague", NULL);
-		__block typeof(self) weakSelf = self;
-		//NSPersistentStoreCoordinator *psc = [[WBCoreDataManager sharedManager] persistentStoreCoordinator];
-		
 		DLog(@"Processing Started");
-		//dispatch_async(request_queue, ^{
-			//NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-			//[newMoc setPersistentStoreCoordinator:psc];
-			
-			//[[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(mergeChanges:)  name:NSManagedObjectContextDidSaveNotification object:moc];
-			
-			[weakSelf loadAndCalculateForYear:newYear.valueValue moc:moc];
-			
-			[WBCoreDataManager saveContext:moc];
-			
-			//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
-			weakSelf.loading = NO;
-		//});
-		//[self performSelectorOnMainThread:@selector(setLoading:) withObject:NO waitUntilDone:NO];
+		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
+
+		self.loading = NO;
 	}
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
 }
 
-- (void)callWebservice {
+- (void)dummyYearsCall {
+	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
+	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+	
+	operation.responseSerializer = [AFJSONResponseSerializer serializer];
+	__block typeof(self) weakSelf = self;
+	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+		DLog(@"Dummy years request Completed: %@", responseObject);
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			// Background code
+			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+			[WBCoreDataManager saveMainContext];
+			
+			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+		}];
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		DLog(@"Failed");
+	}];
+	[operation start];
+}
+
+- (void)dummyYearDataCall {
 	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		DLog(@"Dummy request Completed: %@", responseObject);
-		//dispatch_async(dispatch_get_main_queue(), ^{
-		//self.ghEvents = responseObject;
+		DLog(@"Dummy year data request Completed: %@", responseObject);
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			//[self.tableView reloadData];
-			//[self.refreshControl endRefreshing];
 			[self resetYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 		}];
-		
-		//});
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
