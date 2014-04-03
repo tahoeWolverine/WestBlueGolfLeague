@@ -55,7 +55,13 @@
 - (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
 	if (value != 0 && value != self.yearSelection) {
 		self.yearSelection = value;
-		[self dummyYearDataCall];
+		
+		WBYear *year = [WBYear thisYear];
+		if ([year needsRefresh]) {
+			[self dummyYearDataCall];
+		} else {
+			[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
+		}
 	}
 }
 

@@ -64,9 +64,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
-	
 	WBYear *year = (WBYear *)[self objectAtIndexPath:indexPath];
+	if ([year needsRefresh]) {
+		[MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
+	}
+
 	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 	[tableView reloadData];
 }

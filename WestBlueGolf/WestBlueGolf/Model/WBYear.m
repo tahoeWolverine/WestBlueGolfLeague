@@ -60,4 +60,8 @@
 	return [[self.weeks sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]]][0] seasonIndexValue];
 }
 
+- (BOOL)needsRefresh {
+	return !self.weeks || self.weeks.count == 0;
+}
+
 @end
