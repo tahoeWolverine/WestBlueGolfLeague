@@ -7,7 +7,7 @@
 //
 
 #import "WBAppDelegate.h"
-#import "AFNetworking/AFNetworking.h"
+//#import <AFNetworking/AFNetworking.h>
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -146,7 +146,7 @@
 }
 
 - (void)callWebservice {
-	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
@@ -165,7 +165,7 @@
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
-	[operation start];
+	[operation start];*/
 }
 
 - (void)setProfileTabPlayer {
