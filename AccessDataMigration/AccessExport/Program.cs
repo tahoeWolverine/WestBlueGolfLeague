@@ -89,6 +89,12 @@ namespace AccessExport
                         yearIdToYear[newYear.Id] = newYear;
                         yearValueToYear[year] = newYear;
 
+                        //if (year == 2013)
+                        //{
+                        //    Debugger.Break();
+                        //}
+
+
                         // Weeks
                         cmd.CommandText = "SELECT * FROM WeekTable";
                         Dictionary<int, Week> weekTempIdToWeek = new Dictionary<int, Week>();
@@ -98,18 +104,18 @@ namespace AccessExport
                             while (weekReader.Read())
                             {
                                 string courseName = string.Empty;
-                                int coursePar = 36;
+                                int coursePar = Convert.ToInt32(weekReader.GetString(1));
 
                                 Course course = null;
 
                                 if (year < 2009)
                                 {
-                                    courseName = Convert.ToString(year) + " Course";
+                                    courseName = Convert.ToString(year) + " Course " + Convert.ToString(coursePar);
                                 }
                                 else
                                 {
                                     courseName = weekReader.GetString(3);
-                                    coursePar = Convert.ToInt32(weekReader.GetString(1));
+                                    //coursePar = Convert.ToInt32(weekReader.GetString(1));
                                 }
 
                                 if (!courseNameToCourse.TryGetValue(courseName, out course))
@@ -121,7 +127,7 @@ namespace AccessExport
 
                                 var weekDate = weekReader.GetString(2).Replace("Sept.", "September");
 
-                                Week week = new Week { SeasonIndex = weekReader.GetInt32(0), Course = course, Date = DateTime.Parse(weekDate), Id = weekIndex++ };
+                                Week week = new Week { SeasonIndex = weekReader.GetInt32(0), Course = course, Date = DateTime.Parse(weekDate), Id = weekIndex++, Year = newYear };
                                 weekTempIdToWeek[week.SeasonIndex] = week;
                             }
                         }
@@ -174,7 +180,7 @@ namespace AccessExport
                                 if (year >= 2009)
                                 {
                                     int week0Score = reader.GetInt32(2);
-                                    startingHandicap = week0Score; // -36;
+                                    startingHandicap = week0Score - 36;
                                 }
 
                                 // If we have player status, then set the rookie value based on status.  
@@ -323,7 +329,7 @@ namespace AccessExport
                                 Week week = weekTempIdToWeek[weekId];
 
                                 // Team matchups should be unique based on team ID and week ID for a year.
-                                var teamMatchups = teamMatchupIdMatchup.Values.Where(t => (t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) && t.Week.SeasonIndex == weekId);
+                                var teamMatchups = teamMatchupIdMatchup.Values.Where(t => ((t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) || (t.Team1.Id == teamIdToTeam[team2Id].Id || t.Team2.Id == teamIdToTeam[team1Id].Id)) && t.Week.SeasonIndex == weekId && t.Week.Year.Value == year);
 
                                 if (weekId == 0)
                                 {
@@ -363,6 +369,11 @@ namespace AccessExport
                                 }
 
                                 var teamMatchup = teamMatchups.First();
+
+                                //if (player1.Name == "Pete Mohs" && year == 2013)
+                                //{
+                                //    Debugger.Break();
+                                //}
 
                                 MatchUp matchup = new MatchUp { Id = matchupIndex++, TeamMatchup = teamMatchup, Player1 = player1, Player2 = player2 };
                                 allMatchUps.Add(matchup);
@@ -413,39 +424,124 @@ namespace AccessExport
 
                 foreach (var yd in yearDataForPlayer)
                 {
-                    CalculateHandicaps(dataModel, p, yd);
+                    if (yd.Year.Value > 2011)
+                    {
+                        CalculateHandicaps(dataModel, p, yd);
+                    }
+                    // else wat
                 }
             }
         }
 
         private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData)
         {
+            //if (player.Name == "Pete Mohs" && yearData.Year.Value == 2013)
+            //{
+            //    Debugger.Break();
+            //}
+
+
             // hackyyyy
             var week0Score = yearData.StartingHandicap;
             // we are done with that value, set starting handicap to real value
-            yearData.StartingHandicap = yearData.StartingHandicap - 36;
+            //yearData.StartingHandicap = yearData.StartingHandicap - 36;
+
+            int scoreIndex = 4;
 
             List<int> scores = new List<int>(4);
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < 5; i++)
             {
                 scores.Add(week0Score);
             }
 
-            // TODO: Get results for player, then process them and find the handicap value.
+            // Get all results for a player for the year.
+            var allResultsForPlayer = dataModel.Results.Where(x => x.Player.Id == player.Id).ToList();
+
+            var count2013 = allResultsForPlayer.Where(x => x.Matchup.TeamMatchup.Week.Year.Value == 2013).Count();
+            var allCount2013 = dataModel.Results.Where(x => x.Matchup.TeamMatchup.Week.Year.Value == 2013).ToList();
+
+            var resultsForPlayerForYear = dataModel.Results.Where(x => x.Player.Id == player.Id && x.Matchup.TeamMatchup.Week.Year.Value == yearData.Year.Value).OrderBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex);
+
+            foreach (var result in resultsForPlayerForYear)
+            {
+                result.PriorHandicap = priorHandicapWithScores(scores, scoreIndex);
+
+                scores.Add(result.Score - result.Matchup.TeamMatchup.Week.Course.Par);
+
+                scoreIndex++;
+            }
+
+            //if (player.Name == "Jayson Walberg" && yearData.Year.Value == 2013)
+            //{
+            //    Debugger.Break();
+            //}
 
             // TODO: set ending handicap value on year data.
+            if (yearData.Year.Value == 2013)
+            {
+                player.CurrentHandicap = priorHandicapWithScores(scores, scoreIndex);
+            }
+
+            yearData.FinishingHandicap = priorHandicapWithScores(scores, scoreIndex);
+        }
+
+        private static int priorHandicapWithScores(List<int> scores, int index)
+        {
+            List<int> usedScores = new List<int> { scores[index], scores[index - 1], scores[index - 2], scores[index - 3], scores[index - 4] };
+            int max = -39339;
+            int handicapTotal = 0;
+
+            foreach (var score in usedScores)
+            {
+                if (score > max)
+                {
+                    max = score;
+                }
+                handicapTotal += score;
+            }
+
+            handicapTotal -= max;
+            double handicapAsDouble = (float)handicapTotal / 4.0f;
+
+            // perform half up rounding
+            double finalHandicap = Math.Round(handicapAsDouble, MidpointRounding.AwayFromZero);
+
+            return Convert.ToInt32(finalHandicap);
+        }
+
+        public static void DoValidate(DataModel dataModel) 
+        {
+            var peteMohs = dataModel.Players.First(x => string.Equals("Pete Mohs", x.Name, StringComparison.OrdinalIgnoreCase));
+            var jaysonWalberg = dataModel.Players.First(x => string.Equals("Jayson Walberg", x.Name, StringComparison.OrdinalIgnoreCase));
+            var brianSchwartz = dataModel.Players.First(x => string.Equals("Brian Schwartz", x.Name, StringComparison.OrdinalIgnoreCase));
+
+            var bushwoodsFinest = dataModel.Teams.First(x => string.Equals(x.Name, "Bushwoods Finest", StringComparison.OrdinalIgnoreCase));
+            var yearDataForBushwoods2013 = dataModel.YearDatas.Where(x => x.Year.Value == 2013 && x.Player.Team.Id == bushwoodsFinest.Id);
+
+            int peteHandicap = yearDataForBushwoods2013.First(x => x.Player.Id == peteMohs.Id).FinishingHandicap;
+            int jaysonHandicap = yearDataForBushwoods2013.First(x => x.Player.Id == jaysonWalberg.Id).FinishingHandicap;
+            int brianHandicap = yearDataForBushwoods2013.First(x => x.Player.Id == brianSchwartz.Id).FinishingHandicap;
+
+            Console.WriteLine(Convert.ToString(11 == peteHandicap) + " : " + Convert.ToString(peteHandicap));
+            Console.WriteLine(Convert.ToString(7 == jaysonHandicap) + " : " + Convert.ToString(jaysonHandicap));
+            Console.WriteLine(Convert.ToString(12 == brianHandicap) + " : " + Convert.ToString(brianHandicap));
         }
 
         static void Main(string[] args)
         {
             var dataModel = CreateDataModel();
 
-            var mysqlGenerator = new MySqlGenerator();
-
             ProcessHandicaps(dataModel);
 
-            Console.WriteLine(mysqlGenerator.Generate(dataModel));
+            // Do some validating on our data model.
+            DoValidate(dataModel);
+
+            var mysqlGenerator = new MySqlGenerator();
+
+            var dataModelInserts = mysqlGenerator.Generate(dataModel);
+
+            //Console.WriteLine(dataModelInserts);
         }
     }
 }
