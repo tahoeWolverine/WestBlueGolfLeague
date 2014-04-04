@@ -14,5 +14,6 @@ namespace AccessExport
         public int Id { get; set; }
         public Player Player { get; set; }
         public int PriorHandicap { get; set; }
+        public Year Year { get; set; }
     }
 }

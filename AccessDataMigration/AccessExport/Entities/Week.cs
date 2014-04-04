@@ -12,5 +12,6 @@ namespace AccessExport
         public int Id { get; set; }
         public Course Course { get; set; }
         public int SeasonIndex { get; set; }
+        public Year Year { get; set; }
     }
 }
