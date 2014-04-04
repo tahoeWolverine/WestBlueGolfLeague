@@ -378,10 +378,10 @@ namespace AccessExport
                                 MatchUp matchup = new MatchUp { Id = matchupIndex++, TeamMatchup = teamMatchup, Player1 = player1, Player2 = player2 };
                                 allMatchUps.Add(matchup);
 
-                                Result player1Result = new Result { Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
+                                Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
                                 allResults.Add(player1Result);
 
-                                Result player2Result = new Result { Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
+                                Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
                                 allResults.Add(player2Result);
                             }
                         }
@@ -435,16 +435,7 @@ namespace AccessExport
 
         private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData)
         {
-            //if (player.Name == "Pete Mohs" && yearData.Year.Value == 2013)
-            //{
-            //    Debugger.Break();
-            //}
-
-
-            // hackyyyy
             var week0Score = yearData.StartingHandicap;
-            // we are done with that value, set starting handicap to real value
-            //yearData.StartingHandicap = yearData.StartingHandicap - 36;
 
             int scoreIndex = 4;
 
@@ -458,24 +449,23 @@ namespace AccessExport
             // Get all results for a player for the year.
             var allResultsForPlayer = dataModel.Results.Where(x => x.Player.Id == player.Id).ToList();
 
-            var count2013 = allResultsForPlayer.Where(x => x.Matchup.TeamMatchup.Week.Year.Value == 2013).Count();
-            var allCount2013 = dataModel.Results.Where(x => x.Matchup.TeamMatchup.Week.Year.Value == 2013).ToList();
-
             var resultsForPlayerForYear = dataModel.Results.Where(x => x.Player.Id == player.Id && x.Matchup.TeamMatchup.Week.Year.Value == yearData.Year.Value).OrderBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex);
 
             foreach (var result in resultsForPlayerForYear)
             {
                 result.PriorHandicap = priorHandicapWithScores(scores, scoreIndex);
+                int handicapForWeek = result.Score - result.Matchup.TeamMatchup.Week.Course.Par;
 
-                scores.Add(result.Score - result.Matchup.TeamMatchup.Week.Course.Par);
+                // Can't be larger than 20
+                if (handicapForWeek > 20)
+                {
+                    handicapForWeek = 20;
+                }
+
+                scores.Add(handicapForWeek);
 
                 scoreIndex++;
             }
-
-            //if (player.Name == "Jayson Walberg" && yearData.Year.Value == 2013)
-            //{
-            //    Debugger.Break();
-            //}
 
             // TODO: set ending handicap value on year data.
             if (yearData.Year.Value == 2013)
@@ -502,12 +492,11 @@ namespace AccessExport
             }
 
             handicapTotal -= max;
-            double handicapAsDouble = (float)handicapTotal / 4.0f;
+            double handicapAsDouble = ((double)handicapTotal / 4.0f) + .5;
 
-            // perform half up rounding
-            double finalHandicap = Math.Round(handicapAsDouble, MidpointRounding.AwayFromZero);
+            int finalHandicap = (int)handicapAsDouble;
 
-            return Convert.ToInt32(finalHandicap);
+            return finalHandicap;
         }
 
         public static void DoValidate(DataModel dataModel) 
