@@ -96,7 +96,26 @@
 	}
 	
 	NSString *scoreString = [NSString stringWithFormat:@"%@-%@", teamScore, opponentScore];
-	return @[titleString, winLoss, scoreString];
+	
+	NSInteger myTeamRank = [team rankPriorToWeek:self.week];
+	NSInteger opponentRank = [opponent rankPriorToWeek:self.week];
+	NSString *teamRanksString = [NSString stringWithFormat:@"#%ld vs #%ld", (long)myTeamRank, (long)opponentRank];
+	
+	NSInteger myTeamHandicap = [self totalHandicapForTeam:team];
+	NSInteger opponentHandicap = [self totalHandicapForTeam:opponent];
+	NSString *handicapString = [NSString stringWithFormat:@"+%ld vs +%ld", (long)myTeamHandicap, (long)opponentHandicap];
+	
+	NSInteger myTeamPoints = [self totalPointsForTeam:team];
+	NSInteger opponentPoints = [self totalPointsForTeam:opponent];
+	NSString *pointsString = [NSString stringWithFormat:@"%ld/%ld", (long)myTeamPoints, (long)opponentPoints];
+	
+	NSInteger myTeamNetScore = [self totalNetScoreForTeam:team];
+	NSInteger opponentNetScore = [self totalNetScoreForTeam:opponent];
+	NSString *myTeamNetScoreString = [NSString stringWithFormat:@"%@%ld", myTeamNetScore < 0 ? @"" : @"+", (long)myTeamNetScore];
+	NSString *opponentNetScoreString = [NSString stringWithFormat:@"%@%ld", opponentNetScore < 0 ? @"" : @"+", (long)opponentNetScore];
+	NSString *netScoreString = [NSString stringWithFormat:@"%@,%@", myTeamNetScoreString, opponentNetScoreString];
+	
+	return @[titleString, winLoss, scoreString, teamRanksString, handicapString, pointsString, netScoreString];
 }
 
 - (NSInteger)totalPointsForTeam:(WBTeam *)team {
@@ -131,6 +150,44 @@
 
 - (NSString *)totalScoreStringForTeam:(WBTeam *)team {
 	return [NSString stringWithFormat:@"%ld", (long)[self totalScoreForTeam:team]];
+}
+
+- (NSInteger)totalHandicapForTeam:(WBTeam *)team {
+	NSInteger total = 0;
+	for (WBMatch *match in self.matches) {
+		for (WBResult *result in match.results) {
+			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+				total += result.priorHandicapValue;
+			}
+		}
+	}
+	
+	return total;
+}
+
+- (NSInteger)totalNetScoreForTeam:(WBTeam *)team {
+	NSInteger total = 0;
+	for (WBMatch *match in self.matches) {
+		for (WBResult *result in match.results) {
+			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+				total += [result netScoreDifference];
+			}
+		}
+	}
+	
+	return total;
+}
+
+- (NSArray *)orderedMatches {
+	NSMutableArray *matches = [NSMutableArray arrayWithArray:self.matches.allObjects];
+	[matches sortUsingComparator:^(id obj1, id obj2) {
+		WBMatch *match1 = (WBMatch *)obj1;
+		WBMatch *match2 = (WBMatch *)obj2;
+		NSInteger handicapSum1 = [match1.results.allObjects[0] priorHandicapValue] + [match1.results.allObjects[1] priorHandicapValue];
+		NSInteger handicapSum2 = [match2.results.allObjects[0] priorHandicapValue] + [match2.results.allObjects[1] priorHandicapValue];
+		return handicapSum1 < handicapSum2 ? NSOrderedAscending : handicapSum1 == handicapSum2 ? NSOrderedSame : NSOrderedDescending;
+	}];
+	return matches;
 }
 
 - (NSString *)timeLabel {

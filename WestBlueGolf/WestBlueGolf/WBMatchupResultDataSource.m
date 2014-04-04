@@ -20,7 +20,7 @@
 #define HEADER_HEIGHT 44.0f
 
 #define CELL_HEIGHT 70.0f
-#define CELL_EXPAND_HEIGHT 200.0f
+#define CELL_EXPAND_HEIGHT 220.0f
 
 @interface WBMatchupResultDataSource () <V8HorizontalPickerViewDelegate, V8HorizontalPickerViewDataSource>
 
@@ -236,6 +236,7 @@
 
 - (void)resetDataSource {
 	self.fetchedResultsController = nil;
+	[self resetSelectedCells];
 	[self beginFetch];
 	
 	[[(UITableViewController *)self.viewController tableView] reloadData];

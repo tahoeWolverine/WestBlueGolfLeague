@@ -9,4 +9,6 @@
 
 - (NSInteger)pairing;
 
+- (NSArray *)displayStrings;
+
 @end

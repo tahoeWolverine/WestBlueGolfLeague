@@ -35,8 +35,8 @@
 	NSNumber *opponentScore = opponentResult.score ?: @0;
 	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
 	
-	self.priorHandicapsLabel.text = [NSString stringWithFormat:@"%@ vs %@", [result priorHandicapString], [opponentResult priorHandicapString]];
 	self.pairingLabel.text = [NSString stringWithFormat:@"#%ld Players", (long)[result.match pairing]];
+	self.priorHandicapsLabel.text = [NSString stringWithFormat:@"%@ vs %@", [result priorHandicapString], [opponentResult priorHandicapString]];
 	self.pointsLabel.text = [NSString stringWithFormat:@"%@/%@", result.points, opponentResult.points];
 	self.netScoresLabel.text = [NSString stringWithFormat:@"%@,%@", [result netScoreDifferenceString], [opponentResult netScoreDifferenceString]];
 }
@@ -61,6 +61,11 @@
 			self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : loss ? [UIColor redColor] : [UIColor blackColor];
 			self.winLossLabel.text = displayStrings[1];
 			self.scoreLabel.text = displayStrings[2];
+			
+			self.pairingLabel.text = displayStrings[3];
+			self.priorHandicapsLabel.text = displayStrings[4];
+			self.pointsLabel.text = displayStrings[5];
+			self.netScoresLabel.text = displayStrings[6];
 		} else {
 			self.winLossLabel.textColor = [UIColor blackColor];
 			self.winLossLabel.text = [matchup.week.course shortName];

@@ -152,6 +152,12 @@
 	}
 }
 
+- (void)resetSelectedCells {
+	self.selectedIndexes = [[NSMutableDictionary alloc] init];
+	[self.tableView beginUpdates];
+	[self.tableView endUpdates];
+}
+
 #pragma mark - Fetched results controller
 
 - (NSManagedObjectContext *)managedObjectContext {

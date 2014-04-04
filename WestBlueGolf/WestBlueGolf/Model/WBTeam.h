@@ -1,5 +1,7 @@
 #import "_WBTeam.h"
 
+@class WBWeek;
+
 // LeaderBoard keys
 #define kLeaderboardTeamAverageHandicap @"averageHandicap"
 #define kLeaderboardTeamAverageMarginVictory @"averageMarginOfVictory"
@@ -50,6 +52,8 @@
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
+
+- (NSInteger)rankPriorToWeek:(WBWeek *)week;
 
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;

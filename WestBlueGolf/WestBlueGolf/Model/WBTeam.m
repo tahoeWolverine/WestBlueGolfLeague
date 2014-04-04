@@ -42,11 +42,16 @@
 }
 
 - (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData {
+	return [self filterResultsForYear:year beforeWeek:nil goodData:goodData];
+}
+
+- (NSArray *)filterResultsForYear:(WBYear *)year beforeWeek:(WBWeek *)week goodData:(BOOL)goodData {
 	NSArray *results = nil;
+	NSNumber *seasonIndex = week ? week.seasonIndex : [NSNumber numberWithInteger:30];
 	if (goodData) {
-		results = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.isBadData = %@", year, [NSNumber numberWithBool:NO]]];
+		results = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.isBadData = %@ && match.teamMatchup.week.seasonIndex < %@", year, [NSNumber numberWithBool:NO], seasonIndex]];
 	} else {
-		results = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@", year]];
+		results = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.seasonIndex < %@", year, seasonIndex]];
 	}
 	return  results;
 }
@@ -88,6 +93,16 @@
 // Calculated strictly with the object model, no thread-context needed
 - (NSInteger)totalPointsForYear:(WBYear *)year {
 	NSArray *filtered = [self filterResultsForYear:year goodData:YES];
+	NSInteger total = 0;
+	for (WBResult *result in filtered) {
+		total += result.pointsValue;
+	}
+	return total;
+}
+
+// Calculated strictly with the object model, no thread-context needed
+- (NSInteger)totalPointsForYearBeforeWeek:(WBWeek *)week {
+	NSArray *filtered = [self filterResultsForYear:week.year beforeWeek:week goodData:YES];
 	NSInteger total = 0;
 	for (WBResult *result in filtered) {
 		total += result.pointsValue;
@@ -375,6 +390,20 @@
 	}
 	
 	return totalMargin / roundCount;
+}
+
+- (NSInteger)rankPriorToWeek:(WBWeek *)week {
+	NSInteger myTeamPoints = [self totalPointsForYearBeforeWeek:week], otherTeamPoints = 0, rank = 1;
+	
+	NSArray *teams = [WBTeam findAllForYear:week.year inContext:week.managedObjectContext];
+	for (WBTeam *team in teams) {
+		otherTeamPoints = [team totalPointsForYearBeforeWeek:week];
+		if (otherTeamPoints > myTeamPoints) {
+			rank++;
+		}
+	}
+	
+	return rank;
 }
 
 #pragma mark - Leaderboard fetches

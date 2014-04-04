@@ -13,6 +13,7 @@
 
 - (WBTeam *)opponentTeamOfTeam:(WBTeam *)team;
 
+- (NSInteger)totalPointsForTeam:(WBTeam *)team;
 - (NSString *)totalPointsStringForTeam:(WBTeam *)team;
 - (NSString *)totalScoreStringForTeam:(WBTeam *)team;
 
@@ -21,5 +22,7 @@
 
 - (NSString *)timeLabel;
 - (NSString *)shortTime;
+
+- (NSArray *)orderedMatches;
 
 @end
