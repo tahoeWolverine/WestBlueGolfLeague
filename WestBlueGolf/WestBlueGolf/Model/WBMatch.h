@@ -7,4 +7,6 @@
 							   player2:(WBPlayer *)player2
 								   moc:(NSManagedObjectContext *)moc;
 
+- (NSInteger)pairing;
+
 @end

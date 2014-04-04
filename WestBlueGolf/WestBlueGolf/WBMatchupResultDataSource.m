@@ -19,6 +19,9 @@
 
 #define HEADER_HEIGHT 44.0f
 
+#define CELL_HEIGHT 70.0f
+#define CELL_EXPAND_HEIGHT 200.0f
+
 @interface WBMatchupResultDataSource () <V8HorizontalPickerViewDelegate, V8HorizontalPickerViewDataSource>
 
 @property (strong, nonatomic) NSMutableArray *weekTitleArray;
@@ -111,6 +114,18 @@
 
 - (NSString *)sectionNameKeyPath {
 	return nil;
+}
+
+- (CGFloat)cellHeight {
+	return CELL_HEIGHT;
+}
+
+- (CGFloat)expandedCellHeight {
+	return CELL_EXPAND_HEIGHT;
+}
+
+- (BOOL)shouldExpand {
+	return YES;
 }
 
 - (NSPredicate *)fetchPredicate {

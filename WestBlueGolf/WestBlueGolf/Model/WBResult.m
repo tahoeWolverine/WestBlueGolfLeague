@@ -76,4 +76,12 @@
 	return [self scoreDifference] - self.priorHandicapValue;
 }
 
+- (NSString *)netScoreDifferenceString {
+	return [NSString stringWithFormat:@"%@%ld", [self netScoreDifference] < 0 ? @"" : @"+", (long)[self netScoreDifference]];
+}
+
+- (NSString *)priorHandicapString {
+	return [NSString stringWithFormat:@"%@%@", self.priorHandicapValue < 0 ? @"" : @"+", self.priorHandicap];
+}
+
 @end

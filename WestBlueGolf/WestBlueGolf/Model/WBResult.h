@@ -18,5 +18,7 @@
 
 - (NSInteger)scoreDifference;
 - (NSInteger)netScoreDifference;
+- (NSString *)netScoreDifferenceString;
+- (NSString *)priorHandicapString;
 
 @end

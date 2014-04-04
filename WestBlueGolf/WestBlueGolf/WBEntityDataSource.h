@@ -22,6 +22,9 @@
 - (NSString *)entityName;
 - (NSArray *)sortDescriptorsForFetch;
 - (NSPredicate *)fetchPredicate;
+- (BOOL)shouldExpand;
+- (CGFloat)cellHeight;
+- (CGFloat)expandedCellHeight;
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object;
 

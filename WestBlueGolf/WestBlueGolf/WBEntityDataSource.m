@@ -10,11 +10,15 @@
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 
+#define CELL_HEIGHT 40.0f
+#define CELL_EXPAND_HEIGHT 80.0f
+
 @interface WBEntityDataSource () {
 	NSFetchedResultsController *_fetchedResultsController;
 }
 
 @property (weak, nonatomic) UIViewController *viewController;
+@property (strong, nonatomic) NSMutableDictionary *selectedIndexes;
 
 @end
 
@@ -28,6 +32,7 @@
 	self = [super init];
 	if (self) {
 		self.viewController = aViewController;
+		self.selectedIndexes = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -66,6 +71,18 @@
 	return nil;
 }
 
+- (BOOL)shouldExpand {
+	return NO;
+}
+
+- (CGFloat)cellHeight {
+	return CELL_HEIGHT;
+}
+
+- (CGFloat)expandedCellHeight {
+	return CELL_EXPAND_HEIGHT;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -100,6 +117,39 @@
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	ALog(@"Derived class did not implement configureCell");
+}
+
+#pragma mark - Grow code
+
+- (BOOL)cellIsSelected:(NSInteger)index {
+	// Return whether the cell at the specified index path is selected or not
+	//NSIndexPath *actualIndexPath = (NSIndexPath *)indexPath;
+	NSNumber *selected = [self.selectedIndexes objectForKey:[NSNumber numberWithInteger:index]];
+	DLog(@"cellIsSelected at %ld: %@", (long)index, !selected ? @"nil" : [selected boolValue] ? @"Yes" : @"No");
+	return [selected boolValue];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	BOOL selected = [self cellIsSelected:indexPath.row];
+	return selected ? [self expandedCellHeight] : [self cellHeight];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	// Deselect cell
+	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+	
+	// Toggle 'selected' state
+	if ([self shouldExpand]) {
+		BOOL isSelected = ![self cellIsSelected:indexPath.row];
+
+		// Store cell 'selected' state keyed on indexPath
+		NSNumber *selected = [NSNumber numberWithBool:isSelected];
+		[self.selectedIndexes setObject:selected forKey:[NSNumber numberWithInteger:indexPath.row]];
+
+		// This is where magic happens...
+		[tableView beginUpdates];
+		[tableView endUpdates];
+	}
 }
 
 #pragma mark - Fetched results controller

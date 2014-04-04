@@ -1,5 +1,6 @@
 #import "WBMatch.h"
 #import "WBCoreDataManager.h"
+#import "WBResult.h"
 #import "WBTeamMatchup.h"
 
 @interface WBMatch ()
@@ -25,6 +26,36 @@
 	
 	[teamMatchup addMatchesObject:newMatch];
 	return newMatch;
+}
+
+- (NSInteger)pairing {
+	WBTeamMatchup *matchup = self.teamMatchup;
+	NSInteger pairing = 1;
+	for (WBMatch *match in matchup.matches) {
+		if (match == self) {
+			continue;
+		}
+		
+		if ([self greaterPairingThanMatch:match]) {
+			pairing++;
+		}
+	}
+	return pairing;
+}
+
+- (BOOL)greaterPairingThanMatch:(WBMatch *)match {
+	for (WBResult *result in self.results) {
+		WBTeam *team = result.team;
+		WBResult *otherMatchResult = [match resultForTeam:team];
+		if (result.priorHandicapValue > otherMatchResult.priorHandicapValue) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
+- (WBResult *)resultForTeam:(WBTeam *)team {
+	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"team = %@", team]][0];
 }
 
 @end

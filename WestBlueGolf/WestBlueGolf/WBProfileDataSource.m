@@ -15,13 +15,7 @@
 
 #define SORT_KEY @"match.teamMatchup.week.date"
 
-#define CELL_HEIGHT 40.0f
-
-@interface WBProfileDataSource () {
-}
-
-@property (strong, nonatomic) NSMutableDictionary *selectedIndexes;
-
+@interface WBProfileDataSource ()
 @end
 
 @implementation WBProfileDataSource
@@ -33,15 +27,8 @@
 												 selector:@selector(resetYear)
 													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
-		self.selectedIndexes = [[NSMutableDictionary alloc] init];
 	}
 	return self;
-}
-
-- (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
-	// Return whether the cell at the specified index path is selected or not
-	NSNumber *selectedIndex = [self.selectedIndexes objectForKey:indexPath];
-	return [selectedIndex boolValue];
 }
 
 - (void)dealloc {
@@ -73,6 +60,10 @@
 	return @"WBResult";
 }
 
+- (BOOL)shouldExpand {
+	return YES;
+}
+
 - (NSArray *)sortDescriptorsForFetch {
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:NO];
 	return @[sortOrderDescriptor];
@@ -87,32 +78,6 @@
     WBResult *result = (WBResult *)object;
 	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
 	[resultCell configureCellForResult:result];
-}
-
-#pragma mark - Grow code
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	CGFloat factor = 1.0;
-	if ([self cellIsSelected:indexPath]) {
-		factor = 2.0;
-	}
-	return CELL_HEIGHT * factor;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	// Deselect cell
-	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
-	
-	// Toggle 'selected' state
-	BOOL isSelected = ![self cellIsSelected:indexPath];
-	
-	// Store cell 'selected' state keyed on indexPath
-	NSNumber *selectedIndex = [NSNumber numberWithBool:isSelected];
-	[self.selectedIndexes setObject:selectedIndex forKey:indexPath];
-	
-	// This is where magic happens...
-	[tableView beginUpdates];
-	[tableView endUpdates];
 }
 
 @end

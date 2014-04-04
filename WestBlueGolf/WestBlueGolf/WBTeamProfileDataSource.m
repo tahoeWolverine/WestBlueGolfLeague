@@ -30,6 +30,10 @@
 	return @"WBTeamMatchup";
 }
 
+- (BOOL)shouldExpand {
+	return YES;
+}
+
 - (NSArray *)sortDescriptorsForFetch {
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY_SECTION_1 ascending:NO];
 	//NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY_SECTION_2 ascending:YES];
