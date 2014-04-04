@@ -11,7 +11,7 @@
 #import "WBCoreDataManager.h"
 
 #define CELL_HEIGHT 40.0f
-#define CELL_EXPAND_HEIGHT 80.0f
+#define CELL_EXPAND_HEIGHT 90.0f
 
 @interface WBEntityDataSource () {
 	NSFetchedResultsController *_fetchedResultsController;

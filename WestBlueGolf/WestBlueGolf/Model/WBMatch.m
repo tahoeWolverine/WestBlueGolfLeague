@@ -30,18 +30,9 @@
 }
 
 - (NSInteger)pairing {
-	WBTeamMatchup *matchup = self.teamMatchup;
-	NSInteger pairing = 1;
-	for (WBMatch *match in matchup.matches) {
-		if (match == self) {
-			continue;
-		}
-		
-		if ([self greaterPairingThanMatch:match]) {
-			pairing++;
-		}
-	}
-	return pairing;
+	NSArray *matches = [self.teamMatchup orderedMatches];
+	NSInteger index = [matches indexOfObject:self];
+	return index + 1;
 }
 
 - (BOOL)greaterPairingThanMatch:(WBMatch *)match {

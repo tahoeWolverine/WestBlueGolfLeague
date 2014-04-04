@@ -393,6 +393,11 @@
 }
 
 - (NSInteger)rankPriorToWeek:(WBWeek *)week {
+	NSInteger cachedRank = [[WBCoreDataManager sharedManager] rankForTeam:self priorToWeek:week];
+	if (cachedRank > 0) {
+		return cachedRank;
+	}
+	
 	NSInteger myTeamPoints = [self totalPointsForYearBeforeWeek:week], otherTeamPoints = 0, rank = 1;
 	
 	NSArray *teams = [WBTeam findAllForYear:week.year inContext:week.managedObjectContext];
@@ -402,6 +407,9 @@
 			rank++;
 		}
 	}
+	
+	// Cache the rank
+	[[WBCoreDataManager sharedManager] setRank:rank forTeam:self priorToWeek:week];
 	
 	return rank;
 }

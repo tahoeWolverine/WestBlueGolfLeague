@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
+@class WBTeam;
+@class WBWeek;
+
 @interface WBCoreDataManager : NSObject
 
 + (id)sharedManager;
@@ -20,5 +23,8 @@
 // Releases the current Managed Object Context so that a new one will be set up and returned when sharedManager.managedObjectContext is accessed.
 // NOTE: This method should only be called during app startup/reset!
 - (void)resetManagedObjectContextAndPersistentStore;
+
+- (NSInteger)rankForTeam:(WBTeam *)team priorToWeek:(WBWeek *)week;
+- (void)setRank:(NSInteger)rank forTeam:(WBTeam *)team priorToWeek:(WBWeek *)week;
 
 @end

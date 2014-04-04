@@ -8,6 +8,7 @@
 
 #import "WBCoreDataManager.h"
 #import "WBFileSystem.h"
+#import "WBModels.h"
 
 #define DOMAIN_NAME @"WestBlueGolf"
 #define MODEL_FILE_EXTENSION @"momd"
@@ -16,6 +17,8 @@
 @interface WBCoreDataManager () {
 	NSManagedObjectContext *_managedObjectContext;
 }
+
+@property (strong, nonatomic) NSMutableDictionary *teamWeekRankStore;
 
 @end
 
@@ -126,6 +129,24 @@
 	if (error) {
 		[WBCoreDataManager logError:error];
 	}
+}
+
+#pragma mark - Store/Cache for team + week -> rank
+
+- (NSMutableDictionary *)teamWeekRankStore {
+	if (!_teamWeekRankStore) {
+		_teamWeekRankStore = [NSMutableDictionary dictionary];
+	}
+	return _teamWeekRankStore;
+}
+
+- (NSInteger)rankForTeam:(WBTeam *)team priorToWeek:(WBWeek *)week {
+	NSNumber *rank = [self.teamWeekRankStore objectForKey:[NSString stringWithFormat:@"%@%@", team.objectID, week.objectID]];
+	return rank ? rank.integerValue : 0;
+}
+
+- (void)setRank:(NSInteger)rank forTeam:(WBTeam *)team priorToWeek:(WBWeek *)week {
+	[self.teamWeekRankStore setObject:[NSNumber numberWithInteger:rank] forKey:[NSString stringWithFormat:@"%@%@", team.objectID, week.objectID]];
 }
 
 @end
