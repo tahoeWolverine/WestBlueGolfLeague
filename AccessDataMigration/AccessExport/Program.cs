@@ -420,20 +420,42 @@ namespace AccessExport
             {
                 if (!p.ValidPlayer) continue;
 
-                var yearDataForPlayer = dataModel.YearDatas.Where(y => y.Player.Id == p.Id);
+                var yearDataForPlayer = dataModel.YearDatas.Where(y => y.Player.Id == p.Id).OrderBy(y => y.Year.Value).ToList();
 
-                foreach (var yd in yearDataForPlayer)
+                for (int i = 0; i < yearDataForPlayer.Count; i++)
                 {
-                    if (yd.Year.Value > 2011)
+                    var yd = yearDataForPlayer[i];
+                    bool isNewestYear = i == yearDataForPlayer.Count - 1;
+
+                    if (yd.Year.Value >= 2011)
                     {
-                        CalculateHandicaps(dataModel, p, yd);
+                        CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
-                    // else wat
+                    else if (yd.Year.Value >= 2009)
+                    {
+                        CalculateHandicaps20092010(dataModel, p, yd, isNewestYear);
+                    }
+                    else
+                    {
+                        CalculateHandicapsUnder2009(dataModel, p, yd, isNewestYear);
+                    }
                 }
             }
         }
 
-        private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData)
+        private static void CalculateHandicaps20092010(DataModel dataModel, Player player, YearData yearData, bool isNewestYear) 
+        {
+
+        
+
+        }
+
+        private static void CalculateHandicapsUnder2009(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
+        {
+
+        }
+
+        private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.StartingHandicap;
 
@@ -467,8 +489,7 @@ namespace AccessExport
                 scoreIndex++;
             }
 
-            // TODO: set ending handicap value on year data.
-            if (yearData.Year.Value == 2013)
+            if (isNewestYear)
             {
                 player.CurrentHandicap = priorHandicapWithScores(scores, scoreIndex);
             }
@@ -499,6 +520,11 @@ namespace AccessExport
             return finalHandicap;
         }
 
+        private static void BuildLeaderboards(DataModel dataModel)
+        {
+
+        }
+
         public static void DoValidate(DataModel dataModel) 
         {
             var peteMohs = dataModel.Players.First(x => string.Equals("Pete Mohs", x.Name, StringComparison.OrdinalIgnoreCase));
@@ -522,6 +548,8 @@ namespace AccessExport
             var dataModel = CreateDataModel();
 
             ProcessHandicaps(dataModel);
+
+            BuildLeaderboards(dataModel);
 
             // Do some validating on our data model.
             DoValidate(dataModel);
