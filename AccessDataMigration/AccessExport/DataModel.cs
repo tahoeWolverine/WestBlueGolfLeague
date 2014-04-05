@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccessExport.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,7 @@ namespace AccessExport
         public ICollection<Result> Results { get; set; }
         public ICollection<MatchUp> MatchUp { get; set; }
         public ICollection<Week> Weeks { get; set; }
+        public ICollection<LeaderBoardData> LeaderBoardDatas { get; set; }
+        public ICollection<LeaderBoard> LeaderBoards { get; set; }
     }
 }

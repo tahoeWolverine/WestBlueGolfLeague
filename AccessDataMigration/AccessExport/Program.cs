@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccessExport.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Diagnostics;
@@ -409,6 +410,8 @@ namespace AccessExport
                 YearDatas = yearDatas,
                 Results = allResults,
                 Courses = courseNameToCourse.Values,
+                LeaderBoardDatas = new List<LeaderBoardData>(),
+                LeaderBoards = new List<LeaderBoard>()
             };
         }
 
@@ -445,8 +448,6 @@ namespace AccessExport
 
         private static void CalculateHandicaps20092010(DataModel dataModel, Player player, YearData yearData, bool isNewestYear) 
         {
-
-        
 
         }
 
@@ -522,7 +523,65 @@ namespace AccessExport
 
         private static void BuildLeaderboards(DataModel dataModel)
         {
+            foreach (Year year in dataModel.Years) {
 
+                ISet<int> setOfTeamsForYear = new HashSet<int>();
+                var matchUpsForYear = dataModel.TeamMatchup.Where(x => x.Week.Year.Value == year.Value);
+
+                foreach (TeamMatchup tm in matchUpsForYear) 
+                {
+                    setOfTeamsForYear.Add(tm.Team1.Id);
+                    setOfTeamsForYear.Add(tm.Team2.Id);
+                }
+
+                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id));
+
+                // TODO: replace with real predicates and leader boards.
+                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => 1.0);
+            }
+        }
+
+        private static int LeaderBoardIdIndex = 1;
+        private static int LeaderBoardDataIdIndex = 1;
+
+        private static void TeamBoard(DataModel dataModel, string name, string key, ICollection<Team> teams, Year year, bool isAsc, Func<Team, DataModel, double> valueFunc)
+        {
+            LeaderBoard lb = new LeaderBoard { IsPlayerBoard = false, Id = LeaderBoardIdIndex++, Name = name, Key = key };
+
+            List<LeaderBoardData> datasWhichNeedRanks = new List<LeaderBoardData>();
+
+            foreach (var team in teams)
+            {
+                var results = dataModel.Results.Where(x => (x.Matchup.TeamMatchup.Team1.Id == team.Id || x.Matchup.TeamMatchup.Team2.Id == team.Id) && x.Year.Value == year.Value);
+
+                if (results.Count() == 0) continue;
+
+                double value = valueFunc(team, dataModel);
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value };
+                datasWhichNeedRanks.Add(lbd);
+
+                dataModel.LeaderBoardDatas.Add(lbd);
+            }
+
+            IEnumerable<LeaderBoardData> sortedLbds = null;
+
+            if (isAsc)
+            {
+                sortedLbds = datasWhichNeedRanks.OrderBy(x => x.Value);
+            }
+            else
+            {
+                sortedLbds = datasWhichNeedRanks.OrderByDescending(x => x.Value);
+            }
+
+            int rank = 0;
+
+            foreach (var lbd in sortedLbds)
+            {
+                lbd.Rank = rank;
+            }
+
+            dataModel.LeaderBoards.Add(lb);
         }
 
         public static void DoValidate(DataModel dataModel) 
