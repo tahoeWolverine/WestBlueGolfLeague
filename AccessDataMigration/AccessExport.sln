@@ -5,6 +5,15 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessExport", "AccessExport\AccessExport.csproj", "{E51734AF-B65A-408B-86D1-A32FC90C5905}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1FAD2DAF-F74F-41FE-8B59-0074E3E79D39}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModelTests", "DataModelTests\DataModelTests.csproj", "{EC3A2A34-7147-4D84-AF29-7AC612E68B3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +24,10 @@ Global
 		{E51734AF-B65A-408B-86D1-A32FC90C5905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E51734AF-B65A-408B-86D1-A32FC90C5905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E51734AF-B65A-408B-86D1-A32FC90C5905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC3A2A34-7147-4D84-AF29-7AC612E68B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC3A2A34-7147-4D84-AF29-7AC612E68B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC3A2A34-7147-4D84-AF29-7AC612E68B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC3A2A34-7147-4D84-AF29-7AC612E68B3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
