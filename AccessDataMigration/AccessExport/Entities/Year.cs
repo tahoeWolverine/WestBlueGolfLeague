@@ -11,5 +11,7 @@ namespace AccessExport
         public int Id { get; set; }
         public int Value { get; set; }
         public bool Complete { get; set; }
+
+        public bool NewestYear { get { return this.Value == DateTime.Now.Year; } }
     }
 }

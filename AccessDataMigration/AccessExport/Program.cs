@@ -61,9 +61,9 @@ namespace AccessExport
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
 
-            var noShowPlayer = new Player { Name = "No Show", CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = false, Team = teamOfLostPlayers };
+            var noShowPlayer = new Player(playerIndex++) { Name = "No Show", CurrentHandicap = 0, ValidPlayer = false, Team = teamOfLostPlayers };
             namesToPlayers[noShowPlayer.Name] = noShowPlayer;
-            var nonLeagueSub = new Player { Name = "Non-League Sub", CurrentHandicap = 0, Id = playerIndex++, ValidPlayer = false, Team = teamOfLostPlayers };
+            var nonLeagueSub = new Player(playerIndex++) { Name = "Non-League Sub", CurrentHandicap = 0, ValidPlayer = false, Team = teamOfLostPlayers };
             namesToPlayers[nonLeagueSub.Name] = nonLeagueSub;
 
             for (int year = 1999; year < lastYear; year++)
@@ -194,7 +194,7 @@ namespace AccessExport
                                 Player player = null;
                                 if (!namesToPlayers.TryGetValue(playerName, out player))
                                 {
-                                    player = new Player { Name = playerName, CurrentHandicap = startingHandicap, Id = playerIndex++, ValidPlayer = true };
+                                    player = new Player(playerIndex++) { Name = playerName, CurrentHandicap = startingHandicap, ValidPlayer = true };
                                     namesToPlayers[playerName] = player;
                                     setOfPlayers.Add(playerName);
                                 }
@@ -208,6 +208,7 @@ namespace AccessExport
 
                                 YearData yearData = new YearData { Player = player, Rookie = isRookie, StartingHandicap = startingHandicap, FinishingHandicap = startingHandicap, Year = yearValueToYear[year], Id = yearDataIndex++ };
                                 yearDatas.Add(yearData);
+                                player.AddYearData(yearData);
                             }
                         }
 
@@ -292,7 +293,7 @@ namespace AccessExport
                                             throw new InvalidOperationException("invalid player found in year not 2011: " + player1Name);
                                         }
 
-                                        invalidPlayer = new Player { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                        invalidPlayer = new Player(playerIndex++) { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, CurrentHandicap = 0 };
                                         extraInvalidPlayers.Add(invalidPlayer);
                                     }
 
@@ -311,7 +312,7 @@ namespace AccessExport
                                             throw new InvalidOperationException("invalid player found in year not 2011: " + player2Name);
                                         }
 
-                                        invalidPlayer = new Player { Name = player2Name, Team = teamOfLostPlayers, ValidPlayer = false, Id = playerIndex++, CurrentHandicap = 0 };
+                                        invalidPlayer = new Player(playerIndex++) { Name = player2Name, Team = teamOfLostPlayers, ValidPlayer = false, CurrentHandicap = 0 };
                                         extraInvalidPlayers.Add(invalidPlayer);
                                     }
 
@@ -381,9 +382,11 @@ namespace AccessExport
 
                                 Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
                                 allResults.Add(player1Result);
+                                team1.AddResult(player1Result);
 
                                 Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
                                 allResults.Add(player2Result);
+                                team2.AddResult(player2Result);
                             }
                         }
 
@@ -537,7 +540,13 @@ namespace AccessExport
                 var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id));
 
                 // TODO: replace with real predicates and leader boards.
-                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => 1.0);
+                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => team.TotalPointsForYear(year));
+
+                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.AverageHandicapForYear(year));
+
+                TeamBoard(dataModel, "Win/Loss Ratio", "win_loss_ratio", teamsForYear.ToList(), year, false, (team, dm) => team.RecordRatioForYear(year));
+
+                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.ImprovedInYear(year));
             }
         }
 
