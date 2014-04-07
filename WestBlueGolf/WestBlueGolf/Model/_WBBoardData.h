@@ -5,6 +5,7 @@
 #import "WBManagedObject.h"
 
 extern const struct WBBoardDataAttributes {
+	__unsafe_unretained NSString *detailValue;
 	__unsafe_unretained NSString *rank;
 	__unsafe_unretained NSString *value;
 } WBBoardDataAttributes;
@@ -25,6 +26,7 @@ extern const struct WBBoardDataFetchedProperties {
 
 
 
+
 @interface WBBoardDataID : NSManagedObjectID {}
 @end
 
@@ -33,6 +35,16 @@ extern const struct WBBoardDataFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBBoardDataID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* detailValue;
+
+
+
+//- (BOOL)validateDetailValue:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -95,6 +107,12 @@ extern const struct WBBoardDataFetchedProperties {
 @end
 
 @interface _WBBoardData (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveDetailValue;
+- (void)setPrimitiveDetailValue:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveRank;

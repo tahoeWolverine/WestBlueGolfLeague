@@ -11,6 +11,7 @@
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
 									value:(CGFloat)value
+							  detailValue:(NSString *)detailValue
 									 rank:(NSInteger)rank
 									 year:(WBYear *)year
 									  moc:(NSManagedObjectContext *)moc {
@@ -21,6 +22,7 @@
 	
 	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	data.valueValue = value;
+	data.detailValue = detailValue;
 	data.rankValue = rank;
 	
 	[entity addBoardDataObject:data];

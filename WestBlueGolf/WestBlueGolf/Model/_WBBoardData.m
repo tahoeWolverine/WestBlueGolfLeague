@@ -4,6 +4,7 @@
 #import "_WBBoardData.h"
 
 const struct WBBoardDataAttributes WBBoardDataAttributes = {
+	.detailValue = @"detailValue",
 	.rank = @"rank",
 	.value = @"value",
 };
@@ -56,6 +57,13 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic detailValue;
+
+
 
 
 

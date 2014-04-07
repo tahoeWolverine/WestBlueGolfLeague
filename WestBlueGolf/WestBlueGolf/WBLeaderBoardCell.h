@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *rankLabel;
 @property (weak, nonatomic) IBOutlet UILabel *peopleName;
 @property (weak, nonatomic) IBOutlet UILabel *peopleValue;
+@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 
 - (void)configureCellForBoardData:(WBBoardData *)data;
 

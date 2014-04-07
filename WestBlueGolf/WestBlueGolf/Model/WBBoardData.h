@@ -6,6 +6,7 @@
 + (WBBoardData *)createBoardDataForEntity:(WBPeopleEntity *)entity
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
 									value:(CGFloat)value
+							  detailValue:(NSString *)detailValue
 									 rank:(NSInteger)rank
 									 year:(WBYear *)year
 									  moc:(NSManagedObjectContext *)moc;

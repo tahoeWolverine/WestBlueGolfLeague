@@ -15,6 +15,8 @@
 #define SECTION_KEY @"peopleEntity.me"
 #define SORT_KEY @"rank"
 
+#define CELL_EXPAND_HEIGHT 80.0f
+
 typedef enum {
 	WBLeaderBoardSectionMe,
 	WBLeaderBoardSectionOthers
@@ -43,6 +45,15 @@ typedef enum {
 
 - (NSPredicate *)fetchPredicate {
 	return [NSPredicate predicateWithFormat:@"leaderBoard = %@ && year = %@", [(WBLeaderBoardTableViewController *)self.viewController selectedLeaderboard], [WBYear thisYear]];
+}
+
+// Cells should expand if there is a detailValue for this leaderboard
+- (BOOL)shouldExpand {
+	return ![[(WBBoardData *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] detailValue] isEqualToString:@""];
+}
+
+- (CGFloat)expandedCellHeight {
+	return CELL_EXPAND_HEIGHT;
 }
 
 - (NSArray *)sortDescriptorsForFetch {

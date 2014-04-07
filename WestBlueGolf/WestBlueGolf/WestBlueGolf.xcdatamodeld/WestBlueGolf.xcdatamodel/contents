@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="WBBoardData" representedClassName="WBBoardData" syncable="YES">
+        <attribute name="detailValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rank" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="value" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <relationship name="leaderBoard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBLeaderBoard" inverseName="boardData" inverseEntity="WBLeaderBoard" syncable="YES"/>
@@ -113,9 +114,9 @@
         </userInfo>
     </entity>
     <elements>
-        <element name="WBBoardData" positionX="153" positionY="72" width="128" height="118"/>
+        <element name="WBBoardData" positionX="153" positionY="72" width="128" height="133"/>
         <element name="WBCourse" positionX="-317" positionY="-171" width="128" height="88"/>
-        <element name="WBLeaderBoard" positionX="153" positionY="197" width="128" height="118"/>
+        <element name="WBLeaderBoard" positionX="153" positionY="215" width="128" height="118"/>
         <element name="WBMatch" positionX="7" positionY="-277" width="128" height="88"/>
         <element name="WBPeopleEntity" positionX="153" positionY="-27" width="128" height="88"/>
         <element name="WBPlayer" positionX="153" positionY="-171" width="128" height="133"/>
