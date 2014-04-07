@@ -94,7 +94,6 @@
 		A53498EA18D1123600D52D84 /* WBTeamProfileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */; };
 		A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */; };
 		A53498F018D20D1B00D52D84 /* WBYearSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */; };
-		A560544818EDB24300C7E357 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A560544718EDB24300C7E357 /* AFNetworking.framework */; };
 		A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */; };
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
@@ -372,7 +371,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */,
-				A560544818EDB24300C7E357 /* AFNetworking.framework in Frameworks */,
 				A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */,
 				A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */,
 				A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */,
@@ -1230,10 +1228,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
@@ -1252,7 +1247,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+					.../WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";

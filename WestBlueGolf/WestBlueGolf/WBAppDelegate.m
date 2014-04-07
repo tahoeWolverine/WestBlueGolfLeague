@@ -7,7 +7,7 @@
 //
 
 #import "WBAppDelegate.h"
-#import <AFNetworking/AFNetworking.h>
+//#import <AFNetworking/AFNetworking.h>
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -113,7 +113,8 @@
 }
 
 - (void)dummyYearsCall {
-	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	__block typeof(self) weakSelf = self;
+	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
@@ -121,48 +122,55 @@
 	__block typeof(self) weakSelf = self;
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy years request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 			[WBCoreDataManager saveMainContext];
 			
 			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-		}];
+		/*}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
-	[operation start];
+	[operation start];*/
 }
 
 - (void)dummyYearDataCall {
-	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy year data request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/
 			[self resetYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-		}];
+		/*}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
-	[operation start];
+	[operation start];*/
 }
 
 - (void)setProfileTabPlayer {
 	WBPlayer *me = [WBPlayer me];
 	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
-	UINavigationController *profileTab = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
-	((WBProfileTableViewController *)profileTab.topViewController).selectedPlayer = me;
+	id vc = [tbc.viewControllers objectAtIndex:0];
+	if ([vc isKindOfClass:[UINavigationController class]]) {
+		UINavigationController *profileTab = (UINavigationController *)vc;
+		((WBProfileTableViewController *)profileTab.topViewController).selectedPlayer = me;
+	}
 }
 
 - (BOOL)isProfileTab:(UIViewController *)vc {
 	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
-	UINavigationController *navc = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
-	return vc == navc.topViewController;
+	id firstVC = [tbc.viewControllers objectAtIndex:0];
+	if ([firstVC isKindOfClass:[UINavigationController class]]) {
+		UINavigationController *navc = (UINavigationController *)firstVC;
+		return vc == navc.topViewController;
+	}
+	return NO;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
