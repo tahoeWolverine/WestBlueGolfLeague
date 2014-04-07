@@ -176,3 +176,7 @@ WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/obj
 *.suo
 AccessDataMigration/AccessExport/bin
 AccessDataMigration/AccessExport/obj
+AccessDataMigration/.nuget
+AccessDataMigration/packages
+AccessDataMigration/DataModelTests/bin
+AccessDataMigration/DataModelTests/obj
