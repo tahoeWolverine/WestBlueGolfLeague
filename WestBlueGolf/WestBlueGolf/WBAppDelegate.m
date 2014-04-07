@@ -42,6 +42,14 @@
 	
 	// Fix iOS7.1 tint issue
 	[self.window setTintColor:kEmeraldColor];
+
+	// Split view hack
+	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+	id vc = [tbc.viewControllers objectAtIndex:0];
+	if ([vc isKindOfClass:[UISplitViewController class]]) {
+		UISplitViewController *svc = (UISplitViewController *)vc;
+		svc.delegate = svc.viewControllers[1];
+	}
 	
     return YES;
 }

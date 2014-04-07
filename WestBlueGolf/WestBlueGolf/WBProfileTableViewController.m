@@ -15,7 +15,7 @@
 #import "WBProfileDataSource.h"
 #import "ProfilePictureCropperViewController.h"
 
-@interface WBProfileTableViewController () <UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfilePictureCropperViewControllerDelegate>
+@interface WBProfileTableViewController () <UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UISplitViewControllerDelegate, ProfilePictureCropperViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *winLossLabel;
 @property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
@@ -310,6 +310,12 @@
     NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *getImagePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", player.name]];
     return [UIImage imageWithContentsOfFile:getImagePath];
+}
+
+#pragma mark - UISplitViewControllerDelegate methods
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+	return NO;
 }
 
 @end
