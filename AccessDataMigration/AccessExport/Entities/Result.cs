@@ -16,6 +16,14 @@ namespace AccessExport
         public int PriorHandicap { get; set; }
         public Year Year { get; set; }
 
-        
+        public Result GetOpponentResult()
+        {
+            return this.Matchup.Result1.Id == this.Id ? this.Matchup.Result1 : this.Matchup.Result2;
+        }
+
+        public int ScoreDifference { get { return this.Score - this.Matchup.TeamMatchup.Week.Course.Par; } }
+        public int NetScoreDifference { get { return this.ScoreDifference - this.PriorHandicap; } }
+        public bool WasWin { get { return this.Points > 12; } }
+        public bool WasLoss { get { return this.Points < 12; } }
     }
 }

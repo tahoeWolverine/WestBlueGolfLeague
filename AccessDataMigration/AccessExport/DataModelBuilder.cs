@@ -386,6 +386,9 @@ namespace AccessExport
                             Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
                             allResults.Add(player2Result);
                             team2.AddResult(player2Result);
+
+                            matchup.Result1 = player1Result;
+                            matchup.Result2 = player2Result;
                         }
                     }
 
@@ -548,11 +551,23 @@ namespace AccessExport
                 // TODO: replace with real predicates and leader boards.
                 TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => team.TotalPointsForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.AverageHandicapForYear(year));
+                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, true, (team, dm) => team.AverageHandicapForYear(year));
 
                 TeamBoard(dataModel, "Win/Loss Ratio", "win_loss_ratio", teamsForYear.ToList(), year, false, (team, dm) => team.RecordRatioForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.ImprovedInYear(year));
+                TeamBoard(dataModel, "Season Improvement", "season_improvement", teamsForYear.ToList(), year, true, (team, dm) => team.ImprovedInYear(year));
+
+                TeamBoard(dataModel, "Avg. Opp. Score", "avg_opp_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageOpponentScoreForYear(year));
+
+                TeamBoard(dataModel, "Avg. Opp. Net Score", "avg_opp_net_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageOpponentNetScoreForYear(year));
+
+                TeamBoard(dataModel, "Average Score", "avg_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageScoreForYear(year));
+
+                TeamBoard(dataModel, "Average Net Score", "avg_net_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageNetScoreForYear(year));
+
+                TeamBoard(dataModel, "Ind. W/L Ratio", "ind_win_loss_record", teamsForYear.ToList(), year, true, (team, dm) => team.IndividualRecordRatioForYear(year));
+
+                TeamBoard(dataModel, "Total Match Wins", "total_match_wins", teamsForYear.ToList(), year, true, (team, dm) => team.IndividualRecordForYear(year)[0]);
             }
         }
 

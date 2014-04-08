@@ -20,7 +20,8 @@ namespace AccessExport
         public ICollection<Player> AllPlayers { get { return this.allPlayers.Values; } }
 
 
-        public void AddResult(Result result) {
+        public void AddResult(Result result)
+        {
             this.allResults.Add(result);
         }
 
@@ -73,6 +74,52 @@ namespace AccessExport
             return total;
         }
 
+        public double AverageOpponentScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+
+            if (results == null || results.Count() == 0) return 0;
+
+            double totalScore = 0;
+            double opponentCount = 0;
+
+            foreach (var result in results)
+            {
+                int val = result.GetOpponentResult().ScoreDifference;
+
+                if (val < 60)
+                {
+                    totalScore += val;
+                    opponentCount++;
+                }
+            }
+
+            return totalScore / opponentCount;
+        }
+
+        internal double AverageOpponentNetScoreForYear(Year year)
+        {
+            var allResults = this.AllResultsForYear(year);
+            if (allResults == null || allResults.Count() == 0) return 0;
+
+            double totalScore = 0;
+            double opponentCount = 0;
+
+            foreach (var result in allResults)
+            {
+                int val = result.GetOpponentResult().NetScoreDifference;
+
+                if (val < 60)
+                {
+                    totalScore += val;
+                    opponentCount++;
+                }
+            }
+
+            return totalScore / opponentCount;
+
+        }
+
         public int ImprovedInYear(Year year)
         {
             int totalImproved = 0;
@@ -121,6 +168,95 @@ namespace AccessExport
             }
 
             return new int[] { wins, losses, ties };
+        }
+
+        internal double AverageScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalScore = 0;
+            double roundCount = 0;
+            int value = 0;
+            foreach (var result in results)
+            {
+                value = result.ScoreDifference;
+
+                if (value < 60)
+                {
+                    totalScore += value;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0.0 || totalScore == 0.0)
+            {
+                return 63.0;
+            }
+
+            return totalScore / roundCount;
+        }
+
+        internal double AverageNetScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+            double totalScore = 0;
+            double roundCount = 0;
+            int value = 0;
+            foreach (var result in results)
+            {
+                value = result.ScoreDifference;
+                if (value < 60)
+                {
+                    totalScore += value;
+                    roundCount++;
+                }
+            }
+
+            return totalScore / roundCount;
+        }
+
+        internal double IndividualRecordRatioForYear(Year year)
+        {
+            var record = this.IndividualRecordForYear(year);
+
+            double totalWins = record[0] + (record[2] / 2.0);
+            double totalWeeks = record[0] + record[1] + record[2];
+
+            if (totalWeeks == 0) return 0;
+
+            return totalWins / totalWeeks;
+        }
+
+        public double[] IndividualRecordForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            int wins = 0, losses = 0, ties = 0;
+
+            foreach (var result in results)
+            {
+                if (result.WasWin)
+                {
+                    wins++;
+                }
+                else if (result.WasLoss)
+                {
+                    losses++;
+                }
+                else
+                {
+                    ties++;
+                }
+            }
+
+            return new double[] { wins, losses, ties };
         }
     }
 }

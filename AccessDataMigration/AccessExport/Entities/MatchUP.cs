@@ -12,5 +12,9 @@ namespace AccessExport
         public TeamMatchup TeamMatchup { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
+
+        public Result Result1 { get; set; }
+
+        public Result Result2 { get; set; }
     }
 }
