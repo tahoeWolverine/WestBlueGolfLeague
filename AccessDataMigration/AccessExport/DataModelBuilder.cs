@@ -382,10 +382,12 @@ namespace AccessExport
                             Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
                             allResults.Add(player1Result);
                             team1.AddResult(player1Result);
+                            player1.AddResult(player1Result);
 
                             Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
                             allResults.Add(player2Result);
                             team2.AddResult(player2Result);
+                            player2.AddResult(player2Result);
 
                             matchup.Result1 = player1Result;
                             matchup.Result2 = player2Result;
@@ -536,7 +538,6 @@ namespace AccessExport
         {
             foreach (Year year in dataModel.Years)
             {
-
                 ISet<int> setOfTeamsForYear = new HashSet<int>();
                 var matchUpsForYear = dataModel.TeamMatchup.Where(x => x.Week.Year.Value == year.Value);
 
@@ -546,29 +547,49 @@ namespace AccessExport
                     setOfTeamsForYear.Add(tm.Team2.Id);
                 }
 
-                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id));
+                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id)).ToList();
 
                 // TODO: replace with real predicates and leader boards.
-                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => team.TotalPointsForYear(year));
+                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear, year, false, (team, dm) => team.TotalPointsForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, true, (team, dm) => team.AverageHandicapForYear(year));
+                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear, year, true, (team, dm) => team.AverageHandicapForYear(year));
 
-                TeamBoard(dataModel, "Win/Loss Ratio", "win_loss_ratio", teamsForYear.ToList(), year, false, (team, dm) => team.RecordRatioForYear(year));
+                TeamBoard(dataModel, "Win/Loss Ratio", "win_loss_ratio", teamsForYear, year, false, (team, dm) => team.RecordRatioForYear(year));
 
-                TeamBoard(dataModel, "Season Improvement", "season_improvement", teamsForYear.ToList(), year, true, (team, dm) => team.ImprovedInYear(year));
+                TeamBoard(dataModel, "Season Improvement", "season_improvement", teamsForYear, year, true, (team, dm) => team.ImprovedInYear(year));
 
-                TeamBoard(dataModel, "Avg. Opp. Score", "avg_opp_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageOpponentScoreForYear(year));
+                TeamBoard(dataModel, "Avg. Opp. Score", "avg_opp_score", teamsForYear, year, true, (team, dm) => team.AverageOpponentScoreForYear(year));
 
-                TeamBoard(dataModel, "Avg. Opp. Net Score", "avg_opp_net_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageOpponentNetScoreForYear(year));
+                TeamBoard(dataModel, "Avg. Opp. Net Score", "avg_opp_net_score", teamsForYear, year, true, (team, dm) => team.AverageOpponentNetScoreForYear(year));
 
-                TeamBoard(dataModel, "Average Score", "avg_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageScoreForYear(year));
+                TeamBoard(dataModel, "Average Score", "avg_score", teamsForYear, year, true, (team, dm) => team.AverageScoreForYear(year));
 
-                TeamBoard(dataModel, "Average Net Score", "avg_net_score", teamsForYear.ToList(), year, true, (team, dm) => team.AverageNetScoreForYear(year));
+                TeamBoard(dataModel, "Average Net Score", "avg_net_score", teamsForYear, year, true, (team, dm) => team.AverageNetScoreForYear(year));
 
-                TeamBoard(dataModel, "Ind. W/L Ratio", "ind_win_loss_record", teamsForYear.ToList(), year, true, (team, dm) => team.IndividualRecordRatioForYear(year));
+                TeamBoard(dataModel, "Ind. W/L Ratio", "ind_win_loss_record", teamsForYear, year, true, (team, dm) => team.IndividualRecordRatioForYear(year));
 
-                TeamBoard(dataModel, "Total Match Wins", "total_match_wins", teamsForYear.ToList(), year, true, (team, dm) => team.IndividualRecordForYear(year)[0]);
+                TeamBoard(dataModel, "Total Match Wins", "total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
+
+                TeamBoard(dataModel, "Total Match Wins", "total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
+
+                TeamBoard(dataModel, "Points in a Week", "most_points_in_week", teamsForYear, year, false, (team, dm) => team.MostPointsInWeekForYear(year));
+
+                TeamBoard(dataModel, "Avg Margin of Victory", "avg_margin_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfVictoryForYear(year));
+
+                TeamBoard(dataModel, "Avg Margin of Net Victory", "avg_margin_net_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfNetVictoryForYear(year));
+
+
+                var allPlayersForYear = dataModel.Players.Where(p => p.YearDatas.Any(yd => yd.Year.Value == year.Value)).ToList();
+
+                PlayerBoard(dataModel, "Best Score", "player_best_score", allPlayersForYear, year, true, (p, dm) => p.LowRoundForYear(year));
+
+                PlayerBoard(dataModel, "Best Net Score", "player_net_best_score", allPlayersForYear, year, true, (p, dm) => p.LowNetForYear(year));
+
+                PlayerBoard(dataModel, "Handicap", "player_handicap", allPlayersForYear, year, true, (p, dm) => p.FinishingHandicapInYear(year));
+
+                PlayerBoard(dataModel, "Average Points", "average_points", allPlayersForYear, year, true, (p, dm) => p.AveragePointsInYear(year));
             }
+
         }
 
         private static int LeaderBoardIdIndex = 1;
@@ -607,6 +628,46 @@ namespace AccessExport
             int rank = 0;
 
             foreach (var lbd in sortedLbds)
+            {
+                lbd.Rank = rank;
+            }
+
+            dataModel.LeaderBoards.Add(lb);
+        }
+
+        private static void PlayerBoard(DataModel dataModel, string name, string key, ICollection<Player> players, Year year, bool isAsc, Func<Player, DataModel, double> valueFunc)
+        {
+            LeaderBoard lb = new LeaderBoard { IsPlayerBoard = false, Id = LeaderBoardIdIndex++, Name = name, Key = key };
+
+
+            List<LeaderBoardData> datasToSort = new List<LeaderBoardData>();
+            IEnumerable<LeaderBoardData> datasToSortAndRank = datasToSort;
+
+            foreach (var player in players)
+            {
+                var results = player.AllResultsForYear(year);
+
+                if (results.Count() == 0) continue;
+
+                double value = valueFunc(player, dataModel);
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value };
+
+                datasToSort.Add(lbd);
+                dataModel.LeaderBoardDatas.Add(lbd);
+            }
+
+            if (isAsc)
+            {
+                datasToSortAndRank = datasToSortAndRank.OrderBy(x => x.Value);
+            }
+            else
+            {
+                datasToSortAndRank = datasToSortAndRank.OrderByDescending(x => x.Value);
+            }
+
+            int rank = 0;
+
+            foreach (var lbd in datasToSortAndRank)
             {
                 lbd.Rank = rank;
             }

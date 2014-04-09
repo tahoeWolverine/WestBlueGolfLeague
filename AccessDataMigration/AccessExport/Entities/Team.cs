@@ -208,7 +208,7 @@ namespace AccessExport
                 return 0.0;
             }
             double totalScore = 0;
-            double roundCount = 0;
+            int roundCount = 0;
             int value = 0;
             foreach (var result in results)
             {
@@ -219,6 +219,8 @@ namespace AccessExport
                     roundCount++;
                 }
             }
+
+            if (roundCount == 0) return 0.0;
 
             return totalScore / roundCount;
         }
@@ -257,6 +259,73 @@ namespace AccessExport
             }
 
             return new double[] { wins, losses, ties };
+        }
+
+        internal int MostPointsInWeekForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+
+            return results.Select(x => x.Points).Max();
+        }
+
+        internal double AverageMarginOfVictoryForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalMargin = 0;
+            int roundCount = 0;
+            int playerValue = 0, oppValue = 0;
+            foreach (var result in results)
+            {
+                playerValue = result.ScoreDifference;
+                oppValue = result.GetOpponentResult().ScoreDifference;
+                if (oppValue < 60)
+                {
+                    totalMargin += oppValue - playerValue;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0)
+            {
+                return 0.0;
+            }
+
+            return totalMargin / roundCount;
+        }
+
+        internal double AverageMarginOfNetVictoryForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalMargin = 0;
+            int roundCount = 0;
+            int playerValue = 0, oppValue = 0;
+            foreach (var result in results)
+            {
+                playerValue = result.NetScoreDifference;
+                oppValue = result.GetOpponentResult().NetScoreDifference;
+                if (oppValue < 60)
+                {
+                    totalMargin += oppValue - playerValue;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0)
+            {
+                return 0.0;
+            }
+
+            return totalMargin / roundCount;
         }
     }
 }
