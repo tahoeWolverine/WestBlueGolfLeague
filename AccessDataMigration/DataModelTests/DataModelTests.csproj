@@ -58,8 +58,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="DataModelTestBase.cs" />
+    <Compile Include="HandicapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamStandingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccessExport\AccessExport.csproj">
@@ -68,6 +70,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="file.dsn" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

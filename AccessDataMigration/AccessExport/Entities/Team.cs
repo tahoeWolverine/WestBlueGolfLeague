@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class Team
+    public class Team
     {
         private List<Result> allResults = new List<Result>();
         private Dictionary<int, Player> allPlayers = new Dictionary<int, Player>();

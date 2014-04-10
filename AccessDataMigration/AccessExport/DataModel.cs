@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class DataModel
+    public class DataModel
     {
         public ICollection<Player> Players { get; set; }
         public ICollection<Team> Teams { get; set; }

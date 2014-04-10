@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace AccessExport.Entities
 {
-    class LeaderBoard
+    public class LeaderBoard
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsPlayerBoard { get; set; }
         public int Priority { get; set; }
         public string Key { get; set; }
+        public Year Year { get; set; }
     }
 }

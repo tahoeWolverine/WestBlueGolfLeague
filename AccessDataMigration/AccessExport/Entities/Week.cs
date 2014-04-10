@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class Week
+    public class Week
     {
         public DateTime Date { get; set; }
         public int Id { get; set; }

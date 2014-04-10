@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class Result
+    public class Result
     {
         public int Score { get; set; }
         public int Points { get; set; }

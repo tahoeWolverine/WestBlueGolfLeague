@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class TeamMatchup
+    public class TeamMatchup
     {
         public int Id { get; set; }
         public Team Team1 { get; set; }
