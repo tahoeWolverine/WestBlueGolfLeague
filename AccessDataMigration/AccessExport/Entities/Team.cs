@@ -265,7 +265,18 @@ namespace AccessExport
         {
             var results = this.AllResultsForYear(year);
 
-            return results.Select(x => x.Points).Max();
+            // group results by week
+            var groupedResults = results.GroupBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex, x => x, (key, elements) => new { WeekId = key, Results = elements });
+
+            int max = 0;
+            foreach (var r in groupedResults)
+            {
+                int total = r.Results.Select(x => x.Points).Sum();
+
+                if (total >= max) max = total;
+            }
+
+            return max;
         }
 
         internal double AverageMarginOfVictoryForYear(Year year)

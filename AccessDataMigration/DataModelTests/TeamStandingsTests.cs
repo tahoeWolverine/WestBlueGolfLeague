@@ -13,14 +13,14 @@ namespace DataModelTests
     [TestClass]
     public class TeamStandingsTests : DataModelTestBase
     {
-        private LeaderBoard pointsLeaderBoard2013;
+        private LeaderBoard pointsLeaderBoard;
         private IEnumerable<LeaderBoardData> teamStandings2013LBD;
 
         [TestInitialize]
         public void Init()
         {
-            this.pointsLeaderBoard2013 = DataModel.LeaderBoards.Where(x => x.Year.Value == 2013 && string.Equals(x.Key, "team_ranking")).First();
-            teamStandings2013LBD = DataModel.LeaderBoardDatas.Where(x => x.LeaderBoard.Id == pointsLeaderBoard2013.Id).OrderBy(x => x.Rank);
+            this.pointsLeaderBoard = DataModel.LeaderBoards.Where(x => string.Equals(x.Key, "team_ranking")).First();
+            teamStandings2013LBD = DataModel.LeaderBoardDatas.Where(x => x.LeaderBoard.Id == pointsLeaderBoard.Id && x.Year.Value == 2013).OrderBy(x => x.Rank);
         }
 
         [TestMethod]

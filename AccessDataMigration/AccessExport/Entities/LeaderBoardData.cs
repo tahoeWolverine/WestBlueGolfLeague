@@ -17,5 +17,6 @@ namespace AccessExport.Entities
         public Player Player { get; set; }
         public LeaderBoard LeaderBoard { get; set; }
         public string Detail { get; set; }
+        public Year Year { get; set; }
     }
 }
