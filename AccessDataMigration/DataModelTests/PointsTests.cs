@@ -20,6 +20,9 @@ namespace DataModelTests
         private IEnumerable<LeaderBoardData> mulligansLbd2013;
         private Team kraftDinner;
         private IEnumerable<LeaderBoardData> kraftDinnerLbd2013;
+        private IEnumerable<LeaderBoardData> averagePoints2013;
+        private IEnumerable<LeaderBoardData> mostPointsInMatch2013;
+        private IEnumerable<LeaderBoardData> totalPoints2013;
 
         [TestInitialize]
         public void Init()
@@ -30,6 +33,9 @@ namespace DataModelTests
             this.mulligansLbd2013 = DataModel.LeaderBoardDatas.Where(x => x.IsPlayer == false && x.Year.Value == 2013 && x.Team.Id == mulligans.Id);
             this.kraftDinner = DataModel.Teams.First(x => string.Equals("Kraft Dinner", x.Name));
             this.kraftDinnerLbd2013 = DataModel.LeaderBoardDatas.Where(x => x.IsPlayer == false && x.Year.Value == 2013 && x.Team.Id == kraftDinner.Id);
+            this.averagePoints2013 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2013 && x.IsPlayer == true && string.Equals(x.LeaderBoard.Key, "player_average_points"));
+            this.mostPointsInMatch2013 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2013 && x.LeaderBoard.Key == "player_points_in_match");
+            this.totalPoints2013 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2013 && x.LeaderBoard.Key == "player_total_points");
         }
 
 
@@ -61,6 +67,34 @@ namespace DataModelTests
 
             lbd.Value.ShouldEqual(73);
             lbd.Rank.ShouldEqual(2);
+        }
+
+        [TestMethod]
+        public void BradShouldHaveBestAveragePoints2013()
+        {
+            var firstRank = this.averagePoints2013.Where(x => x.Rank == 1);
+
+            firstRank.Count().ShouldEqual(1);
+            firstRank.First().Value.ShouldEqual(15.38, .1);
+            firstRank.First().Player.Name.ShouldEqual("Brad Zilge");
+        }
+
+        [TestMethod]
+        public void FourPlayersWith22PointsInMatchAndRank22013()
+        {
+            var pointsLbd = this.mostPointsInMatch2013.Where(x => x.Rank == 2);
+
+            pointsLbd.Count().ShouldEqual(4);
+            pointsLbd.First().Value.ShouldEqual(22);
+        }
+
+        [TestMethod]
+        public void PerryHasMostPoints2013()
+        {
+            var totalPoints = this.totalPoints2013.Where(x => x.Rank == 1);
+
+            totalPoints.Count().ShouldEqual(1);
+            totalPoints.First().Value.ShouldEqual(211);
         }
     }
 }

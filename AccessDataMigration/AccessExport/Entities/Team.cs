@@ -229,7 +229,7 @@ namespace AccessExport
         {
             var record = this.IndividualRecordForYear(year);
 
-            double totalWins = record[0] + (record[2] / 2.0);
+            double totalWins = record[0] + ((double)record[2] / 2.0);
             double totalWeeks = record[0] + record[1] + record[2];
 
             if (totalWeeks == 0) return 0;

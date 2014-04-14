@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,8 +124,13 @@ namespace AccessExport
 
         public double RecordRatioForYear(Year year)
         {
+            //if (year.Value == 2013 && (this.Name == "Ivan Kuznia" || this.Name == "Patrick Neuman"))
+            //{
+            //    Debugger.Break();
+            //}
+
             var record = this.RecordForYear(year);
-            double totalWins = record[0] + (record[2] / 2);
+            double totalWins = record[0] + ((double)record[2] / 2);
             int totalMatches = record[0] + record[1] + record[2];
 
             return totalMatches == 0 ? 0.0 : totalWins / (double)totalMatches;

@@ -29,7 +29,7 @@ namespace AccessExport
             // 09 - 11 - added week 0 score to players, added course name to week
             // 12 - 13 - added status to player
 
-            const int lastYear = 2014;
+            const int lastYear = 2015;
 
             Dictionary<string, Player> namesToPlayers = new Dictionary<string, Player>();
             ICollection<Player> extraInvalidPlayers = new List<Player>();
@@ -547,7 +547,7 @@ namespace AccessExport
                     setOfTeamsForYear.Add(tm.Team2.Id);
                 }
 
-                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id)).ToList();
+                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id) && x.ValidTeam).ToList();
 
                 // TODO: replace with real predicates and leader boards.
                 TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear, year, false, (team, dm) => team.TotalPointsForYear(year));
@@ -579,7 +579,7 @@ namespace AccessExport
                 TeamBoard(dataModel, "Avg Margin of Net Victory", "team_avg_margin_net_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfNetVictoryForYear(year));
 
 
-                var allPlayersForYear = dataModel.Players.Where(p => p.YearDatas.Any(yd => yd.Year.Value == year.Value)).ToList();
+                var allPlayersForYear = dataModel.Players.Where(p => p.YearDatas.Any(yd => yd.Year.Value == year.Value) && p.ValidPlayer).ToList();
 
                 PlayerBoard(dataModel, "Best Score", "player_best_score", allPlayersForYear, year, true, (p, dm) => p.LowRoundForYear(year));
 
@@ -605,7 +605,7 @@ namespace AccessExport
 
                 PlayerBoard(dataModel, "Total Points", "player_total_points", allPlayersForYear, year, false, (p, dm) => p.TotalPointsForYear(year));
 
-                PlayerBoard(dataModel, "Total Wins", "player_total_points", allPlayersForYear, year, false, (p, dm) => p.RecordForYear(year)[0]);
+                PlayerBoard(dataModel, "Total Wins", "player_total_wins", allPlayersForYear, year, false, (p, dm) => p.RecordForYear(year)[0]);
 
                 PlayerBoard(dataModel, "Avg. Margin of Victory", "player_avg_margin_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfVictoryForYear(year));
 
@@ -652,24 +652,7 @@ namespace AccessExport
                 dataModel.LeaderBoardDatas.Add(lbd);
             }
 
-            IEnumerable<LeaderBoardData> sortedLbds = null;
-
-            if (isAsc)
-            {
-                sortedLbds = datasWhichNeedRanks.OrderBy(x => x.Value);
-            }
-            else
-            {
-                sortedLbds = datasWhichNeedRanks.OrderByDescending(x => x.Value);
-            }
-
-            int rank = 1;
-
-            foreach (var lbd in sortedLbds)
-            {
-                lbd.Rank = rank;
-                rank++;
-            }
+            this.SortAndRankLeaderBoardData(datasWhichNeedRanks, isAsc);
 
             dataModel.LeaderBoards.Add(lb);
         }
@@ -679,7 +662,6 @@ namespace AccessExport
             LeaderBoard lb = this.LeaderBoardByKey(dataModel, key, true, name);
 
             List<LeaderBoardData> datasToSort = new List<LeaderBoardData>();
-            IEnumerable<LeaderBoardData> datasToSortAndRank = datasToSort;
 
             foreach (var player in players)
             {
@@ -694,25 +676,37 @@ namespace AccessExport
                 dataModel.LeaderBoardDatas.Add(lbd);
             }
 
-            if (isAsc)
-            {
-                datasToSortAndRank = datasToSortAndRank.OrderBy(x => x.Value);
-            }
-            else
-            {
-                datasToSortAndRank = datasToSortAndRank.OrderByDescending(x => x.Value);
-            }
-
-            int rank = 1;
-
-            foreach (var lbd in datasToSortAndRank)
-            {
-                lbd.Rank = rank;
-                rank++;
-            }
+            this.SortAndRankLeaderBoardData(datasToSort, isAsc);
 
             dataModel.LeaderBoards.Add(lb);
         }
 
+        private void SortAndRankLeaderBoardData(IEnumerable<LeaderBoardData> datas, bool isAsc)
+        {
+            if (isAsc)
+            {
+                datas = datas.OrderBy(x => x.Value).ToList();
+            }
+            else
+            {
+                datas = datas.OrderByDescending(x => x.Value).ToList();
+            }
+
+            int rank = 0, count = 0;
+            double previousValue = double.MaxValue;
+
+            foreach (var lbd in datas)
+            {
+                count++;
+
+                if (lbd.Value != previousValue)
+                {
+                    rank = count;
+                }
+
+                lbd.Rank = rank;
+                previousValue = lbd.Value;
+            }
+        }
     }
 }

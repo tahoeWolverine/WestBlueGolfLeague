@@ -14,16 +14,28 @@ namespace DataModelTests
     [TestClass]
     public class ScoresTests : DataModelTestBase
     {
-        private LeaderBoard bestScoreLb;
         private IEnumerable<LeaderBoardData> bestScoreLbd2012;
         private Player harlow;
+        private Player bjerken;
+        private IEnumerable<LeaderBoardData> bestScoreLbd2013;
+        private IEnumerable<LeaderBoardData> bestNetScoreLbd2013;
 
         [TestInitialize]
         public void Init()
         {
-            this.bestScoreLb = DataModel.LeaderBoards.First(x => string.Equals(x.Key, "player_best_score"));
-            this.bestScoreLbd2012 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2012 && x.LeaderBoard.Id == bestScoreLb.Id);
-            this.harlow = DataModel.Players.First(x => string.Equals(x.Name, "Michael Harlow"));
+            {
+                var bestScoreLb = DataModel.LeaderBoards.First(x => string.Equals(x.Key, "player_best_score"));
+                this.bestScoreLbd2012 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2012 && x.LeaderBoard.Id == bestScoreLb.Id);
+                this.harlow = DataModel.Players.First(x => string.Equals(x.Name, "Michael Harlow"));
+                this.bestScoreLbd2013 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2013 && x.LeaderBoard.Id == bestScoreLb.Id);
+                this.bjerken = DataModel.Players.First(x => string.Equals(x.Name, "Nick Bjerken"));
+            }
+
+            {
+                var bestNetScoreLb = DataModel.LeaderBoards.First(x => string.Equals(x.Key, "player_net_best_score"));
+                this.bestNetScoreLbd2013 = DataModel.LeaderBoardDatas.Where(x => x.Year.Value == 2013 && x.LeaderBoard.Id == bestNetScoreLb.Id);
+            }
+
         }
 
         [TestMethod]
@@ -41,6 +53,33 @@ namespace DataModelTests
             var lbd36Count = this.bestScoreLbd2012.Where(x => x.Value == 36).Count();
 
             lbd36Count.ShouldEqual(5);
+        }
+
+        [TestMethod]
+        public void BjerkenTopScore2013()
+        {
+            var lbd = this.bestScoreLbd2013.First(x => x.IsPlayer && x.Player.Id == this.bjerken.Id);
+
+            lbd.Rank.ShouldEqual(1);
+            lbd.Value.ShouldEqual(34);
+        }
+
+        [TestMethod]
+        public void BestNetScoreShouldBeThreeWayTie2013()
+        {
+            var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 1);
+
+            netScoreData.First().Value.ShouldEqual(-8);
+            netScoreData.Count().ShouldEqual(3);
+        }
+
+        [TestMethod]
+        public void SecondBestNetScore2013ShouldHaveRank4()
+        {
+            var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 4);
+
+            netScoreData.Count().ShouldEqual(7);
+            netScoreData.First().Value.ShouldEqual(-7);
         }
     }
 }
