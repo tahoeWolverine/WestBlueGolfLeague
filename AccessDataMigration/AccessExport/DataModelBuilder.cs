@@ -449,7 +449,7 @@ namespace AccessExport
                     }
                     else if (yd.Year.Value >= 2009)
                     {
-                        CalculateHandicaps20092010(dataModel, p, yd, isNewestYear);
+                        CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else
                     {

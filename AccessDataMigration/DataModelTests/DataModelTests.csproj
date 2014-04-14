@@ -63,6 +63,7 @@
     <Compile Include="PointsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultsTests.cs" />
+    <Compile Include="ScoresTests.cs" />
     <Compile Include="TeamStandingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
