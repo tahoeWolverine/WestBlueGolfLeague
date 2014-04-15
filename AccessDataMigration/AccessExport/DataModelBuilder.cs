@@ -29,7 +29,7 @@ namespace AccessExport
             // 09 - 11 - added week 0 score to players, added course name to week
             // 12 - 13 - added status to player
 
-            const int lastYear = 2015;
+            const int lastYear = 2014;
 
             Dictionary<string, Player> namesToPlayers = new Dictionary<string, Player>();
             ICollection<Player> extraInvalidPlayers = new List<Player>();
@@ -260,11 +260,10 @@ namespace AccessExport
                             var player2Name = resultsReader.GetString(6);
 
                             // TODO: Can we throw this out?  It doesn't seem to make sense
-                            if (team1Id == team2Id)
-                            {
-                                //Console.WriteLine("bad datas in results");
-                                continue;
-                            }
+                            //if (team1Id == team2Id && weekId != 0)
+                            //{
+                            //    throw new ArgumentException("team1: " + team1Id + ", team2: " + team2Id + ", week: " + weekId);
+                            //}
 
                             Player player1 = null;
                             Player player2 = null;
@@ -328,9 +327,7 @@ namespace AccessExport
                             Team team2 = teamIdToTeam[team2Id];
                             Week week = weekTempIdToWeek[weekId];
 
-                            // Team matchups should be unique based on team ID and week ID for a year.
-                            var teamMatchups = teamMatchupIdMatchup.Values.Where(t => ((t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) || (t.Team1.Id == teamIdToTeam[team2Id].Id || t.Team2.Id == teamIdToTeam[team1Id].Id)) && t.Week.SeasonIndex == weekId && t.Week.Year.Value == year);
-
+                            // Week 0's are a really special case... we allow team IDs to match here.
                             if (weekId == 0)
                             {
                                 // Take player1 and player2 and set their current handicaps
@@ -364,9 +361,18 @@ namespace AccessExport
                                 // Console.WriteLine("could not find matchup.");
                                 continue;
                             }
-                            else if (teamMatchups.Count() == 0)
+
+                            // Team matchups should be unique based on team ID and week ID for a year.
+                            var teamMatchups = teamMatchupIdMatchup.Values.Where(t => ((t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) || (t.Team1.Id == teamIdToTeam[team2Id].Id || t.Team2.Id == teamIdToTeam[team1Id].Id)) && t.Week.SeasonIndex == weekId && t.Week.Year.Value == year);
+
+                            if (teamMatchups.Count() == 0)
                             {
                                 throw new InvalidOperationException("Should've found a team matchup... " + Convert.ToString(team1Id) + " " + Convert.ToString(weekId));
+                            }
+
+                            if (team1Id == team2Id && year != 2011)
+                            {
+                                throw new ArgumentException("Teams can only play eachother in week 0 and 2011.");
                             }
 
                             var teamMatchup = teamMatchups.First();
@@ -618,7 +624,7 @@ namespace AccessExport
 
         private int LeaderBoardIdIndex = 1;
         private int LeaderBoardDataIdIndex = 1;
-
+        private int Priority = 1;
 
         private LeaderBoard LeaderBoardByKey(DataModel dataModel, string key, bool isPlayerBoard, string name)
         {
@@ -626,7 +632,7 @@ namespace AccessExport
 
             if (lb == null)
             {
-                lb = new LeaderBoard { Key = key, Name = name, IsPlayerBoard = isPlayerBoard, Id = this.LeaderBoardIdIndex++ };
+                lb = new LeaderBoard { Key = key, Name = name, IsPlayerBoard = isPlayerBoard, Id = this.LeaderBoardIdIndex++, Priority = this.Priority++ };
                 dataModel.LeaderBoards.Add(lb);
             }
 

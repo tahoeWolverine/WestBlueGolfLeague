@@ -96,5 +96,13 @@ namespace DataModelTests
             totalPoints.Count().ShouldEqual(1);
             totalPoints.First().Value.ShouldEqual(211);
         }
+
+        [TestMethod]
+        public void DoubleEaglesHad781Points2011()
+        {
+            var eaglesTeamRanking = DataModel.LeaderBoardDatas.First(x => x.Year.Value == 2011 && x.LeaderBoard.Key == "team_ranking" && x.IsPlayer == false && x.Team.Name == "Double Eagles");
+
+            eaglesTeamRanking.Value.ShouldEqual(781);
+        }
     }
 }
