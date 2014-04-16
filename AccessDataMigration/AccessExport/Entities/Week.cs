@@ -13,5 +13,6 @@ namespace AccessExport
         public Course Course { get; set; }
         public int SeasonIndex { get; set; }
         public Year Year { get; set; }
+        public bool IsBadData { get; set; }
     }
 }

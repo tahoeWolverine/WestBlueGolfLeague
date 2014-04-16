@@ -46,7 +46,6 @@ namespace AccessExport
                 resultIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
-            Dictionary<int, Week> weekNewIndexToWeek = new Dictionary<int, Week>();
             Dictionary<string, Course> courseNameToCourse = new Dictionary<string, Course>();
             Dictionary<int, Year> yearIdToYear = new Dictionary<int, Year>();
             Dictionary<int, Year> yearValueToYear = new Dictionary<int, Year>();
@@ -54,6 +53,7 @@ namespace AccessExport
             ICollection<MatchUp> allMatchUps = new List<MatchUp>();
             ICollection<Result> allResults = new List<Result>();
             ICollection<YearData> yearDatas = new List<YearData>();
+            ICollection<Week> allWeeks = new List<Week>();
 
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
@@ -70,7 +70,7 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                Console.WriteLine("***** starting year " + yearStr + " *****");
+                Console.WriteLine("/***** starting year " + yearStr + " *****/");
 
                 string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=..\..\..\..\Actual Data\access_db\golf" + yearStr.Substring(2) + ".mdb";
 
@@ -126,6 +126,12 @@ namespace AccessExport
                             var weekDate = weekReader.GetString(2).Replace("Sept.", "September");
 
                             Week week = new Week { SeasonIndex = weekReader.GetInt32(0), Course = course, Date = DateTime.Parse(weekDate), Id = weekIndex++, Year = newYear };
+
+                            if (week.SeasonIndex != 0)
+                            {
+                                allWeeks.Add(week);
+                            }
+
                             weekTempIdToWeek[week.SeasonIndex] = week;
                         }
                     }
@@ -238,7 +244,7 @@ namespace AccessExport
                             // TODO/NOTE: Treating null as "false".  Change if it should be treated as true.
                             bool matchComplete = matchReader[0].GetType() == DBNull.Value.GetType() || string.Equals(matchReader.GetString(0), "N", StringComparison.OrdinalIgnoreCase) ? false : true;
 
-                            var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id] };
+                            var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id], MatchId = matchId };
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                         }
                     }
@@ -270,12 +276,12 @@ namespace AccessExport
 
                             if (!setOfPlayers.Contains(player1Name))
                             {
-                                Console.WriteLine("player missing: " + player1Name);
+                                //Console.WriteLine("player missing: " + player1Name);
                             }
 
                             if (!setOfPlayers.Contains(player2Name))
                             {
-                                Console.WriteLine("player missing: " + player2Name);
+                                //Console.WriteLine("player missing: " + player2Name);
                             }
 
                             if (!namesToPlayers.TryGetValue(player1Name, out player1))
@@ -321,7 +327,7 @@ namespace AccessExport
 
                             if (!teamIdToTeam.ContainsKey(team2Id))
                             {
-                                Console.WriteLine("Where is dis team: " + team2Id);
+                                //Console.WriteLine("Where is dis team: " + team2Id);
                             }
 
                             Team team2 = teamIdToTeam[team2Id];
@@ -375,6 +381,12 @@ namespace AccessExport
                                 throw new ArgumentException("Teams can only play eachother in week 0 and 2011.");
                             }
 
+                            // Don't do anything with invalid players that play themselves!
+                            if (player1.Id == 1 && player2.Id == 1)
+                            {
+                                continue;
+                            }
+
                             var teamMatchup = teamMatchups.First();
 
                             //if (player1.Name == "Pete Mohs" && year == 2013)
@@ -419,7 +431,7 @@ namespace AccessExport
                 Players = namesToPlayers.Values.Concat(extraInvalidPlayers).ToList(),
                 MatchUp = allMatchUps,
                 TeamMatchup = teamMatchupIdMatchup.Values,
-                Weeks = weekNewIndexToWeek.Values,
+                Weeks = allWeeks,
                 YearDatas = yearDatas,
                 Results = allResults,
                 Courses = courseNameToCourse.Values,

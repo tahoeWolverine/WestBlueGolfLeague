@@ -13,5 +13,6 @@ namespace AccessExport
         public Team Team2 { get; set; }
         public bool MatchComplete { get; set; }
         public Week Week { get; set; }
+        public int MatchId { get; set; }
     }
 }
