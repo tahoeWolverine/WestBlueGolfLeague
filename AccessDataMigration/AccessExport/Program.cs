@@ -27,6 +27,8 @@ namespace AccessExport
             Console.WriteLine();
 
             Console.WriteLine(dataModelInserts);
+
+            //Console.WriteLine(BitConverter.ToString(Hasher.Hash("xxxxxxxx", "839202910", 5000)).Replace("-", ""));
         }
     }
 }

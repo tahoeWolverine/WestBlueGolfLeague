@@ -57,6 +57,7 @@
     <Compile Include="Entities\MatchUp.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="FluentMySqlInsert.cs" />
+    <Compile Include="Hasher.cs" />
     <Compile Include="MySqlGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
