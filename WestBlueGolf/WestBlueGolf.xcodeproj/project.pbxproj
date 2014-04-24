@@ -98,7 +98,6 @@
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
 		A56F21B218CE625600BF5CEE /* WBManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21B118CE625600BF5CEE /* WBManagedObject.m */; };
-		A59429821909C3A000F9F64E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A560544718EDB24300C7E357 /* AFNetworking.framework */; };
 		A59BC3DD18C67710003B5350 /* matchTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D718C67710003B5350 /* matchTable2013.json */; };
 		A59BC3DF18C67710003B5350 /* playerTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D918C67710003B5350 /* playerTable2013.json */; };
 		A59BC3E018C67710003B5350 /* resultsTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DA18C67710003B5350 /* resultsTable2013.json */; };
@@ -372,7 +371,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */,
-				A59429821909C3A000F9F64E /* AFNetworking.framework in Frameworks */,
 				A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */,
 				A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */,
 				A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */,
