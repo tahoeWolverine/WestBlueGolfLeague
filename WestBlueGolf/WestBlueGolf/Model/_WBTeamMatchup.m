@@ -6,6 +6,7 @@
 const struct WBTeamMatchupAttributes WBTeamMatchupAttributes = {
 	.matchComplete = @"matchComplete",
 	.matchId = @"matchId",
+	.playoffType = @"playoffType",
 };
 
 const struct WBTeamMatchupRelationships WBTeamMatchupRelationships = {
@@ -50,6 +51,11 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 	}
 	if ([key isEqualToString:@"matchIdValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"matchId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"playoffTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"playoffType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -106,6 +112,32 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 
 - (void)setPrimitiveMatchIdValue:(int16_t)value_ {
 	[self setPrimitiveMatchId:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic playoffType;
+
+
+
+- (int16_t)playoffTypeValue {
+	NSNumber *result = [self playoffType];
+	return [result shortValue];
+}
+
+- (void)setPlayoffTypeValue:(int16_t)value_ {
+	[self setPlayoffType:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitivePlayoffTypeValue {
+	NSNumber *result = [self primitivePlayoffType];
+	return [result shortValue];
+}
+
+- (void)setPrimitivePlayoffTypeValue:(int16_t)value_ {
+	[self setPrimitivePlayoffType:[NSNumber numberWithShort:value_]];
 }
 
 

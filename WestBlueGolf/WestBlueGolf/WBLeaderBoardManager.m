@@ -50,26 +50,26 @@
 	[self calculateTeamBoardWithName:@"Avg. Opp. Score" key:kLeaderboardTeamAverageOpponentScore priority:5 teams:teams year:year ascending:YES moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageOpponentScoreForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalOpponentResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalOpponentResultsForYear:year]];
 	}];
 	
 	[self calculateTeamBoardWithName:@"Avg. Opp. Net Score" key:kLeaderboardTeamAverageOpponentNetScore priority:6 teams:teams year:year ascending:YES moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageOpponentNetScoreForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalOpponentResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalOpponentResultsForYear:year]];
 	}];
 	
 	// Extra team boards
 	[self calculateTeamBoardWithName:@"Average Score" key:kLeaderboardTeamAverageScore priority:7 teams:teams year:year ascending:YES moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageScoreForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
 	}];
 
 	[self calculateTeamBoardWithName:@"Avg. Net Score" key:kLeaderboardTeamAverageNet priority:8 teams:teams year:year ascending:YES moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageNetScoreForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
 	}];
 
 	[self calculateTeamBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio priority:9 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
@@ -94,13 +94,13 @@
 	[self calculateTeamBoardWithName:@"Avg Margin of Victory" key:kLeaderboardTeamAverageMarginVictory priority:12 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageMarginOfVictoryForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
 	}];
 	
 	[self calculateTeamBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardTeamAverageMarginNetVictory priority:13 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return [team averageMarginOfNetVictoryForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team totalResultsForYear:year]];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
 	}];
 
 	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:14 isPlayerBoard:NO moc:moc];
@@ -222,7 +222,6 @@
 	// Pro Triple crown board: Avg Points, Avg Score, Total Wins
 	// Triple Crown: Avg Points, Avg Net Score, Improved
 	
-	//[WBCoreDataManager saveContext];
 	[WBCoreDataManager saveContext:moc];
 }
 

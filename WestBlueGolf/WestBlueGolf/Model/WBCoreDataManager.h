@@ -5,6 +5,12 @@
 //  Created by Mike Harlow on 2/7/14.
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
+/* Script to run for regen of model classes
+function regenGolf() {
+    mogenerator --model WestBlueGolf.xcdatamodeld/WestBlueGolf.xcdatamodel --base-class WBManagedObject --machine-dir Model --human-dir Model --template-var arc=true
+}
+export -f regenGolf
+ */
 
 @class WBTeam;
 @class WBWeek;

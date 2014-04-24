@@ -121,16 +121,16 @@
 
 #pragma mark - Grow code
 
-- (BOOL)cellIsSelected:(NSInteger)index {
+- (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
 	// Return whether the cell at the specified index path is selected or not
 	//NSIndexPath *actualIndexPath = (NSIndexPath *)indexPath;
-	NSNumber *selected = [self.selectedIndexes objectForKey:[NSNumber numberWithInteger:index]];
+	NSNumber *selected = [self.selectedIndexes objectForKey:indexPath];
 	DLog(@"cellIsSelected at %ld: %@", (long)index, !selected ? @"nil" : [selected boolValue] ? @"Yes" : @"No");
 	return [selected boolValue];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	BOOL selected = [self cellIsSelected:indexPath.row];
+	BOOL selected = [self cellIsSelected:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
 	return selected ? [self expandedCellHeight] : [self cellHeight];
 }
 
@@ -140,11 +140,11 @@
 	
 	// Toggle 'selected' state
 	if ([self shouldExpand]) {
-		BOOL isSelected = ![self cellIsSelected:indexPath.row];
+		BOOL isSelected = ![self cellIsSelected:indexPath];
 
 		// Store cell 'selected' state keyed on indexPath
 		NSNumber *selected = [NSNumber numberWithBool:isSelected];
-		[self.selectedIndexes setObject:selected forKey:[NSNumber numberWithInteger:indexPath.row]];
+		[self.selectedIndexes setObject:selected forKey:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
 
 		// This is where magic happens...
 		[tableView beginUpdates];

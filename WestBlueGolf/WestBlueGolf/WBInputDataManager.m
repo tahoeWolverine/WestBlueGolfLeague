@@ -77,6 +77,7 @@
 		DLog(@"No data for year %ld", (long)yearValue);
 		return;
 	}
+
 	NSArray *weekArray = [self jsonFromData:weekData];
 	WBCourse *course = nil;
 	NSString *courseName = nil, *weekDate = nil;
@@ -92,9 +93,8 @@
 		date = [self dateForString:weekDate];
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
 	}
-	
-	
-	[WBCoreDataManager saveContext:moc];
+
+	//[WBCoreDataManager saveContext:moc];
 	
 	// team table
 	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable" year:year]];
@@ -106,8 +106,7 @@
 		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
 	}
 	
-	
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// password/user table
 	/*NSArray *captainArray = [self jsonFromData:[self fileDataForFilename:@"passwordTable"]];
@@ -144,8 +143,7 @@
 	// Create a player to catch all the no shows (ends up being conditional too)
 	[WBPlayer createNoShowPlayerInContext:moc];
 	
-	
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];

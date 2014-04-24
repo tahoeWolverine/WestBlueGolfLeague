@@ -127,7 +127,6 @@
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-	__block typeof(self) weakSelf = self;
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy years request Completed: %@", responseObject);
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/

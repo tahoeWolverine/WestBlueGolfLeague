@@ -70,6 +70,9 @@
 			self.winLossLabel.textColor = [UIColor blackColor];
 			self.winLossLabel.text = [matchup.week.course shortName];
 			self.scoreLabel.text = [matchup shortTime];
+			
+			self.pairingLabel.text = displayStrings[3];
+			self.priorHandicapsLabel.text = displayStrings[4];
 		}
 	}
 }

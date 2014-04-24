@@ -7,6 +7,7 @@
 extern const struct WBTeamMatchupAttributes {
 	__unsafe_unretained NSString *matchComplete;
 	__unsafe_unretained NSString *matchId;
+	__unsafe_unretained NSString *playoffType;
 } WBTeamMatchupAttributes;
 
 extern const struct WBTeamMatchupRelationships {
@@ -21,6 +22,7 @@ extern const struct WBTeamMatchupFetchedProperties {
 @class WBMatch;
 @class WBTeam;
 @class WBWeek;
+
 
 
 
@@ -61,6 +63,20 @@ extern const struct WBTeamMatchupFetchedProperties {
 - (void)setMatchIdValue:(int16_t)value_;
 
 //- (BOOL)validateMatchId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* playoffType;
+
+
+
+@property int16_t playoffTypeValue;
+- (int16_t)playoffTypeValue;
+- (void)setPlayoffTypeValue:(int16_t)value_;
+
+//- (BOOL)validatePlayoffType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -121,6 +137,15 @@ extern const struct WBTeamMatchupFetchedProperties {
 
 - (int16_t)primitiveMatchIdValue;
 - (void)setPrimitiveMatchIdValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitivePlayoffType;
+- (void)setPrimitivePlayoffType:(NSNumber*)value;
+
+- (int16_t)primitivePlayoffTypeValue;
+- (void)setPrimitivePlayoffTypeValue:(int16_t)value_;
 
 
 

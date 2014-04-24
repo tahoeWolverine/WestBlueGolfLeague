@@ -1,5 +1,12 @@
 #import "_WBTeamMatchup.h"
 
+typedef enum {
+	WBPlayoffTypeNone,
+	WBPlayoffTypeLexis,
+	WBPlayoffTypeConsolation,
+	WBPlayoffTypeChampionship
+} WBPlayoffType;
+
 @interface WBTeamMatchup : _WBTeamMatchup {}
 
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1
