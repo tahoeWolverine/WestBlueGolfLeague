@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class MatchUp
+    public class MatchUp
     {
         public int Id { get; set; }
         public TeamMatchup TeamMatchup { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
+
+        public Result Result1 { get; set; }
+
+        public Result Result2 { get; set; }
     }
 }

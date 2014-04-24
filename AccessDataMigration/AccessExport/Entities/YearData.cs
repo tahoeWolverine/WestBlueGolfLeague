@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class YearData
+    public class YearData
     {
         public int Id { get; set; }
         public Year Year { get; set; }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AccessExport
 {
-    class DataModelBuilder
+    public class DataModelBuilder
     {
         private static Player GetProperInvalidPlayer(string playerName, Player noShow, Player nonLeague)
         {
@@ -46,7 +46,6 @@ namespace AccessExport
                 resultIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
-            Dictionary<int, Week> weekNewIndexToWeek = new Dictionary<int, Week>();
             Dictionary<string, Course> courseNameToCourse = new Dictionary<string, Course>();
             Dictionary<int, Year> yearIdToYear = new Dictionary<int, Year>();
             Dictionary<int, Year> yearValueToYear = new Dictionary<int, Year>();
@@ -54,6 +53,7 @@ namespace AccessExport
             ICollection<MatchUp> allMatchUps = new List<MatchUp>();
             ICollection<Result> allResults = new List<Result>();
             ICollection<YearData> yearDatas = new List<YearData>();
+            ICollection<Week> allWeeks = new List<Week>();
 
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
@@ -70,7 +70,7 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                Console.WriteLine("***** starting year " + yearStr + " *****");
+                Console.WriteLine("/***** starting year " + yearStr + " *****/");
 
                 string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=..\..\..\..\Actual Data\access_db\golf" + yearStr.Substring(2) + ".mdb";
 
@@ -126,6 +126,12 @@ namespace AccessExport
                             var weekDate = weekReader.GetString(2).Replace("Sept.", "September");
 
                             Week week = new Week { SeasonIndex = weekReader.GetInt32(0), Course = course, Date = DateTime.Parse(weekDate), Id = weekIndex++, Year = newYear };
+
+                            if (week.SeasonIndex != 0)
+                            {
+                                allWeeks.Add(week);
+                            }
+
                             weekTempIdToWeek[week.SeasonIndex] = week;
                         }
                     }
@@ -238,7 +244,7 @@ namespace AccessExport
                             // TODO/NOTE: Treating null as "false".  Change if it should be treated as true.
                             bool matchComplete = matchReader[0].GetType() == DBNull.Value.GetType() || string.Equals(matchReader.GetString(0), "N", StringComparison.OrdinalIgnoreCase) ? false : true;
 
-                            var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id] };
+                            var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id], MatchId = matchId };
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                         }
                     }
@@ -260,23 +266,22 @@ namespace AccessExport
                             var player2Name = resultsReader.GetString(6);
 
                             // TODO: Can we throw this out?  It doesn't seem to make sense
-                            if (team1Id == team2Id)
-                            {
-                                //Console.WriteLine("bad datas in results");
-                                continue;
-                            }
+                            //if (team1Id == team2Id && weekId != 0)
+                            //{
+                            //    throw new ArgumentException("team1: " + team1Id + ", team2: " + team2Id + ", week: " + weekId);
+                            //}
 
                             Player player1 = null;
                             Player player2 = null;
 
                             if (!setOfPlayers.Contains(player1Name))
                             {
-                                Console.WriteLine("player missing: " + player1Name);
+                                //Console.WriteLine("player missing: " + player1Name);
                             }
 
                             if (!setOfPlayers.Contains(player2Name))
                             {
-                                Console.WriteLine("player missing: " + player2Name);
+                                //Console.WriteLine("player missing: " + player2Name);
                             }
 
                             if (!namesToPlayers.TryGetValue(player1Name, out player1))
@@ -322,15 +327,13 @@ namespace AccessExport
 
                             if (!teamIdToTeam.ContainsKey(team2Id))
                             {
-                                Console.WriteLine("Where is dis team: " + team2Id);
+                                //Console.WriteLine("Where is dis team: " + team2Id);
                             }
 
                             Team team2 = teamIdToTeam[team2Id];
                             Week week = weekTempIdToWeek[weekId];
 
-                            // Team matchups should be unique based on team ID and week ID for a year.
-                            var teamMatchups = teamMatchupIdMatchup.Values.Where(t => ((t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) || (t.Team1.Id == teamIdToTeam[team2Id].Id || t.Team2.Id == teamIdToTeam[team1Id].Id)) && t.Week.SeasonIndex == weekId && t.Week.Year.Value == year);
-
+                            // Week 0's are a really special case... we allow team IDs to match here.
                             if (weekId == 0)
                             {
                                 // Take player1 and player2 and set their current handicaps
@@ -364,9 +367,24 @@ namespace AccessExport
                                 // Console.WriteLine("could not find matchup.");
                                 continue;
                             }
-                            else if (teamMatchups.Count() == 0)
+
+                            // Team matchups should be unique based on team ID and week ID for a year.
+                            var teamMatchups = teamMatchupIdMatchup.Values.Where(t => ((t.Team1.Id == teamIdToTeam[team1Id].Id || t.Team2.Id == teamIdToTeam[team2Id].Id) || (t.Team1.Id == teamIdToTeam[team2Id].Id || t.Team2.Id == teamIdToTeam[team1Id].Id)) && t.Week.SeasonIndex == weekId && t.Week.Year.Value == year);
+
+                            if (teamMatchups.Count() == 0)
                             {
                                 throw new InvalidOperationException("Should've found a team matchup... " + Convert.ToString(team1Id) + " " + Convert.ToString(weekId));
+                            }
+
+                            if (team1Id == team2Id && year != 2011)
+                            {
+                                throw new ArgumentException("Teams can only play eachother in week 0 and 2011.");
+                            }
+
+                            // Don't do anything with invalid players that play themselves!
+                            if (player1.Id == 1 && player2.Id == 1)
+                            {
+                                continue;
                             }
 
                             var teamMatchup = teamMatchups.First();
@@ -382,10 +400,15 @@ namespace AccessExport
                             Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
                             allResults.Add(player1Result);
                             team1.AddResult(player1Result);
+                            player1.AddResult(player1Result);
 
                             Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
                             allResults.Add(player2Result);
                             team2.AddResult(player2Result);
+                            player2.AddResult(player2Result);
+
+                            matchup.Result1 = player1Result;
+                            matchup.Result2 = player2Result;
                         }
                     }
 
@@ -408,7 +431,7 @@ namespace AccessExport
                 Players = namesToPlayers.Values.Concat(extraInvalidPlayers).ToList(),
                 MatchUp = allMatchUps,
                 TeamMatchup = teamMatchupIdMatchup.Values,
-                Weeks = weekNewIndexToWeek.Values,
+                Weeks = allWeeks,
                 YearDatas = yearDatas,
                 Results = allResults,
                 Courses = courseNameToCourse.Values,
@@ -444,7 +467,7 @@ namespace AccessExport
                     }
                     else if (yd.Year.Value >= 2009)
                     {
-                        CalculateHandicaps20092010(dataModel, p, yd, isNewestYear);
+                        CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else
                     {
@@ -529,11 +552,10 @@ namespace AccessExport
             return finalHandicap;
         }
 
-        private static void BuildLeaderboards(DataModel dataModel)
+        private void BuildLeaderboards(DataModel dataModel)
         {
             foreach (Year year in dataModel.Years)
             {
-
                 ISet<int> setOfTeamsForYear = new HashSet<int>();
                 var matchUpsForYear = dataModel.TeamMatchup.Where(x => x.Week.Year.Value == year.Value);
 
@@ -543,25 +565,95 @@ namespace AccessExport
                     setOfTeamsForYear.Add(tm.Team2.Id);
                 }
 
-                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id));
+                var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id) && x.ValidTeam).ToList();
 
                 // TODO: replace with real predicates and leader boards.
-                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear.ToList(), year, false, (team, dm) => team.TotalPointsForYear(year));
+                TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear, year, false, (team, dm) => team.TotalPointsForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.AverageHandicapForYear(year));
+                TeamBoard(dataModel, "Average Handicap", "team_average_handicap", teamsForYear, year, true, (team, dm) => team.AverageHandicapForYear(year));
 
-                TeamBoard(dataModel, "Win/Loss Ratio", "win_loss_ratio", teamsForYear.ToList(), year, false, (team, dm) => team.RecordRatioForYear(year));
+                TeamBoard(dataModel, "Win/Loss Ratio", "team_win_loss_ratio", teamsForYear, year, false, (team, dm) => team.RecordRatioForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "average_handicap", teamsForYear.ToList(), year, false, (team, dm) => team.ImprovedInYear(year));
+                TeamBoard(dataModel, "Season Improvement", "team_season_improvement", teamsForYear, year, true, (team, dm) => team.ImprovedInYear(year));
+
+                TeamBoard(dataModel, "Avg. Opp. Score", "team_avg_opp_score", teamsForYear, year, true, (team, dm) => team.AverageOpponentScoreForYear(year));
+
+                TeamBoard(dataModel, "Avg. Opp. Net Score", "team_avg_opp_net_score", teamsForYear, year, true, (team, dm) => team.AverageOpponentNetScoreForYear(year));
+
+                TeamBoard(dataModel, "Average Score", "team_avg_score", teamsForYear, year, true, (team, dm) => team.AverageScoreForYear(year));
+
+                TeamBoard(dataModel, "Average Net Score", "team_avg_net_score", teamsForYear, year, true, (team, dm) => team.AverageNetScoreForYear(year));
+
+                TeamBoard(dataModel, "Ind. W/L Ratio", "team_ind_win_loss_record", teamsForYear, year, true, (team, dm) => team.IndividualRecordRatioForYear(year));
+
+                TeamBoard(dataModel, "Total Match Wins", "team_total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
+
+                TeamBoard(dataModel, "Total Match Wins", "team_total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
+
+                TeamBoard(dataModel, "Points in a Week", "team_most_points_in_week", teamsForYear, year, false, (team, dm) => team.MostPointsInWeekForYear(year));
+
+                TeamBoard(dataModel, "Avg Margin of Victory", "team_avg_margin_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfVictoryForYear(year));
+
+                TeamBoard(dataModel, "Avg Margin of Net Victory", "team_avg_margin_net_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfNetVictoryForYear(year));
+
+
+                var allPlayersForYear = dataModel.Players.Where(p => p.YearDatas.Any(yd => yd.Year.Value == year.Value) && p.ValidPlayer).ToList();
+
+                PlayerBoard(dataModel, "Best Score", "player_best_score", allPlayersForYear, year, true, (p, dm) => p.LowRoundForYear(year));
+
+                PlayerBoard(dataModel, "Best Net Score", "player_net_best_score", allPlayersForYear, year, true, (p, dm) => p.LowNetForYear(year));
+
+                PlayerBoard(dataModel, "Handicap", "player_handicap", allPlayersForYear, year, true, (p, dm) => p.FinishingHandicapInYear(year));
+
+                PlayerBoard(dataModel, "Average Points", "player_average_points", allPlayersForYear, year, false, (p, dm) => p.AveragePointsInYear(year));
+
+                PlayerBoard(dataModel, "Win/Loss Ratio", "player_win_loss_ratio", allPlayersForYear, year, false, (p, dm) => p.RecordRatioForYear(year));
+
+                PlayerBoard(dataModel, "Season Improvement", "player_season_improvement", allPlayersForYear, year, true, (p, dm) => p.ImprovedInYear(year));
+
+                PlayerBoard(dataModel, "Avg. Opp. Score", "player_avg_opp_score", allPlayersForYear, year, true, (p, dm) => p.AverageOpponentScoreForYear(year));
+
+                PlayerBoard(dataModel, "Avg. Opp. Net Score", "player_avg_opp_score", allPlayersForYear, year, true, (p, dm) => p.AverageOpponentNetScoreForYear(year));
+
+                PlayerBoard(dataModel, "Average Score", "player_average_score", allPlayersForYear, year, true, (p, dm) => p.AverageScoreForYear(year));
+
+                PlayerBoard(dataModel, "Average Net Score", "player_average_net_score", allPlayersForYear, year, true, (p, dm) => p.AverageNetScoreForYear(year));
+
+                PlayerBoard(dataModel, "Points in a Match", "player_points_in_match", allPlayersForYear, year, false, (p, dm) => p.MostPointsInMatchForYear(year));
+
+                PlayerBoard(dataModel, "Total Points", "player_total_points", allPlayersForYear, year, false, (p, dm) => p.TotalPointsForYear(year));
+
+                PlayerBoard(dataModel, "Total Wins", "player_total_wins", allPlayersForYear, year, false, (p, dm) => p.RecordForYear(year)[0]);
+
+                PlayerBoard(dataModel, "Avg. Margin of Victory", "player_avg_margin_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfVictoryForYear(year));
+
+                PlayerBoard(dataModel, "Avg. Margin of Net Victory", "player_avg_net_margin_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfNetVictoryForYear(year));
+
+                PlayerBoard(dataModel, "Total Rounds", "player_total_rounds_for_year", allPlayersForYear, year, false, (p, dm) => p.TotalRoundsForYear(year));
             }
+
         }
 
-        private static int LeaderBoardIdIndex = 1;
-        private static int LeaderBoardDataIdIndex = 1;
+        private int LeaderBoardIdIndex = 1;
+        private int LeaderBoardDataIdIndex = 1;
+        private int Priority = 1;
 
-        private static void TeamBoard(DataModel dataModel, string name, string key, ICollection<Team> teams, Year year, bool isAsc, Func<Team, DataModel, double> valueFunc)
+        private LeaderBoard LeaderBoardByKey(DataModel dataModel, string key, bool isPlayerBoard, string name)
         {
-            LeaderBoard lb = new LeaderBoard { IsPlayerBoard = false, Id = LeaderBoardIdIndex++, Name = name, Key = key };
+            var lb = dataModel.LeaderBoards.FirstOrDefault(x => string.Equals(key, x.Key));
+
+            if (lb == null)
+            {
+                lb = new LeaderBoard { Key = key, Name = name, IsPlayerBoard = isPlayerBoard, Id = this.LeaderBoardIdIndex++, Priority = this.Priority++ };
+                dataModel.LeaderBoards.Add(lb);
+            }
+
+            return lb;
+        }
+
+        private void TeamBoard(DataModel dataModel, string name, string key, ICollection<Team> teams, Year year, bool isAsc, Func<Team, DataModel, double> valueFunc)
+        {
+            LeaderBoard lb = this.LeaderBoardByKey(dataModel, key, false, name);
 
             List<LeaderBoardData> datasWhichNeedRanks = new List<LeaderBoardData>();
 
@@ -572,32 +664,67 @@ namespace AccessExport
                 if (results.Count() == 0) continue;
 
                 double value = valueFunc(team, dataModel);
-                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value };
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value, LeaderBoard = lb, Year = year };
                 datasWhichNeedRanks.Add(lbd);
 
                 dataModel.LeaderBoardDatas.Add(lbd);
             }
 
-            IEnumerable<LeaderBoardData> sortedLbds = null;
-
-            if (isAsc)
-            {
-                sortedLbds = datasWhichNeedRanks.OrderBy(x => x.Value);
-            }
-            else
-            {
-                sortedLbds = datasWhichNeedRanks.OrderByDescending(x => x.Value);
-            }
-
-            int rank = 0;
-
-            foreach (var lbd in sortedLbds)
-            {
-                lbd.Rank = rank;
-            }
+            this.SortAndRankLeaderBoardData(datasWhichNeedRanks, isAsc);
 
             dataModel.LeaderBoards.Add(lb);
         }
 
+        private void PlayerBoard(DataModel dataModel, string name, string key, ICollection<Player> players, Year year, bool isAsc, Func<Player, DataModel, double> valueFunc)
+        {
+            LeaderBoard lb = this.LeaderBoardByKey(dataModel, key, true, name);
+
+            List<LeaderBoardData> datasToSort = new List<LeaderBoardData>();
+
+            foreach (var player in players)
+            {
+                var results = player.AllResultsForYear(year);
+
+                if (results.Count() == 0) continue;
+
+                double value = valueFunc(player, dataModel);
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, LeaderBoard = lb, Year = year };
+
+                datasToSort.Add(lbd);
+                dataModel.LeaderBoardDatas.Add(lbd);
+            }
+
+            this.SortAndRankLeaderBoardData(datasToSort, isAsc);
+
+            dataModel.LeaderBoards.Add(lb);
+        }
+
+        private void SortAndRankLeaderBoardData(IEnumerable<LeaderBoardData> datas, bool isAsc)
+        {
+            if (isAsc)
+            {
+                datas = datas.OrderBy(x => x.Value).ToList();
+            }
+            else
+            {
+                datas = datas.OrderByDescending(x => x.Value).ToList();
+            }
+
+            int rank = 0, count = 0;
+            double previousValue = double.MaxValue;
+
+            foreach (var lbd in datas)
+            {
+                count++;
+
+                if (lbd.Value != previousValue)
+                {
+                    rank = count;
+                }
+
+                lbd.Rank = rank;
+                previousValue = lbd.Value;
+            }
+        }
     }
 }

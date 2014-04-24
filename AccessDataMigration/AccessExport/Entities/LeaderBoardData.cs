@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport.Entities
 {
-    class LeaderBoardData
+    public class LeaderBoardData
     {
         public int Id { get; set; }
         public int Rank { get; set; }
@@ -16,5 +16,7 @@ namespace AccessExport.Entities
         public Team Team { get; set; }
         public Player Player { get; set; }
         public LeaderBoard LeaderBoard { get; set; }
+        public string Detail { get; set; }
+        public Year Year { get; set; }
     }
 }

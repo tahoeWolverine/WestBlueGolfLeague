@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport.Entities
 {
-    class LeaderBoard
+    public class LeaderBoard
     {
         public int Id { get; set; }
         public string Name { get; set; }

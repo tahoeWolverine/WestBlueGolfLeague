@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccessExport
 {
-    class Team
+    public class Team
     {
         private List<Result> allResults = new List<Result>();
         private Dictionary<int, Player> allPlayers = new Dictionary<int, Player>();
@@ -20,7 +20,8 @@ namespace AccessExport
         public ICollection<Player> AllPlayers { get { return this.allPlayers.Values; } }
 
 
-        public void AddResult(Result result) {
+        public void AddResult(Result result)
+        {
             this.allResults.Add(result);
         }
 
@@ -73,6 +74,52 @@ namespace AccessExport
             return total;
         }
 
+        public double AverageOpponentScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+
+            if (results == null || results.Count() == 0) return 0;
+
+            double totalScore = 0;
+            double opponentCount = 0;
+
+            foreach (var result in results)
+            {
+                int val = result.GetOpponentResult().ScoreDifference;
+
+                if (val < 60)
+                {
+                    totalScore += val;
+                    opponentCount++;
+                }
+            }
+
+            return totalScore / opponentCount;
+        }
+
+        internal double AverageOpponentNetScoreForYear(Year year)
+        {
+            var allResults = this.AllResultsForYear(year);
+            if (allResults == null || allResults.Count() == 0) return 0;
+
+            double totalScore = 0;
+            double opponentCount = 0;
+
+            foreach (var result in allResults)
+            {
+                int val = result.GetOpponentResult().NetScoreDifference;
+
+                if (val < 60)
+                {
+                    totalScore += val;
+                    opponentCount++;
+                }
+            }
+
+            return totalScore / opponentCount;
+
+        }
+
         public int ImprovedInYear(Year year)
         {
             int totalImproved = 0;
@@ -121,6 +168,175 @@ namespace AccessExport
             }
 
             return new int[] { wins, losses, ties };
+        }
+
+        internal double AverageScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalScore = 0;
+            double roundCount = 0;
+            int value = 0;
+            foreach (var result in results)
+            {
+                value = result.ScoreDifference;
+
+                if (value < 60)
+                {
+                    totalScore += value;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0.0 || totalScore == 0.0)
+            {
+                return 63.0;
+            }
+
+            return totalScore / roundCount;
+        }
+
+        internal double AverageNetScoreForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+            double totalScore = 0;
+            int roundCount = 0;
+            int value = 0;
+            foreach (var result in results)
+            {
+                value = result.ScoreDifference;
+                if (value < 60)
+                {
+                    totalScore += value;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0) return 0.0;
+
+            return totalScore / roundCount;
+        }
+
+        internal double IndividualRecordRatioForYear(Year year)
+        {
+            var record = this.IndividualRecordForYear(year);
+
+            double totalWins = record[0] + ((double)record[2] / 2.0);
+            double totalWeeks = record[0] + record[1] + record[2];
+
+            if (totalWeeks == 0) return 0;
+
+            return totalWins / totalWeeks;
+        }
+
+        public double[] IndividualRecordForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            int wins = 0, losses = 0, ties = 0;
+
+            foreach (var result in results)
+            {
+                if (result.WasWin)
+                {
+                    wins++;
+                }
+                else if (result.WasLoss)
+                {
+                    losses++;
+                }
+                else
+                {
+                    ties++;
+                }
+            }
+
+            return new double[] { wins, losses, ties };
+        }
+
+        internal int MostPointsInWeekForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+
+            // group results by week
+            var groupedResults = results.GroupBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex, x => x, (key, elements) => new { WeekId = key, Results = elements });
+
+            int max = 0;
+            foreach (var r in groupedResults)
+            {
+                int total = r.Results.Select(x => x.Points).Sum();
+
+                if (total >= max) max = total;
+            }
+
+            return max;
+        }
+
+        internal double AverageMarginOfVictoryForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalMargin = 0;
+            int roundCount = 0;
+            int playerValue = 0, oppValue = 0;
+            foreach (var result in results)
+            {
+                playerValue = result.ScoreDifference;
+                oppValue = result.GetOpponentResult().ScoreDifference;
+                if (oppValue < 60)
+                {
+                    totalMargin += oppValue - playerValue;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0)
+            {
+                return 0.0;
+            }
+
+            return totalMargin / roundCount;
+        }
+
+        internal double AverageMarginOfNetVictoryForYear(Year year)
+        {
+            var results = this.AllResultsForYear(year);
+            if (results == null || results.Count() == 0)
+            {
+                return 0.0;
+            }
+
+            double totalMargin = 0;
+            int roundCount = 0;
+            int playerValue = 0, oppValue = 0;
+            foreach (var result in results)
+            {
+                playerValue = result.NetScoreDifference;
+                oppValue = result.GetOpponentResult().NetScoreDifference;
+                if (oppValue < 60)
+                {
+                    totalMargin += oppValue - playerValue;
+                    roundCount++;
+                }
+            }
+
+            if (roundCount == 0)
+            {
+                return 0.0;
+            }
+
+            return totalMargin / roundCount;
         }
     }
 }

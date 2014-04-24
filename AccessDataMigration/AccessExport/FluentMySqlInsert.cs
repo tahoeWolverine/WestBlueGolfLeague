@@ -43,6 +43,14 @@ namespace AccessExport
                     var b = (bool?)obj;
                     sb.Append(!b.HasValue ? "NULL" : b.HasValue && b.Value ? "1" : "0");
                 }
+                else if (type == typeof(DateTime))
+                {
+                    var date = (DateTime)obj;
+                    sb
+                        .Append("'")
+                        .Append(date.ToString("yyyy-MM-dd"))
+                        .Append("'");
+                }
                 else
                 {
                     throw new ArgumentException("Unknown type of '" + obj.GetType().AssemblyQualifiedName + "'");
