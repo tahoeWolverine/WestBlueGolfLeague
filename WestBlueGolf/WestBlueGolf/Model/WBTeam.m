@@ -272,6 +272,24 @@
 	return totalScore / roundCount;
 }
 
+- (NSInteger)totalResultsForYear:(WBYear *)year {
+	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat roundCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result netScoreDifference];
+		if (value < 60) {
+			roundCount++;
+		}
+	}
+	
+	return roundCount;
+}
+
 // Calculated strictly with the object model, no thread-context needed
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -314,10 +332,28 @@
 	return totalOpponentScore / opponentCount;
 }
 
-// Calculated strictly with the object model, no thread-context needed
-- (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
+- (NSInteger)totalOpponentResultsForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat opponentCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [[result opponentResult] netScoreDifference];
+		if (value < 60) {
+			opponentCount++;
+		}
+	}
+	
+	return opponentCount;
+}
 
+// Calculated strictly with the object model, no thread-context needed
+- (NSArray *)resultWeekArrayForYear:(WBYear *)year {
+	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	
 	NSInteger arraySize = [year maxSeasonIndex];
 	NSMutableArray *weeks = [NSMutableArray arrayWithCapacity:arraySize];
 	for (NSInteger i = 0; i < arraySize; i++) {
@@ -330,14 +366,31 @@
 		[weeks replaceObjectAtIndex:index withObject:[NSNumber numberWithInteger:[[weeks objectAtIndex:index] integerValue] + result.pointsValue]];
 	}
 	
+	return weeks;
+}
+
+- (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
 	NSInteger maxPoints = 0;
-	for (NSNumber *weekPoints in weeks) {
+	for (NSNumber *weekPoints in [self resultWeekArrayForYear:year]) {
 		if ([weekPoints integerValue] > maxPoints) {
 			maxPoints = [weekPoints integerValue];
 		}
 	}
 	
 	return maxPoints;
+}
+
+- (NSInteger)seasonIndexForMostPointsInWeekForYear:(WBYear *)year {
+	NSInteger maxPoints = 0, maxPointsIndex = -1, loopIndex = 0;
+	for (NSNumber *weekPoints in [self resultWeekArrayForYear:year]) {
+		if ([weekPoints integerValue] > maxPoints) {
+			maxPoints = [weekPoints integerValue];
+			maxPointsIndex = loopIndex + 1;
+		}
+		loopIndex++;
+	}
+	
+	return maxPointsIndex;
 }
 
 // Calculated strictly with the object model, no thread-context needed

@@ -83,4 +83,14 @@ typedef enum {
 	return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	WBBoardData *data = (WBBoardData *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+	if (![data.detailValue isEqualToString:@""]) {
+		[super tableView:tableView didSelectRowAtIndexPath:indexPath];
+	} else {
+		// Deselect cell
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}
+}
+
 @end

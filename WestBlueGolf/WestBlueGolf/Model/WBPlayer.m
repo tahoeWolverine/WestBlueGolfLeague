@@ -184,6 +184,17 @@
 	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
 }
 
+- (NSInteger)seasonIndexForLowRoundForYear:(WBYear *)year {
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@ && match.teamMatchup.week.isBadData = 0", year, self];
+	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
+	WBResult *result = (WBResult *)[WBResult findFirstRecordWithPredicate:pred sortedBy:sorts];
+	if (!result) {
+		return -1;
+	}
+	
+	return result.match.teamMatchup.week.seasonIndexValue;
+}
+
 // Calculated strictly with the object model, no thread-context needed
 - (NSInteger)lowNetForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -205,6 +216,22 @@
 - (NSString *)lowNetString {
 	NSNumber *value = [self findLowNetBoardData].value;
 	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
+}
+
+- (NSInteger)seasonIdexForLowNetForYear:(WBYear *)year {
+	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	NSInteger index = -1;
+	if (results && results.count > 0) {
+		NSInteger lowNet = 100;
+		for (WBResult *result in results) {
+			NSInteger netScoreDifference = [result netScoreDifference];
+			if (netScoreDifference < lowNet) {
+				lowNet = netScoreDifference;
+				index = result.match.teamMatchup.week.seasonIndexValue;
+			}
+		}
+	}
+	return index;
 }
 
 // Calculated strictly with the object model, no thread-context needed
@@ -354,6 +381,23 @@
 	}
 	
 	return mostPoints;
+}
+
+- (NSInteger)seasonIndexForMostPointsInMatchForYear:(WBYear *)year {
+	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	NSInteger mostPoints = 0, seasonIndex = -1;
+	for (WBResult *result in results) {
+		if (result.pointsValue > mostPoints) {
+			mostPoints = result.pointsValue;
+			seasonIndex = result.match.teamMatchup.week.seasonIndexValue;
+		}
+	}
+	
+	return seasonIndex;
 }
 
 // Calculated strictly with the object model, no thread-context needed

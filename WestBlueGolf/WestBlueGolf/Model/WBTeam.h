@@ -32,6 +32,8 @@
 
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
+- (NSArray *)filterMatchupsForYear:(WBYear *)year;
+- (NSArray *)filterPlayersForYear:(WBYear *)year;
 
 - (NSInteger)totalPointsForYear:(WBYear *)year;
 - (NSString *)placeString;
@@ -46,9 +48,12 @@
 - (CGFloat)averageHandicapForYear:(WBYear *)year;
 - (CGFloat)averageScoreForYear:(WBYear *)year;
 - (CGFloat)averageNetScoreForYear:(WBYear *)year;
+- (NSInteger)totalResultsForYear:(WBYear *)year;
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
+- (NSInteger)totalOpponentResultsForYear:(WBYear *)year;
 - (NSInteger)mostPointsInWeekForYear:(WBYear *)year;
+- (NSInteger)seasonIndexForMostPointsInWeekForYear:(WBYear *)year;
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
 - (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;

@@ -136,7 +136,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// Deselect cell
-	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	// Toggle 'selected' state
 	if ([self shouldExpand]) {

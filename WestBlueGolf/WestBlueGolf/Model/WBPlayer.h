@@ -64,9 +64,11 @@
 
 - (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSString *)lowRoundString;
+- (NSInteger)seasonIndexForLowRoundForYear:(WBYear *)year;
 
 - (NSInteger)lowNetForYear:(WBYear *)year;
 - (NSString *)lowNetString;
+- (NSInteger)seasonIdexForLowNetForYear:(WBYear *)year;
 
 - (CGFloat)averagePointsInYear:(WBYear *)year;
 - (NSString *)averagePointsString;
@@ -81,6 +83,7 @@
 - (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
 
 - (NSInteger)mostPointsInMatchForYear:(WBYear *)year;
+- (NSInteger)seasonIndexForMostPointsInMatchForYear:(WBYear *)year;
 - (NSInteger)totalPointsForYear:(WBYear *)year;
 
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;

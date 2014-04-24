@@ -13,6 +13,7 @@
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
+#import "WBWeekTableViewController.h"
 #import "V8HorizontalPickerView.h"
 
 #define SORT_KEY @"matchId"
@@ -42,6 +43,8 @@
 												 selector:@selector(resetYear)
 													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
+		
+		[[(WBWeekTableViewController *)aViewController tableView] setTableFooterView:[self footerView]];
 	}
 	return self;
 }
@@ -196,8 +199,15 @@
 	return self.pickerView;
 }
 
+/*
+This method seems bugged so we alloc the table with a footer initially
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-	UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, 44.0f)];
+	[self footerView];
+}*/
+
+- (UIView *)footerView {
+	WBWeekTableViewController *vc = (WBWeekTableViewController *)self.viewController;
+	UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, vc.tableView.bounds.size.width, 44.0f)];
 	UILabel *courseLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0.0, 160.0f, 44.0f)];
 	courseLabel.text = [NSString stringWithFormat:@"Course: %@", [self selectedWeek].course.name];
 	UILabel *matchupsLabel = [[UILabel alloc] initWithFrame:CGRectMake(188.0f, 0.0, 112.0f, 44.0f)];
