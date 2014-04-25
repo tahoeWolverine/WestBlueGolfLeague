@@ -30,9 +30,18 @@ namespace AccessExport
                     sb.Append(this.GetSafeStr((string)obj));
                     sb.Append("'");
                 }
+                else if (type == typeof(NullableValue<int>))
+                {
+                    var nv = (NullableValue<int>)obj;
+                    sb.Append(nv.HasValue ? Convert.ToString(nv.Value) : "NULL");
+                }
                 else if (type == typeof(int))
                 {
                     sb.Append(Convert.ToString((int)obj));
+                }
+                else if (type == typeof(double))
+                {
+                    sb.Append(Convert.ToString((double)obj));
                 }
                 else if (type == typeof(bool))
                 {

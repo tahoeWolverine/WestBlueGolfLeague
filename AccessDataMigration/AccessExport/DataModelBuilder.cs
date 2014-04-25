@@ -397,12 +397,12 @@ namespace AccessExport
                             MatchUp matchup = new MatchUp { Id = matchupIndex++, TeamMatchup = teamMatchup, Player1 = player1, Player2 = player2 };
                             allMatchUps.Add(matchup);
 
-                            Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++ };
+                            Result player1Result = new Result { Year = newYear, Player = player1, Matchup = matchup, Points = points1, Score = score1, Id = resultIndex++, Team = team1 };
                             allResults.Add(player1Result);
                             team1.AddResult(player1Result);
                             player1.AddResult(player1Result);
 
-                            Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++ };
+                            Result player2Result = new Result { Year = newYear, Player = player2, Matchup = matchup, Points = points2, Score = score2, Id = resultIndex++, Team = team2 };
                             allResults.Add(player2Result);
                             team2.AddResult(player2Result);
                             player2.AddResult(player2Result);
