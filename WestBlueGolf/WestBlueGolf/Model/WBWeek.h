@@ -14,4 +14,7 @@
 
 - (NSString *)pairingLabel;
 
++ (WBWeek *)finalPlayoffWeekInYear:(WBYear *)year;
++ (WBWeek *)firstPlayoffWeekInYear:(WBYear *)year;
+
 @end

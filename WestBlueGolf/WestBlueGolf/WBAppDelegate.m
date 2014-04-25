@@ -66,7 +66,7 @@
 		
 		WBYear *year = [WBYear thisYear];
 		if ([year needsRefresh]) {
-			[self dummyYearDataCall];
+			[self resetYearFromServer:year];
 		} else {
 			[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
 		}
@@ -84,6 +84,7 @@
 
 - (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+	[inputManager clearRefreshableDataForYearValue:yearValue];
 	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
 	WBYear *year = [WBYear yearWithValue:yearValue inContext:moc];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
@@ -107,16 +108,19 @@
 	}
 }
 
-- (void)resetYearInContext:(NSManagedObjectContext *)moc {
-	WBYear *newYear = [WBYear thisYearInContext:moc];
-	if (!newYear.weeks || newYear.weeks.count == 0) {
+- (void)resetYearFromServer:(WBYear *)year {
+	[self dummyYearDataCallForYear:year];
+}
+
+- (void)resetYear:(WBYear *)year {
+	if (!year.weeks || year.weeks.count == 0) {
 		self.loading = YES;
 		DLog(@"Processing Started");
-		[self loadAndCalculateForYear:newYear.valueValue moc:moc];
-
+		[self loadAndCalculateForYear:year.valueValue moc:year.managedObjectContext];
+		
 		self.loading = NO;
 	}
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
 }
 
@@ -143,7 +147,7 @@
 	[operation start];*/
 }
 
-- (void)dummyYearDataCall {
+- (void)dummyYearDataCallForYear:(WBYear *)year {
 	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -152,7 +156,7 @@
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy year data request Completed: %@", responseObject);
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/
-			[self resetYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+			[self resetYear:year];
 		/*}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");

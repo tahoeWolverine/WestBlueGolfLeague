@@ -10,4 +10,7 @@
 
 @interface WBMatchupResultDataSource : WBEntityDataSource
 
+- (UIView *)headerView;
+- (UIView *)footerView;
+
 @end

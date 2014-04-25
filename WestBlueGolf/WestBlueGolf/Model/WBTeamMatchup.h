@@ -2,9 +2,10 @@
 
 typedef enum {
 	WBPlayoffTypeNone,
-	WBPlayoffTypeLexis,
+	WBPlayoffTypeChampionship,
+	WBPlayoffTypeBronze,
 	WBPlayoffTypeConsolation,
-	WBPlayoffTypeChampionship
+	WBPlayoffTypeLexis
 } WBPlayoffType;
 
 @interface WBTeamMatchup : _WBTeamMatchup {}

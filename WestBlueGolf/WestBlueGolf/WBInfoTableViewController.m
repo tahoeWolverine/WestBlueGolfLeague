@@ -38,7 +38,7 @@
 - (void)resetYear {
 	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 	
-	[self performSelector:@selector(hideProgress) withObject:nil afterDelay:3.0];
+	[self performSelector:@selector(hideProgress) withObject:nil afterDelay:1.0];
 }
 
 - (void)hideProgress {
@@ -184,7 +184,6 @@
     return YES;
 }
 */
-
 
 #pragma mark - Navigation
 

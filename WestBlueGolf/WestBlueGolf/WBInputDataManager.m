@@ -91,6 +91,7 @@
 		weekId = [[elt objectForKey:wbJsonKeyWeekIndex] integerValue];
 		weekDate = [elt objectForKey:wbJsonKeyWeekDate];
 		date = [self dateForString:weekDate];
+
 		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
 	}
 
@@ -153,6 +154,7 @@
 	NSInteger team1Id = 0, team2Id = 0, matchId = 0;
 	weekId = 0;
 	BOOL matchComplete = NO;
+	
 	for (NSDictionary *elt in matchArray) {
 		weekId = [[elt objectForKey:wbJsonKeyMatchWeek] integerValue];
 		team1Id = [[elt objectForKey:wbJsonKeyMatchTeam1] integerValue];
@@ -170,6 +172,32 @@
 		
 		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete moc:moc];
 	}
+	
+	WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
+	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+	WBTeamMatchup *oneFourMatch = firstWeekMatchups[0];
+	oneFourMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+	WBTeamMatchup *twoThreeMatch = firstWeekMatchups[1];
+	twoThreeMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+	WBTeamMatchup *fiveEightMatch = firstWeekMatchups[2];
+	fiveEightMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+	WBTeamMatchup *sixSevenMatch = firstWeekMatchups[3];
+	sixSevenMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+	WBTeamMatchup *nineTenMatch = firstWeekMatchups[4];
+	nineTenMatch.playoffTypeValue = WBPlayoffTypeLexis;
+	
+	WBWeek *finalPlayoffWeek = [WBWeek finalPlayoffWeekInYear:year];
+	NSArray *finalWeekMatchups = [finalPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+	WBTeamMatchup *oneTwoMatch = finalWeekMatchups[0];
+	oneTwoMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+	WBTeamMatchup *threeFourMatch = finalWeekMatchups[1];
+	threeFourMatch.playoffTypeValue = WBPlayoffTypeBronze;
+	WBTeamMatchup *fiveSixMatch = finalWeekMatchups[2];
+	fiveSixMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+	WBTeamMatchup *sevenEightMatch = finalWeekMatchups[3];
+	sevenEightMatch.playoffTypeValue = WBPlayoffTypeLexis;
+	WBTeamMatchup *lastMatch = finalWeekMatchups[4];
+	lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
 
 	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
@@ -232,6 +260,23 @@
 	
 	//[WBCoreDataManager saveContext];
 	[WBCoreDataManager saveContext:moc];
+}
+
+- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
+	WBYear *year = [WBYear yearWithValue:yearValue champion:nil inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	
+	// This should delete all weeks, teamMatchups, matches, and results
+	for (WBWeek *week in year.weeks) {
+		[week deleteEntityInContext:week.managedObjectContext];
+	}
+	
+	for (WBPlayerYearData *data in year.playerYearData) {
+		[data deleteEntityInContext:data.managedObjectContext];
+	}
+	
+	for (WBBoardData *boardData in year.boardData) {
+		[boardData deleteEntityInContext:boardData.managedObjectContext];
+	}
 }
 
 #pragma mark - Helper functions

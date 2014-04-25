@@ -47,7 +47,8 @@
 }
 
 - (WBResult *)resultForTeam:(WBTeam *)team {
-	return [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"team = %@", team]][0];
+	NSArray *filteredResults = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"team = %@", team]];
+	return filteredResults && filteredResults.count > 0 ? filteredResults[0] : nil;
 }
 
 - (NSArray *)displayStrings {
@@ -58,13 +59,13 @@
 	WBTeam *winner = (team1Points > team2Points) ? team1 : team2;
 	WBTeam *loser = team1 == winner ? team2 : team1;
 	
-	WBResult *winnerResult = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"team = %@", winner]][0];
-	WBResult *loserResult = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"team = %@", loser]][0];
-	NSString *player1Name = [winnerResult.player shortName];
-	NSString *player2Name = [loserResult.player shortName];
-	NSString *player1Score = [NSString stringWithFormat:@"%@", winnerResult.score];
-	NSString *player2Score = [NSString stringWithFormat:@"%@", loserResult.score];
-	NSString *matchPoints = [NSString stringWithFormat:@"%@/%@", winnerResult.points, loserResult.points];
+	WBResult *winnerResult = [self resultForTeam:winner];
+	WBResult *loserResult = [self resultForTeam:loser];
+	NSString *player1Name = winnerResult ? [winnerResult.player shortName] : @"No Player";
+	NSString *player2Name = loserResult ? [loserResult.player shortName] : @"No Player";
+	NSString *player1Score = winnerResult ? [NSString stringWithFormat:@"%@", winnerResult.score] : @"-";
+	NSString *player2Score = loserResult ? [NSString stringWithFormat:@"%@", loserResult.score] : @"-";
+	NSString *matchPoints = winnerResult && loserResult ? [NSString stringWithFormat:@"%@/%@", winnerResult.points, loserResult.points] : @"0";
 	return @[player1Name, player1Score, player2Name, player2Score, matchPoints];
 }
 

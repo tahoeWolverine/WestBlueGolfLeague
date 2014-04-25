@@ -16,7 +16,8 @@
 #import "WBWeekTableViewController.h"
 #import "V8HorizontalPickerView.h"
 
-#define SORT_KEY @"matchId"
+#define SORT_KEY	@"matchId"
+#define SECTION_KEY	@"playoffType"
 
 #define HEADER_HEIGHT 44.0f
 
@@ -44,7 +45,7 @@
 													 name:WBYearChangedLoadingFinishedNotification
 												   object:nil];
 		
-		[[(WBWeekTableViewController *)aViewController tableView] setTableFooterView:[self footerView]];
+		//[[(WBWeekTableViewController *)aViewController tableView] setTableFooterView:[self footerView]];
 	}
 	return self;
 }
@@ -116,7 +117,7 @@
 }
 
 - (NSString *)sectionNameKeyPath {
-	return nil;
+	return SECTION_KEY;
 }
 
 - (CGFloat)cellHeight {
@@ -152,8 +153,9 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
+	NSSortDescriptor *sectionSort = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:YES];
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sortOrderDescriptor];
+	return @[sectionSort, sortOrderDescriptor];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -173,9 +175,9 @@
 	[resultCell configureCellForMatchup:matchup];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+/*- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return HEADER_HEIGHT;
-}
+}*/
 
 - (WBWeek *)selectedWeek {
 	return [WBWeek findWeekWithSeasonIndex:[self selectedSeasonIndex] year:[WBYear thisYear]];
@@ -188,7 +190,7 @@
 	return [self.seasonIndexArray[self.pickerView.currentSelectedIndex] integerValue];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+/*- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	if (!self.weekTitleArray || self.weekTitleArray.count == 0) {
 		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.bounds.size.width, HEADER_HEIGHT)];
 		noWeeks.text = @"No Weeks Found";
@@ -197,7 +199,7 @@
 	}
 	
 	return self.pickerView;
-}
+}*/
 
 /*
 This method seems bugged so we alloc the table with a footer initially
@@ -205,16 +207,53 @@ This method seems bugged so we alloc the table with a footer initially
 	[self footerView];
 }*/
 
+- (UIView *)headerView {
+	return self.pickerView;
+}
+
 - (UIView *)footerView {
+	NSString *courseName = [self selectedWeek].course.name;
+	if (!courseName || [courseName isEqualToString:@""]) {
+		UILabel *noWeeks = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.viewController.view.bounds.size.width, HEADER_HEIGHT)];
+		noWeeks.text = @"No Weeks Found";
+		noWeeks.textAlignment = NSTextAlignmentCenter;
+		return noWeeks;
+	}
+	
 	WBWeekTableViewController *vc = (WBWeekTableViewController *)self.viewController;
 	UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, vc.tableView.bounds.size.width, 44.0f)];
 	UILabel *courseLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0.0, 160.0f, 44.0f)];
-	courseLabel.text = [NSString stringWithFormat:@"Course: %@", [self selectedWeek].course.name];
+	courseLabel.text = [NSString stringWithFormat:@"Course: %@", courseName];
 	UILabel *matchupsLabel = [[UILabel alloc] initWithFrame:CGRectMake(188.0f, 0.0, 112.0f, 44.0f)];
 	matchupsLabel.text = [NSString stringWithFormat:@"Pairs: %@", [[self selectedWeek] pairingLabel]];
 	[newView addSubview:courseLabel];
 	[newView addSubview:matchupsLabel];
 	return newView;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	if (!self.fetchedResultsController.sections || self.fetchedResultsController.sections.count == 0) {
+		return nil;
+	}
+	
+	WBTeamMatchup *example = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+	switch (example.playoffTypeValue) {
+		case WBPlayoffTypeNone:
+			return nil;
+		case WBPlayoffTypeChampionship:
+			return @"Championship";
+		case WBPlayoffTypeBronze:
+			return @"Third Place";
+		case WBPlayoffTypeConsolation:
+			return @"Consolation";
+		case WBPlayoffTypeLexis:
+			return @"Lexis Nexis";
+		default:
+			ALog(@"Unkown playoff type");
+			break;
+	}
+	
+	return nil;
 }
 
 #pragma mark - HorizontalPickerView DataSource Methods
@@ -249,7 +288,16 @@ This method seems bugged so we alloc the table with a footer initially
 	[self resetSelectedCells];
 	[self beginFetch];
 	
-	[[(UITableViewController *)self.viewController tableView] reloadData];
+	WBWeekTableViewController *vc = (WBWeekTableViewController *)self.viewController;
+	[[vc tableView] reloadData];
+
+	// Reset the pickerview header
+	[self.pickerView removeFromSuperview];
+	[vc.headerView addSubview:[self headerView]];
+	for (UIView *view in vc.footerView.subviews) {
+		[view removeFromSuperview];
+	}
+	[vc.footerView addSubview:[self footerView]];
 }
 
 - (void)resetYear {

@@ -45,4 +45,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+	if (self.navigationController.viewControllers.count > 1) {
+		[self.navigationController popToRootViewControllerAnimated:NO];
+	}
+}
+
 @end

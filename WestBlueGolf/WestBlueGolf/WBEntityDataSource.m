@@ -123,9 +123,8 @@
 
 - (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
 	// Return whether the cell at the specified index path is selected or not
-	//NSIndexPath *actualIndexPath = (NSIndexPath *)indexPath;
 	NSNumber *selected = [self.selectedIndexes objectForKey:indexPath];
-	DLog(@"cellIsSelected at %ld: %@", (long)index, !selected ? @"nil" : [selected boolValue] ? @"Yes" : @"No");
+	//DLog(@"cellIsSelected at %ld: %@", (long)index, !selected ? @"nil" : [selected boolValue] ? @"Yes" : @"No");
 	return [selected boolValue];
 }
 

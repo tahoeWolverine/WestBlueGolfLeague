@@ -8,6 +8,8 @@
 
 #define kEmeraldColor [UIColor colorWithRed:46.0 / 255.0 green:204.0 / 255.0 blue:113.0 / 255.0 alpha:1.0]
 
+@class WBYear;
+
 @interface WBAppDelegate : UIResponder <UIApplicationDelegate> {
 	NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;
@@ -24,5 +26,6 @@
 - (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc;
 
 - (void)setupCoreData:(BOOL)reset;
+- (void)resetYearFromServer:(WBYear *)year;
 
 @end

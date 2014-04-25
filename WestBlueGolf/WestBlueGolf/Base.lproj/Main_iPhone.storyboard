@@ -12,9 +12,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="6TT-tf-ADs">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="CiI-cp-3Jw">
+                            <rect key="frame" x="0.0" y="420" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MatchupListCell" rowHeight="220" id="Mbe-o6-7tB" customClass="WBMatchupResultCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="220"/>
+                                <rect key="frame" x="0.0" y="130" width="320" height="220"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mbe-o6-7tB" id="d9n-k0-ohU">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="219"/>
@@ -224,7 +234,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IncompleteMatchupListCell" rowHeight="70" id="NPf-9a-XWe" customClass="WBMatchupResultCell">
-                                <rect key="frame" x="0.0" y="306" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="350" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NPf-9a-XWe" id="omI-bD-CQO">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
@@ -260,7 +270,17 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="This Week" id="KQu-fz-uVv"/>
+                    <navigationItem key="navigationItem" title="This Week" id="KQu-fz-uVv">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="peb-ew-ieM">
+                            <connections>
+                                <action selector="refreshYear:" destination="EIC-wK-4yO" id="Dby-aw-4zL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="footerView" destination="CiI-cp-3Jw" id="iMd-Lw-PoN"/>
+                        <outlet property="headerView" destination="6TT-tf-ADs" id="yPP-O7-XpJ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kgP-Rk-vcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,4 +8,7 @@
 
 @interface WBWeekTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+
 @end
