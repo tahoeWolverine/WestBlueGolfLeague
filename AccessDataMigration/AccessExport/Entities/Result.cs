@@ -25,5 +25,7 @@ namespace AccessExport
         public int NetScoreDifference { get { return this.ScoreDifference - this.PriorHandicap; } }
         public bool WasWin { get { return this.Points > 12; } }
         public bool WasLoss { get { return this.Points < 12; } }
+
+        public Team Team { get; set; }
     }
 }

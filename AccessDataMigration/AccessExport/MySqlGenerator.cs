@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccessExport.Entities;
 
 namespace AccessExport
 {
@@ -68,12 +69,52 @@ namespace AccessExport
             var matchUpToPlayers = dataModel.MatchUp.Select(m => this.GetMatchupToPlayerInsert(m));
             sb.AppendLine(string.Join("\n", matchUpToPlayers));
 
-            // TODO: results, leaderboards, leaderboard datas.
+            // results
+            sb.AppendLine().AppendLine().AppendLine("/* results! */");
+            var results = dataModel.Results.Select(m => this.GetResultsInsert(m));
+            sb.AppendLine(string.Join("\n", results));
+
+            // Leaderboard
+            sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
+            var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
+            sb.AppendLine(string.Join("\n", lbs));
+
+            // Leaderboard data
+            sb.AppendLine().AppendLine().AppendLine("/* lb data */");
+            var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
+            sb.AppendLine(string.Join("\n", lbData));
 
             sb.Append("\n\n\n");
             sb.Append("COMMIT;\n");
 
             return sb.ToString();
+        }
+
+        private string GetLeaderBoardDataInsert(LeaderBoardData l)
+        {
+            NullableValue<int> playerId = l.IsPlayer ? new NullableValue<int>(l.Player.Id) : new NullableValue<int>();
+            NullableValue<int> teamId = l.IsPlayer ? new NullableValue<int>() : new NullableValue<int>(l.Team.Id);
+
+            return new FluentMySqlInsert("leaderBoardData")
+               .WithColumns("id", "rank", "value", "leaderBoardId", "yearId", "isPlayer", "teamId", "playerId", "detail")
+               .WithValues(l.Id, l.Rank, l.Value, l.LeaderBoard.Id, l.Year.Id, l.IsPlayer, teamId, playerId, l.Detail ?? string.Empty)
+               .ToString();
+        }
+
+        private string GetLeaderBoardInsert(LeaderBoard l)
+        {
+            return new FluentMySqlInsert("leaderBoard")
+               .WithColumns("id", "name", "priority", "isPlayerBoard", "key")
+               .WithValues(l.Id, l.Name, l.Priority, l.IsPlayerBoard, l.Key)
+               .ToString();
+        }
+
+        private string GetResultsInsert(Result m)
+        {
+            return new FluentMySqlInsert("result")
+                .WithColumns("id", "priorHandicap", "score", "points", "teamId", "playerId", "matchupId", "yearId")
+                .WithValues(m.Id, m.PriorHandicap, m.Score, m.Points, m.Team.Id, m.Player.Id, m.Matchup.Id, m.Year.Id)
+                .ToString();
         }
 
         private string GetMatchupInsert(MatchUp m)

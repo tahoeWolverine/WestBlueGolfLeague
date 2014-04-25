@@ -59,6 +59,7 @@
     <Compile Include="FluentMySqlInsert.cs" />
     <Compile Include="Hasher.cs" />
     <Compile Include="MySqlGenerator.cs" />
+    <Compile Include="NullableValue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Result.cs" />
