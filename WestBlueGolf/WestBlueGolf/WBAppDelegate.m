@@ -7,7 +7,7 @@
 //
 
 #import "WBAppDelegate.h"
-//#import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/AFNetworking.h>
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -126,42 +126,42 @@
 
 - (void)dummyYearsCall {
 	__block typeof(self) weakSelf = self;
-	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy years request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			// Background code
 			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 			[WBCoreDataManager saveMainContext];
 			
 			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-		/*}];
+		}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
-	[operation start];*/
+	[operation start];
 }
 
 - (void)dummyYearDataCallForYear:(WBYear *)year {
-	/*NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
+	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy year data request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{*/
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self resetYear:year];
-		/*}];
+		}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
 	}];
-	[operation start];*/
+	[operation start];
 }
 
 - (void)setProfileTabPlayer {
