@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,11 +45,21 @@ namespace AccessExport
 
         public double AverageHandicapForYear(Year year)
         {
+            if (this.Id == 10)
+            {
+                // TODO: Account for players which may have switched teams.
+                //Debugger.Break();
+            }
+
             var allPlayersForYear = this.AllPlayersForYear(year);
 
             int totalHandicap = 0;
 
             foreach (var player in allPlayersForYear) { totalHandicap += player.CurrentHandicap; }
+
+            // TODO: This should never be empty... but will be if the players switched off of
+            // this team for another team.
+            if (allPlayersForYear.Count() == 0) return 0;
 
             return (double)totalHandicap / (double)allPlayersForYear.Count();
         }

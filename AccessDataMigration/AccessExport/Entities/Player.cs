@@ -29,7 +29,15 @@ namespace AccessExport
             get { return this.team; }
             set
             {
-                if (this.team != null) this.team.RemovePlayer(this);
+                if (this.team != null)
+                {
+                    if (value.Id != this.team.Id) 
+                    {
+                        Console.WriteLine("Switched team: " + this.Name);
+                    }
+
+                    this.team.RemovePlayer(this);
+                }
 
                 value.AddPlayer(this); this.team = value;
             }

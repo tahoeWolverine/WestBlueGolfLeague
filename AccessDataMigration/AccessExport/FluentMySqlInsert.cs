@@ -89,7 +89,16 @@ namespace AccessExport
         {
             sb.Append(" (");
 
-            sb.Append(string.Join(",", colNames));
+            for (int i = 0; i < colNames.Length; i++)
+            {
+                sb
+                    .Append("`")
+                    .Append(colNames[i])
+                    .Append("`");
+
+                if (i != colNames.Length - 1)
+                    sb.Append(",");
+            }
 
             sb.Append(")");
 
