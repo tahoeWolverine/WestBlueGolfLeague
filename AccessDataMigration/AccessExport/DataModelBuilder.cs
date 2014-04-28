@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
+using System.Diagnostics;
 using System.Linq;
 
 namespace AccessExport
@@ -179,6 +180,11 @@ namespace AccessExport
                             int playersTeam = reader.GetInt32(1);
                             int startingHandicap = 0;
                             bool isRookie = false;
+
+                            //if (playersTeam == 8)
+                            //{
+                            //    Debugger.Break();
+                            //}
 
                             // If the year is before 2009, we'll update the handicaps later
                             if (year >= 2009)
@@ -671,8 +677,6 @@ namespace AccessExport
             }
 
             this.SortAndRankLeaderBoardData(datasWhichNeedRanks, isAsc);
-
-            dataModel.LeaderBoards.Add(lb);
         }
 
         private void PlayerBoard(DataModel dataModel, string name, string key, ICollection<Player> players, Year year, bool isAsc, Func<Player, DataModel, double> valueFunc)
@@ -695,8 +699,6 @@ namespace AccessExport
             }
 
             this.SortAndRankLeaderBoardData(datasToSort, isAsc);
-
-            dataModel.LeaderBoards.Add(lb);
         }
 
         private void SortAndRankLeaderBoardData(IEnumerable<LeaderBoardData> datas, bool isAsc)
