@@ -10,7 +10,7 @@ Dim dsn_name, connectstr, sDSNDir, DBQ
 dsn_name = "file.dsn"
 DBQ = "DBQ=" & Server.MapPath("\access_db\")
 sDSNDir = Server.MapPath("\westblue\_dsn\")
-connectstr = "filedsn=" & sDSNDir & "\" & dsn_name & ";UID=Admin;PWD=bigmatt;" & DBQ & "\"
+connectstr = "filedsn=" & sDSNDir & "\" & dsn_name & ";" & DBQ & "\"
 
 Dim strYearsArray (15)
 strYearsArray(0) = ("1999")

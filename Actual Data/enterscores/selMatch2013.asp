@@ -19,7 +19,7 @@ Set Conn = Server.CreateObject("ADODB.Connection")
 'Conn.Open odbcName(strCurrentYear)
 connectstr = connectstr & odbcName(strCurrentYear) & ";"
 conn.Open connectstr
-sqlQuery = "SELECT MatchComplete, MatchID, TeamID1, TeamID2 FROM MatchTable WHERE Week=" & strWeek & " ORDER BY ABS(MatchID)"
+sqlQuery = "SELECT MatchComplete, MatchID, TeamID1, TeamID2 FROM MatchTable WHERE Week=" & strWeek
 Set RS = Conn.Execute(sqlQuery)
 %>
 
