@@ -42,6 +42,10 @@
 	}
 }
 
+- (void)addSectionDataSource:(WBSectionDataSource *)dataSource {
+	[self.sectionDataSources addObject:dataSource];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -49,11 +53,16 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.sectionDataSources[section] tableView:tableView numberOfRowsInSection:1];
+    return [self.sectionDataSources[section] tableView:tableView numberOfRowsInSection:0];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.sectionDataSources[indexPath.section] tableView:tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:1]];
+    return [self.sectionDataSources[indexPath.section] tableView:tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+}
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	[self.sectionDataSources[self.tableView.indexPathForSelectedRow.section] prepareForSegue:segue sender:sender];
 }
 
 @end

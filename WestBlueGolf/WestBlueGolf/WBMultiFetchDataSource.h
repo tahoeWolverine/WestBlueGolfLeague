@@ -6,11 +6,17 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-@interface WBMultiFetchDataSource : NSObject
+@class WBSectionDataSource;
+
+@interface WBMultiFetchDataSource : NSObject <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 
 + (id)dataSourceWithViewController:(UIViewController *)aViewController;
 - (id)initWithViewController:(UIViewController *)aViewController;
+
+- (void)addSectionDataSource:(WBSectionDataSource *)dataSource;
+
+- (void)beginFetch;
 
 @end

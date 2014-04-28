@@ -60,7 +60,6 @@
 	}
 	
 	[noTeam deleteEntityInContext:moc];
-	//[WBCoreDataManager saveContext];
 	[WBCoreDataManager saveContext:moc];
 }
 

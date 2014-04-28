@@ -45,16 +45,6 @@
 	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", self.selectedTeam, [WBYear thisYear]];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-	
-	[self configureCell:cell withObject:matchup];
-    
-    return cell;
-}
-
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	/*WBPlayer *player = (WBPlayer *)object;
@@ -62,8 +52,7 @@
 	cell.detailTextLabel.text = player.team.name;*/
 	WBTeamMatchup *matchup = (WBTeamMatchup *)object;
 	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
-	[resultCell configureCellForResultsOfTeam:self.selectedTeam matchup:matchup];
-	
+	[resultCell configureCellForResultsOfTeam:self.selectedTeam matchup:matchup];	
 }
 
 @end

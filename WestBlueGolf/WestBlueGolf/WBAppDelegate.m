@@ -100,11 +100,11 @@
 	}
 	
 	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-	self.yearSelection = year.valueValue;
-	
 	if (!year) {
 		DLog(@"Processing Started");
 		[self dummyYearsCall];
+	} else {
+		self.yearSelection = year.valueValue;
 	}
 }
 
