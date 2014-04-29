@@ -8,7 +8,7 @@
 
 @interface WBFileSystem : NSObject
 
-+ (NSString *)documentsDirectory ;
++ (NSString *)documentsDirectory;
 + (NSString *)cachesDirectory;
 + (NSString *)libraryDirectory;
 + (NSString *)privateDocumentsDirectory;

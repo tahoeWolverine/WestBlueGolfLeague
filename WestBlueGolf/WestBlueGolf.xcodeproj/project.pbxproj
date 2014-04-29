@@ -125,6 +125,7 @@
 		A5CAEE7718D751890072F134 /* resultsTable2011.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE7218D751890072F134 /* resultsTable2011.json */; };
 		A5CAEE7818D751890072F134 /* teamTable2011.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE7318D751890072F134 /* teamTable2011.json */; };
 		A5CAEE7918D751890072F134 /* weekTable2011.json in Resources */ = {isa = PBXBuildFile; fileRef = A5CAEE7418D751890072F134 /* weekTable2011.json */; };
+		A5D135DA19104C4700BC961A /* WBPlayerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D1356B19104C4700BC961A /* WBPlayerListCell.m */; };
 		A5F344C818C7B63E00EBF40A /* credits.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C518C7B63E00EBF40A /* credits.html */; };
 		A5F344C918C7B63E00EBF40A /* info.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C618C7B63E00EBF40A /* info.html */; };
 		A5F344CA18C7B63E00EBF40A /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F344C718C7B63E00EBF40A /* rules.html */; };
@@ -341,6 +342,8 @@
 		A5CAEE7218D751890072F134 /* resultsTable2011.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable2011.json; sourceTree = "<group>"; };
 		A5CAEE7318D751890072F134 /* teamTable2011.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teamTable2011.json; sourceTree = "<group>"; };
 		A5CAEE7418D751890072F134 /* weekTable2011.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weekTable2011.json; sourceTree = "<group>"; };
+		A5D1356A19104C4700BC961A /* WBPlayerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPlayerListCell.h; sourceTree = "<group>"; };
+		A5D1356B19104C4700BC961A /* WBPlayerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPlayerListCell.m; sourceTree = "<group>"; };
 		A5F344C518C7B63E00EBF40A /* credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits.html; sourceTree = "<group>"; };
 		A5F344C618C7B63E00EBF40A /* info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = info.html; sourceTree = "<group>"; };
 		A5F344C718C7B63E00EBF40A /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
@@ -854,14 +857,16 @@
 			isa = PBXGroup;
 			children = (
 				A5F3459818C92DFC00EBF40A /* DataSources */,
+				D2C274AB18DB56F500CB1B93 /* ProfilePictureCropperViewController.h */,
+				D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */,
 				480C2B4E18BAE6570027F051 /* WBEntityTableViewController.h */,
 				480C2B4F18BAE6570027F051 /* WBEntityTableViewController.m */,
+				A5D1356A19104C4700BC961A /* WBPlayerListCell.h */,
+				A5D1356B19104C4700BC961A /* WBPlayerListCell.m */,
 				48B221B018B034B400F2DD99 /* WBProfileTableViewController.h */,
 				48B221B118B034B400F2DD99 /* WBProfileTableViewController.m */,
 				48B221B718B1EB2000F2DD99 /* WBResultTableViewCell.h */,
 				48B221B818B1EB2000F2DD99 /* WBResultTableViewCell.m */,
-				D2C274AB18DB56F500CB1B93 /* ProfilePictureCropperViewController.h */,
-				D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */,
 			);
 			name = PlayerProfile;
 			sourceTree = "<group>";
@@ -1110,6 +1115,7 @@
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */,
 				48B54E1118CBD75700F97F8C /* WBLeaderBoardListDataSource.m in Sources */,
+				A5D135DA19104C4700BC961A /* WBPlayerListCell.m in Sources */,
 				A50E163118972418008933A5 /* _WBPlayerYearData.m in Sources */,
 				48B54DF818CBD59900F97F8C /* _WBTeamBoard.m in Sources */,
 				A5CAEE6118D3BC450072F134 /* V8HorizontalPickerView.m in Sources */,
@@ -1281,6 +1287,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
+					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
@@ -1301,6 +1308,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
+					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";

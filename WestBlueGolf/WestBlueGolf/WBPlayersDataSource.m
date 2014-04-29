@@ -10,6 +10,7 @@
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
+#import "WBPlayerListCell.h"
 #import "WBProfileTableViewController.h"
 
 #define SECTION_KEY @"favorite"
@@ -22,7 +23,6 @@ typedef enum {
 
 @interface WBPlayersDataSource ()
 
-@property (strong, nonatomic) NSString *documentsPath;
 @end
 
 @implementation WBPlayersDataSource
@@ -40,14 +40,6 @@ typedef enum {
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (NSString *)documentsPath {
-    if (!_documentsPath) {
-        _documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    }
-    
-    return _documentsPath;
 }
 
 - (void)resetYear {
@@ -85,20 +77,7 @@ typedef enum {
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	WBPlayer *player = (WBPlayer *)object;
-    cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = player.team.name;
-    cell.imageView.clipsToBounds = YES;
-    
-    NSString *path = [self.documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-profile-image.png", player.name]];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        cell.imageView.image = [UIImage imageWithContentsOfFile:path];
-        cell.imageView.layer.borderColor = cell.contentView.tintColor.CGColor;
-        cell.imageView.layer.borderWidth = 2.0f;
-    } else {
-        cell.imageView.image = [UIImage imageNamed:@"UITabBarContactsTemplate"];
-        cell.imageView.layer.borderColor = [UIColor clearColor].CGColor;
-        cell.imageView.layer.borderWidth = 0.0f;
-    }
+	[(WBPlayerListCell *)cell configureCellForPlayer:player];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

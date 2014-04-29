@@ -176,6 +176,20 @@
 		}
 	}
 	
+	if (total == 0) {
+		NSArray *players = [team filterPlayersForYear:self.week.year];
+		NSArray *sortedPlayers = [players sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"currentHandicap" ascending:YES]]];
+		NSInteger topFourCount = 0;
+		for (WBPlayer *player in sortedPlayers) {
+			total += [player thisYearHandicap];
+
+			topFourCount++;
+			if (topFourCount > 3) {
+				break;
+			}
+		}
+	}
+	
 	return total;
 }
 

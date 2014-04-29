@@ -155,14 +155,15 @@
 	return @[[NSNumber numberWithInteger:wins], [NSNumber numberWithInteger:losses], [NSNumber numberWithInteger:ties]];
 }
 
-- (NSString *)currentHandicapString {
-	TRAssert(self.managedObjectContext, @"No mananged object context in currentHandicapString");
-	NSInteger handi = self.currentHandicapValue;
+- (NSInteger)thisYearHandicap {
 	WBYear *thisYear = [WBYear thisYear];
 	WBYear *newestYear = [WBYear newestYearInContext:self.managedObjectContext];
-	if (newestYear != thisYear) {
-		handi = [self finishingHandicapInYear:thisYear];
-	}
+	return thisYear == newestYear ? self.currentHandicapValue : [self finishingHandicapInYear:thisYear];
+}
+
+- (NSString *)currentHandicapString {
+	TRAssert(self.managedObjectContext, @"No mananged object context in currentHandicapString");
+	NSInteger handi = [self thisYearHandicap];
 	
 	BOOL isPositive = handi > 0;
 	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)handi];

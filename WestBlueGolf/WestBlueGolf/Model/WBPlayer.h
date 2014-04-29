@@ -56,6 +56,7 @@
 - (NSInteger)startingHandicapInYear:(WBYear *)year;
 - (NSInteger)finishingHandicapInYear:(WBYear *)year;
 
+- (NSInteger)thisYearHandicap;
 - (NSString *)currentHandicapString;
 
 - (NSArray *)recordForYear:(WBYear *)year;
