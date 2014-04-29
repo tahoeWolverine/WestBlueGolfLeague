@@ -48,20 +48,32 @@ namespace AccessExport
             if (this.Id == 10)
             {
                 // TODO: Account for players which may have switched teams.
-                //Debugger.Break();
+                Debugger.Break();
             }
 
-            var allPlayersForYear = this.AllPlayersForYear(year);
+            // Get all results for year
+            var resultsForYear = this.AllResultsForYear(year);
 
-            int totalHandicap = 0;
+            // Get all players for these results
+            var playersWhichPlayedForYear = resultsForYear.Select(x => x.Player).Where(x => x.ValidPlayer).GroupBy(x => x.Id).Select(x => x.First());
 
-            foreach (var player in allPlayersForYear) { totalHandicap += player.CurrentHandicap; }
+            // get year data for all players
+            List<YearData> yds = new List<YearData>();
 
-            // TODO: This should never be empty... but will be if the players switched off of
-            // this team for another team.
-            if (allPlayersForYear.Count() == 0) return 0;
+            foreach (var player in playersWhichPlayedForYear)
+            {
+                var yd = player.YearDatas.FirstOrDefault(y => y.Year.Value == year.Value);
 
-            return (double)totalHandicap / (double)allPlayersForYear.Count();
+                if (yd == null) Debugger.Break();
+
+                yds.Add(yd);
+            }
+
+            var handicapSum = yds.Sum(x => x.FinishingHandicap);
+
+            if (playersWhichPlayedForYear.Count() == 0) return 0.0;
+
+            return (double)handicapSum / (double)playersWhichPlayedForYear.Count();
         }
 
         public IEnumerable<Player> AllPlayersForYear(Year year)

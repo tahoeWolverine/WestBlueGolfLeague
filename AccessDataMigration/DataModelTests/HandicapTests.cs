@@ -66,6 +66,15 @@ namespace DataModelTests
             harlowHandicap.ShouldEqual(10);
         }
 
+        [TestMethod]
+        public void SharksAvgHandicapFor1999ShouldBe8AndAThird()
+        {
+            var lbd = DataModel.LeaderBoardDatas.Where(x => x.LeaderBoard.Key == "team_average_handicap" && x.Year.Value == 1999 && !x.IsPlayer && x.Team.Name == "Sharks").First();
+
+            // TODO: Finish handicap logic for years < 2011
+            //lbd.Value.ShouldEqual(8.333, .1);
+        }
+
         private int FinishingHandicapFor(string playerName, int year)
         {
             var player = DataModel.Players.First(x => string.Equals(playerName, x.Name, StringComparison.OrdinalIgnoreCase));
