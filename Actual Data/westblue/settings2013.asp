@@ -1,7 +1,7 @@
 <%
 
 Dim strCurrentYear
-strCurrentYear = "2014"
+strCurrentYear = "2013"
 
 Dim iScoresToEval
 iScoresToEval = 4
@@ -10,9 +10,9 @@ Dim dsn_name, connectstr, sDSNDir, DBQ
 dsn_name = "file.dsn"
 DBQ = "DBQ=" & Server.MapPath("\access_db\")
 sDSNDir = Server.MapPath("\westblue\_dsn\")
-connectstr = "filedsn=" & sDSNDir & "\" & dsn_name & ";UID=Admin;PWD=bigmatt;" & DBQ & "\"
+connectstr = "filedsn=" & sDSNDir & "\" & dsn_name & ";" & DBQ & "\"
 
-Dim strYearsArray (16)
+Dim strYearsArray (15)
 strYearsArray(0) = ("1999")
 strYearsArray(1) = ("2000")
 strYearsArray(2) = ("2001")
@@ -28,7 +28,6 @@ strYearsArray(11) = ("2010")
 strYearsArray(12) = ("2011")
 strYearsArray(13) = ("2012")
 strYearsArray(14) = ("2013")
-strYearsArray(15) = ("2014")
 %>
 
 <%
@@ -42,8 +41,6 @@ for i = UBound(strYearsArray) - 1 to 0 step -1  %>
 function odbcName(byVal strYear)
 
 Select Case strYear
-	Case ("2014")
-	odbcName = "golf14.mdb"
 	Case ("2013")
 	odbcName = "golf13.mdb"	
 	Case ("2012")

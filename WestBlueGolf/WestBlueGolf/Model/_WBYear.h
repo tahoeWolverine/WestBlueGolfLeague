@@ -11,7 +11,6 @@ extern const struct WBYearAttributes {
 
 extern const struct WBYearRelationships {
 	__unsafe_unretained NSString *boardData;
-	__unsafe_unretained NSString *champion;
 	__unsafe_unretained NSString *playerYearData;
 	__unsafe_unretained NSString *weeks;
 } WBYearRelationships;
@@ -20,7 +19,6 @@ extern const struct WBYearFetchedProperties {
 } WBYearFetchedProperties;
 
 @class WBBoardData;
-@class WBTeam;
 @class WBPlayerYearData;
 @class WBWeek;
 
@@ -71,13 +69,6 @@ extern const struct WBYearFetchedProperties {
 @property (nonatomic, strong) NSSet *boardData;
 
 - (NSMutableSet*)boardDataSet;
-
-
-
-
-@property (nonatomic, strong) WBTeam *champion;
-
-//- (BOOL)validateChampion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -142,11 +133,6 @@ extern const struct WBYearFetchedProperties {
 
 - (NSMutableSet*)primitiveBoardData;
 - (void)setPrimitiveBoardData:(NSMutableSet*)value;
-
-
-
-- (WBTeam*)primitiveChampion;
-- (void)setPrimitiveChampion:(WBTeam*)value;
 
 
 

@@ -8,7 +8,6 @@ const struct WBTeamAttributes WBTeamAttributes = {
 };
 
 const struct WBTeamRelationships WBTeamRelationships = {
-	.championYears = @"championYears",
 	.matchups = @"matchups",
 	.players = @"players",
 	.results = @"results",
@@ -80,19 +79,6 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 
 
 
-
-@dynamic championYears;
-
-	
-- (NSMutableSet*)championYearsSet {
-	[self willAccessValueForKey:@"championYears"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"championYears"];
-  
-	[self didAccessValueForKey:@"championYears"];
-	return result;
-}
-	
 
 @dynamic matchups;
 

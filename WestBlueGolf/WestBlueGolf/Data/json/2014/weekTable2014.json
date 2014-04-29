@@ -1,0 +1,104 @@
+[
+  {
+    "Week":0,
+    "Par":36,
+    "Date":"4/28/2014",
+    "Course":"Silver Front"
+  },
+  {
+    "Week":1,
+    "Par":36,
+    "Date":"5/5/2014",
+    "Course":"Silver Front"
+  },
+  {
+    "Week":2,
+    "Par":37,
+    "Date":"5/12/2014",
+    "Course":"Silver Back"
+  },
+  {
+    "Week":3,
+    "Par":36,
+    "Date":"5/19/2014",
+    "Course":"Gold Front"
+  },
+  {
+    "Week":4,
+    "Par":36,
+    "Date":"6/2/2014",
+    "Course":"Gold Back"
+  },
+  {
+    "Week":5,
+    "Par":36,
+    "Date":"6/9/2014",
+    "Course":"Silver Front"
+  },
+  {
+    "Week":6,
+    "Par":37,
+    "Date":"6/16/2014",
+    "Course":"Silver Back"
+  },
+  {
+    "Week":7,
+    "Par":36,
+    "Date":"6/23/2014",
+    "Course":"Gold Front"
+  },
+  {
+    "Week":8,
+    "Par":36,
+    "Date":"6/30/2014",
+    "Course":"Gold Back"
+  },
+  {
+    "Week":9,
+    "Par":37,
+    "Date":"7/14/2014",
+    "Course":"Silver Back"
+  },
+  {
+    "Week":10,
+    "Par":36,
+    "Date":"7/21/2014",
+    "Course":"Gold Front"
+  },
+  {
+    "Week":11,
+    "Par":36,
+    "Date":"7/28/2014",
+    "Course":"Gold Back"
+  },
+  {
+    "Week":12,
+    "Par":36,
+    "Date":"8/4/2014",
+    "Course":"Silver Front"
+  },
+  {
+    "Week":13,
+    "Par":37,
+    "Date":"8/11/2014",
+    "Course":"Silver Back"
+  },
+  {
+    "Week":14,
+    "Par":36,
+    "Date":"8/18/2014",
+    "Course":"Gold Front"
+  },
+  {
+    "Week":15,
+    "Par":36,
+    "Date":"8/25/2014",
+    "Course":"Gold Back"
+  },
+  {
+    "Week":16,
+    "Par":36,
+    "Date":"9/8/2014",
+    "Course":"Silver Front"
+  }
+]

@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBEntityDataSource.h"
+#import "WBMultiFetchDataSource.h"
 
 @class WBTeam;
 
-@interface WBTeamProfileDataSource : WBEntityDataSource
+@interface WBTeamProfileDataSource : WBMultiFetchDataSource
 
 @property (strong, nonatomic) WBTeam *selectedTeam;
 

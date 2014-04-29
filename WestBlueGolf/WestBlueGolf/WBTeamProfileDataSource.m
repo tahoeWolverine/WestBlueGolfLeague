@@ -9,61 +9,18 @@
 #import "WBTeamProfileDataSource.h"
 #import "WBModels.h"
 #import "WBResultTableViewCell.h"
-
-#define SORT_KEY_SECTION_1 @"week.date"
-#define SORT_KEY_SECTION_2 @"name"
+#import "WBTeamPlayersDataSource.h"
+#import "WBTeamResultsDataSource.h"
 
 @implementation WBTeamProfileDataSource
 
-- (NSString *)cellIdentifier {
-	static NSString *CellIdentifier = @"TeamResultsCell"; //@"TeamCell";
-	return CellIdentifier;
-}
-
-- (NSString *)incompleteCellIdentifier {
-	static NSString *CellIdentifier = @"IncompleteTeamResultsCell"; //@"TeamCell";
-	return CellIdentifier;
-}
-
-- (NSString *)entityName {
-	//return @"WBPlayer";
-	return @"WBTeamMatchup";
-}
-
-- (BOOL)shouldExpand {
-	return YES;
-}
-
-- (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY_SECTION_1 ascending:NO];
-	//NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY_SECTION_2 ascending:YES];
-	return @[sortOrderDescriptor];
-}
-
-- (NSPredicate *)fetchPredicate {
-	//return [NSPredicate predicateWithFormat:@"team = %@", self.selectedTeam];
-	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", self.selectedTeam, [WBYear thisYear]];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-	
-	[self configureCell:cell withObject:matchup];
-    
-    return cell;
-}
-
-- (void)configureCell:(UITableViewCell *)cell
-		   withObject:(NSManagedObject *)object {
-	/*WBPlayer *player = (WBPlayer *)object;
-    cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = player.team.name;*/
-	WBTeamMatchup *matchup = (WBTeamMatchup *)object;
-	WBResultTableViewCell *resultCell = (WBResultTableViewCell *)cell;
-	[resultCell configureCellForResultsOfTeam:self.selectedTeam matchup:matchup];
-	
+- (id)initWithViewController:(UIViewController *)aViewController {
+	self = [super initWithViewController:aViewController];
+	if (self) {
+		[self addSectionDataSource:[WBTeamResultsDataSource dataSourceWithParentDataSource:self]];
+		[self addSectionDataSource:[WBTeamPlayersDataSource dataSourceWithParentDataSource:self]];
+	}
+	return self;
 }
 
 @end

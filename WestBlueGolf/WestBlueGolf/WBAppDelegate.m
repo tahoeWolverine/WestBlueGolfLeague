@@ -86,7 +86,7 @@
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 	[inputManager clearRefreshableDataForYearValue:yearValue];
 	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
-	WBYear *year = [WBYear yearWithValue:yearValue inContext:moc];
+	WBYear *year = [WBYear findYearWithValue:yearValue inContext:moc];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
 	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
@@ -100,11 +100,11 @@
 	}
 	
 	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-	self.yearSelection = year.valueValue;
-	
 	if (!year) {
 		DLog(@"Processing Started");
 		[self dummyYearsCall];
+	} else {
+		self.yearSelection = year.valueValue;
 	}
 }
 

@@ -69,10 +69,8 @@
 	self.navigationItem.title = self.selectedTeam.name ?: @"No Team Selected";
 }
 
-// In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	WBProfileTableViewController *vc = [segue destinationViewController];
-	vc.selectedPlayer = (WBPlayer *)[self.dataSource objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+	[self.dataSource prepareForSegue:segue sender:sender];
 }
 
 @end
