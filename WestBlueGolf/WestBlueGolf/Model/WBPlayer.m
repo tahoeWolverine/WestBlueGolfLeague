@@ -165,7 +165,7 @@
 	TRAssert(self.managedObjectContext, @"No mananged object context in currentHandicapString");
 	NSInteger handi = [self thisYearHandicap];
 	
-	BOOL isPositive = handi > 0;
+	BOOL isPositive = handi >= 0;
 	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)handi];
 }
 

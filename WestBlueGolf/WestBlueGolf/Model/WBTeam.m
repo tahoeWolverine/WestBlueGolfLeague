@@ -472,6 +472,23 @@
 	return rank;
 }
 
+- (NSArray *)top4Players {
+	WBYear *year = [WBYear thisYear];
+	NSArray *players = [self filterPlayersForYear:year];
+	NSArray *sortedPlayers = [players sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"currentHandicap" ascending:YES]]];
+	
+	if (!players || players.count == 0) {
+		return nil;
+	}
+	
+	if ([(WBPlayer *)players[players.count - 1] finishingHandicapInYear:year] == 0) {
+		// Year isn't done
+		DLog(@"Unfinished Year");
+	}
+	
+	return @[sortedPlayers[0], sortedPlayers[1], sortedPlayers[2], sortedPlayers[3]];
+}
+
 #pragma mark - Leaderboard fetches
 
 - (WBBoardData *)findTotalPointsBoardData {

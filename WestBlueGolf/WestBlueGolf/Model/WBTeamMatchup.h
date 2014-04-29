@@ -33,4 +33,6 @@ typedef enum {
 
 - (NSArray *)orderedMatches;
 
+- (WBTeam *)teamWithName:(NSString *)name;
+
 @end

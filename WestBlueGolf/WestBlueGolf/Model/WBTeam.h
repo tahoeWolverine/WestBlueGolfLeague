@@ -61,6 +61,8 @@
 
 - (NSInteger)rankPriorToWeek:(WBWeek *)week;
 
+- (NSArray *)top4Players;
+
 - (WBBoardData *)findTotalPointsBoardData;
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossRatioBoardData;

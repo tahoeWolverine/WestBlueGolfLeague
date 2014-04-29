@@ -177,16 +177,9 @@
 	}
 	
 	if (total == 0) {
-		NSArray *players = [team filterPlayersForYear:self.week.year];
-		NSArray *sortedPlayers = [players sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"currentHandicap" ascending:YES]]];
-		NSInteger topFourCount = 0;
-		for (WBPlayer *player in sortedPlayers) {
+		NSArray *players = [team top4Players];
+		for (WBPlayer *player in players) {
 			total += [player thisYearHandicap];
-
-			topFourCount++;
-			if (topFourCount > 3) {
-				break;
-			}
 		}
 	}
 	
@@ -256,6 +249,15 @@
 			break;
 	}
 	return @"";
+}
+
+- (WBTeam *)teamWithName:(NSString *)name {
+	for (WBTeam *team in self.teams) {
+		if ([team.name isEqualToString:name]) {
+			return team;
+		}
+	}
+	return nil;
 }
 
 @end

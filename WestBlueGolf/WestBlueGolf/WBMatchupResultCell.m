@@ -23,12 +23,13 @@
 	NSArray *displayStrings = [matchup displayStrings];
 	
 	self.team1NameLabel.text = displayStrings[0];
-	if (matchup.matchCompleteValue) {
-		self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
-	}
+	self.team1NameSmall.text = displayStrings[0];
 	self.team2NameLabel.text = displayStrings[3];
+	self.team2NameSmall.text = displayStrings[3];
 
 	if (matchup.matchCompleteValue) {
+		self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+		
 		self.team1PointsLabel.text = displayStrings[1];
 		self.team2PointsLabel.text = displayStrings[4];
 	
@@ -73,6 +74,32 @@
 		
 		self.team1ScoreLabel.text = @"";
 		self.team2ScoreLabel.text = @"";
+		
+		if (matchup.teams.count == 2) {
+			WBTeam *team1 = [matchup teamWithName:displayStrings[0]];
+			WBTeam *team2 = [matchup teamWithName:displayStrings[3]];
+			NSArray *team1TopPlayers = [team1 top4Players];
+			NSArray *team2TopPlayers = [team2 top4Players];
+			self.team1Player1Name.text = [(WBPlayer *)team1TopPlayers[0] shortName];
+			self.team1Player1Score.text = [(WBPlayer *)team1TopPlayers[0] currentHandicapString];
+			self.team2Player1Name.text = [(WBPlayer *)team2TopPlayers[0] shortName];
+			self.team2Player1Score.text = [(WBPlayer *)team2TopPlayers[0] currentHandicapString];
+
+			self.team1Player2Name.text = [(WBPlayer *)team1TopPlayers[1] shortName];
+			self.team1Player2Score.text = [(WBPlayer *)team1TopPlayers[1] currentHandicapString];
+			self.team2Player2Name.text = [(WBPlayer *)team2TopPlayers[1] shortName];
+			self.team2Player2Score.text = [(WBPlayer *)team2TopPlayers[1] currentHandicapString];
+
+			self.team1Player3Name.text = [(WBPlayer *)team1TopPlayers[2] shortName];
+			self.team1Player3Score.text = [(WBPlayer *)team1TopPlayers[2] currentHandicapString];
+			self.team2Player3Name.text = [(WBPlayer *)team2TopPlayers[2] shortName];
+			self.team2Player3Score.text = [(WBPlayer *)team2TopPlayers[2] currentHandicapString];
+
+			self.team1Player4Name.text = [(WBPlayer *)team1TopPlayers[3] shortName];
+			self.team1Player4Score.text = [(WBPlayer *)team1TopPlayers[3] currentHandicapString];
+			self.team2Player4Name.text = [(WBPlayer *)team2TopPlayers[3] shortName];
+			self.team2Player4Score.text = [(WBPlayer *)team2TopPlayers[3] currentHandicapString];
+		}
 	}
 }
 
