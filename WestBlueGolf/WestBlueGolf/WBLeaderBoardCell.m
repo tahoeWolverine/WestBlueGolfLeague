@@ -35,8 +35,10 @@
 		fmt.minimumFractionDigits = 3;
 		self.peopleValue.text = [NSString stringWithFormat:@"%@%@", avg.floatValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:avg]];
 	}
-	
-	self.detailLabel.text = data.detailValue;
+
+	if (data.detailValue) {
+		self.detailLabel.text = data.detailValue;
+	}
 }
 
 @end

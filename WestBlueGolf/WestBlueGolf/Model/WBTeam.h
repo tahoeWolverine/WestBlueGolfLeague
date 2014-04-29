@@ -39,9 +39,9 @@
 - (NSInteger)totalPointsForYear:(WBYear *)year;
 - (NSString *)placeString;
 - (NSString *)averagePointsString;
-- (NSString *)record;
+- (NSString *)recordStringForYear:(WBYear *)year;
 - (CGFloat)recordRatioForYear:(WBYear *)year;
-- (NSString *)individualRecord;
+- (NSString *)individualRecordStringForYear:(WBYear *)year;
 - (CGFloat)individualRecordRatioForYear:(WBYear *)year;
 - (NSArray *)individualRecordForYear:(WBYear *)year;
 - (NSString *)improvedString;

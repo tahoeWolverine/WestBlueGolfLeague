@@ -38,7 +38,7 @@
 	[self calculateTeamBoardWithName:@"Win/Loss Ratio" key:kLeaderboardTeamWeeklyWinLossRatio priority:3 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return [team recordRatioForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringRecord, [team record]];
+		return [NSString stringWithFormat:kDetailStringRecord, [team recordStringForYear:year]];
 	}];
 	
 	[self calculateTeamBoardWithName:@"Season Improvement" key:kLeaderboardTeamTotalImproved priority:4 teams:teams year:year ascending:YES moc:moc valueCalculation:^(WBTeam *team) {
@@ -75,13 +75,13 @@
 	[self calculateTeamBoardWithName:@"Ind. W/L Ratio" key:kLeaderboardTeamIndividualWinLossRatio priority:9 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return [team individualRecordRatioForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringRecord, [team individualRecord]];
+		return [NSString stringWithFormat:kDetailStringRecord, [team individualRecordStringForYear:year]];
 	}];
 
 	[self calculateTeamBoardWithName:@"Total Match Wins" key:kLeaderboardTeamTotalWins priority:10 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return  (CGFloat)[[team individualRecordForYear:year][0] floatValue];
 	} detailValueCalc:^(WBTeam *team) {
-		return [NSString stringWithFormat:kDetailStringWeeks, (long)team.matchups.count];
+		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team filterMatchupsForYear:year].count];
 	}];
 
 	[self calculateTeamBoardWithName:@"Points in a Week" key:kLeaderboardTeamMaxWeekPoints priority:11 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
@@ -131,19 +131,19 @@
 	[self calculatePlayerBoardWithName:@"Handicap" key:kLeaderboardPlayerHandicap priority:3 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)[player finishingHandicapInYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Average Points" key:kLeaderboardPlayerAveragePoints priority:4 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averagePointsInYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Win/Loss Ratio" key:kLeaderboardPlayerWinLossRatio priority:5 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player recordRatioForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringRecord, [player record]];
+		return [NSString stringWithFormat:kDetailStringRecord, [player recordStringForYear:year]];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved priority:6 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
@@ -155,26 +155,26 @@
 	[self calculatePlayerBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore priority:7 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageOpponentScoreForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Avg. Opp. Net Score" key:kLeaderboardPlayerAverageOpponentNetScore priority:8 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageOpponentNetScoreForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	// Extra Player boards
 	[self calculatePlayerBoardWithName:@"Average Score" key:kLeaderboardPlayerAverageScore priority:9 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageScoreForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Avg. Net Score" key:kLeaderboardPlayerAverageNet priority:10 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageNetScoreForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Points in a Match" key:kLeaderboardPlayerMaxPoints priority:11 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
@@ -187,25 +187,25 @@
 	[self calculatePlayerBoardWithName:@"Total Points" key:kLeaderboardPlayerTotalPoints priority:12 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)[player totalPointsForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Total Wins" key:kLeaderboardPlayerTotalWins priority:13 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)[[player recordForYear:year][0] floatValue];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Avg Margin of Victory" key:kLeaderboardPlayerAverageMarginVictory priority:14 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageMarginOfVictoryForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Avg Margin of Net Victory" key:kLeaderboardPlayerAverageMarginNetVictory priority:15 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
 		return [player averageMarginOfNetVictoryForYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringMatches, (long)player.results.count];
+		return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
 	}];
 	
 	[self calculatePlayerBoardWithName:@"Total Rounds" key:kLeaderboardPlayerTotalRounds priority:16 players:players year:year ascending:NO moc:moc valueCalculation:^(WBPlayer *player) {
@@ -253,7 +253,7 @@
 	
 	// Create league average for board
 	if (teamCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / teamCount) detailValue:detailValue rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / teamCount) detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];
@@ -289,7 +289,7 @@
 	
 	// Create league average for board
 	if (playerCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / playerCount) detailValue:detailValue rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / playerCount) detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];

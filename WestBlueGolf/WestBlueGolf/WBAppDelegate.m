@@ -91,7 +91,7 @@
 	[handiManager calculateHandicapsForYear:year moc:moc];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
 	[boardManager calculateLeaderBoardsForYear:year moc:moc];
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 }
 
 - (void)setupCoreData:(BOOL)reset {

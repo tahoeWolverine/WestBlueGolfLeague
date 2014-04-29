@@ -122,8 +122,8 @@
 	return [self filterYearDataForYear:year].finishingHandicapValue;
 }
 
-- (NSString *)record {
-	NSArray *record = [self recordForYear:[WBYear thisYear]];
+- (NSString *)recordStringForYear:(WBYear *)year {
+	NSArray *record = [self recordForYear:year];
 	BOOL hasTies = record[2] && [(NSNumber *)record[2] integerValue] != 0;
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }

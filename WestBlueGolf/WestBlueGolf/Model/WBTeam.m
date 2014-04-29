@@ -87,7 +87,7 @@
 - (NSString *)placeString {
 	NSInteger place = [self findTotalPointsBoardData].rankValue;
 	NSString *text = place == 1 ? @"st" : place == 2 ? @"nd" : place == 3 ? @"rd" : @"th";
-	return [NSString stringWithFormat:@"%ld%@", (long)place, text];
+	return place > 0 ? [NSString stringWithFormat:@"%ld%@", (long)place, text] : @"N/A";
 }
 
 // Calculated strictly with the object model, no thread-context needed
@@ -114,12 +114,13 @@
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
 	NSInteger matchupCount = [self filterMatchupsForYear:[WBYear thisYear]].count;
-	NSNumber *avg = [NSNumber numberWithFloat:(CGFloat)[self totalPointsForYear:[WBYear thisYear]] / (CGFloat)matchupCount];
-	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
+	NSInteger total = [self totalPointsForYear:[WBYear thisYear]];
+	NSNumber *avg = [NSNumber numberWithFloat:(CGFloat)total / (CGFloat)matchupCount];
+	return matchupCount != 0 ? [fmt stringFromNumber:avg] : @"N/A";
 }
 
-- (NSString *)individualRecord {
-	NSArray *record = [self individualRecordForYear:[WBYear thisYear]];
+- (NSString *)individualRecordStringForYear:(WBYear *)year {
+	NSArray *record = [self individualRecordForYear:year];
 	BOOL hasTies = record[2] && [(NSNumber *)record[2] integerValue] != 0;
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }
@@ -150,8 +151,8 @@
 	return @[[NSNumber numberWithInteger:wins], [NSNumber numberWithInteger:losses], [NSNumber numberWithInteger:ties]];
 }
 
-- (NSString *)record {
-	NSArray *record = [self recordForYear:[WBYear thisYear]];
+- (NSString *)recordStringForYear:(WBYear *)year {
+	NSArray *record = [self recordForYear:year];
 	BOOL hasTies = record[2] && [(NSNumber *)record[2] integerValue] != 0;
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }

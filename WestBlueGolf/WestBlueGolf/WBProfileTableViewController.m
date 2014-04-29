@@ -144,7 +144,7 @@
 - (void)refreshPlayerHighlights {
 	WBPlayer *player = self.selectedPlayer;
 	if (player) {
-		self.winLossLabel.text = [player record];
+		self.winLossLabel.text = [player recordStringForYear:[WBYear thisYear]];
 		self.handicapLabel.text = [player currentHandicapString];
 		self.lowRoundLabel.text = [player lowRoundString];
 		self.averagePointsLabel.text = [player averagePointsString];

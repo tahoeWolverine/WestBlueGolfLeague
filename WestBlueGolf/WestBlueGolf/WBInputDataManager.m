@@ -102,7 +102,7 @@
 		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
 	}
 	
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// password/user table
 	/*NSArray *captainArray = [self jsonFromData:[self fileDataForFilename:@"passwordTable"]];
@@ -139,7 +139,7 @@
 	// Create a player to catch all the no shows (ends up being conditional too)
 	[WBPlayer createNoShowPlayerInContext:moc];
 	
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];
@@ -165,17 +165,19 @@
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		if (!team1 || !team2) {
-			DLog(@"Bad teams");
-			continue;
-		}
-		
-		if (team1.teamIdValue == 0 || team2.teamIdValue == 0) {
-			DLog(@"");
+			if (team1.teamIdValue == 0 || team2.teamIdValue == 0) {
+				DLog(@"Team 0s");
+				team1 = team2 = [WBTeam teamWithName:@"Playoff Team" teamId:0 inContext:moc];
+			} else {
+				DLog(@"Bad teams");
+				continue;
+			}
 		}
 		
 		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete moc:moc];
-		[WBCoreDataManager saveContext:moc];
 	}
+	
+	//[WBCoreDataManager saveContext:moc];
 	
 	WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
 	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
@@ -203,7 +205,7 @@
 	WBTeamMatchup *lastMatch = finalWeekMatchups[4];
 	lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
 
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
@@ -255,7 +257,7 @@
 		}
 	}
 
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 	
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
 	NSArray *matches = nil;

@@ -59,11 +59,12 @@
 }
 
 - (void)refreshTeamHighlights {
+	WBYear *year = [WBYear thisYear];
 	WBTeam *team = self.dataSource.selectedTeam;
 	self.placeLabel.text = [team placeString];
 	self.averagePointsLabel.text = [team averagePointsString];
-	self.winLossLabel.text = [team record];
-	self.winLossAllLabel.text = [team individualRecord];
+	self.winLossLabel.text = [team recordStringForYear:year];
+	self.winLossAllLabel.text = [team individualRecordStringForYear:year];
 	self.improvedLabel.text = [team improvedString];
 	
 	self.navigationItem.title = self.selectedTeam.name ?: @"No Team Selected";

@@ -59,7 +59,12 @@
 - (NSArray *)displayStrings {
 	// Determine winner/loser, tie is unimportant
 	WBTeam *team1 = self.teams.allObjects[0];
-	WBTeam *team2 = self.teams.allObjects[1];
+	WBTeam *team2 = nil;
+	if (self.teams.count == 2) {
+		team2 = self.teams.allObjects[1];
+	} else {
+		team2 = team1; // if only 1 team, its against itself
+	}
 	NSInteger team1Points = [self totalPointsForTeam:team1];
 	NSInteger team2Points = [self totalPointsForTeam:team2];
 	WBTeam *winner = (team1Points > team2Points) ? team1 : team2;

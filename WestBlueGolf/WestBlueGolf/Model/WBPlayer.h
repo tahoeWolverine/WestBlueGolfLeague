@@ -60,7 +60,7 @@
 
 - (NSArray *)recordForYear:(WBYear *)year;
 - (CGFloat)recordRatioForYear:(WBYear *)year;
-- (NSString *)record;
+- (NSString *)recordStringForYear:(WBYear *)year;
 
 - (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSString *)lowRoundString;

@@ -49,7 +49,8 @@ typedef enum {
 
 // Cells should expand if there is a detailValue for this leaderboard
 - (BOOL)shouldExpand {
-	return ![[(WBBoardData *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] detailValue] isEqualToString:@""];
+	NSString *detail = [(WBBoardData *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] detailValue];
+	return detail && ![detail isEqualToString:@""];
 }
 
 - (CGFloat)expandedCellHeight {
@@ -85,7 +86,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	WBBoardData *data = (WBBoardData *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	if (![data.detailValue isEqualToString:@""]) {
+	if (data.detailValue && ![data.detailValue isEqualToString:@""]) {
 		[super tableView:tableView didSelectRowAtIndexPath:indexPath];
 	} else {
 		// Deselect cell
