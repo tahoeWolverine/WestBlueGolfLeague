@@ -50,22 +50,18 @@
 @implementation WBInputDataManager
 
 - (void)createYearsInContext:(NSManagedObjectContext *)moc {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0 inContext:moc];
-
 	NSArray *yearArray = [self jsonFromData:[self fileDataForFilename:@"yearTable" year:0]];
 	NSInteger yearValue = 0;
 	for (NSDictionary *elt in yearArray) {
 		yearValue = [[elt objectForKey:wbJsonKeyYearValue] integerValue];
-		[WBYear yearWithValue:yearValue champion:noTeam inContext:moc];
+		[WBYear yearWithValue:yearValue inContext:moc];
 	}
 	
-	[noTeam deleteEntityInContext:moc];
 	[WBCoreDataManager saveContext:moc];
 }
 
 - (void)loadJsonDataForYearValue:(NSInteger)yearValue fromContext:(NSManagedObjectContext *)moc {
-	WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over" teamId:0 inContext:moc];
-	WBYear *year = [WBYear yearWithValue:yearValue champion:noTeam inContext:moc];
+	WBYear *year = [WBYear findYearWithValue:yearValue inContext:moc];
 
 	//TODO: Will need a way to calculate this
 	year.isCompleteValue = YES;
@@ -106,7 +102,7 @@
 		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
 	}
 	
-	//[WBCoreDataManager saveContext:moc];
+	[WBCoreDataManager saveContext:moc];
 	
 	// password/user table
 	/*NSArray *captainArray = [self jsonFromData:[self fileDataForFilename:@"passwordTable"]];
@@ -143,7 +139,7 @@
 	// Create a player to catch all the no shows (ends up being conditional too)
 	[WBPlayer createNoShowPlayerInContext:moc];
 	
-	//[WBCoreDataManager saveContext:moc];
+	[WBCoreDataManager saveContext:moc];
 	
 	// match table
 	NSArray *matchArray = [self jsonFromData:[self fileDataForFilename:@"matchTable" year:year]];
@@ -168,8 +164,17 @@
 		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
+		if (!team1 || !team2) {
+			DLog(@"Bad teams");
+			continue;
+		}
+		
+		if (team1.teamIdValue == 0 || team2.teamIdValue == 0) {
+			DLog(@"");
+		}
 		
 		matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchId:matchId matchComplete:matchComplete moc:moc];
+		[WBCoreDataManager saveContext:moc];
 	}
 	
 	WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
@@ -198,6 +203,8 @@
 	WBTeamMatchup *lastMatch = finalWeekMatchups[4];
 	lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
 
+	[WBCoreDataManager saveContext:moc];
+	
 	// results table
 	NSArray *resultsArray = [self jsonFromData:[self fileDataForFilename:@"resultsTable" year:year]];
 	WBPlayer *player1 = nil, *player2 = nil;
@@ -232,6 +239,10 @@
 		
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
+		if (!team1 || !team2) {
+			DLog(@"Bad Teams");
+			continue;
+		}
 		
 		matchup = [WBTeamMatchup matchupForTeam:team1 inWeek:week inContext:moc];
 		
@@ -243,6 +254,8 @@
 			[WBResult createResultForMatch:match forPlayer:player2 team:team2 withPoints:points2 priorHandicap:player2.currentHandicapValue score:score2 moc:moc];
 		}
 	}
+
+	[WBCoreDataManager saveContext:moc];
 	
 	// Determine if there are any weeks with no matches and mark them bad data (in addition to those marked bad from having teams playing themselves)
 	NSArray *matches = nil;
@@ -254,15 +267,11 @@
 		}
 	}
 	
-	// Delete the noTeam
-	[noTeam deleteEntityInContext:moc];
-	
-	//[WBCoreDataManager saveContext];
 	[WBCoreDataManager saveContext:moc];
 }
 
 - (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
-	WBYear *year = [WBYear yearWithValue:yearValue champion:nil inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 	
 	// This should delete all weeks, teamMatchups, matches, and results
 	for (WBWeek *week in year.weeks) {
@@ -313,46 +322,6 @@
 		ALog(@"no json data found");
 	}
 	return nil;
-}
-
-#pragma mark - Test Method
-
-- (void)createTestData {
-	/*WBTeam *noTeam = [WBTeam createTeamWithName:@"Season not yet over"];
-	 WBYear *year = [WBYear createYearWithValue:2013 champion:noTeam];
-	 WBCourse *course = [WBCourse createCourseWithName:@"Gold Front" par:36];
-	 WBWeek *week = [WBWeek createWeekWithDate:[NSDate date] inYear:year forCourse:course];
-	 
-	 WBTeam *team1 = [WBTeam createTeamWithName:@"Earthmovers"];
-	 WBCaptain *captain1 = [WBCaptain createCaptainWithId:1 username:@"dale" password:@"vlasak" name:@"Dale Vlasak" currentHandicap:14 onTeam:team1];
-	 WBPlayer *player10 = [WBPlayer createPlayerWithName:@"Michael Harlow" currentHandicap:5 onTeam:team1];
-	 WBPlayer *player11 = [WBPlayer createPlayerWithName:@"Tim Wagner" currentHandicap:3 onTeam:team1];
-	 WBPlayer *player12 = [WBPlayer createPlayerWithName:@"Andy Norgren" currentHandicap:14 onTeam:team1];
-	 
-	 WBTeam *team2 = [WBTeam createTeamWithName:@"Swing Doctors"];
-	 WBCaptain *captain2 = [WBCaptain createCaptainWithId:2 username:@"nick" password:@"remarke" name:@"Nick Remarke" currentHandicap:11 onTeam:team2];
-	 WBPlayer *player20 = [WBPlayer createPlayerWithName:@"Ryan Hunecke" currentHandicap:9 onTeam:team2];
-	 WBPlayer *player21 = [WBPlayer createPlayerWithName:@"Jason Meggit" currentHandicap:7 onTeam:team2];
-	 WBPlayer *player22 = [WBPlayer createPlayerWithName:@"Nick Brett" currentHandicap:7 onTeam:team2];
-	 
-	 WBTeamMatchup *matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week];
-	 WBMatch *match1 = [WBMatch createMatchForTeamMatchup:matchup player1:player11 player2:player21];
-	 [WBResult createResultForMatch:match1 forPlayer:player11 withPoints:18 priorHandicap:3 score:39];
-	 [WBResult createResultForMatch:match1 forPlayer:player21 withPoints:6 priorHandicap:7 score:43];
-	 WBMatch *match2 = [WBMatch createMatchForTeamMatchup:matchup player1:player10 player2:player22];
-	 [WBResult createResultForMatch:match2 forPlayer:player10 withPoints:22 priorHandicap:5 score:41];
-	 [WBResult createResultForMatch:match2 forPlayer:player22 withPoints:2 priorHandicap:7 score:43];
-	 WBMatch *match3 = [WBMatch createMatchForTeamMatchup:matchup player1:captain1 player2:player20];
-	 [WBResult createResultForMatch:match3 forPlayer:captain1 withPoints:15 priorHandicap:14 score:50];
-	 [WBResult createResultForMatch:match3 forPlayer:player20 withPoints:9 priorHandicap:7 score:43];
-	 WBMatch *match4 = [WBMatch createMatchForTeamMatchup:matchup player1:player12 player2:captain2];
-	 [WBResult createResultForMatch:match4 forPlayer:player12 withPoints:12 priorHandicap:14 score:50];
-	 [WBResult createResultForMatch:match4 forPlayer:captain2 withPoints:12 priorHandicap:11 score:37];
-	 
-	 // Delete the noTeam
-	 [noTeam deleteTeam];*/
-	
-	//[WBCoreDataManager saveContext];
 }
 
 @end

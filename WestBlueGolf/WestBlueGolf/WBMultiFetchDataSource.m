@@ -27,16 +27,12 @@
 	self = [super init];
 	if (self) {
 		self.viewController = aViewController;
+		self.sectionDataSources = [NSMutableArray array];
 	}
 	return self;
 }
 
 - (void)beginFetch {
-	/*NSError *error = nil;
-	if (![[self fetchedResultsController] performFetch:&error]) {
-		ALog(@"Unresolved error %@, %@", error, [error userInfo]);
-		[WBCoreDataManager logError:error];
-	}*/
 	for (WBSectionDataSource *dataSource in self.sectionDataSources) {
 		[dataSource beginFetch];
 	}
@@ -57,12 +53,39 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.sectionDataSources[indexPath.section] tableView:tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+	WBSectionDataSource *sectionDataSource = self.sectionDataSources[indexPath.section];
+	NSManagedObject *object = [sectionDataSource.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[sectionDataSource cellIdentifierForObject:object] forIndexPath:indexPath];
+	
+	[sectionDataSource configureCell:cell withObject:object];
+	
+	return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return [self.sectionDataSources[indexPath.section] tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self.sectionDataSources[indexPath.section] tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+}
+
+- (WBSectionDataSource *)dataSourceForSegueIdentifier:(NSString *)segueIdentifier {
+	for (WBSectionDataSource *dataSource in self.sectionDataSources) {
+		if ([[dataSource supportedSegueIdentifier] isEqualToString:segueIdentifier]) {
+			return dataSource;
+		}
+	}
+	
+	return nil;
 }
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	[self.sectionDataSources[self.tableView.indexPathForSelectedRow.section] prepareForSegue:segue sender:sender];
+	WBSectionDataSource *sectionDataSource = [self dataSourceForSegueIdentifier:segue.identifier];
+	if (sectionDataSource) {
+		[sectionDataSource prepareForSegue:segue sender:sender];
+	}
 }
 
 @end

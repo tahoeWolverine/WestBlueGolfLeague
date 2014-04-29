@@ -8,19 +8,21 @@
 
 #import "WBTeamPlayersDataSource.h"
 #import "WBModels.h"
+#import "WBProfileTableViewController.h"
 #import "WBResultTableViewCell.h"
 #import "WBTeamProfileDataSource.h"
 
 #define SORT_KEY @"name"
+#define SEGUE_IDENTIFIER @"WBTeamPlayerSegue"
 
 @implementation WBTeamPlayersDataSource
 
 - (WBTeam *)selectedTeam {
-	WBTeamProfileDataSource *multi = (WBTeamProfileDataSource *)self.multiFetchDataSource;
+	WBTeamProfileDataSource *multi = (WBTeamProfileDataSource *)self.parentDataSource;
 	return multi.selectedTeam;
 }
 
-- (NSString *)cellIdentifier {
+- (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	static NSString *CellIdentifier = @"TeamCell";
 	return CellIdentifier;
 }
@@ -35,7 +37,7 @@
 }
 
 - (BOOL)shouldExpand {
-	return YES;
+	return NO;
 }
 
 - (NSArray *)sortDescriptorsForFetch {
@@ -47,27 +49,21 @@
 	return [NSPredicate predicateWithFormat:@"team = %@", [self selectedTeam]];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	NSString *identifier = [self cellIdentifier];
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-	
-	[self configureCell:cell withObject:matchup];
-    
-    return cell;
-}
-
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	WBPlayer *player = (WBPlayer *)object;
     cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = player.team.name;
+	cell.detailTextLabel.text = [player currentHandicapString];
+}
+
+- (NSString *)supportedSegueIdentifier {
+	return SEGUE_IDENTIFIER;
 }
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	//WBProfileTableViewController *vc = [segue destinationViewController];
-	//vc.selectedPlayer = (WBPlayer *)[self.dataSource objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+	WBProfileTableViewController *vc = [segue destinationViewController];
+	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:self.parentDataSource.tableView.indexPathForSelectedRow.row inSection:0]];
 }
 
 @end

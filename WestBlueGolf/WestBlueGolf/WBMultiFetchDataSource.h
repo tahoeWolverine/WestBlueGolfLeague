@@ -18,5 +18,6 @@
 - (void)addSectionDataSource:(WBSectionDataSource *)dataSource;
 
 - (void)beginFetch;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 
 @end

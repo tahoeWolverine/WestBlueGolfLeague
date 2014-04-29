@@ -16,18 +16,16 @@
 @implementation WBTeamResultsDataSource
 
 - (WBTeam *)selectedTeam {
-	WBTeamProfileDataSource *multi = (WBTeamProfileDataSource *)self.multiFetchDataSource;
+	WBTeamProfileDataSource *multi = (WBTeamProfileDataSource *)self.parentDataSource;
 	return multi.selectedTeam;
 }
 
-- (NSString *)cellIdentifier {
+- (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	static NSString *CellIdentifier = @"TeamResultsCell";
-	return CellIdentifier;
-}
+	static NSString *IncompleteCellIdentifier = @"IncompleteTeamResultsCell";
 
-- (NSString *)incompleteCellIdentifier {
-	static NSString *CellIdentifier = @"IncompleteTeamResultsCell";
-	return CellIdentifier;
+	WBTeamMatchup *matchup = (WBTeamMatchup *)object;
+	return matchup.matchCompleteValue ? CellIdentifier : IncompleteCellIdentifier;
 }
 
 - (NSString *)entityName {
@@ -45,16 +43,6 @@
 
 - (NSPredicate *)fetchPredicate {
 	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", [self selectedTeam], [WBYear thisYear]];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-	
-	[self configureCell:cell withObject:matchup];
-    
-    return cell;
 }
 
 - (void)configureCell:(UITableViewCell *)cell

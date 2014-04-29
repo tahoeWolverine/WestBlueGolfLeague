@@ -31,8 +31,8 @@
 - (id)initWithViewController:(UIViewController *)aViewController {
 	self = [super init];
 	if (self) {
-		self.viewController = aViewController;
-		self.selectedIndexes = [[NSMutableDictionary alloc] init];
+		_viewController = aViewController;
+		_selectedIndexes = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }

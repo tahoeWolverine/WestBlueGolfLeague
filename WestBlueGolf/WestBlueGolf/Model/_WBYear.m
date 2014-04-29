@@ -10,7 +10,6 @@ const struct WBYearAttributes WBYearAttributes = {
 
 const struct WBYearRelationships WBYearRelationships = {
 	.boardData = @"boardData",
-	.champion = @"champion",
 	.playerYearData = @"playerYearData",
 	.weeks = @"weeks",
 };
@@ -124,10 +123,6 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 	[self didAccessValueForKey:@"boardData"];
 	return result;
 }
-	
-
-@dynamic champion;
-
 	
 
 @dynamic playerYearData;

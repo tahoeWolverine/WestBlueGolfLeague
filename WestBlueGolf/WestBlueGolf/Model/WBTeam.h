@@ -1,6 +1,7 @@
 #import "_WBTeam.h"
 
 @class WBWeek;
+@class WBYear;
 
 // LeaderBoard keys
 #define kLeaderboardTeamAverageHandicap @"averageHandicap"

@@ -12,17 +12,24 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-@property (weak, nonatomic) WBMultiFetchDataSource *multiFetchDataSource;
+@property (weak, nonatomic) WBMultiFetchDataSource *parentDataSource;
 
++ (WBSectionDataSource *)dataSourceWithParentDataSource:(WBMultiFetchDataSource *)parentDataSource;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 
 - (void)beginFetch;
 
-- (NSString *)cellIdentifier;
+- (NSString *)cellIdentifierForObject:(NSManagedObject *)object;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptorsForFetch;
 - (NSPredicate *)fetchPredicate;
+- (BOOL)shouldExpand;
+- (CGFloat)cellHeight;
+- (CGFloat)expandedCellHeight;
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object;
+
+- (NSString *)supportedSegueIdentifier;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 
 @end

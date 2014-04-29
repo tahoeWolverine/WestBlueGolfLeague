@@ -70,7 +70,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	
+	[self.dataSource prepareForSegue:segue sender:sender];
 }
 
 @end
