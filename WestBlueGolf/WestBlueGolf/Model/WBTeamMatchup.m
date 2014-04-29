@@ -102,9 +102,18 @@
 	
 	NSString *scoreString = [NSString stringWithFormat:@"%@-%@", teamScore, opponentScore];
 	
-	NSInteger myTeamRank = [team rankPriorToWeek:self.week];
-	NSInteger opponentRank = [opponent rankPriorToWeek:self.week];
-	NSString *teamRanksString = [NSString stringWithFormat:@"#%ld vs #%ld", (long)myTeamRank, (long)opponentRank];
+	NSString *teamRanksString = @"";
+	if (self.week.seasonIndexValue == 1) {
+		teamRanksString = @"Unranked";
+	} else {
+		NSInteger myTeamRank = [team rankPriorToWeek:self.week];
+		NSInteger opponentRank = [opponent rankPriorToWeek:self.week];
+		if (myTeamRank == 0 || opponentRank == 0) {
+			teamRanksString = @"Unranked";
+		} else {
+			teamRanksString = [NSString stringWithFormat:@"#%ld vs #%ld", (long)myTeamRank, (long)opponentRank];
+		}
+	}
 	
 	NSInteger myTeamHandicap = [self totalHandicapForTeam:team];
 	NSInteger opponentHandicap = [self totalHandicapForTeam:opponent];

@@ -65,7 +65,7 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:NO];
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
 	return @[sortOrderDescriptor];
 }
 

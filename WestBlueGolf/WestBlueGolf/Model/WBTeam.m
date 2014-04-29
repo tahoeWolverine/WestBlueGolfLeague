@@ -462,6 +462,10 @@
 		}
 	}
 	
+	if (rank == 1 && myTeamPoints == 0) {
+		rank = 0;
+	}
+	
 	// Cache the rank
 	[[WBCoreDataManager sharedManager] setRank:rank forTeam:self priorToWeek:week];
 	

@@ -11,7 +11,7 @@
 #import "WBResultTableViewCell.h"
 #import "WBTeamProfileDataSource.h"
 
-#define SORT_KEY_SECTION_1 @"week.date"
+#define SORT_KEY @"week.date"
 
 @implementation WBTeamResultsDataSource
 
@@ -37,7 +37,7 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY_SECTION_1 ascending:NO];
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
 	return @[sortOrderDescriptor];
 }
 
