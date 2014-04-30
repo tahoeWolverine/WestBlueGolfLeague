@@ -7,6 +7,7 @@
 extern const struct WBPeopleEntityAttributes {
 	__unsafe_unretained NSString *me;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *real;
 } WBPeopleEntityAttributes;
 
 extern const struct WBPeopleEntityRelationships {
@@ -17,6 +18,7 @@ extern const struct WBPeopleEntityFetchedProperties {
 } WBPeopleEntityFetchedProperties;
 
 @class WBBoardData;
+
 
 
 
@@ -58,6 +60,20 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* real;
+
+
+
+@property BOOL realValue;
+- (BOOL)realValue;
+- (void)setRealValue:(BOOL)value_;
+
+//- (BOOL)validateReal:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSSet *boardData;
 
 - (NSMutableSet*)boardDataSet;
@@ -91,6 +107,15 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveReal;
+- (void)setPrimitiveReal:(NSNumber*)value;
+
+- (BOOL)primitiveRealValue;
+- (void)setPrimitiveRealValue:(BOOL)value_;
 
 
 

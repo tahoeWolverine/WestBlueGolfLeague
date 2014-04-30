@@ -6,6 +6,7 @@
 const struct WBPeopleEntityAttributes WBPeopleEntityAttributes = {
 	.me = @"me",
 	.name = @"name",
+	.real = @"real",
 };
 
 const struct WBPeopleEntityRelationships WBPeopleEntityRelationships = {
@@ -46,6 +47,11 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
+	if ([key isEqualToString:@"realValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"real"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -81,6 +87,32 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 
 @dynamic name;
 
+
+
+
+
+
+@dynamic real;
+
+
+
+- (BOOL)realValue {
+	NSNumber *result = [self real];
+	return [result boolValue];
+}
+
+- (void)setRealValue:(BOOL)value_ {
+	[self setReal:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveRealValue {
+	NSNumber *result = [self primitiveReal];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveRealValue:(BOOL)value_ {
+	[self setPrimitiveReal:[NSNumber numberWithBool:value_]];
+}
 
 
 

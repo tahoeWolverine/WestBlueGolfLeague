@@ -454,5 +454,23 @@
     "TeamID":10,
     "Week0Score":39,
     "Status":"OLD"
+  },
+  {
+    "PlayerName":"Dave Peloquin",
+    "TeamID":11,
+    "Week0Score":45,
+    "Status":"NEW"
+  },
+  {
+    "PlayerName":"Todd Schneiderhan",
+    "TeamID":11,
+    "Week0Score":41,
+    "Status":"NEW"
+  },
+  {
+    "PlayerName":"Wayne Luethmers",
+    "TeamID":11,
+    "Week0Score":36,
+    "Status":"NEW"
   }
 ]

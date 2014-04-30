@@ -168,6 +168,8 @@
 			if (team1.teamIdValue == 0 || team2.teamIdValue == 0) {
 				DLog(@"Team 0s");
 				team1 = team2 = [WBTeam teamWithName:@"Playoff Team" teamId:0 inContext:moc];
+				team1.realValue = NO;
+				team2.realValue = NO;
 			} else {
 				DLog(@"Bad teams");
 				continue;

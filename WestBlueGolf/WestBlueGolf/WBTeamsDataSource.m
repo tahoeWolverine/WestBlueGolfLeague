@@ -56,7 +56,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"ANY matchups.week.year = %@", [WBYear thisYear]];
+	return [NSPredicate predicateWithFormat:@"ANY matchups.week.year = %@ && real = 1", [WBYear thisYear]];
 }
 
 - (NSArray *)sortDescriptorsForFetch {
