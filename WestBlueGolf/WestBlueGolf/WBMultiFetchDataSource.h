@@ -10,7 +10,7 @@
 
 @interface WBMultiFetchDataSource : NSObject <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (weak, nonatomic, readonly) UITableView *tableView;
 
 + (id)dataSourceWithViewController:(UIViewController *)aViewController;
 - (id)initWithViewController:(UIViewController *)aViewController;

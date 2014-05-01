@@ -11,7 +11,7 @@
 
 @interface WBMultiFetchDataSource ()
 
-@property (weak, nonatomic) UIViewController *viewController;
+@property (weak, nonatomic) UITableViewController *viewController;
 
 @property (strong, nonatomic) NSMutableArray *sectionDataSources;
 
@@ -19,15 +19,19 @@
 
 @implementation WBMultiFetchDataSource
 
-+ (id)dataSourceWithViewController:(UIViewController *)aViewController {
+- (UITableView *)tableView {
+	return self.viewController.tableView;
+}
+
++ (id)dataSourceWithViewController:(UITableViewController *)aViewController {
 	return [[self alloc] initWithViewController:aViewController];
 }
 
-- (id)initWithViewController:(UIViewController *)aViewController {
+- (id)initWithViewController:(UITableViewController *)aViewController {
 	self = [super init];
 	if (self) {
-		self.viewController = aViewController;
-		self.sectionDataSources = [NSMutableArray array];
+		_viewController = aViewController;
+		_sectionDataSources = [NSMutableArray array];
 	}
 	return self;
 }

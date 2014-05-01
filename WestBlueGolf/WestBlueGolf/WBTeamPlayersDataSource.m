@@ -63,7 +63,9 @@
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	WBProfileTableViewController *vc = [segue destinationViewController];
-	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:self.parentDataSource.tableView.indexPathForSelectedRow.row inSection:0]];
+	NSIndexPath *path = self.parentDataSource.tableView.indexPathForSelectedRow;
+	NSIndexPath *adjustedPath = [NSIndexPath indexPathForRow:path.row inSection:0];
+	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:adjustedPath];
 }
 
 @end
