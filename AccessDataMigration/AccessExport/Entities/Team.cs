@@ -48,7 +48,7 @@ namespace AccessExport
             if (this.Id == 10)
             {
                 // TODO: Account for players which may have switched teams.
-                Debugger.Break();
+                //Debugger.Break();
             }
 
             // Get all results for year

@@ -181,11 +181,6 @@ namespace AccessExport
                             int startingHandicap = 0;
                             bool isRookie = false;
 
-                            //if (playersTeam == 8)
-                            //{
-                            //    Debugger.Break();
-                            //}
-
                             // If the year is before 2009, we'll update the handicaps later
                             if (year >= 2009)
                             {

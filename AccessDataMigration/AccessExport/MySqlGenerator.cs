@@ -75,14 +75,14 @@ namespace AccessExport
             sb.AppendLine(string.Join("\n", results));
 
             // Leaderboard
-            sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
-            var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
-            sb.AppendLine(string.Join("\n", lbs));
+            //sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
+            //var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
+            //sb.AppendLine(string.Join("\n", lbs));
 
-            // Leaderboard data
-            sb.AppendLine().AppendLine().AppendLine("/* lb data */");
-            var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
-            sb.AppendLine(string.Join("\n", lbData));
+            //// Leaderboard data
+            //sb.AppendLine().AppendLine().AppendLine("/* lb data */");
+            //var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
+            //sb.AppendLine(string.Join("\n", lbData));
 
             sb.Append("\n\n\n");
             sb.Append("COMMIT;\n");
