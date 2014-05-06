@@ -45,12 +45,6 @@ namespace AccessExport
 
         public double AverageHandicapForYear(Year year)
         {
-            if (this.Id == 10)
-            {
-                // TODO: Account for players which may have switched teams.
-                Debugger.Break();
-            }
-
             // Get all results for year
             var resultsForYear = this.AllResultsForYear(year);
 
@@ -64,7 +58,7 @@ namespace AccessExport
             {
                 var yd = player.YearDatas.FirstOrDefault(y => y.Year.Value == year.Value);
 
-                if (yd == null) Debugger.Break();
+                if (yd == null) { continue; }
 
                 yds.Add(yd);
             }
@@ -117,6 +111,11 @@ namespace AccessExport
                 }
             }
 
+            if (opponentCount == 0)
+            {
+                return 0.0;
+            }
+
             return totalScore / opponentCount;
         }
 
@@ -139,8 +138,12 @@ namespace AccessExport
                 }
             }
 
-            return totalScore / opponentCount;
+            if (opponentCount == 0)
+            {
+                return 0.0;
+            }
 
+            return totalScore / opponentCount;
         }
 
         public int ImprovedInYear(Year year)
@@ -160,6 +163,11 @@ namespace AccessExport
 
             double totalWins = (double)record[0] + ((double)record[1] / 2.0);
             int totalWeeks = record[0] + record[1] + record[2];
+
+            if (totalWeeks == 0)
+            {
+                return 0.0;
+            }
 
             return totalWins / (double)totalWeeks;
         }

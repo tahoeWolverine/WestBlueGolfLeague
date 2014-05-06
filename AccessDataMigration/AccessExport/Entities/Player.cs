@@ -33,7 +33,8 @@ namespace AccessExport
                 {
                     if (value.Id != this.team.Id) 
                     {
-                        Console.WriteLine("Switched team: " + this.Name);
+                        // TODO: Anything special to do with switched teams??
+                        //Console.WriteLine("Switched team: " + this.Name);
                     }
 
                     this.team.RemovePlayer(this);
@@ -132,11 +133,6 @@ namespace AccessExport
 
         public double RecordRatioForYear(Year year)
         {
-            //if (year.Value == 2013 && (this.Name == "Ivan Kuznia" || this.Name == "Patrick Neuman"))
-            //{
-            //    Debugger.Break();
-            //}
-
             var record = this.RecordForYear(year);
             double totalWins = record[0] + ((double)record[2] / 2);
             int totalMatches = record[0] + record[1] + record[2];

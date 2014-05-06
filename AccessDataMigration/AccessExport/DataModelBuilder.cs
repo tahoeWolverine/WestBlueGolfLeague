@@ -71,12 +71,10 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                Console.WriteLine("/***** starting year " + yearStr + " *****/");
+                //Console.WriteLine("/***** starting year " + yearStr + " *****/");
 
                 string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=..\..\..\..\Actual Data\access_db\golf" + yearStr.Substring(2) + ".mdb";
 
-                /*try
-                {*/
                 using (connection = new OdbcConnection(connectionString))
                 {
                     connection.Open();
@@ -87,12 +85,6 @@ namespace AccessExport
                     var newYear = new Year { Id = yearIndex++, Value = year, Complete = true };
                     yearIdToYear[newYear.Id] = newYear;
                     yearValueToYear[year] = newYear;
-
-                    //if (year == 2013)
-                    //{
-                    //    Debugger.Break();
-                    //}
-
 
                     // Weeks
                     cmd.CommandText = "SELECT * FROM WeekTable";
@@ -157,7 +149,15 @@ namespace AccessExport
 
                             if (!teamNameToTeam.TryGetValue(teamName, out team))
                             {
-                                team = new Team() { Name = teamName, Id = teamIndex++, ValidTeam = true };
+                                bool validTeam = true;
+
+                                // Garbage team from 2005. Throw it awayyy
+                                if (string.Equals(teamName, "Handicap", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    validTeam = false;
+                                }
+
+                                team = new Team() { Name = teamName, Id = teamIndex++, ValidTeam = validTeam };
                                 teamNameToTeam.Add(teamName, team);
                             }
 
@@ -180,11 +180,6 @@ namespace AccessExport
                             int playersTeam = reader.GetInt32(1);
                             int startingHandicap = 0;
                             bool isRookie = false;
-
-                            //if (playersTeam == 8)
-                            //{
-                            //    Debugger.Break();
-                            //}
 
                             // If the year is before 2009, we'll update the handicaps later
                             if (year >= 2009)
@@ -420,14 +415,6 @@ namespace AccessExport
 
                     connection.Close();
                 }
-
-
-                /*}
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message + "\r\n" + e.StackTrace);
-                    throw new Exception("wat", e);
-                }*/
             }
 
             DataModel dm = new DataModel
@@ -573,13 +560,13 @@ namespace AccessExport
 
                 var teamsForYear = dataModel.Teams.Where(x => setOfTeamsForYear.Contains(x.Id) && x.ValidTeam).ToList();
 
-                // TODO: replace with real predicates and leader boards.
                 TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear, year, false, (team, dm) => team.TotalPointsForYear(year));
 
                 TeamBoard(dataModel, "Average Handicap", "team_average_handicap", teamsForYear, year, true, (team, dm) => team.AverageHandicapForYear(year));
 
                 TeamBoard(dataModel, "Win/Loss Ratio", "team_win_loss_ratio", teamsForYear, year, false, (team, dm) => team.RecordRatioForYear(year));
 
+                // TODO: This board is currently broken b/c handicaps for years < 2011 are broken.
                 TeamBoard(dataModel, "Season Improvement", "team_season_improvement", teamsForYear, year, true, (team, dm) => team.ImprovedInYear(year));
 
                 TeamBoard(dataModel, "Avg. Opp. Score", "team_avg_opp_score", teamsForYear, year, true, (team, dm) => team.AverageOpponentScoreForYear(year));
