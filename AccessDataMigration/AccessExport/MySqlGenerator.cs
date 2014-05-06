@@ -15,9 +15,8 @@ namespace AccessExport
             StringBuilder sb = new StringBuilder();
 
             // begin our transaction
-            sb.Append("SET autocommit=0;\n");
-            sb.Append("START TRANSACTION;\n");
-
+            sb.AppendLine("SET autocommit=0;");
+            
 
             // Create teams first
             sb.AppendLine().AppendLine("/* Teams */");
@@ -75,17 +74,16 @@ namespace AccessExport
             sb.AppendLine(string.Join("\n", results));
 
             // Leaderboard
-            //sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
-            //var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
-            //sb.AppendLine(string.Join("\n", lbs));
+            sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
+            var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
+            sb.AppendLine(string.Join("\n", lbs));
 
-            //// Leaderboard data
-            //sb.AppendLine().AppendLine().AppendLine("/* lb data */");
-            //var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
-            //sb.AppendLine(string.Join("\n", lbData));
+            // Leaderboard data
+            sb.AppendLine().AppendLine().AppendLine("/* lb data */");
+            var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
+            sb.AppendLine(string.Join("\n", lbData));
 
             sb.Append("\n\n\n");
-            sb.Append("COMMIT;\n");
 
             return sb.ToString();
         }
@@ -128,11 +126,6 @@ namespace AccessExport
 
         private string GetMatchupToPlayerInsert(MatchUp m)
         {
-            //if (m.Id == 475)
-            //{
-            //    Debugger.Break();
-            //}
-
             var insert1 = new FluentMySqlInsert("matchupToPlayer")
                 .WithColumns("playerId", "matchupId")
                 .WithValues(m.Player1.Id, m.Id)
