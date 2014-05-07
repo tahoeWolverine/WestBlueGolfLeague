@@ -13,6 +13,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 using System.IO;
+using System.Threading;
 
 
 namespace AccessExport
@@ -32,6 +33,20 @@ namespace AccessExport
         static void Main(string[] args)
         {
 
+            if (args.Length < 3)
+            {
+                Console.WriteLine("** WARNING **");
+                Console.WriteLine("** Using defaults as required vals were not passed in **");
+                Console.WriteLine();
+            }
+
+            DoExport();                
+
+            //Console.WriteLine(BitConverter.ToString(Hasher.Hash("xxxxxxxx", "839202910", 5000)).Replace("-", ""));
+        }
+
+        private static void DoExport()
+        {
             bool dataPopulateMode = true;
             DataModel dataModel = null;
 
@@ -42,6 +57,9 @@ namespace AccessExport
                 dataModel = dmb.CreateDataModel();
             });
 
+            //
+            // Begin MySql specific stuff
+            //
             string dataModelInserts = string.Empty;
 
             TimedTask("-- Generating mysql inserts --", () =>
@@ -50,7 +68,6 @@ namespace AccessExport
 
                 dataModelInserts = mysqlGenerator.Generate(dataModel);
             });
-
 
             // if we aren't populating data, stream the sql to stdout for debugging
             if (!dataPopulateMode)
@@ -70,7 +87,7 @@ namespace AccessExport
                     // We need to set the packet size for mysql to accept our large inserts.
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "SET GLOBAL max_allowed_packet = 20777216;";
+                        command.CommandText = "SET GLOBAL max_allowed_packet = 28777216;";
                         command.ExecuteNonQuery();
                     }
                 }
@@ -120,8 +137,6 @@ namespace AccessExport
                     throw;
                 }
             }
-
-            //Console.WriteLine(BitConverter.ToString(Hasher.Hash("xxxxxxxx", "839202910", 5000)).Replace("-", ""));
         }
     }
 }
