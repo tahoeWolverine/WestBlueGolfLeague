@@ -1,2 +1,222 @@
 [
+  {
+    "Week":"1",
+    "TeamID1":9,
+    "PlayerName1":"Evan Stoltz",
+    "Score1":42,
+    "Points1":5,
+    "TeamID2":10,
+    "PlayerName2":"Michael Harlow",
+    "Score2":39,
+    "Points2":19
+  },
+  {
+    "Week":"1",
+    "TeamID1":9,
+    "PlayerName1":"Dave Dietsche",
+    "Score1":43,
+    "Points1":20,
+    "TeamID2":10,
+    "PlayerName2":"Dan Mule",
+    "Score2":51,
+    "Points2":4
+  },
+  {
+    "Week":"1",
+    "TeamID1":9,
+    "PlayerName1":"Pat Fermoyle",
+    "Score1":47,
+    "Points1":6,
+    "TeamID2":10,
+    "PlayerName2":"Andy Norgren",
+    "Score2":44,
+    "Points2":18
+  },
+  {
+    "Week":"1",
+    "TeamID1":9,
+    "PlayerName1":"Adam Ahrens",
+    "Score1":54,
+    "Points1":15,
+    "TeamID2":10,
+    "PlayerName2":"Aaron L. Johnson",
+    "Score2":59,
+    "Points2":9
+  },
+  {
+    "Week":"1",
+    "TeamID1":4,
+    "PlayerName1":"Scott Hanson",
+    "Score1":40,
+    "Points1":13,
+    "TeamID2":7,
+    "PlayerName2":"Jeff Geske-Peer",
+    "Score2":45,
+    "Points2":11
+  },
+  {
+    "Week":"1",
+    "TeamID1":4,
+    "PlayerName1":"Ryan Kinsella",
+    "Score1":46,
+    "Points1":6,
+    "TeamID2":7,
+    "PlayerName2":"Tristan Wilwert",
+    "Score2":48,
+    "Points2":18
+  },
+  {
+    "Week":"1",
+    "TeamID1":4,
+    "PlayerName1":"Brian Tschida",
+    "Score1":48,
+    "Points1":10,
+    "TeamID2":7,
+    "PlayerName2":"Guy Normandeau",
+    "Score2":54,
+    "Points2":14
+  },
+  {
+    "Week":"1",
+    "TeamID1":4,
+    "PlayerName1":"Rob Voith",
+    "Score1":47,
+    "Points1":7,
+    "TeamID2":7,
+    "PlayerName2":"Jesse Smith",
+    "Score2":49,
+    "Points2":17
+  },
+  {
+    "Week":"1",
+    "TeamID1":3,
+    "PlayerName1":"Alun Champion",
+    "Score1":48,
+    "Points1":5,
+    "TeamID2":6,
+    "PlayerName2":"Rick Rowan",
+    "Score2":39,
+    "Points2":19
+  },
+  {
+    "Week":"1",
+    "TeamID1":3,
+    "PlayerName1":"Ryan Hunecke",
+    "Score1":42,
+    "Points1":19,
+    "TeamID2":6,
+    "PlayerName2":"Gary Sole",
+    "Score2":48,
+    "Points2":5
+  },
+  {
+    "Week":"1",
+    "TeamID1":3,
+    "PlayerName1":"Nick Remarke",
+    "Score1":49,
+    "Points1":4,
+    "TeamID2":6,
+    "PlayerName2":"Matt Nohelty",
+    "Score2":44,
+    "Points2":20
+  },
+  {
+    "Week":"1",
+    "TeamID1":3,
+    "PlayerName1":"Chad Schommer",
+    "Score1":51,
+    "Points1":21,
+    "TeamID2":6,
+    "PlayerName2":"Ted Gonyeau",
+    "Score2":77,
+    "Points2":3
+  },
+  {
+    "Week":"1",
+    "TeamID1":1,
+    "PlayerName1":"Paul Haering",
+    "Score1":42,
+    "Points1":16,
+    "TeamID2":8,
+    "PlayerName2":"Nick Bjerken",
+    "Score2":43,
+    "Points2":8
+  },
+  {
+    "Week":"1",
+    "TeamID1":1,
+    "PlayerName1":"Jason Price",
+    "Score1":45,
+    "Points1":6,
+    "TeamID2":8,
+    "PlayerName2":"Tory Stellick",
+    "Score2":38,
+    "Points2":18
+  },
+  {
+    "Week":"1",
+    "TeamID1":1,
+    "PlayerName1":"Hank Maurer",
+    "Score1":52,
+    "Points1":8,
+    "TeamID2":8,
+    "PlayerName2":"Anthony Caswell",
+    "Score2":48,
+    "Points2":16
+  },
+  {
+    "Week":"1",
+    "TeamID1":1,
+    "PlayerName1":"Jim Joseph",
+    "Score1":56,
+    "Points1":5,
+    "TeamID2":8,
+    "PlayerName2":"Kieth Kurpiers",
+    "Score2":50,
+    "Points2":19
+  },
+  {
+    "Week":"1",
+    "TeamID1":2,
+    "PlayerName1":"Drew Johnson",
+    "Score1":40,
+    "Points1":17,
+    "TeamID2":5,
+    "PlayerName2":"Jayson Walberg",
+    "Score2":51,
+    "Points2":7
+  },
+  {
+    "Week":"1",
+    "TeamID1":2,
+    "PlayerName1":"Matt Wendt",
+    "Score1":49,
+    "Points1":7,
+    "TeamID2":5,
+    "PlayerName2":"Pete Mohs",
+    "Score2":51,
+    "Points2":17
+  },
+  {
+    "Week":"1",
+    "TeamID1":2,
+    "PlayerName1":"Brad Loya",
+    "Score1":51,
+    "Points1":17,
+    "TeamID2":5,
+    "PlayerName2":"Matt Sinn",
+    "Score2":57,
+    "Points2":7
+  },
+  {
+    "Week":"1",
+    "TeamID1":2,
+    "PlayerName1":"Jeff Walberg",
+    "Score1":48,
+    "Points1":16,
+    "TeamID2":5,
+    "PlayerName2":"Perry Coulson",
+    "Score2":49,
+    "Points2":8
+  }
 ]
