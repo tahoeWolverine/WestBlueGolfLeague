@@ -1,34 +1,34 @@
 [
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":1,
     "Week":1,
     "TeamID1":9,
     "TeamID2":10
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":2,
     "Week":1,
     "TeamID1":4,
     "TeamID2":7
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":3,
     "Week":1,
     "TeamID1":3,
     "TeamID2":6
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":4,
     "Week":1,
     "TeamID1":1,
     "TeamID2":8
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":5,
     "Week":1,
     "TeamID1":2,

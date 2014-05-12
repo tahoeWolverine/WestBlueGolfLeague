@@ -23,7 +23,11 @@ RS2.AddNew
 RS2("PlayerName") = PlayerName
 RS2("TeamID") = TeamID
 RS2("Week0Score") = Handicap
-RS2("Status") = "NEW"
+If request("existing") = "on" then
+	RS2("Status") = "OLD"
+Else
+	RS2("Status") = "NEW"
+End If
 RS2.UPDATE
 RS2.CLOSE
 TargetConn.Close
