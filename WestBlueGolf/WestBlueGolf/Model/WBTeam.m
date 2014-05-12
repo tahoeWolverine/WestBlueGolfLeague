@@ -264,7 +264,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result netScoreDifference];
-		if (value < 60) {
+		if (value < 30) {
 			totalScore += value;
 			roundCount++;
 		}
@@ -433,7 +433,7 @@
 	for (WBResult *result in results) {
 		playerValue = [result netScoreDifference];
 		oppValue = [[result opponentResult] netScoreDifference];
-		if (oppValue < 60) {
+		if (oppValue < 30) {
 			totalMargin += oppValue - playerValue;
 			roundCount++;
 		}
