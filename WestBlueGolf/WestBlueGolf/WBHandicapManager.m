@@ -24,57 +24,85 @@
 }
 
 - (void)calculateHandicapsForPlayer:(WBPlayer *)player year:(WBYear *)year isNewestYear:(BOOL)isNewestYear {
-	NSMutableArray *scores = [NSMutableArray array];
-	NSInteger scoreIndex = 4;
-	
 	// Add starting handicap 4 times to backfill based on ~2013 rules
 	WBPlayerYearData *data = [player filterYearDataForYear:year];
 	if (!data) {
 		DLog(@"Handicap not calculated for %@ in year %@", player.name, year.value);
 		return;
 	}
+
+	// Rookies only get to count their starting handicap once, existing players get the full amount of backfills
+	NSInteger backfillCount = 1;
+	if (!data.isRookieValue) {
+		backfillCount = 4;
+	}
 	
-	for (NSInteger i = 0; i < 5; i++) {
+	NSMutableArray *scores = [NSMutableArray array];
+	NSInteger scoreIndex = -1;
+	for (NSInteger i = 0; i < backfillCount; i++) {
 		[scores addObject:data.startingHandicap];
+		scoreIndex++;
 	}
 	
 	// Add scores for the season, calculating handicap result by result
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"match.teamMatchup.week.seasonIndex" ascending:YES]];
 	NSArray *playerResults = [player filterResultsForYear:year goodData:NO sorts:sorts];
+	
+	// Note: the way this loop works is that it calculates the *prior* handicap, so it's kind of always one behind the result,
+	// which the final score added being used for the final handicap
+	NSInteger newNetScore = 0;
 	for (WBResult *result in playerResults) {
 		result.priorHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
 		
+		// Max score for handicap purproses is +20
+		newNetScore = result.scoreValue - result.match.teamMatchup.week.course.parValue;
+		if (newNetScore > 20) {
+			newNetScore = 20;
+		}
+		
 		// Add the score for the week to be factored into the next weeks handicap
-		[scores addObject:[NSNumber numberWithInteger:result.scoreValue - result.match.teamMatchup.week.course.parValue]];
+		[scores addObject:[NSNumber numberWithInteger:newNetScore]];
 
 		scoreIndex++;
 	}
 	
+	NSInteger priorHandicap = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
+
 	if (isNewestYear) {
 		// This might need to change to support players that aren't playing this year; what's their current handicap?
-		player.currentHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
+		player.currentHandicapValue = priorHandicap;
 	}
 
 	if (year.isCompleteValue) {
-		data.finishingHandicapValue = [self priorHandicapWithScores:scores scoresIndex:scoreIndex];
+		data.finishingHandicapValue = priorHandicap;
 	}
 }
 
+// We only want to drop the lowest score once we have 4 scores recorded, otherwise its a true average
 - (NSInteger)priorHandicapWithScores:(NSArray *)scores scoresIndex:(NSInteger)scoreIndex {
-	NSArray *usedScores = @[scores[scoreIndex], scores[scoreIndex - 1], scores[scoreIndex - 2], scores[scoreIndex - 3], scores[scoreIndex - 4]];
 	NSInteger maxValue = -10;
 	NSInteger handicapTotal = 0;
-	for (NSNumber *num in usedScores) {
-		if (num.integerValue > maxValue) {
-			maxValue = num.integerValue;
+	NSNumber *netScore = nil;
+	NSInteger i = scoreIndex;
+	NSInteger usedScores = 0;
+	while (i >= 0 && usedScores < 5) {
+		netScore = scores[i];
+		if (netScore.integerValue > maxValue) {
+			maxValue = netScore.integerValue;
 		}
-		handicapTotal += num.integerValue;
+		handicapTotal += netScore.integerValue;
+		usedScores++;
+		i--;
 	}
 
-	// Subtract the highest score diff as per handicap calculation rule
-	handicapTotal -= maxValue;
+	// Determine whether we're dropping the lowest of the 5 scores (including week 0) or doing a straight average
+	if (usedScores == 5) {
+		// Subtract the highest score diff as per handicap calculation rule
+		handicapTotal -= maxValue;
+		usedScores--;
+	}
 	
-	return (NSInteger)((CGFloat)handicapTotal / 4.0f + 0.5f);
+	return (NSInteger)((CGFloat)handicapTotal / (CGFloat)usedScores + 0.5f);
 }
 
 @end
