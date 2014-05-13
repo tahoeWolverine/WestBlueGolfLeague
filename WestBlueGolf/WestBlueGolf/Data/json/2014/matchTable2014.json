@@ -35,35 +35,35 @@
     "TeamID2":5
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":6,
     "Week":2,
     "TeamID1":3,
     "TeamID2":7
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":7,
     "Week":2,
     "TeamID1":9,
     "TeamID2":8
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":8,
     "Week":2,
     "TeamID1":4,
     "TeamID2":5
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":9,
     "Week":2,
     "TeamID1":2,
     "TeamID2":1
   },
   {
-    "MatchComplete":"N",
+    "MatchComplete":"Y",
     "MatchID":10,
     "Week":2,
     "TeamID1":6,

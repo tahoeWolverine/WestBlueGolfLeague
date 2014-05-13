@@ -1,6 +1,6 @@
 [
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":9,
     "PlayerName1":"Evan Stoltz",
     "Score1":42,
@@ -11,7 +11,7 @@
     "Points2":19
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":9,
     "PlayerName1":"Dave Dietsche",
     "Score1":43,
@@ -22,7 +22,7 @@
     "Points2":4
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":9,
     "PlayerName1":"Pat Fermoyle",
     "Score1":47,
@@ -33,7 +33,7 @@
     "Points2":18
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":9,
     "PlayerName1":"Adam Ahrens",
     "Score1":54,
@@ -44,7 +44,7 @@
     "Points2":9
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":4,
     "PlayerName1":"Scott Hanson",
     "Score1":40,
@@ -55,7 +55,7 @@
     "Points2":11
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":4,
     "PlayerName1":"Ryan Kinsella",
     "Score1":46,
@@ -66,7 +66,7 @@
     "Points2":18
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":4,
     "PlayerName1":"Brian Tschida",
     "Score1":48,
@@ -77,7 +77,7 @@
     "Points2":14
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":4,
     "PlayerName1":"Rob Voith",
     "Score1":47,
@@ -88,7 +88,7 @@
     "Points2":17
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":3,
     "PlayerName1":"Alun Champion",
     "Score1":48,
@@ -99,7 +99,7 @@
     "Points2":19
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":3,
     "PlayerName1":"Ryan Hunecke",
     "Score1":42,
@@ -110,7 +110,7 @@
     "Points2":5
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":3,
     "PlayerName1":"Nick Remarke",
     "Score1":49,
@@ -121,7 +121,7 @@
     "Points2":20
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":3,
     "PlayerName1":"Chad Schommer",
     "Score1":51,
@@ -132,7 +132,7 @@
     "Points2":3
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":1,
     "PlayerName1":"Paul Haering",
     "Score1":42,
@@ -143,7 +143,7 @@
     "Points2":8
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":1,
     "PlayerName1":"Jason Price",
     "Score1":45,
@@ -154,7 +154,7 @@
     "Points2":18
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":1,
     "PlayerName1":"Hank Maurer",
     "Score1":52,
@@ -165,7 +165,7 @@
     "Points2":16
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":1,
     "PlayerName1":"Jim Joseph",
     "Score1":56,
@@ -176,7 +176,7 @@
     "Points2":19
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":2,
     "PlayerName1":"Drew Johnson",
     "Score1":40,
@@ -187,7 +187,7 @@
     "Points2":7
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":2,
     "PlayerName1":"Matt Wendt",
     "Score1":49,
@@ -198,7 +198,7 @@
     "Points2":17
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":2,
     "PlayerName1":"Brad Loya",
     "Score1":51,
@@ -209,7 +209,7 @@
     "Points2":7
   },
   {
-    "Week":"1",
+    "Week":1,
     "TeamID1":2,
     "PlayerName1":"Jeff Walberg",
     "Score1":48,
@@ -218,5 +218,225 @@
     "PlayerName2":"Perry Coulson",
     "Score2":49,
     "Points2":8
+  },
+  {
+    "Week":2,
+    "TeamID1":4,
+    "PlayerName1":"John Prout",
+    "Score1":42,
+    "Points1":6,
+    "TeamID2":5,
+    "PlayerName2":"Pete Mohs",
+    "Score2":43,
+    "Points2":18
+  },
+  {
+    "Week":2,
+    "TeamID1":4,
+    "PlayerName1":"Ed Packer",
+    "Score1":49,
+    "Points1":6,
+    "TeamID2":5,
+    "PlayerName2":"Perry Coulson",
+    "Score2":51,
+    "Points2":18
+  },
+  {
+    "Week":2,
+    "TeamID1":4,
+    "PlayerName1":"Jess Kingston",
+    "Score1":49,
+    "Points1":20,
+    "TeamID2":5,
+    "PlayerName2":"Matt Sinn",
+    "Score2":62,
+    "Points2":4
+  },
+  {
+    "Week":2,
+    "TeamID1":6,
+    "PlayerName1":"Gary Sole",
+    "Score1":47,
+    "Points1":12,
+    "TeamID2":10,
+    "PlayerName2":"Tim Wagner",
+    "Score2":42,
+    "Points2":12
+  },
+  {
+    "Week":2,
+    "TeamID1":6,
+    "PlayerName1":"Matt Nohelty",
+    "Score1":41,
+    "Points1":18,
+    "TeamID2":10,
+    "PlayerName2":"Michael Harlow",
+    "Score2":44,
+    "Points2":6
+  },
+  {
+    "Week":2,
+    "TeamID1":6,
+    "PlayerName1":"Randy Bleicher",
+    "Score1":59,
+    "Points1":14,
+    "TeamID2":10,
+    "PlayerName2":"Greg Ohrt",
+    "Score2":54,
+    "Points2":10
+  },
+  {
+    "Week":2,
+    "TeamID1":6,
+    "PlayerName1":"Ted Gonyeau",
+    "Score1":76,
+    "Points1":2,
+    "TeamID2":10,
+    "PlayerName2":"Dale Vlasak",
+    "Score2":53,
+    "Points2":22
+  },
+  {
+    "Week":2,
+    "TeamID1":9,
+    "PlayerName1":"Brad Smith",
+    "Score1":48,
+    "Points1":5,
+    "TeamID2":8,
+    "PlayerName2":"Nick Bjerken",
+    "Score2":41,
+    "Points2":19
+  },
+  {
+    "Week":2,
+    "TeamID1":9,
+    "PlayerName1":"Adam Olsen",
+    "Score1":37,
+    "Points1":18,
+    "TeamID2":8,
+    "PlayerName2":"Tory Stellick",
+    "Score2":42,
+    "Points2":6
+  },
+  {
+    "Week":2,
+    "TeamID1":9,
+    "PlayerName1":"Pat Fermoyle",
+    "Score1":46,
+    "Points1":7,
+    "TeamID2":8,
+    "PlayerName2":"John Schwartz",
+    "Score2":47,
+    "Points2":17
+  },
+  {
+    "Week":2,
+    "TeamID1":9,
+    "PlayerName1":"TR Miller",
+    "Score1":56,
+    "Points1":8,
+    "TeamID2":8,
+    "PlayerName2":"Mike Tyrrell",
+    "Score2":55,
+    "Points2":16
+  },
+  {
+    "Week":2,
+    "TeamID1":2,
+    "PlayerName1":"Lee VanGundy",
+    "Score1":57,
+    "Points1":5,
+    "TeamID2":1,
+    "PlayerName2":"Brian Kuznia",
+    "Score2":44,
+    "Points2":19
+  },
+  {
+    "Week":2,
+    "TeamID1":2,
+    "PlayerName1":"Matt Wendt",
+    "Score1":48,
+    "Points1":9,
+    "TeamID2":1,
+    "PlayerName2":"Dave Dietsche",
+    "Score2":45,
+    "Points2":15
+  },
+  {
+    "Week":2,
+    "TeamID1":2,
+    "PlayerName1":"Jeff Walberg",
+    "Score1":46,
+    "Points1":16,
+    "TeamID2":1,
+    "PlayerName2":"Wayne Luethmers",
+    "Score2":46,
+    "Points2":8
+  },
+  {
+    "Week":2,
+    "TeamID1":2,
+    "PlayerName1":"Darren Trzynka",
+    "Score1":57,
+    "Points1":5,
+    "TeamID2":1,
+    "PlayerName2":"Chris Mulcahy",
+    "Score2":46,
+    "Points2":19
+  },
+  {
+    "Week":2,
+    "TeamID1":3,
+    "PlayerName1":"Nick Remarke",
+    "Score1":50,
+    "Points1":7,
+    "TeamID2":7,
+    "PlayerName2":"Guy Normandeau",
+    "Score2":50,
+    "Points2":17
+  },
+  {
+    "Week":2,
+    "TeamID1":3,
+    "PlayerName1":"Ryan Hunecke",
+    "Score1":44,
+    "Points1":18,
+    "TeamID2":7,
+    "PlayerName2":"Dave Olenius",
+    "Score2":52,
+    "Points2":6
+  },
+  {
+    "Week":2,
+    "TeamID1":3,
+    "PlayerName1":"Jason Meggitt",
+    "Score1":41,
+    "Points1":13,
+    "TeamID2":7,
+    "PlayerName2":"Mike Gleiter",
+    "Score2":42,
+    "Points2":11
+  },
+  {
+    "Week":2,
+    "TeamID1":3,
+    "PlayerName1":"Gary Kiefer",
+    "Score1":43,
+    "Points1":9,
+    "TeamID2":7,
+    "PlayerName2":"Jesse Smith",
+    "Score2":47,
+    "Points2":15
+  },
+  {
+    "Week":2,
+    "TeamID1":4,
+    "PlayerName1":"Scott Hanson",
+    "Score1":41,
+    "Points1":5,
+    "TeamID2":5,
+    "PlayerName2":"Jayson Walberg",
+    "Score2":44,
+    "Points2":19
   }
 ]
