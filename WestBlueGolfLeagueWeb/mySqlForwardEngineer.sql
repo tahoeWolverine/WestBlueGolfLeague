@@ -249,6 +249,7 @@ CREATE TABLE IF NOT EXISTS `westbluegolf`.`playerYearData` (
   `finishingHandicap` INT NOT NULL,
   `playerId` INT NOT NULL,
   `yearId` INT NOT NULL,
+  `teamId` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_player_year_data_player1`
     FOREIGN KEY (`playerId`)
@@ -259,12 +260,19 @@ CREATE TABLE IF NOT EXISTS `westbluegolf`.`playerYearData` (
     FOREIGN KEY (`yearId`)
     REFERENCES `westbluegolf`.`year` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_playerYearData_team1`
+    FOREIGN KEY (`teamId`)
+    REFERENCES `westbluegolf`.`team` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_player_year_data_player1_idx` ON `westbluegolf`.`playerYearData` (`playerId` ASC);
 
 CREATE INDEX `fk_player_year_data_year1_idx` ON `westbluegolf`.`playerYearData` (`yearId` ASC);
+
+CREATE INDEX `fk_playerYearData_team1_idx` ON `westbluegolf`.`playerYearData` (`teamId` ASC);
 
 
 -- -----------------------------------------------------
@@ -386,7 +394,6 @@ DROP TABLE IF EXISTS `westbluegolf`.`teamMatchupToTeam` ;
 CREATE TABLE IF NOT EXISTS `westbluegolf`.`teamMatchupToTeam` (
   `teamMatchupId` INT NOT NULL,
   `teamId` INT NOT NULL,
-  PRIMARY KEY (`teamMatchupId`, `teamId`),
   CONSTRAINT `fk_teamMatchupToTeam_teamMatchup1`
     FOREIGN KEY (`teamMatchupId`)
     REFERENCES `westbluegolf`.`teamMatchup` (`id`)
@@ -418,6 +425,12 @@ CREATE TABLE IF NOT EXISTS `westbluegolf`.`user` (
   `email` VARCHAR(120) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+SET SQL_MODE = '';
+GRANT USAGE ON *.* TO user1;
+ DROP USER user1;
+SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+CREATE USER 'user1';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

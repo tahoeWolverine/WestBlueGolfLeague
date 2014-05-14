@@ -44,6 +44,9 @@
       <HintPath>..\packages\ShouldFluent.1.1.19\lib\Should.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net.FtpClient">
+      <HintPath>..\packages\System.Net.FtpClient.1.0.5200.21177\lib\net40\System.Net.FtpClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

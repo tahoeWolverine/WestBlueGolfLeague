@@ -57,7 +57,7 @@ namespace AccessExport
                     var date = (DateTime)obj;
                     sb
                         .Append("'")
-                        .Append(date.ToString("yyyy-MM-dd"))
+                        .Append(date.ToString("yyyy-MM-dd HH:mm:ss"))
                         .Append("'");
                 }
                 else
