@@ -107,6 +107,7 @@
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
 		A56F21B218CE625600BF5CEE /* WBManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21B118CE625600BF5CEE /* WBManagedObject.m */; };
+		A58FD3591923EFEA00DB1609 /* TRInternalAppAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58FD3581923EFEA00DB1609 /* TRInternalAppAuth.framework */; };
 		A59BC3DD18C67710003B5350 /* matchTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D718C67710003B5350 /* matchTable2013.json */; };
 		A59BC3DF18C67710003B5350 /* playerTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D918C67710003B5350 /* playerTable2013.json */; };
 		A59BC3E018C67710003B5350 /* resultsTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DA18C67710003B5350 /* resultsTable2013.json */; };
@@ -320,6 +321,7 @@
 		A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBHandicapManager.m; path = WestBlueGolf/WBHandicapManager.m; sourceTree = SOURCE_ROOT; };
 		A56F21B018CE625600BF5CEE /* WBManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBManagedObject.h; path = Model/WBManagedObject.h; sourceTree = "<group>"; };
 		A56F21B118CE625600BF5CEE /* WBManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBManagedObject.m; path = Model/WBManagedObject.m; sourceTree = "<group>"; };
+		A58FD3581923EFEA00DB1609 /* TRInternalAppAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TRInternalAppAuth.framework; path = WestBlueGolf/Frameworks/TRInternalAppAuth.framework; sourceTree = "<group>"; };
 		A59BC3D718C67710003B5350 /* matchTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = matchTable2013.json; sourceTree = "<group>"; };
 		A59BC3D918C67710003B5350 /* playerTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playerTable2013.json; sourceTree = "<group>"; };
 		A59BC3DA18C67710003B5350 /* resultsTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable2013.json; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */,
 				48B2B1E8190DC7E0009F8F39 /* AFNetworking.framework in Frameworks */,
 				A5F476E51890769400AB3529 /* CoreGraphics.framework in Frameworks */,
+				A58FD3591923EFEA00DB1609 /* TRInternalAppAuth.framework in Frameworks */,
 				A5F476E71890769400AB3529 /* UIKit.framework in Frameworks */,
 				A5F476E31890769400AB3529 /* Foundation.framework in Frameworks */,
 			);
@@ -783,6 +786,7 @@
 		A5F476E11890769400AB3529 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A58FD3581923EFEA00DB1609 /* TRInternalAppAuth.framework */,
 				A560544718EDB24300C7E357 /* AFNetworking.framework */,
 				A5F4771D18907E5E00AB3529 /* CoreData.framework */,
 				A5F476E21890769400AB3529 /* Foundation.framework */,
@@ -1251,6 +1255,7 @@
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
 					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
@@ -1366,6 +1371,7 @@
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
 					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
@@ -1387,6 +1393,7 @@
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
 					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
+					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
