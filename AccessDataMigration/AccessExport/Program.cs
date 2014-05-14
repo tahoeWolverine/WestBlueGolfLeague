@@ -33,24 +33,31 @@ namespace AccessExport
 
         static void Main(string[] args)
         {
-            string ftpHost = string.Empty;
-            string ftpUsername = string.Empty;
-            string ftpPassword = string.Empty;
-
-            if (args.Length < 3)
+            try
             {
-                Console.WriteLine("** WARNING **");
-                Console.WriteLine("** Using defaults. Required vals were not passed in **");
-                Console.WriteLine();
-            }
-            else
-            {
-                ftpHost = args[0];
-                ftpUsername = args[1];
-                ftpPassword = args[2];
-            }
+                string ftpHost = string.Empty;
+                string ftpUsername = string.Empty;
+                string ftpPassword = string.Empty;
 
-            DoExport(ftpHost, new NetworkCredential(ftpUsername, ftpPassword));
+                if (args.Length < 3)
+                {
+                    Console.WriteLine("** WARNING **");
+                    Console.WriteLine("** Using defaults. Required vals were not passed in **");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    ftpHost = args[0];
+                    ftpUsername = args[1];
+                    ftpPassword = args[2];
+                }
+
+                DoExport(ftpHost, new NetworkCredential(ftpUsername, ftpPassword));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
 
             //Console.WriteLine(BitConverter.ToString(Hasher.Hash("xxxxxxxx", "839202910", 5000)).Replace("-", ""));
         }
@@ -96,19 +103,19 @@ namespace AccessExport
             //
             // Begin MySql specific stuff
             //
-            string dataModelInserts = string.Empty;
+            var dataModelInserts = new StringBuilder();
 
             var mysqlGenerator = new MySqlGenerator();
 
             TimedTask("-- Generating mysql inserts --", () =>
             {
-                dataModelInserts = mysqlGenerator.Generate(dataModel);
+                mysqlGenerator.Generate(dataModel, (sql) => dataModelInserts.AppendLine(sql));
             });
 
             // if we aren't populating data, stream the sql to stdout for debugging
             if (!dataPopulateMode)
             {
-                Console.WriteLine(dataModelInserts);
+                Console.WriteLine(dataModelInserts.ToString());
                 return;
             }
 
@@ -121,7 +128,7 @@ namespace AccessExport
 
             TimedTask("-- doing inserts --", () =>
             {
-                mysqlGenerator.DoInsert(connectionString, dataModelInserts);
+                mysqlGenerator.DoInsert(connectionString, dataModel);
             });
         }
     }

@@ -223,7 +223,16 @@ namespace AccessExport
                             // For years after 2009, current handicap will be updated when processing results.
                             player.CurrentHandicap = startingHandicap;
 
-                            YearData yearData = new YearData { Player = player, Rookie = isRookie, StartingHandicap = startingHandicap, FinishingHandicap = startingHandicap, Year = yearValueToYear[year], Id = yearDataIndex++ };
+                            YearData yearData = new YearData 
+                                                    { 
+                                                        Player = player, 
+                                                        Rookie = isRookie, 
+                                                        StartingHandicap = startingHandicap, 
+                                                        FinishingHandicap = startingHandicap, 
+                                                        Year = yearValueToYear[year], Id = yearDataIndex++, 
+                                                        Team = teamIdToTeam[playersTeam] 
+                                                    };
+
                             yearDatas.Add(yearData);
                             player.AddYearData(yearData);
                         }

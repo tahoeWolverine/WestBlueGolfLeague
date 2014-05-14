@@ -12,6 +12,7 @@ namespace AccessExport
 {
     class MySqlGenerator
     {
+        public delegate void SqlListener(string generatedSql);
 
         public void DoPrereq(string connectionString)
         {
@@ -22,13 +23,13 @@ namespace AccessExport
                 // We need to set the packet size for mysql to accept our large inserts.
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "SET GLOBAL max_allowed_packet = " + Convert.ToString(48 * 1024 * 1024) + ";";
+                    command.CommandText = "SET GLOBAL max_allowed_packet = " + Convert.ToString(24 * 1024 * 1024) + ";";
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void DoInsert(string connectionString, string sql)
+        public void DoInsert(string connectionString, DataModel dataModel)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -39,7 +40,6 @@ namespace AccessExport
                 {
                     transaction = conn.BeginTransaction();
 
-                    var inserts = sql;
                     var deletes = File.ReadAllText("scripts/deletes.txt");
 
                     using (var command = conn.CreateCommand())
@@ -50,12 +50,15 @@ namespace AccessExport
                         command.ExecuteNonQuery();
                     }
 
-                    using (var command = conn.CreateCommand())
+                    this.Generate(dataModel, (sql) =>
                     {
-                        command.Transaction = transaction;
-                        command.CommandText = inserts;
-                        command.ExecuteNonQuery();
-                    }
+                        using (var command = conn.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = sql;
+                            command.ExecuteNonQuery();
+                        }
+                    });
 
                     transaction.Commit();
                 }
@@ -72,87 +75,143 @@ namespace AccessExport
         }
 
 
-        public string Generate(DataModel dataModel)
+        public void Generate(DataModel dataModel, SqlListener sqlListener = null)
         {
-            StringBuilder sb = new StringBuilder();
-
             // begin our transaction
-            sb.AppendLine("SET autocommit=0;");
-            
+            // sb.AppendLine("SET autocommit=0;");
+
+            // set to no-op if not set.
+            if (sqlListener == null)
+            {
+                sqlListener = (sql) => { };
+            }
 
             // Create teams first
-            sb.AppendLine().AppendLine("/* Teams */");
-            var teamInserts = dataModel.Teams.Select(t => this.GetTeamInsert(t));
-            sb.Append(string.Join("\n", teamInserts));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine("/* Teams */");
+                var teamInserts = dataModel.Teams.Select(t => this.GetTeamInsert(t));
+                sb.Append(string.Join("\n", teamInserts));
+                sqlListener(sb.ToString());
+            }
 
             // playerssss
-            sb.Append("\n\n\n/* Players */");
-            var players = dataModel.Players.Select(p => this.GetPlayerInsert(p));
-            sb.Append(string.Join("\n", players));
+            {
+                var sb = new StringBuilder();
+                sb.Append("\n\n\n/* Players */");
+                var players = dataModel.Players.Select(p => this.GetPlayerInsert(p));
+                sb.Append(string.Join("\n", players));
+                sqlListener(sb.ToString());
+            }
 
             // Years
-            sb.Append("\n\n\n/* years */");
-            var years = dataModel.Years.Select(y => this.GetYearInsert(y));
-            sb.Append(string.Join("\n", years));
+            {
+                var sb = new StringBuilder();
+                sb.Append("\n\n\n/* years */");
+                var years = dataModel.Years.Select(y => this.GetYearInsert(y));
+                sb.Append(string.Join("\n", years));
+                sqlListener(sb.ToString());
+            }
 
             // Player data
-            sb.AppendLine().AppendLine().AppendLine("/* Player year data */");
-            var pyds = dataModel.YearDatas.Select(yd => this.GetYearDataInsert(yd));
-            sb.Append(string.Join("\n", pyds));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* Player year data */");
+                var pyds = dataModel.YearDatas.Select(yd => this.GetYearDataInsert(yd));
+                sb.Append(string.Join("\n", pyds));
+                sqlListener(sb.ToString());
+            }
 
             // Courses
-            sb.AppendLine().AppendLine().AppendLine("/* Courses */");
-            var courses = dataModel.Courses.Select(c => this.GetCoursesInsert(c));
-            sb.Append(string.Join("\n", courses));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* Courses */");
+                var courses = dataModel.Courses.Select(c => this.GetCoursesInsert(c));
+                sb.Append(string.Join("\n", courses));
+                sqlListener(sb.ToString());
+            }
 
             // Weeks
-            sb.AppendLine().AppendLine().AppendLine("/* Weeks */");
-            var weeks = dataModel.Weeks.Select(p => this.GetWeekInsert(p));
-            sb.Append(string.Join("\n", weeks));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* Weeks */");
+                var weeks = dataModel.Weeks.Select(p => this.GetWeekInsert(p));
+                sb.Append(string.Join("\n", weeks));
+                sqlListener(sb.ToString());
+            }
 
             // Team Matchup
-            sb.AppendLine().AppendLine().AppendLine("/* team matchups */");
-            var teamMatchups = dataModel.TeamMatchup.Select(tm => this.GetTeamMatchupInsert(tm));
-            sb.Append(string.Join("\n", teamMatchups));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* team matchups */");
+                var teamMatchups = dataModel.TeamMatchup.Select(tm => this.GetTeamMatchupInsert(tm));
+                sb.Append(string.Join("\n", teamMatchups));
+                sqlListener(sb.ToString());
+            }
 
             // Team Matchup to Team -- This is one is special cause we don't have an entity for it!
-            sb.AppendLine().AppendLine().AppendLine("/* team matchup to team */");
-            var teamMatchupsToTeam = dataModel.TeamMatchup.Select(tm => this.GetTeamMatchupToTeamInsert(tm));
-            sb.Append(string.Join("\n", teamMatchupsToTeam));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* team matchup to team */");
+                var teamMatchupsToTeam = dataModel.TeamMatchup.Select(tm => this.GetTeamMatchupToTeamInsert(tm));
+                sb.Append(string.Join("\n", teamMatchupsToTeam));
+                sqlListener(sb.ToString());
+            }
 
             // Matchup
-            sb.AppendLine().AppendLine().AppendLine("/* matchup */");
-            var matchUps = dataModel.MatchUp.Select(m => this.GetMatchupInsert(m));
-            sb.AppendLine(string.Join("\n", matchUps));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* matchup */");
+                var matchUps = dataModel.MatchUp.Select(m => this.GetMatchupInsert(m));
+                sb.AppendLine(string.Join("\n", matchUps));
+                sqlListener(sb.ToString());
+            }
 
             // MatchupToPlayer
-            sb.AppendLine().AppendLine().AppendLine("/* matchup to player*/");
-            var matchUpToPlayers = dataModel.MatchUp.Select(m => this.GetMatchupToPlayerInsert(m));
-            sb.AppendLine(string.Join("\n", matchUpToPlayers));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* matchup to player*/");
+                var matchUpToPlayers = dataModel.MatchUp.Select(m => this.GetMatchupToPlayerInsert(m));
+                sb.AppendLine(string.Join("\n", matchUpToPlayers));
+                sqlListener(sb.ToString());
+            }
 
             // results
-            sb.AppendLine().AppendLine().AppendLine("/* results! */");
-            var results = dataModel.Results.Select(m => this.GetResultsInsert(m));
-            sb.AppendLine(string.Join("\n", results));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* results! */");
+                var results = dataModel.Results.Select(m => this.GetResultsInsert(m));
+                sb.AppendLine(string.Join("\n", results));
+                sqlListener(sb.ToString());
+            }
 
             // Leaderboard
-            sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
-            var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
-            sb.AppendLine(string.Join("\n", lbs));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* leaderboardddsss */");
+                var lbs = dataModel.LeaderBoards.Select(l => this.GetLeaderBoardInsert(l));
+                sb.AppendLine(string.Join("\n", lbs));
+                sqlListener(sb.ToString());
+            }
 
             // Leaderboard data
-            sb.AppendLine().AppendLine().AppendLine("/* lb data */");
-            var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
-            sb.AppendLine(string.Join("\n", lbData));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* lb data */");
+                var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
+                sb.AppendLine(string.Join("\n", lbData));
+                sqlListener(sb.ToString());
+            }
 
             // data migrations
-            sb.AppendLine().AppendLine().AppendLine("/* data migration data */");
-            var dmData = dataModel.DataMigrations.Select(l => this.GetDataMigrationInsert(l));
-            sb.AppendLine(string.Join("\n", dmData));
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* data migration data */");
+                var dmData = dataModel.DataMigrations.Select(l => this.GetDataMigrationInsert(l));
+                sb.AppendLine(string.Join("\n", dmData));
+                sqlListener(sb.ToString());
+            }
 
-            sb.Append("\n\n\n");
-
-            return sb.ToString();
         }
 
         private string GetDataMigrationInsert(DataMigration dm)
@@ -192,7 +251,7 @@ namespace AccessExport
 
         private string GetMatchupInsert(MatchUp m)
         {
-            return 
+            return
                 new FluentMySqlInsert("matchup")
                 .WithColumns("id", "teamMatchupId")
                 .WithValues(m.Id, m.TeamMatchup.Id)
@@ -244,14 +303,14 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("playerYearData")
-                .WithColumns("id", "isRookie", "startingHandicap", "finishingHandicap", "playerId", "yearId")
-                .WithValues(yd.Id, yd.Rookie, yd.StartingHandicap, yd.FinishingHandicap, yd.Player.Id, yd.Year.Id)
+                .WithColumns("id", "isRookie", "startingHandicap", "finishingHandicap", "playerId", "yearId", "teamId")
+                .WithValues(yd.Id, yd.Rookie, yd.StartingHandicap, yd.FinishingHandicap, yd.Player.Id, yd.Year.Id, yd.Team.Id)
                 .ToString();
         }
 
         private string GetCoursesInsert(Course c)
         {
-            return 
+            return
                 new FluentMySqlInsert("course")
                 .WithColumns("id", "name", "par", "address")
                 .WithValues(c.Id, c.Name, c.Par, string.Empty)
