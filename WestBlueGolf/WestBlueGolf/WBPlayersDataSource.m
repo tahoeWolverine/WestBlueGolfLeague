@@ -101,9 +101,6 @@ typedef enum {
 				if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
 					WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
 					[(WBProfileTableViewController *)vc setSelectedPlayer:player];
-				} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
-					WBTeam *team = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
-					[(WBTeamProfileTableViewController *)vc setSelectedTeam:team];
 				}
 			}
 		}
