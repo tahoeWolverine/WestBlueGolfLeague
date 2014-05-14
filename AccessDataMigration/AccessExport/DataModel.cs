@@ -20,5 +20,7 @@ namespace AccessExport
         public ICollection<Week> Weeks { get; set; }
         public ICollection<LeaderBoardData> LeaderBoardDatas { get; set; }
         public ICollection<LeaderBoard> LeaderBoards { get; set; }
+
+        public ICollection<DataMigration> DataMigrations { get; set; }
     }
 }

@@ -180,3 +180,4 @@ AccessDataMigration/.nuget
 AccessDataMigration/packages
 AccessDataMigration/DataModelTests/bin
 AccessDataMigration/DataModelTests/obj
+AccessDataMigration/AccessExport/FtpInfo.config

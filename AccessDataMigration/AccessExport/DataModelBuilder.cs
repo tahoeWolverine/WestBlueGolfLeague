@@ -24,13 +24,13 @@ namespace AccessExport
             return null;
         }
 
-        public DataModel CreateDataModel()
+        public DataModel CreateDataModel(string databaseDirectory)
         {
             // 99 - 08
             // 09 - 11 - added week 0 score to players, added course name to week
             // 12 - 13 - added status to player
 
-            const int lastYear = 2014;
+            const int lastYear = 2015;
 
             Dictionary<string, Player> namesToPlayers = new Dictionary<string, Player>();
             ICollection<Player> extraInvalidPlayers = new List<Player>();
@@ -44,7 +44,8 @@ namespace AccessExport
                 teamMatchupIndex = 1,
                 playerIndex = 1,
                 matchupIndex = 1,
-                resultIndex = 1;
+                resultIndex = 1,
+                dataMigrationIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
             Dictionary<string, Course> courseNameToCourse = new Dictionary<string, Course>();
@@ -55,6 +56,7 @@ namespace AccessExport
             ICollection<Result> allResults = new List<Result>();
             ICollection<YearData> yearDatas = new List<YearData>();
             ICollection<Week> allWeeks = new List<Week>();
+            ICollection<DataMigration> dataMigrationDatas = new List<DataMigration>();
 
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
@@ -71,9 +73,7 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                //Console.WriteLine("/***** starting year " + yearStr + " *****/");
-
-                string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=..\..\..\..\Actual Data\access_db\golf" + yearStr.Substring(2) + ".mdb";
+                string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=" + databaseDirectory + @"\golf" + yearStr.Substring(2) + ".mdb";
 
                 using (connection = new OdbcConnection(connectionString))
                 {
@@ -85,6 +85,18 @@ namespace AccessExport
                     var newYear = new Year { Id = yearIndex++, Value = year, Complete = true };
                     yearIdToYear[newYear.Id] = newYear;
                     yearValueToYear[year] = newYear;
+
+                    // Data migration
+                    DateTime migrationDate = DateTime.UtcNow;
+
+                    if (year != DateTime.Now.Year)
+                    {
+                        migrationDate.AddDays(20);
+                    }
+
+                    var dataMigration = new DataMigration { Id = dataMigrationIndex++, Year = newYear, Notes = yearStr, DataMigrationDate = migrationDate };
+
+                    dataMigrationDatas.Add(dataMigration);
 
                     // Weeks
                     cmd.CommandText = "SELECT * FROM WeekTable";
@@ -244,6 +256,11 @@ namespace AccessExport
 
                             // TODO/NOTE: Treating null as "false".  Change if it should be treated as true.
                             bool matchComplete = matchReader[0].GetType() == DBNull.Value.GetType() || string.Equals(matchReader.GetString(0), "N", StringComparison.OrdinalIgnoreCase) ? false : true;
+                                                        
+                            if (!matchComplete && team1Id == 0 && team2Id == 0)
+                            {
+                                continue;
+                            }
 
                             var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id], MatchId = matchId };
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
@@ -429,7 +446,8 @@ namespace AccessExport
                 Results = allResults,
                 Courses = courseNameToCourse.Values,
                 LeaderBoardDatas = new List<LeaderBoardData>(),
-                LeaderBoards = new List<LeaderBoard>()
+                LeaderBoards = new List<LeaderBoard>(),
+                DataMigrations = dataMigrationDatas
             };
 
             ProcessHandicaps(dm);

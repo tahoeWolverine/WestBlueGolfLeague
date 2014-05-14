@@ -5,11 +5,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AccessExport.Entities;
+using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace AccessExport
 {
     class MySqlGenerator
     {
+
+        public void DoPrereq(string connectionString)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // We need to set the packet size for mysql to accept our large inserts.
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "SET GLOBAL max_allowed_packet = " + Convert.ToString(48 * 1024 * 1024) + ";";
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DoInsert(string connectionString, string sql)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                MySqlTransaction transaction = null;
+                try
+                {
+                    transaction = conn.BeginTransaction();
+
+                    var inserts = sql;
+                    var deletes = File.ReadAllText("scripts/deletes.txt");
+
+                    using (var command = conn.CreateCommand())
+                    {
+                        command.CommandText = deletes;
+                        command.CommandTimeout = 120;
+                        command.Transaction = transaction;
+                        command.ExecuteNonQuery();
+                    }
+
+                    using (var command = conn.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText = inserts;
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
+
+                    throw;
+                }
+            }
+        }
+
+
         public string Generate(DataModel dataModel)
         {
             StringBuilder sb = new StringBuilder();
@@ -83,9 +145,22 @@ namespace AccessExport
             var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
             sb.AppendLine(string.Join("\n", lbData));
 
+            // data migrations
+            sb.AppendLine().AppendLine().AppendLine("/* data migration data */");
+            var dmData = dataModel.DataMigrations.Select(l => this.GetDataMigrationInsert(l));
+            sb.AppendLine(string.Join("\n", dmData));
+
             sb.Append("\n\n\n");
 
             return sb.ToString();
+        }
+
+        private string GetDataMigrationInsert(DataMigration dm)
+        {
+            return new FluentMySqlInsert("dataMigration")
+                .WithColumns("id", "yearId", "notes", "dataMigrationDate")
+                .WithValues(dm.Id, dm.Year.Id, dm.Notes, dm.DataMigrationDate)
+                .ToString();
         }
 
         private string GetLeaderBoardDataInsert(LeaderBoardData l)

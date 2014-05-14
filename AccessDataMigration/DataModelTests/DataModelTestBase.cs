@@ -17,7 +17,9 @@ namespace DataModelTests
         public static void Init(TestContext testContext)
         {
             var dm = new DataModelBuilder();
-            DataModelTestBase.DataModel = dm.CreateDataModel();
+            string databaseDir = @"..\..\..\..\Actual Data\access_db";
+
+            DataModelTestBase.DataModel = dm.CreateDataModel(databaseDir);
         }
     }
 }

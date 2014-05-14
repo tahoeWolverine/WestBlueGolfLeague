@@ -85,6 +85,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.FtpClient">
+      <HintPath>..\packages\System.Net.FtpClient.1.0.5200.21177\lib\net40\System.Net.FtpClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,11 +99,13 @@
     <Compile Include="DataModel.cs" />
     <Compile Include="DataModelBuilder.cs" />
     <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\DataMigration.cs" />
     <Compile Include="Entities\LeaderBoard.cs" />
     <Compile Include="Entities\LeaderBoardData.cs" />
     <Compile Include="Entities\MatchUp.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="FluentMySqlInsert.cs" />
+    <Compile Include="FtpUtil.cs" />
     <Compile Include="Hasher.cs" />
     <Compile Include="MySqlGenerator.cs" />
     <Compile Include="NullableValue.cs" />
@@ -113,10 +119,11 @@
     <Compile Include="Entities\YearData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AccessExport_TemporaryKey.pfx" />
     <None Include="App.config" />
     <None Include="file.dsn" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\deletes.txt">
@@ -139,6 +146,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

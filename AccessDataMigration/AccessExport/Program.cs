@@ -14,6 +14,7 @@ using MySql.Data.MySqlClient;
 using System.Configuration;
 using System.IO;
 using System.Threading;
+using System.Net;
 
 
 namespace AccessExport
@@ -32,29 +33,64 @@ namespace AccessExport
 
         static void Main(string[] args)
         {
+            string ftpHost = string.Empty;
+            string ftpUsername = string.Empty;
+            string ftpPassword = string.Empty;
 
             if (args.Length < 3)
             {
                 Console.WriteLine("** WARNING **");
-                Console.WriteLine("** Using defaults as required vals were not passed in **");
+                Console.WriteLine("** Using defaults. Required vals were not passed in **");
                 Console.WriteLine();
             }
+            else
+            {
+                ftpHost = args[0];
+                ftpUsername = args[1];
+                ftpPassword = args[2];
+            }
 
-            DoExport();                
+            DoExport(ftpHost, new NetworkCredential(ftpUsername, ftpPassword));
 
             //Console.WriteLine(BitConverter.ToString(Hasher.Hash("xxxxxxxx", "839202910", 5000)).Replace("-", ""));
         }
 
-        private static void DoExport()
+        private static void DoExport(string ftpHost, NetworkCredential ftpCreds)
         {
             bool dataPopulateMode = true;
             DataModel dataModel = null;
+            string destinationDir = "databases";
+
+            if (!string.IsNullOrEmpty(ftpHost))
+            {
+                FtpUtil.DownloadFtpDirectory(ftpCreds, ftpHost, "access_db", destinationDir, (fileName) =>
+                {
+                    if (fileName.Contains("14"))
+                    {
+                        return true;
+                    }
+
+                    if (!File.Exists(destinationDir + "/" + fileName))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
 
             TimedTask("-- Building data model from access dbs --", () =>
             {
                 var dmb = new DataModelBuilder();
 
-                dataModel = dmb.CreateDataModel();
+                string databaseDir = @"..\..\..\..\Actual Data\access_db";
+
+                if (!string.IsNullOrEmpty(ftpHost))
+                {
+                    databaseDir = destinationDir;
+                }
+
+                dataModel = dmb.CreateDataModel(databaseDir);
             });
 
             //
@@ -62,10 +98,10 @@ namespace AccessExport
             //
             string dataModelInserts = string.Empty;
 
+            var mysqlGenerator = new MySqlGenerator();
+
             TimedTask("-- Generating mysql inserts --", () =>
             {
-                var mysqlGenerator = new MySqlGenerator();
-
                 dataModelInserts = mysqlGenerator.Generate(dataModel);
             });
 
@@ -80,63 +116,13 @@ namespace AccessExport
 
             TimedTask("-- setting prerequisite conditions for mysql --", () =>
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    // We need to set the packet size for mysql to accept our large inserts.
-                    using (var command = conn.CreateCommand())
-                    {
-                        command.CommandText = "SET GLOBAL max_allowed_packet = 28777216;";
-                        command.ExecuteNonQuery();
-                    }
-                }
+                mysqlGenerator.DoPrereq(connectionString);
             });
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            TimedTask("-- doing inserts --", () =>
             {
-                conn.Open();
-
-                MySqlTransaction transaction = null;
-                try
-                {
-                    transaction = conn.BeginTransaction();
-
-                    var inserts = dataModelInserts;
-                    var deletes = File.ReadAllText("scripts/deletes.txt");
-
-                    TimedTask("-- deleting current data --", () =>
-                    {
-                        using (var command = conn.CreateCommand())
-                        {
-                            command.CommandText = deletes;
-                            command.Transaction = transaction;
-                            command.ExecuteNonQuery();
-                        }
-                    });
-
-                    TimedTask("-- inserting new data --", () =>
-                    {
-                        using (var command = conn.CreateCommand())
-                        {
-                            command.Transaction = transaction;
-                            command.CommandText = inserts;
-                            command.ExecuteNonQuery();
-                        }
-                    });
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    if (transaction != null)
-                    {
-                        transaction.Rollback();
-                    }
-
-                    throw;
-                }
-            }
+                mysqlGenerator.DoInsert(connectionString, dataModelInserts);
+            });
         }
     }
 }

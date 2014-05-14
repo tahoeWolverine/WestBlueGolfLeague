@@ -13,6 +13,27 @@ namespace AccessExport
     {
         public delegate bool ShouldDownloadFile(string fileName);
 
+        private static void TryDownloadFile(FtpClient ftpClient, FtpListItem item, string remoteDir, string destinationDir, ShouldDownloadFile sdlf)
+        {
+            bool shouldDownload = sdlf(item.Name);
+
+            if (!shouldDownload) return;
+
+            string fileFullPath = destinationDir + "/" + item.Name;
+
+            using (var stream = ftpClient.OpenRead(remoteDir + "/" + item.Name, FtpDataType.Binary))
+            {
+                if (stream.Length != 0)
+                {
+                    // Create a FileStream object to write a stream to a file
+                    using (FileStream fileStream = File.Create(fileFullPath, (int)stream.Length))
+                    {
+                        stream.CopyTo(fileStream);
+                    }
+                }
+            }
+        }
+
         public static void DownloadFtpDirectory(NetworkCredential creds, string host, string remoteDir, string destinationDir, ShouldDownloadFile sdlf)
         {
             Directory.CreateDirectory(destinationDir);
@@ -30,22 +51,13 @@ namespace AccessExport
                         continue;
                     }
 
-                    bool shouldDownload = sdlf(item.Name);
-
-                    if (!shouldDownload) continue;
-
-                    string fileFullPath = destinationDir + "/" + item.Name;
-
-                    using (var stream = ftp.OpenRead(remoteDir + "/" + item.Name, FtpDataType.Binary))
+                    try
                     {
-                        if (stream.Length != 0)
-                        {
-                            // Create a FileStream object to write a stream to a file
-                            using (FileStream fileStream = File.Create(fileFullPath, (int)stream.Length))
-                            {
-                                stream.CopyTo(fileStream);
-                            }
-                        }
+                        TryDownloadFile(ftp, item, remoteDir, destinationDir, sdlf);
+                    }
+                    catch (IOException ex)
+                    {
+                        throw new Exception("Unable to download file.", ex);
                     }
                 }
             }
