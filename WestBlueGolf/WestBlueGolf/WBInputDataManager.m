@@ -128,7 +128,7 @@
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
 		teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
 		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
-		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] boolValue];
+		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] isEqualToString:@"NEW"];
 		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
 		
 		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam inContext:moc];

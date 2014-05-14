@@ -46,7 +46,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"team = %@", [self selectedTeam]];
+	return [NSPredicate predicateWithFormat:@"team = %@ && ANY yearData.year = %@", [self selectedTeam], [WBYear thisYear]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
