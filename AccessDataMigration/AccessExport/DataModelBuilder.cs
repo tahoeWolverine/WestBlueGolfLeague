@@ -73,7 +73,7 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                string connectionString = @"filedsn=..\..\file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=" + databaseDirectory + @"\golf" + yearStr.Substring(2) + ".mdb";
+                string connectionString = @"filedsn=" + AppDomain.CurrentDomain.BaseDirectory + "file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=" + databaseDirectory + @"\golf" + yearStr.Substring(2) + ".mdb";
 
                 using (connection = new OdbcConnection(connectionString))
                 {
