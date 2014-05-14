@@ -8,6 +8,7 @@
 
 #import "WBAppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
+#import <TRInternalAppAuth/TRInternalAppAuthService.h>
 #import "WBCoreDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
@@ -25,8 +26,19 @@
 @implementation WBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	//[self setupCoreData:NO];
+	// Start reachability testing (simply by accessing the shared reference)
+	//ConnectionStatusManager *connectManager = [ConnectionStatusManager sharedManager];
 	
+//#ifndef TR_SKIP_INTERNAL_APP_AUTH
+	//if ([connectManager isAbleToConnectToInternet]) {
+
+		// check to see if the use of the application has already been authorized
+		//if (![TRInternalAppAuthService isAuthorized]) {
+			//[self authorizeUserForInternalApp];
+		//}
+	//}
+//#endif
+
 	[self subscribeToNotifications];
 	
 	// Setup year (could be preference of some kind, but for now, newest)
@@ -187,6 +199,24 @@
 - (NSManagedObjectContext *)managedObjectContext {
 	return [[WBCoreDataManager sharedManager] managedObjectContext];
 }
+
+#pragma mark - TRInternalAppAuthService methods
+
+/*#ifndef TR_SKIP_INTERNAL_APP_AUTH
+- (void)authorizeUserForInternalApp {
+	// otherwise make the user authenticate
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internalAppAuthorizationWasSuccessful:) name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
+	[TRInternalAppAuthService authorizeUserModallyFromRootViewController:self.window.rootViewController animated:NO];
+}
+
+- (void)internalAppAuthorizationWasSuccessful:(NSNotification *)notification {
+	NSAssert([TRInternalAppAuthService isAuthorized], @"user should have been authorized");
+	
+	// remove the notifcation request and show the splash screen
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
+	//[self showSplashScreen];
+}
+#endif*/
 							
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -203,6 +233,9 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	[self subscribeToNotifications];
+	
+	//[self.window.rootViewController dismissViewControllerAnimated:NO completion:^{}];
+	//[self authorizeUserForInternalApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

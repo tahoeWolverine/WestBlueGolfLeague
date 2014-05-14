@@ -12,6 +12,7 @@
 #import "WBNotifications.h"
 #import "WBPlayerListCell.h"
 #import "WBProfileTableViewController.h"
+#import "WBTeamProfileTableViewController.h"
 
 #define SECTION_KEY @"favorite"
 #define SORT_KEY @"name"
@@ -89,6 +90,26 @@ typedef enum {
 	}
 	
 	return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (self.viewController.splitViewController) {
+		UIViewController *vc = nil;
+		for (UINavigationController *nc in self.viewController.splitViewController.viewControllers) {
+			vc = [nc topViewController];
+			if (vc != self.viewController) {
+				if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
+					WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
+					[(WBProfileTableViewController *)vc setSelectedPlayer:player];
+				} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
+					WBTeam *team = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
+					[(WBTeamProfileTableViewController *)vc setSelectedTeam:team];
+				}
+			}
+		}
+	}
+	
+	//[tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
 }
 
 @end
