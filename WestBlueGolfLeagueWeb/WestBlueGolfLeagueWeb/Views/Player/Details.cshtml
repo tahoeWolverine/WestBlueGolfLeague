@@ -1,0 +1,61 @@
+﻿@model WestBlueGolfLeagueWeb.Models.Entities.player
+
+@{
+    ViewBag.Title = Html.DisplayFor(model => model.name);   
+}
+
+<div>
+    <h4>player</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.team.teamName)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.team.teamName)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.currentHandicap)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.currentHandicap)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.favorite)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.favorite)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.validPlayer)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.validPlayer)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.modifiedDate)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.modifiedDate)
+        </dd>
+    
+    </dl>
+</div>
+

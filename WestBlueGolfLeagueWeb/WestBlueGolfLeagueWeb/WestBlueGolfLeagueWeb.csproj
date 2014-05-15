@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\matchupsController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TopScoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +228,11 @@
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />
+    <Compile Include="Models\Responses\MatchupResponse.cs" />
+    <Compile Include="Models\Responses\PlayerResponse.cs" />
+    <Compile Include="Models\Responses\ResultResponse.cs" />
+    <Compile Include="Models\Responses\TeamMatchupResponse.cs" />
+    <Compile Include="Models\Responses\TeamResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -283,6 +289,8 @@
     <Content Include="Views\Information\Rules.cshtml" />
     <Content Include="Views\Information\Info.cshtml" />
     <Content Include="Views\TopScore\Index.cshtml" />
+    <Content Include="Views\Player\Details.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
