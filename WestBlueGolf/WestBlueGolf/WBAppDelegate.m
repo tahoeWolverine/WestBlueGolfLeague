@@ -202,7 +202,7 @@
 
 #pragma mark - TRInternalAppAuthService methods
 
-/*#ifndef TR_SKIP_INTERNAL_APP_AUTH
+#ifndef TR_SKIP_INTERNAL_APP_AUTH
 - (void)authorizeUserForInternalApp {
 	// otherwise make the user authenticate
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internalAppAuthorizationWasSuccessful:) name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
@@ -216,7 +216,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
 	//[self showSplashScreen];
 }
-#endif*/
+#endif
 							
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -234,8 +234,10 @@
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	[self subscribeToNotifications];
 	
+	BOOL auth = [TRInternalAppAuthService isAuthorized];
+	DLog(@"User is %@authorized for use", auth ? @"" : @"not ");
 	//[self.window.rootViewController dismissViewControllerAnimated:NO completion:^{}];
-	//[self authorizeUserForInternalApp];
+	[self authorizeUserForInternalApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

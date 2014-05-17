@@ -131,9 +131,9 @@
 		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] isEqualToString:@"NEW"];
 		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
 		
-		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap onTeam:playerTeam inContext:moc];
+		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap inContext:moc];
 		
-		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
+		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year onTeam:playerTeam withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
 	}
 	
 	// Create a player to catch all the no shows (ends up being conditional too)

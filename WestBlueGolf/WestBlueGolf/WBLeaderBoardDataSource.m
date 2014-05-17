@@ -7,20 +7,13 @@
 //
 
 #import "WBLeaderBoardDataSource.h"
-#import "WBCoreDataManager.h"
 #import "WBLeaderBoardCell.h"
-#import "WBLeaderBoardTableViewController.h"
+#import "WBLeaderBoardParentDataSource.h"
 #import "WBModels.h"
 
-#define SECTION_KEY @"peopleEntity.me"
 #define SORT_KEY @"rank"
 
 #define CELL_EXPAND_HEIGHT 80.0f
-
-typedef enum {
-	WBLeaderBoardSectionMe,
-	WBLeaderBoardSectionOthers
-} WBLeaderBoardSection;
 
 @interface WBLeaderBoardDataSource ()
 
@@ -30,7 +23,7 @@ typedef enum {
 
 #pragma mark - WBEntityDataSource methods to implement
 
-- (NSString *)cellIdentifier {
+- (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	static NSString *CellIdentifier = @"LeaderBoardCell";
 	return CellIdentifier;
 }
@@ -39,12 +32,8 @@ typedef enum {
 	return @"WBBoardData";
 }
 
-- (NSString *)sectionNameKeyPath {
-	return SECTION_KEY;
-}
-
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"leaderBoard = %@ && year = %@", [(WBLeaderBoardTableViewController *)self.viewController selectedLeaderboard], [WBYear thisYear]];
+	return [NSPredicate predicateWithFormat:@"leaderBoard = %@ && year = %@", [(WBLeaderBoardParentDataSource *)self.parentDataSource selectedLeaderBoard], [WBYear thisYear]];
 }
 
 // Cells should expand if there is a detailValue for this leaderboard
@@ -58,10 +47,9 @@ typedef enum {
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sectionSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:NO];
 	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
 	NSSortDescriptor *nameSortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"peopleEntity.name" ascending:YES];
-	return @[sectionSortOrderDescriptor, sortOrderDescriptor, nameSortOrderDescriptor];
+	return @[sortOrderDescriptor, nameSortOrderDescriptor];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
@@ -69,29 +57,6 @@ typedef enum {
 	WBBoardData *data = (WBBoardData *)object;
 	WBLeaderBoardCell *leaderBoardCell = (WBLeaderBoardCell *)cell;
 	[leaderBoardCell configureCellForBoardData:data];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	NSInteger sectionCount = [self.fetchedResultsController.sections count];
-	if (sectionCount == 2) {
-		if (section == WBLeaderBoardSectionMe) {
-			return @"My Rank";
-		} else {
-			return @"Leaderboard Ranks";
-		}
-	}
-	
-	return nil;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	WBBoardData *data = (WBBoardData *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	if (data.detailValue && ![data.detailValue isEqualToString:@""]) {
-		[super tableView:tableView didSelectRowAtIndexPath:indexPath];
-	} else {
-		// Deselect cell
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	}
 }
 
 @end

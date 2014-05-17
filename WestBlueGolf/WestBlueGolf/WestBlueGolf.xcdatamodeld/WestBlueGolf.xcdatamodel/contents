@@ -38,6 +38,7 @@
         </userInfo>
     </entity>
     <entity name="WBPeopleEntity" representedClassName="WBPeopleEntity" syncable="YES">
+        <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="me" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="real" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -48,10 +49,8 @@
     </entity>
     <entity name="WBPlayer" representedClassName="WBPlayer" parentEntity="WBPeopleEntity" syncable="YES">
         <attribute name="currentHandicap" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="favorite" attributeType="Boolean" syncable="YES"/>
         <relationship name="matches" toMany="YES" deletionRule="Nullify" destinationEntity="WBMatch" inverseName="players" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="results" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBResult" inverseName="player" inverseEntity="WBResult" syncable="YES"/>
-        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="players" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="yearData" toMany="YES" deletionRule="Cascade" destinationEntity="WBPlayerYearData" inverseName="player" inverseEntity="WBPlayerYearData" syncable="YES"/>
     </entity>
     <entity name="WBPlayerYearData" representedClassName="WBPlayerYearData" syncable="YES">
@@ -59,6 +58,7 @@
         <attribute name="isRookie" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="startingHandicap" attributeType="Integer 16" syncable="YES"/>
         <relationship name="player" maxCount="1" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="yearData" inverseEntity="WBPlayer" syncable="YES"/>
+        <relationship name="team" maxCount="1" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="playerYearData" inverseEntity="WBTeam" syncable="YES"/>
         <relationship name="year" maxCount="1" deletionRule="Nullify" destinationEntity="WBYear" inverseName="playerYearData" inverseEntity="WBYear" syncable="YES"/>
         <userInfo>
             <entry key="mogenerator.customBaseClass" value="WBManagedObject"/>
@@ -78,7 +78,7 @@
     <entity name="WBTeam" representedClassName="WBTeam" parentEntity="WBPeopleEntity" syncable="YES">
         <attribute name="teamId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="matchups" toMany="YES" deletionRule="Nullify" destinationEntity="WBTeamMatchup" inverseName="teams" inverseEntity="WBTeamMatchup" syncable="YES"/>
-        <relationship name="players" toMany="YES" deletionRule="Nullify" destinationEntity="WBPlayer" inverseName="team" inverseEntity="WBPlayer" syncable="YES"/>
+        <relationship name="playerYearData" toMany="YES" deletionRule="Nullify" destinationEntity="WBPlayerYearData" inverseName="team" inverseEntity="WBPlayerYearData" syncable="YES"/>
         <relationship name="results" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WBResult" inverseName="team" inverseEntity="WBResult" syncable="YES"/>
     </entity>
     <entity name="WBTeamMatchup" representedClassName="WBTeamMatchup" syncable="YES">
@@ -118,9 +118,9 @@
         <element name="WBCourse" positionX="-317" positionY="-171" width="128" height="88"/>
         <element name="WBLeaderBoard" positionX="153" positionY="215" width="128" height="118"/>
         <element name="WBMatch" positionX="7" positionY="-277" width="128" height="88"/>
-        <element name="WBPeopleEntity" positionX="153" positionY="-27" width="128" height="103"/>
-        <element name="WBPlayer" positionX="153" positionY="-171" width="128" height="133"/>
-        <element name="WBPlayerYearData" positionX="288" positionY="-171" width="128" height="118"/>
+        <element name="WBPeopleEntity" positionX="153" positionY="-27" width="128" height="118"/>
+        <element name="WBPlayer" positionX="153" positionY="-171" width="128" height="103"/>
+        <element name="WBPlayerYearData" positionX="288" positionY="-171" width="128" height="133"/>
         <element name="WBResult" positionX="151" positionY="-322" width="128" height="133"/>
         <element name="WBTeam" positionX="9" positionY="-46" width="128" height="103"/>
         <element name="WBTeamMatchup" positionX="7" positionY="-189" width="128" height="133"/>

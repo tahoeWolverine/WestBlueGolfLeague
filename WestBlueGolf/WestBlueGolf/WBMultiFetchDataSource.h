@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic, readonly) UITableView *tableView;
 
+@property (strong, nonatomic) NSMutableArray *sectionDataSources;
+
 + (id)dataSourceWithViewController:(UIViewController *)aViewController;
 - (id)initWithViewController:(UIViewController *)aViewController;
 

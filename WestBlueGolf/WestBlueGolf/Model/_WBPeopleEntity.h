@@ -5,6 +5,7 @@
 #import "WBManagedObject.h"
 
 extern const struct WBPeopleEntityAttributes {
+	__unsafe_unretained NSString *favorite;
 	__unsafe_unretained NSString *me;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *real;
@@ -23,6 +24,7 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 
 
+
 @interface WBPeopleEntityID : NSManagedObjectID {}
 @end
 
@@ -31,6 +33,20 @@ extern const struct WBPeopleEntityFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBPeopleEntityID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* favorite;
+
+
+
+@property BOOL favoriteValue;
+- (BOOL)favoriteValue;
+- (void)setFavoriteValue:(BOOL)value_;
+
+//- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -94,6 +110,15 @@ extern const struct WBPeopleEntityFetchedProperties {
 @end
 
 @interface _WBPeopleEntity (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveFavorite;
+- (void)setPrimitiveFavorite:(NSNumber*)value;
+
+- (BOOL)primitiveFavoriteValue;
+- (void)setPrimitiveFavoriteValue:(BOOL)value_;
+
+
 
 
 - (NSNumber*)primitiveMe;

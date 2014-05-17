@@ -5,13 +5,11 @@
 
 const struct WBPlayerAttributes WBPlayerAttributes = {
 	.currentHandicap = @"currentHandicap",
-	.favorite = @"favorite",
 };
 
 const struct WBPlayerRelationships WBPlayerRelationships = {
 	.matches = @"matches",
 	.results = @"results",
-	.team = @"team",
 	.yearData = @"yearData",
 };
 
@@ -49,11 +47,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
-	if ([key isEqualToString:@"favoriteValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"favorite"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
@@ -87,32 +80,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 
 
-@dynamic favorite;
-
-
-
-- (BOOL)favoriteValue {
-	NSNumber *result = [self favorite];
-	return [result boolValue];
-}
-
-- (void)setFavoriteValue:(BOOL)value_ {
-	[self setFavorite:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveFavoriteValue {
-	NSNumber *result = [self primitiveFavorite];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveFavoriteValue:(BOOL)value_ {
-	[self setPrimitiveFavorite:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
 @dynamic matches;
 
 	
@@ -137,10 +104,6 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 	[self didAccessValueForKey:@"results"];
 	return result;
 }
-	
-
-@dynamic team;
-
 	
 
 @dynamic yearData;

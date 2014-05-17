@@ -1,5 +1,6 @@
 #import "_WBPlayer.h"
 
+@class WBTeam;
 @class WBYear;
 
 // Leaderboard keys
@@ -31,16 +32,15 @@
 // Player specific create function
 + (WBPlayer *)createPlayerWithName:(NSString *)name
 				   currentHandicap:(NSInteger)currentHandicap
-							onTeam:(WBTeam *)currentTeam
 						 inContext:(NSManagedObjectContext *)moc;
 + (WBPlayer *)playerWithName:(NSString *)name
 			 currentHandicap:(NSInteger)currentHandicap
-					  onTeam:(WBTeam *)currentTeam
 				   inContext:(NSManagedObjectContext *)moc;
 
 + (WBPlayer *)me;
 - (void)setPlayerToMe;
 - (void)setPlayerToNotMe;
+- (WBTeam *)currentTeam;
 
 + (WBPlayer *)noShowPlayer;
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;

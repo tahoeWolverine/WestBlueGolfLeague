@@ -7,9 +7,7 @@
 //
 
 #import "WBLeaderBoardListDataSource.h"
-#import "WBCoreDataManager.h"
 #import "WBLeaderBoardListCell.h"
-#import "WBModels.h"
 
 #define SORT_KEY @"tablePriority"
 

@@ -15,7 +15,7 @@
 
 - (void)configureCellForPlayer:(WBPlayer *)player {
 	self.playerNameLabel.text = player.name;
-	self.teamNameLabel.text = player.team.name;
+	self.teamNameLabel.text = [player currentTeam].name;
 
 	//cell.imageView.clipsToBounds = YES;
 	

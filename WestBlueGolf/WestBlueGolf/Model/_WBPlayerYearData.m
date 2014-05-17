@@ -11,6 +11,7 @@ const struct WBPlayerYearDataAttributes WBPlayerYearDataAttributes = {
 
 const struct WBPlayerYearDataRelationships WBPlayerYearDataRelationships = {
 	.player = @"player",
+	.team = @"team",
 	.year = @"year",
 };
 
@@ -144,6 +145,10 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 
 
 @dynamic player;
+
+	
+
+@dynamic team;
 
 	
 
