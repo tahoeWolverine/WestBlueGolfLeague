@@ -8,8 +8,14 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     public partial class WestBlue : DbContext
     {
         public WestBlue()
-            : base("name=WestBlue")
+            : base("name=WestBlueReadOnly")
         {
+        }
+
+        public WestBlue(bool readOnly)
+            : base(readOnly ? "name=WestBlueReadOnly" : "name=WestBlue")
+        {
+
         }
 
         public virtual DbSet<course> courses { get; set; }

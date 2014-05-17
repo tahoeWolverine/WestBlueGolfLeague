@@ -26,7 +26,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             db.Configuration.ProxyCreationEnabled = false;
             
-            var playersForYear = db.players.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
+            // TODO: Invalid players might need to be added to this (no shows, etc)
+            var yearDataWithPlayerForYear = db.playeryeardatas.Include(p => p.player).AsNoTracking().Where(x => x.year.value == year).ToList();
+
             var teamsForYear = db.teams.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
             var leaderboards = db.leaderboards.AsNoTracking().ToList();
             var leaderBoardDataForYear = db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
@@ -36,8 +38,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var dby = new DataByYear
             {
-                PlayersForYear = playersForYear,
-                LeaderboardDataForYear = leaderBoardDataForYear,
+                PlayersForYear = yearDataWithPlayerForYear.Select(x => PlayerResponse.From(x)).ToList(),
+                LeaderboardDataForYear = leaderBoardDataForYear.Select(x => LeaderboardDataResponse.From(x)).ToList(),
                 Leaderboards = leaderboards,
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList()
