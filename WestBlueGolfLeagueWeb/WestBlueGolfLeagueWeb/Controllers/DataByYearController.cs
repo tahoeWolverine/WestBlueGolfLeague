@@ -39,7 +39,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 PlayersForYear = playersForYear,
                 LeaderboardDataForYear = leaderBoardDataForYear,
                 Leaderboards = leaderboards,
-                TeamsForYear = teamsForYear,
+                TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList()
             };
 

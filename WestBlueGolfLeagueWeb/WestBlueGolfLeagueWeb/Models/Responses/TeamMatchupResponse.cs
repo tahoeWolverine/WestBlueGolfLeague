@@ -16,7 +16,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             tmr.Mc = tm.matchComplete;
             tmr.MId = tm.matchId;
             tmr.Status = tm.status;
-            tmr.Teams = tm.teams.Select(x => TeamResponse.From(x)).ToList();
+            tmr.TeamIds = tm.teams.Select(x => x.id).ToList();
             tmr.WId = tm.weekId;
             tmr.Matchups = tm.matchups.Select(x => MatchupResponse.From(x)).ToList();
 
@@ -31,7 +31,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 
         public string Status { get; set; }
 
-        public IList<TeamResponse> Teams { get; set; }
+        public IList<int> TeamIds { get; set; }
 
         public int WId { get; set; }
 
