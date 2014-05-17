@@ -12,8 +12,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         {
         }
 
-        public WestBlue(bool readOnly)
-            : base(readOnly ? "name=WestBlueReadOnly" : "name=WestBlue")
+        public WestBlue(bool needWriteAccess)
+            : base(needWriteAccess ? "name=WestBlue" : "name=WestBlueReadOnly")
         {
 
         }
