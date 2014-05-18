@@ -24,7 +24,7 @@ namespace AccessExport
             return null;
         }
 
-        public DataModel CreateDataModel(string databaseDirectory)
+        public DataModel CreateDataModel(string databaseDirectory, string fileDsnLocation)
         {
             // 99 - 08
             // 09 - 11 - added week 0 score to players, added course name to week
@@ -73,7 +73,7 @@ namespace AccessExport
 
                 string yearStr = Convert.ToString(year);
 
-                string connectionString = @"filedsn=" + AppDomain.CurrentDomain.BaseDirectory + "file.dsn; Uid=Admin; Pwd=bigmatt; DBQ=" + databaseDirectory + @"\golf" + yearStr.Substring(2) + ".mdb";
+                string connectionString = @"filedsn=" + fileDsnLocation + "; Uid=Admin; Pwd=bigmatt; DBQ=" + databaseDirectory + @"\golf" + yearStr.Substring(2) + ".mdb";
 
                 using (connection = new OdbcConnection(connectionString))
                 {
@@ -192,11 +192,12 @@ namespace AccessExport
                             int playersTeam = reader.GetInt32(1);
                             int startingHandicap = 0;
                             bool isRookie = false;
+                            int week0Score = -1;
 
                             // If the year is before 2009, we'll update the handicaps later
                             if (year >= 2009)
                             {
-                                int week0Score = reader.GetInt32(2);
+                                week0Score = reader.GetInt32(2);
                                 startingHandicap = week0Score - 36;
                             }
 
@@ -230,7 +231,8 @@ namespace AccessExport
                                                         StartingHandicap = startingHandicap, 
                                                         FinishingHandicap = startingHandicap, 
                                                         Year = yearValueToYear[year], Id = yearDataIndex++, 
-                                                        Team = teamIdToTeam[playersTeam] 
+                                                        Team = teamIdToTeam[playersTeam],
+                                                        Week0Score = week0Score == -1 ? 0 : week0Score // only years > 2009 will have a valid value here.
                                                     };
 
                             yearDatas.Add(yearData);
@@ -366,8 +368,8 @@ namespace AccessExport
                                 // Take player1 and player2 and set their current handicaps
 
                                 // Set the week0 score in to the year data's starting handicap.
-                                int player1Handicap = score1;// -36;
-                                int player2Handicap = score2;// -36;
+                                int player1Handicap = score1 - 36;
+                                int player2Handicap = score2 - 36;
 
                                 var player1YearDatas = yearDatas.Where(y => y.Player.Id == player1.Id && y.Year.Value == year);
                                 var player2YearDatas = yearDatas.Where(y => y.Player.Id == player2.Id && y.Year.Value == year);
@@ -381,6 +383,8 @@ namespace AccessExport
                                     // with the correct value.
                                     player1.CurrentHandicap = player1Handicap;
                                     var player1YearDataForThisYear = player1YearDatas.First();
+                                    player1YearDataForThisYear.Week0Score = score1;
+                                    // finishing handicap will be fixed later when we process handicaps.
                                     player1YearDataForThisYear.StartingHandicap = player1YearDataForThisYear.FinishingHandicap = player1Handicap;
                                 }
 
@@ -388,6 +392,8 @@ namespace AccessExport
                                 {
                                     player2.CurrentHandicap = player2Handicap;
                                     var player2YearDataForThisYear = player2YearDatas.First();
+                                    player2YearDataForThisYear.Week0Score = score2;
+                                    // finishing handicap will be fixed later when we process handicaps.
                                     player2YearDataForThisYear.StartingHandicap = player2YearDataForThisYear.FinishingHandicap = player2Handicap;
                                 }
 
@@ -549,6 +555,7 @@ namespace AccessExport
             yearData.FinishingHandicap = priorHandicapWithScores(scores, scoreIndex);
         }
 
+        // TODO: Update this method with correct handicap calculation (needs to factor in previous years (< 2011) and new/old player distinction)
         private static int priorHandicapWithScores(List<int> scores, int index)
         {
             List<int> usedScores = new List<int> { scores[index], scores[index - 1], scores[index - 2], scores[index - 3], scores[index - 4] };

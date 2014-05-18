@@ -19,7 +19,7 @@ namespace DataModelTests
             var dm = new DataModelBuilder();
             string databaseDir = @"..\..\..\..\Actual Data\access_db";
 
-            DataModelTestBase.DataModel = dm.CreateDataModel(databaseDir);
+            DataModelTestBase.DataModel = dm.CreateDataModel(databaseDir, @"..\..\file.dsn");
         }
     }
 }

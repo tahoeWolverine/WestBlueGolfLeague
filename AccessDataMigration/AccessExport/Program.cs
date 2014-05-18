@@ -97,7 +97,7 @@ namespace AccessExport
                     databaseDir = destinationDir;
                 }
 
-                dataModel = dmb.CreateDataModel(databaseDir);
+                dataModel = dmb.CreateDataModel(databaseDir, AppDomain.CurrentDomain.BaseDirectory + "file.dsn");
             });
 
             //
