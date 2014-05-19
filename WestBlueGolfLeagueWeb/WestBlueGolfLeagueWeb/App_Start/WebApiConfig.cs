@@ -18,6 +18,8 @@ namespace WestBlueGolfLeagueWeb
 
             config.Routes.MapHttpRoute(name: "DataByYear", routeTemplate: "api/v1/data/{year}", defaults: new { controller = "DataByYear", action = "GetDataForYear" });
 
+            config.Routes.MapHttpRoute(name: "AvailableYears", routeTemplate: "api/v1/availableYears", defaults: new { controller = "DataByYear", action = "GetAvailableYears" });
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

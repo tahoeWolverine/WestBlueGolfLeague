@@ -33,7 +33,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var leaderboards = db.leaderboards.AsNoTracking().ToList();
             var leaderBoardDataForYear = db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
             var courses = db.courses.AsNoTracking().ToList();
-            var week = db.weeks.AsNoTracking().Where(w => w.year.value == year);
+            var weeks = db.weeks.AsNoTracking().Where(w => w.year.value == year).ToList();
             var teamMatchupsForYear = db.teammatchups.Include(x => x.matchups).Include("matchups.results").Where(x => x.week.year.value == year).ToList();
 
             var dby = new DataByYear
@@ -42,10 +42,18 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 LeaderboardDataForYear = leaderBoardDataForYear.Select(x => LeaderboardDataResponse.From(x)).ToList(),
                 Leaderboards = leaderboards,
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
-                TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList()
+                TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList(),
+                Courses = courses.Select(x => CourseResponse.From(x)).ToList(),
+                Weeks = weeks.Select(x => WeekResponse.From(x)).ToList()
             };
 
             return Ok(dby);
+        }
+
+        [ResponseType(typeof(List<YearResponse>))]
+        public IHttpActionResult GetAvailableYears()
+        {
+            return Ok(db.years.ToList().Select(x => YearResponse.From(x)));
         }
 
         protected override void Dispose(bool disposing)

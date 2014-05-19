@@ -82,7 +82,7 @@ namespace AccessExport
                     cmd.Connection = connection;
 
                     // Year
-                    var newYear = new Year { Id = yearIndex++, Value = year, Complete = true };
+                    var newYear = new Year { Id = yearIndex++, Value = year, Complete = year == DateTime.Now.Year ? false : true };
                     yearIdToYear[newYear.Id] = newYear;
                     yearValueToYear[year] = newYear;
 
@@ -706,11 +706,16 @@ namespace AccessExport
 
             List<LeaderBoardData> datasToSort = new List<LeaderBoardData>();
 
+            int noResForYear = 0;
             foreach (var player in players)
             {
                 var results = player.AllResultsForYear(year);
 
-                if (results.Count() == 0) continue;
+                if (results.Count() == 0)
+                {
+                    noResForYear++;
+                    continue;
+                }
 
                 double value = valueFunc(player, dataModel);
                 LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, LeaderBoard = lb, Year = year };
