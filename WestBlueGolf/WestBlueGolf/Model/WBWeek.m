@@ -1,5 +1,4 @@
 #import "WBWeek.h"
-#import "WBCoreDataManager.h"
 #import "WBCourse.h"
 #import "WBYear.h"
 

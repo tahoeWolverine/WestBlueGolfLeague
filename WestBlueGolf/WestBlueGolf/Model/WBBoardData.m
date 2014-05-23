@@ -1,5 +1,4 @@
 #import "WBBoardData.h"
-#import "WBCoreDataManager.h"
 #import "WBLeaderBoard.h"
 #import "WBYear.h"
 

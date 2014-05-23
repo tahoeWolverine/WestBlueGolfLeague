@@ -1,5 +1,4 @@
 #import "WBPlayerYearData.h"
-#import "WBCoreDataManager.h"
 #import "WBPlayer.h"
 #import "WBTeam.h"
 #import "WBYear.h"

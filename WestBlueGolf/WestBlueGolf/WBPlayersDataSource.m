@@ -7,7 +7,6 @@
 //
 
 #import "WBPlayersDataSource.h"
-#import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBPlayerListCell.h"

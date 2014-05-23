@@ -7,7 +7,6 @@
 //
 
 #import "WBTeamsDataSource.h"
-#import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"

@@ -7,7 +7,6 @@
 //
 
 #import "WBEntityTableViewController.h"
-#import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBEntityDataSource.h"
 #import "WBNotifications.h"

@@ -1,6 +1,5 @@
 #import "WBYear.h"
 #import "WBAppDelegate.h"
-#import "WBCoreDataManager.h"
 #import "WBTeam.h"
 #import "WBWeek.h"
 
@@ -31,7 +30,7 @@
 }
 
 + (WBYear *)thisYearInContext:(NSManagedObjectContext *)moc {
-	NSInteger selectedValue = [(WBAppDelegate *)[UIApplication sharedApplication].delegate thisYearValue];
+	NSInteger selectedValue = [[WBAppDelegate sharedDelegate] thisYearValue];
 	return [self findYearWithValue:selectedValue inContext:moc];
 }
 

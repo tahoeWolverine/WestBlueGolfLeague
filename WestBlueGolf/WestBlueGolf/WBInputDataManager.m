@@ -275,7 +275,7 @@
 }
 
 - (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
-	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[WBCoreDataManager mainContext]];
 	
 	// This should delete all weeks, teamMatchups, matches, and results
 	for (WBWeek *week in year.weeks) {

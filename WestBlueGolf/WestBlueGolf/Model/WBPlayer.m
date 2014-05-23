@@ -1,6 +1,5 @@
 #import "WBPlayer.h"
 #import "WBBoardData.h"
-#import "WBCoreDataManager.h"
 #import "WBCourse.h"
 #import "WBMatch.h"
 #import "WBPlayerYearData.h"

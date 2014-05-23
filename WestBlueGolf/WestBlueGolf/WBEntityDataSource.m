@@ -159,17 +159,13 @@
 
 #pragma mark - Fetched results controller
 
-- (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
-}
-
 - (NSFetchedResultsController *)fetchedResultsController {
     // Set up the fetched results controller if needed.
     if (_fetchedResultsController == nil) {
         // Create the fetch request for the entity.
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         // Edit the entity name as appropriate.
-        NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[self managedObjectContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:[WBCoreDataManager mainContext]];
         [fetchRequest setEntity:entity];
 		[fetchRequest setPredicate:[self fetchPredicate]];
         
@@ -178,7 +174,7 @@
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
         NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-																									managedObjectContext:[self managedObjectContext]
+																									managedObjectContext:[WBCoreDataManager mainContext]
 																									  sectionNameKeyPath:[self sectionNameKeyPath]
 																											   cacheName:nil];
         aFetchedResultsController.delegate = self;

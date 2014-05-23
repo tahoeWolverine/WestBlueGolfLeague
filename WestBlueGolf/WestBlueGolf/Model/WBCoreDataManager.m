@@ -59,6 +59,10 @@
 	return storeCoordinator;
 }
 
++ (NSManagedObjectContext *)mainContext {
+	return [[self sharedManager] managedObjectContext];
+}
+
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext {

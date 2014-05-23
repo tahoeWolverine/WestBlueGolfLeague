@@ -8,7 +8,6 @@
 
 #import "WBMatchupResultDataSource.h"
 #import "WBAppDelegate.h"
-#import "WBCoreDataManager.h"
 #import "WBMatchupResultCell.h"
 #import "WBModels.h"
 #import "WBNotifications.h"

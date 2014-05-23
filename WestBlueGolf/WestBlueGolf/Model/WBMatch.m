@@ -1,5 +1,4 @@
 #import "WBMatch.h"
-#import "WBCoreDataManager.h"
 #import "WBPlayer.h"
 #import "WBResult.h"
 #import "WBTeamMatchup.h"

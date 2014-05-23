@@ -19,13 +19,15 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL loading;
 
++ (instancetype)sharedDelegate;
+
+- (NSInteger)thisYearValue;
+- (void)changeYearToYear:(NSInteger)year;
+- (void)refreshThisYear;
+
 - (void)setProfileTabPlayer;
 - (BOOL)isProfileTab:(UIViewController *)vc;
 
-- (NSInteger)thisYearValue;
-- (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc;
-
-- (void)setupCoreData:(BOOL)reset;
-- (void)resetYearFromServer:(WBYear *)year;
+- (void)resetAllData;
 
 @end
