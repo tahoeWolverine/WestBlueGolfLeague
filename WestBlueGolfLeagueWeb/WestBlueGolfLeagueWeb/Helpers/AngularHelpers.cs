@@ -6,7 +6,7 @@ using System.Web.Optimization;
 
 
 /*
- * Inspired from madsny's AngularPartialsBundles project:
+ * Copied from madsny's AngularPartialsBundles project:
  * https://github.com/madsny/AngularPartialsBundles/blob/master/AngularTemplateBundles/AngularPartials.cs
  */
 namespace WestBlueGolfLeagueWeb.Helpers

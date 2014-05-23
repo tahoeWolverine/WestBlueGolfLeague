@@ -6,7 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @RenderSection("head", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -42,7 +42,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/myNgApp")
+    @Scripts.Render("~/bundles/app")
     @AngularHelpers.RenderTemplates("~/bundles/app/html")
     @RenderSection("scripts", required: false)
 </body>

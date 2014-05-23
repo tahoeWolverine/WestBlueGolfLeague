@@ -4,8 +4,22 @@
     ViewBag.Title = Html.DisplayFor(model => model.name);   
 }
 
-<div>
-    <h4>player</h4>
+@section head {
+    <base href="/Player/Details/@Model.id/" />
+}
+
+<div ng-app="player">
+
+    <div ng-view></div>
+
+    <h4>@Html.DisplayFor(model => model.name)</h4>
+
+    <ul ng-controller="navController" class="nav nav-pills">
+        <!-- TODO: this is kind of nasty. where to get route state from for stuff like this...? -->
+        <li ng-class="{active: currState.stateValue == 0}"><a href="handicaps/2013">Handicaps</a></li>
+        <li ng-class="{active: currState.stateValue == 1}"><a href="results/2013">Results</a></li>
+    </ul>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -59,3 +73,6 @@
     </dl>
 </div>
 
+@section scripts {
+    @Scripts.Render("~/bundles/player")
+}
