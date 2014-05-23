@@ -115,11 +115,8 @@ namespace AccessExport
 
             // Player data
             {
-                var sb = new StringBuilder();
-                sb.AppendLine().AppendLine().AppendLine("/* Player year data */");
                 var pyds = dataModel.YearDatas.Select(yd => this.GetYearDataInsert(yd));
-                sb.Append(string.Join("\n", pyds));
-                sqlListener(sb.ToString());
+                ChunkInsertsAndNotify("/* Player year data */", pyds, sqlListener);
             }
 
             // Courses
@@ -169,20 +166,14 @@ namespace AccessExport
 
             // MatchupToPlayer
             {
-                var sb = new StringBuilder();
-                sb.AppendLine().AppendLine().AppendLine("/* matchup to player*/");
                 var matchUpToPlayers = dataModel.MatchUp.Select(m => this.GetMatchupToPlayerInsert(m));
-                sb.AppendLine(string.Join("\n", matchUpToPlayers));
-                sqlListener(sb.ToString());
+                ChunkInsertsAndNotify("/* matchup to player */", matchUpToPlayers, sqlListener);
             }
 
             // results
             {
-                var sb = new StringBuilder();
-                sb.AppendLine().AppendLine().AppendLine("/* results! */");
                 var results = dataModel.Results.Select(m => this.GetResultsInsert(m));
-                sb.AppendLine(string.Join("\n", results));
-                sqlListener(sb.ToString());
+                ChunkInsertsAndNotify("/* results! */", results, sqlListener);
             }
 
             // Leaderboard
@@ -196,11 +187,8 @@ namespace AccessExport
 
             // Leaderboard data
             {
-                var sb = new StringBuilder();
-                sb.AppendLine().AppendLine().AppendLine("/* lb data */");
                 var lbData = dataModel.LeaderBoardDatas.Select(l => this.GetLeaderBoardDataInsert(l));
-                sb.AppendLine(string.Join("\n", lbData));
-                sqlListener(sb.ToString());
+                ChunkInsertsAndNotify("/* lb data */", lbData, sqlListener);
             }
 
             // data migrations
@@ -212,6 +200,22 @@ namespace AccessExport
                 sqlListener(sb.ToString());
             }
 
+        }
+
+        private void ChunkInsertsAndNotify(string header, IEnumerable<string> inserts, SqlListener sqlListener)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("/* lb data */");
+
+            int i = 0;
+            var groupedInserts = inserts.GroupBy(x => i++ / 50).Select(x => x.AsEnumerable());
+
+            foreach (var e in groupedInserts)
+            {
+                sb.AppendLine(string.Join("\n", e));
+                sqlListener(sb.ToString());
+                sb.Clear();
+            }
         }
 
         private string GetDataMigrationInsert(DataMigration dm)
@@ -303,8 +307,8 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("playerYearData")
-                .WithColumns("id", "isRookie", "startingHandicap", "finishingHandicap", "playerId", "yearId", "teamId")
-                .WithValues(yd.Id, yd.Rookie, yd.StartingHandicap, yd.FinishingHandicap, yd.Player.Id, yd.Year.Id, yd.Team.Id)
+                .WithColumns("id", "isRookie", "startingHandicap", "finishingHandicap", "playerId", "yearId", "teamId", "week0Score")
+                .WithValues(yd.Id, yd.Rookie, yd.StartingHandicap, yd.FinishingHandicap, yd.Player.Id, yd.Year.Id, yd.Team.Id, yd.Week0Score)
                 .ToString();
         }
 

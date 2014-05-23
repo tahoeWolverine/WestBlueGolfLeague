@@ -1,0 +1,14 @@
+﻿@model List<WestBlueGolfLeagueWeb.Models.Entities.player>
+
+@{
+    ViewBag.Title = "Players";
+}
+
+<ul>
+
+@foreach (var player in this.Model)
+{
+    <li>@Html.ActionLink(player.name, "Details", "Player", new { id = player.id }, null)</li>
+}
+
+</ul>

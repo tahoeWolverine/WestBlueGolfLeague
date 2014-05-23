@@ -1,0 +1,78 @@
+﻿@model WestBlueGolfLeagueWeb.Models.Entities.player
+
+@{
+    ViewBag.Title = Html.DisplayFor(model => model.name);   
+}
+
+@section head {
+    <base href="/Player/Details/@Model.id/" />
+}
+
+<div ng-app="player">
+
+    <div ng-view></div>
+
+    <h4>@Html.DisplayFor(model => model.name)</h4>
+
+    <ul ng-controller="navController" class="nav nav-pills">
+        <!-- TODO: this is kind of nasty. where to get route state from for stuff like this...? -->
+        <li ng-class="{active: currState.stateValue == 0}"><a href="handicaps/2013">Handicaps</a></li>
+        <li ng-class="{active: currState.stateValue == 1}"><a href="results/2013">Results</a></li>
+    </ul>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.team.teamName)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.team.teamName)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.currentHandicap)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.currentHandicap)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.favorite)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.favorite)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.validPlayer)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.validPlayer)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.modifiedDate)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.modifiedDate)
+        </dd>
+    
+    </dl>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/player")
+}

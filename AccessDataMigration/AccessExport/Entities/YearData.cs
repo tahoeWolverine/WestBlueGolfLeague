@@ -14,7 +14,8 @@ namespace AccessExport
         public int FinishingHandicap { get; set; }
         public bool Rookie { get; set; }
         public Player Player { get; set; }
-
+        public int Week0Score { get; set; }
+            
         public Team Team { get; set; }
     }
 }

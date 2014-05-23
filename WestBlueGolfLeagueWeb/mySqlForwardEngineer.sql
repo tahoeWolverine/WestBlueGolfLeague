@@ -250,6 +250,7 @@ CREATE TABLE IF NOT EXISTS `westbluegolf`.`playerYearData` (
   `playerId` INT NOT NULL,
   `yearId` INT NOT NULL,
   `teamId` INT NOT NULL,
+  `week0Score` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_player_year_data_player1`
     FOREIGN KEY (`playerId`)
@@ -425,12 +426,6 @@ CREATE TABLE IF NOT EXISTS `westbluegolf`.`user` (
   `email` VARCHAR(120) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO user1;
- DROP USER user1;
-SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-CREATE USER 'user1';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

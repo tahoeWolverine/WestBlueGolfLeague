@@ -6,7 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @RenderSection("head", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +26,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Rules", "Rules", "Information")</li>
                     <li>@Html.ActionLink("Info", "Info", "Information")</li>
-                    <li>@Html.ActionLink("Top Scores", "Index", "TopScore")</li>
+                    <li>@Html.ActionLink("Players", "Index", "Player")</li>
                 </ul>
             </div>
         </div>
@@ -41,6 +41,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/app")
+    @AngularHelpers.RenderTemplates("~/bundles/app/html")
     @RenderSection("scripts", required: false)
 </body>
 </html>

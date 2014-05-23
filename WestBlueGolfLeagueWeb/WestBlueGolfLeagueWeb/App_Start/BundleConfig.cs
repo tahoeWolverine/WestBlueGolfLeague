@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using HtmlBundling;
+using System.Web;
 using System.Web.Optimization;
 
 namespace WestBlueGolfLeagueWeb
@@ -23,9 +24,23 @@ namespace WestBlueGolfLeagueWeb
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular")
+                    .Include(
+                        "~/Scripts/lib/angular-{version}.js", 
+                        "~/Scripts/lib/angular-*"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include("~/Scripts/main/*.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/player").Include("~/Scripts/player/player.js", "~/Scripts/player/*.js"));
+
+            bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

@@ -189,25 +189,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AngularJsHtmlBundle.cs" />
+    <Compile Include="App_Start\AngularJsHtmlCombine.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\matchupsController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TopScoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AngularHelpers.cs" />
     <Compile Include="Models\Entities\course.cs" />
     <Compile Include="Models\Entities\datamigration.cs" />
     <Compile Include="Models\Entities\leaderboard.cs" />
@@ -224,9 +227,17 @@
     <Compile Include="Models\Entities\week.cs" />
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
-    <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\WestBlueGolfDbContext.cs" />
-    <Compile Include="Models\WestBlueTestInitializer.cs" />
+    <Compile Include="Models\Responses\CourseResponse.cs" />
+    <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
+    <Compile Include="Models\Responses\DataByYear.cs" />
+    <Compile Include="Models\Responses\LeaderboardDataResponse.cs" />
+    <Compile Include="Models\Responses\MatchupResponse.cs" />
+    <Compile Include="Models\Responses\PlayerResponse.cs" />
+    <Compile Include="Models\Responses\ResultResponse.cs" />
+    <Compile Include="Models\Responses\TeamMatchupResponse.cs" />
+    <Compile Include="Models\Responses\TeamResponse.cs" />
+    <Compile Include="Models\Responses\WeekResponse.cs" />
+    <Compile Include="Models\Responses\YearResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -257,8 +268,19 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lib\angular-1.2.16.js" />
+    <Content Include="Scripts\lib\angular-animate-1.2.16.js" />
+    <Content Include="Scripts\lib\angular-cookies-1.2.16.js" />
+    <Content Include="Scripts\lib\angular-resource-1.2.16.js" />
+    <Content Include="Scripts\lib\angular-route-1.2.16.js" />
+    <Content Include="Scripts\lib\angular-touch-1.2.16.js" />
+    <Content Include="Scripts\main\app.js" />
+    <Content Include="Scripts\main\test.tpl.html" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\player\player.js" />
+    <Content Include="Scripts\player\tpl\playerHandicaps.tpl.html" />
+    <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -283,6 +305,8 @@
     <Content Include="Views\Information\Rules.cshtml" />
     <Content Include="Views\Information\Info.cshtml" />
     <Content Include="Views\TopScore\Index.cshtml" />
+    <Content Include="Views\Player\Details.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

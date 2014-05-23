@@ -23,6 +23,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int teamId { get; set; }
 
+        public int week0Score { get; set; }
+
         public virtual player player { get; set; }
 
         public virtual year year { get; set; }
