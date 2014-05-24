@@ -13,8 +13,6 @@
 
 @property (weak, nonatomic) UITableViewController *viewController;
 
-@property (strong, nonatomic) NSMutableArray *sectionDataSources;
-
 @end
 
 @implementation WBMultiFetchDataSource

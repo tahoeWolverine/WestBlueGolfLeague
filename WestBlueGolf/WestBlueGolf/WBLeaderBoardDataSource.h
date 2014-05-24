@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-#import "WBEntityDataSource.h"
+#import "WBSectionDataSource.h"
 
-@interface WBLeaderBoardDataSource : WBEntityDataSource
+@interface WBLeaderBoardDataSource : WBSectionDataSource
 
 @end

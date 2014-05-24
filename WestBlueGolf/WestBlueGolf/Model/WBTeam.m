@@ -4,6 +4,7 @@
 #import "WBCourse.h"
 #import "WBMatch.h"
 #import "WBPlayer.h"
+#import "WBPlayerYearData.h"
 #import "WBResult.h"
 #import "WBTeamMatchup.h"
 #import "WBWeek.h"
@@ -60,8 +61,17 @@
 	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@ && week.isBadData = 0", year]];
 }
 
+- (NSArray *)filterPlayerDataForYear:(WBYear *)year {
+	return [self.playerYearData.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"year = %@", year]];
+}
+
 - (NSArray *)filterPlayersForYear:(WBYear *)year {
-	return [self.players.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"ANY yearData.year = %@", year]];
+	NSMutableArray *players = [NSMutableArray array];
+	NSArray *dataArray = [self filterPlayerDataForYear:year];
+	for (WBPlayerYearData *data in dataArray) {
+		[players addObject:data.player];
+	}
+	return players;
 }
 
 /*- (NSInteger)place {

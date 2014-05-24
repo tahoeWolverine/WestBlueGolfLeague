@@ -4,6 +4,7 @@
 #import "_WBPeopleEntity.h"
 
 const struct WBPeopleEntityAttributes WBPeopleEntityAttributes = {
+	.favorite = @"favorite",
 	.me = @"me",
 	.name = @"name",
 	.real = @"real",
@@ -42,6 +43,11 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"favoriteValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"favorite"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"meValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"me"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -55,6 +61,32 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic favorite;
+
+
+
+- (BOOL)favoriteValue {
+	NSNumber *result = [self favorite];
+	return [result boolValue];
+}
+
+- (void)setFavoriteValue:(BOOL)value_ {
+	[self setFavorite:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFavoriteValue {
+	NSNumber *result = [self primitiveFavorite];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFavoriteValue:(BOOL)value_ {
+	[self setPrimitiveFavorite:[NSNumber numberWithBool:value_]];
+}
+
 
 
 

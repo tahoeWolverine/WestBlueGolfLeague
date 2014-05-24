@@ -126,8 +126,10 @@
 	self.dataSource.selectedPlayer = selectedPlayer;
 	if ([self isMeTab]) {
 		[self setTabName:selectedPlayer ? [selectedPlayer firstName] : @"You"];
-		[self resetTableAndFetchedResultsController];
 	}
+	[self resetTableAndFetchedResultsController];
+	[self refreshPlayerHighlights];
+	[self refreshFavoriteButton];
 }
 
 - (void)setTabName:(NSString *)name {
@@ -196,13 +198,14 @@
 		[resetAlert show];
 	} else {
 		WBPlayer *me = [WBPlayer me];
+		WBPlayer *selected = self.selectedPlayer;
 		if (!me) {
-			[self.selectedPlayer setPlayerToMe];
-			[WBCoreDataManager saveMainContext];
+			[selected setPlayerToMe];
 			[(WBAppDelegate *)[UIApplication sharedApplication].delegate setProfileTabPlayer];
 		} else {
-			self.selectedPlayer.favoriteValue = !self.selectedPlayer.favoriteValue;
+			selected.favoriteValue = !selected.favoriteValue;
 		}
+		[WBCoreDataManager saveContext:selected.managedObjectContext];
 	}
 	
 	[self refreshFavoriteButton];

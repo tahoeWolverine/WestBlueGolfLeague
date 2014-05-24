@@ -58,8 +58,8 @@
 - (IBAction)refreshYear:(id)sender {
 	DLog(@"Refresh Year");
 
-	[(WBAppDelegate *)[UIApplication sharedApplication].delegate resetYearFromServer:[WBYear thisYear]];
-	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setProfileTabPlayer];
+	[[WBAppDelegate sharedDelegate] refreshThisYear];
+	[[WBAppDelegate sharedDelegate] setProfileTabPlayer];
 	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

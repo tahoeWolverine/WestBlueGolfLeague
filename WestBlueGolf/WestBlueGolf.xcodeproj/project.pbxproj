@@ -103,11 +103,16 @@
 		A53498EA18D1123600D52D84 /* WBTeamProfileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */; };
 		A53498ED18D2095600D52D84 /* WBYearSelectionDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */; };
 		A53498F018D20D1B00D52D84 /* WBYearSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */; };
+		A5692211192FC79100E18CC6 /* WBAvailableYearsService.m in Sources */ = {isa = PBXBuildFile; fileRef = A5692210192FC79100E18CC6 /* WBAvailableYearsService.m */; };
+		A5692214192FCAF600E18CC6 /* WBYearDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = A5692213192FCAF600E18CC6 /* WBYearDataService.m */; };
+		A5692217192FCC5E00E18CC6 /* WBDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5692216192FCC5E00E18CC6 /* WBDataManager.m */; };
 		A56F21A918CE0C0900BF5CEE /* WBLeaderBoardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */; };
 		A56F21AC18CE0CFA00BF5CEE /* WBInputDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */; };
 		A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */; };
 		A56F21B218CE625600BF5CEE /* WBManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A56F21B118CE625600BF5CEE /* WBManagedObject.m */; };
 		A58FD3591923EFEA00DB1609 /* TRInternalAppAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58FD3581923EFEA00DB1609 /* TRInternalAppAuth.framework */; };
+		A59B97D21926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A59B97D11926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.m */; };
+		A59B97D81926D832005842AB /* WBLeaderBoardParentDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A59B97D71926D832005842AB /* WBLeaderBoardParentDataSource.m */; };
 		A59BC3DD18C67710003B5350 /* matchTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D718C67710003B5350 /* matchTable2013.json */; };
 		A59BC3DF18C67710003B5350 /* playerTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3D918C67710003B5350 /* playerTable2013.json */; };
 		A59BC3E018C67710003B5350 /* resultsTable2013.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BC3DA18C67710003B5350 /* resultsTable2013.json */; };
@@ -307,12 +312,17 @@
 		A53498E518D10F1600D52D84 /* WBProfileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBProfileDataSource.h; sourceTree = "<group>"; };
 		A53498E618D10F1600D52D84 /* WBProfileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBProfileDataSource.m; sourceTree = "<group>"; };
 		A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTeamProfileDataSource.m; sourceTree = "<group>"; };
-		A53498E918D1123600D52D84 /* WBTeamProfileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileDataSource.h; sourceTree = "<group>"; };
 		A53498EB18D2095600D52D84 /* WBYearSelectionDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearSelectionDataSource.h; sourceTree = "<group>"; };
 		A53498EC18D2095600D52D84 /* WBYearSelectionDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionDataSource.m; sourceTree = "<group>"; };
 		A53498EE18D20D1B00D52D84 /* WBYearSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearSelectionViewController.h; sourceTree = "<group>"; };
 		A53498EF18D20D1B00D52D84 /* WBYearSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearSelectionViewController.m; sourceTree = "<group>"; };
 		A560544718EDB24300C7E357 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = WestBlueGolf/Frameworks/AFNetworking.framework; sourceTree = "<group>"; };
+		A569220F192FC79100E18CC6 /* WBAvailableYearsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBAvailableYearsService.h; sourceTree = "<group>"; };
+		A5692210192FC79100E18CC6 /* WBAvailableYearsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBAvailableYearsService.m; sourceTree = "<group>"; };
+		A5692212192FCAF600E18CC6 /* WBYearDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBYearDataService.h; sourceTree = "<group>"; };
+		A5692213192FCAF600E18CC6 /* WBYearDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBYearDataService.m; sourceTree = "<group>"; };
+		A5692215192FCC5E00E18CC6 /* WBDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBDataManager.h; sourceTree = "<group>"; };
+		A5692216192FCC5E00E18CC6 /* WBDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBDataManager.m; sourceTree = "<group>"; };
 		A56F21A718CE0C0900BF5CEE /* WBLeaderBoardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBLeaderBoardManager.h; path = WestBlueGolf/WBLeaderBoardManager.h; sourceTree = SOURCE_ROOT; };
 		A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBLeaderBoardManager.m; path = WestBlueGolf/WBLeaderBoardManager.m; sourceTree = SOURCE_ROOT; };
 		A56F21AA18CE0CFA00BF5CEE /* WBInputDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBInputDataManager.h; path = WestBlueGolf/WBInputDataManager.h; sourceTree = SOURCE_ROOT; };
@@ -322,6 +332,11 @@
 		A56F21B018CE625600BF5CEE /* WBManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBManagedObject.h; path = Model/WBManagedObject.h; sourceTree = "<group>"; };
 		A56F21B118CE625600BF5CEE /* WBManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBManagedObject.m; path = Model/WBManagedObject.m; sourceTree = "<group>"; };
 		A58FD3581923EFEA00DB1609 /* TRInternalAppAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TRInternalAppAuth.framework; path = WestBlueGolf/Frameworks/TRInternalAppAuth.framework; sourceTree = "<group>"; };
+		A59B97D01926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardFavoriteDataSource.h; sourceTree = "<group>"; };
+		A59B97D11926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardFavoriteDataSource.m; sourceTree = "<group>"; };
+		A59B97D61926D832005842AB /* WBLeaderBoardParentDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBLeaderBoardParentDataSource.h; sourceTree = "<group>"; };
+		A59B97D71926D832005842AB /* WBLeaderBoardParentDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBLeaderBoardParentDataSource.m; sourceTree = "<group>"; };
+		A59B97D91926D83E005842AB /* WBTeamProfileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTeamProfileDataSource.h; sourceTree = "<group>"; };
 		A59BC3D718C67710003B5350 /* matchTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = matchTable2013.json; sourceTree = "<group>"; };
 		A59BC3D918C67710003B5350 /* playerTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playerTable2013.json; sourceTree = "<group>"; };
 		A59BC3DA18C67710003B5350 /* resultsTable2013.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resultsTable2013.json; sourceTree = "<group>"; };
@@ -421,8 +436,12 @@
 			children = (
 				48B54E1518CBDA8800F97F8C /* WBLeaderBoardDataSource.h */,
 				48B54E1618CBDA8800F97F8C /* WBLeaderBoardDataSource.m */,
+				A59B97D01926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.h */,
+				A59B97D11926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.m */,
 				48B54E0F18CBD75700F97F8C /* WBLeaderBoardListDataSource.h */,
 				48B54E1018CBD75700F97F8C /* WBLeaderBoardListDataSource.m */,
+				A59B97D61926D832005842AB /* WBLeaderBoardParentDataSource.h */,
+				A59B97D71926D832005842AB /* WBLeaderBoardParentDataSource.m */,
 			);
 			name = DataSources;
 			sourceTree = "<group>";
@@ -638,7 +657,7 @@
 			children = (
 				48B2B1E9190DCDD6009F8F39 /* WBTeamPlayersDataSource.h */,
 				48B2B1EA190DCDD6009F8F39 /* WBTeamPlayersDataSource.m */,
-				A53498E918D1123600D52D84 /* WBTeamProfileDataSource.h */,
+				A59B97D91926D83E005842AB /* WBTeamProfileDataSource.h */,
 				A53498E818D1123600D52D84 /* WBTeamProfileDataSource.m */,
 				48B2B1EB190DCDD6009F8F39 /* WBTeamResultsDataSource.h */,
 				48B2B1EC190DCDD7009F8F39 /* WBTeamResultsDataSource.m */,
@@ -653,12 +672,18 @@
 			children = (
 				A5F344C418C7B63E00EBF40A /* html */,
 				A59BC3D518C67710003B5350 /* json */,
+				A569220F192FC79100E18CC6 /* WBAvailableYearsService.h */,
+				A5692210192FC79100E18CC6 /* WBAvailableYearsService.m */,
+				A5692215192FCC5E00E18CC6 /* WBDataManager.h */,
+				A5692216192FCC5E00E18CC6 /* WBDataManager.m */,
 				A56F21AD18CE0E1400BF5CEE /* WBHandicapManager.h */,
 				A56F21AE18CE0E1400BF5CEE /* WBHandicapManager.m */,
 				A56F21AA18CE0CFA00BF5CEE /* WBInputDataManager.h */,
 				A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */,
 				A56F21A718CE0C0900BF5CEE /* WBLeaderBoardManager.h */,
 				A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */,
+				A5692212192FCAF600E18CC6 /* WBYearDataService.h */,
+				A5692213192FCAF600E18CC6 /* WBYearDataService.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1080,6 +1105,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A59B97D21926D5DE005842AB /* WBLeaderBoardFavoriteDataSource.m in Sources */,
 				A5F3455018C9087A00EBF40A /* WBNotifications.m in Sources */,
 				A50E163818972418008933A5 /* WBCourse.m in Sources */,
 				A5F476EF1890769400AB3529 /* main.m in Sources */,
@@ -1096,6 +1122,7 @@
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
 				A5AAA57818D2389500AC2912 /* WBMultiFetchDataSource.m in Sources */,
 				480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */,
+				A5692211192FC79100E18CC6 /* WBAvailableYearsService.m in Sources */,
 				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
 				A50E162E18972418008933A5 /* _WBCourse.m in Sources */,
@@ -1105,6 +1132,7 @@
 				A5F3459718C928DC00EBF40A /* WBEntityDataSource.m in Sources */,
 				A5F344CF18C7CED300EBF40A /* WBInfoTableViewController.m in Sources */,
 				A5F345A218CA1C4500EBF40A /* WBMatchupResultCell.m in Sources */,
+				A5692214192FCAF600E18CC6 /* WBYearDataService.m in Sources */,
 				48B54E1718CBDA8800F97F8C /* WBLeaderBoardDataSource.m in Sources */,
 				A50E163318972418008933A5 /* _WBTeam.m in Sources */,
 				48B54E1E18CBE74100F97F8C /* _WBPeopleEntity.m in Sources */,
@@ -1112,6 +1140,7 @@
 				A50E163C18972418008933A5 /* WBResult.m in Sources */,
 				A50E163A18972418008933A5 /* WBPlayer.m in Sources */,
 				48B54DF918CBD59900F97F8C /* _WBTeamBoardData.m in Sources */,
+				A59B97D81926D832005842AB /* WBLeaderBoardParentDataSource.m in Sources */,
 				A50E164018972418008933A5 /* WBYear.m in Sources */,
 				48B54E0618CBD5B600F97F8C /* WBBoardData.m in Sources */,
 				48B54E1118CBD75700F97F8C /* WBLeaderBoardListDataSource.m in Sources */,
@@ -1122,6 +1151,7 @@
 				A5F344D218C7D06C00EBF40A /* WBInfoWebviewViewController.m in Sources */,
 				48B54DF718CBD59900F97F8C /* _WBPlayerBoardData.m in Sources */,
 				48B54E1418CBD9CD00F97F8C /* WBLeaderBoardTableViewController.m in Sources */,
+				A5692217192FCC5E00E18CC6 /* WBDataManager.m in Sources */,
 				A5F3459E18C92E8600EBF40A /* WBTeamsDataSource.m in Sources */,
 				48B54DF418CBD59900F97F8C /* _WBBoardData.m in Sources */,
 				A56F21AF18CE0E1400BF5CEE /* WBHandicapManager.m in Sources */,

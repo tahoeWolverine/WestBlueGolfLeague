@@ -7,8 +7,6 @@
 //
 
 #import "WBTeamProfileDataSource.h"
-#import "WBModels.h"
-#import "WBResultTableViewCell.h"
 #import "WBTeamPlayersDataSource.h"
 #import "WBTeamResultsDataSource.h"
 

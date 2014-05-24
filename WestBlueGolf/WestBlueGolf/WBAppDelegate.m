@@ -7,29 +7,43 @@
 //
 
 #import "WBAppDelegate.h"
-#import <AFNetworking/AFNetworking.h>
+#import <TRInternalAppAuth/TRInternalAppAuthService.h>
+#import "WBAvailableYearsService.h"
 #import "WBCoreDataManager.h"
+#import "WBDataManager.h"
 #import "WBHandicapManager.h"
 #import "WBInputDataManager.h"
 #import "WBLeaderBoardManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
+#import "WBYearDataService.h"
 
 @interface WBAppDelegate ()
 
-@property (assign, nonatomic) NSInteger yearSelection;
+@property (strong, nonatomic) WBDataManager *dataManager;
 
 @end
 
 @implementation WBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	//[self setupCoreData:NO];
+	// Start reachability testing (simply by accessing the shared reference)
+	//ConnectionStatusManager *connectManager = [ConnectionStatusManager sharedManager];
 	
+//#ifndef TR_SKIP_INTERNAL_APP_AUTH
+	//if ([connectManager isAbleToConnectToInternet]) {
+
+		// check to see if the use of the application has already been authorized
+		//if (![TRInternalAppAuthService isAuthorized]) {
+			//[self authorizeUserForInternalApp];
+		//}
+	//}
+//#endif
+
 	[self subscribeToNotifications];
 	
-	// Setup year (could be preference of some kind, but for now, newest)
+	/*// Setup year (could be preference of some kind, but for now, newest)
 	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
 	if (!year) {
 		self.loading = YES;
@@ -38,7 +52,9 @@
 		[self setupCoreData:YES];
 	}
 	
-	self.yearSelection = year.valueValue;
+	self.yearSelection = year.valueValue;*/
+	self.dataManager = [WBDataManager dataManager];
+	[self.dataManager setupData];
 	
 	// Fix iOS7.1 tint issue
 	[self.window setTintColor:kEmeraldColor];
@@ -56,21 +72,20 @@
 
 #pragma mark - Important properties
 
-- (NSInteger)thisYearValue {
-	return self.yearSelection;
++ (instancetype)sharedDelegate {
+	return (WBAppDelegate *)[UIApplication sharedApplication].delegate;
 }
 
-- (void)setThisYearValue:(NSInteger)value inContext:(NSManagedObjectContext *)moc {
-	if (value != 0 && value != self.yearSelection) {
-		self.yearSelection = value;
-		
-		WBYear *year = [WBYear thisYear];
-		if ([year needsRefresh]) {
-			[self resetYearFromServer:year];
-		} else {
-			[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
-		}
-	}
+- (NSInteger)thisYearValue {
+	return [self.dataManager thisYearValue];
+}
+
+- (void)changeYearToYear:(NSInteger)year {
+	[self.dataManager setThisYearValue:year inContext:[WBCoreDataManager mainContext]];
+}
+
+- (void)refreshThisYear {
+	[self.dataManager resetYearFromServer:[WBYear thisYear]];
 }
 
 - (void)setLoading:(BOOL)loading {
@@ -80,88 +95,9 @@
 	}
 }
 
-#pragma mark - Data calls
-
-- (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
-	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-	[inputManager clearRefreshableDataForYearValue:yearValue];
-	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
-	WBYear *year = [WBYear findYearWithValue:yearValue inContext:moc];
-	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicapsForYear:year moc:moc];
-	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoardsForYear:year moc:moc];
-	//[WBCoreDataManager saveContext:moc];
-}
-
-- (void)setupCoreData:(BOOL)reset {
-	if (reset) {
-		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
-	}
-	
-	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-	if (!year) {
-		DLog(@"Processing Started");
-		[self dummyYearsCall];
-	} else {
-		self.yearSelection = year.valueValue;
-	}
-}
-
-- (void)resetYearFromServer:(WBYear *)year {
-	[self dummyYearDataCallForYear:year];
-}
-
-- (void)resetYear:(WBYear *)year {
-	if (!year.weeks || year.weeks.count == 0) {
-		self.loading = YES;
-		DLog(@"Processing Started");
-		[self loadAndCalculateForYear:year.valueValue moc:year.managedObjectContext];
-		
-		self.loading = NO;
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
-}
-
-- (void)dummyYearsCall {
-	__block typeof(self) weakSelf = self;
-	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
-	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-	
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		DLog(@"Dummy years request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			// Background code
-			WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-			[inputManager createYearsInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-			[WBCoreDataManager saveMainContext];
-			
-			[weakSelf setThisYearValue:[WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]].valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-		}];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		DLog(@"Failed");
-	}];
-	[operation start];
-}
-
-- (void)dummyYearDataCallForYear:(WBYear *)year {
-	NSURL *url = [NSURL URLWithString:@"https://api.github.com/events"];
-	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-	
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		DLog(@"Dummy year data request Completed: %@", responseObject);
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self resetYear:year];
-		}];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		DLog(@"Failed");
-	}];
-	[operation start];
+- (void)resetAllData {
+	[self.dataManager setupCoreData:YES];
+	[self setProfileTabPlayer];
 }
 
 - (void)setProfileTabPlayer {
@@ -184,9 +120,23 @@
 	return NO;
 }
 
-- (NSManagedObjectContext *)managedObjectContext {
-	return [[WBCoreDataManager sharedManager] managedObjectContext];
+#pragma mark - TRInternalAppAuthService methods
+
+#ifndef TR_SKIP_INTERNAL_APP_AUTH
+- (void)authorizeUserForInternalApp {
+	// otherwise make the user authenticate
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internalAppAuthorizationWasSuccessful:) name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
+	[TRInternalAppAuthService authorizeUserModallyFromRootViewController:self.window.rootViewController animated:NO];
 }
+
+- (void)internalAppAuthorizationWasSuccessful:(NSNotification *)notification {
+	NSAssert([TRInternalAppAuthService isAuthorized], @"user should have been authorized");
+	
+	// remove the notifcation request and show the splash screen
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:TRInternalAppAuthorizationWasSuccessfulNotification object:nil];
+	//[self showSplashScreen];
+}
+#endif
 							
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -203,6 +153,11 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	[self subscribeToNotifications];
+	
+	BOOL auth = [TRInternalAppAuthService isAuthorized];
+	DLog(@"User is %@authorized for use", auth ? @"" : @"not ");
+	//[self.window.rootViewController dismissViewControllerAnimated:NO completion:^{}];
+	[self authorizeUserForInternalApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

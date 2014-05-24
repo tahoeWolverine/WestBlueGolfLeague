@@ -12,7 +12,7 @@
 #import "WBResultTableViewCell.h"
 #import "WBTeamProfileDataSource.h"
 
-#define SORT_KEY @"name"
+#define SORT_KEY @"player.name"
 #define SEGUE_IDENTIFIER @"WBTeamPlayerSegue"
 
 @implementation WBTeamPlayersDataSource
@@ -33,7 +33,7 @@
 }*/
 
 - (NSString *)entityName {
-	return @"WBPlayer";
+	return @"WBPlayerYearData";
 }
 
 - (BOOL)shouldExpand {
@@ -46,14 +46,14 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"team = %@ && ANY yearData.year = %@", [self selectedTeam], [WBYear thisYear]];
+	return [NSPredicate predicateWithFormat:@"team = %@ && year = %@", [self selectedTeam], [WBYear thisYear]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
-	WBPlayer *player = (WBPlayer *)object;
-    cell.textLabel.text = player.name;
-	cell.detailTextLabel.text = [player currentHandicapString];
+	WBPlayerYearData *data = (WBPlayerYearData *)object;
+    cell.textLabel.text = data.player.name;
+	cell.detailTextLabel.text = [data.player currentHandicapString];
 }
 
 - (NSString *)supportedSegueIdentifier {

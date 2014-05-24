@@ -7,12 +7,12 @@
 //
 
 #import "WBLeaderBoardTableViewController.h"
-#import "WBLeaderBoardDataSource.h"
+#import "WBLeaderBoardParentDataSource.h"
 #import "WBModels.h"
 
 @interface WBLeaderBoardTableViewController ()
 
-@property (strong, nonatomic) WBLeaderBoardDataSource *teamDataSource;
+@property (strong, nonatomic) WBLeaderBoardParentDataSource *boardDataSource;
 
 @end
 
@@ -21,22 +21,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.teamDataSource = [WBLeaderBoardDataSource dataSourceWithViewController:self];
+	self.boardDataSource = [WBLeaderBoardParentDataSource dataSourceWithViewController:self];
+	self.boardDataSource.selectedLeaderBoard = self.selectedLeaderboard;
 
-    self.tableView.dataSource = self.teamDataSource;
-	self.tableView.delegate = self.teamDataSource;
+    self.tableView.dataSource = self.boardDataSource;
+	self.tableView.delegate = self.boardDataSource;
 	
-	[self.teamDataSource beginFetch];
+	[self.boardDataSource beginFetch];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.navigationItem.title = self.selectedLeaderboard.name;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

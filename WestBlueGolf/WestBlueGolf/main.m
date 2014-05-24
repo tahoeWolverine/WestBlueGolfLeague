@@ -8,9 +8,8 @@
 
 #import "WBAppDelegate.h"
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	@autoreleasepool {
-	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([WBAppDelegate class]));
+		return UIApplicationMain(argc, argv, nil, NSStringFromClass([WBAppDelegate class]));
 	}
 }

@@ -8,11 +8,9 @@
 
 #import "WBMatchupResultDataSource.h"
 #import "WBAppDelegate.h"
-#import "WBCoreDataManager.h"
 #import "WBMatchupResultCell.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
-#import "WBProfileTableViewController.h"
 #import "WBWeekTableViewController.h"
 #import "V8HorizontalPickerView.h"
 

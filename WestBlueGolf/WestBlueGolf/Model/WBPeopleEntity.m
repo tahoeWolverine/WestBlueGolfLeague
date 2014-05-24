@@ -1,5 +1,4 @@
 #import "WBPeopleEntity.h"
-#import "WBCoreDataManager.h"
 
 #define LEAGUE_AVERAGE_NAME @"=League Average="
 

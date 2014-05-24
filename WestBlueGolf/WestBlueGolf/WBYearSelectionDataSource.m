@@ -69,7 +69,7 @@
 		[MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
 	}
 
-	[(WBAppDelegate *)[UIApplication sharedApplication].delegate setThisYearValue:year.valueValue inContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
+	[[WBAppDelegate sharedDelegate] changeYearToYear:year.valueValue];
 	[tableView reloadData];
 }
 

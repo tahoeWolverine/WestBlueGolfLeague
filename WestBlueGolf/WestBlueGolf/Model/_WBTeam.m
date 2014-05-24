@@ -9,7 +9,7 @@ const struct WBTeamAttributes WBTeamAttributes = {
 
 const struct WBTeamRelationships WBTeamRelationships = {
 	.matchups = @"matchups",
-	.players = @"players",
+	.playerYearData = @"playerYearData",
 	.results = @"results",
 };
 
@@ -93,15 +93,15 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 }
 	
 
-@dynamic players;
+@dynamic playerYearData;
 
 	
-- (NSMutableSet*)playersSet {
-	[self willAccessValueForKey:@"players"];
+- (NSMutableSet*)playerYearDataSet {
+	[self willAccessValueForKey:@"playerYearData"];
   
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"players"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"playerYearData"];
   
-	[self didAccessValueForKey:@"players"];
+	[self didAccessValueForKey:@"playerYearData"];
 	return result;
 }
 	

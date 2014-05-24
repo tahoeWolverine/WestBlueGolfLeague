@@ -12,6 +12,7 @@ extern const struct WBPlayerYearDataAttributes {
 
 extern const struct WBPlayerYearDataRelationships {
 	__unsafe_unretained NSString *player;
+	__unsafe_unretained NSString *team;
 	__unsafe_unretained NSString *year;
 } WBPlayerYearDataRelationships;
 
@@ -19,6 +20,7 @@ extern const struct WBPlayerYearDataFetchedProperties {
 } WBPlayerYearDataFetchedProperties;
 
 @class WBPlayer;
+@class WBTeam;
 @class WBYear;
 
 
@@ -87,6 +89,13 @@ extern const struct WBPlayerYearDataFetchedProperties {
 
 
 
+@property (nonatomic, strong) WBTeam *team;
+
+//- (BOOL)validateTeam:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) WBYear *year;
 
 //- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
@@ -134,6 +143,11 @@ extern const struct WBPlayerYearDataFetchedProperties {
 
 - (WBPlayer*)primitivePlayer;
 - (void)setPrimitivePlayer:(WBPlayer*)value;
+
+
+
+- (WBTeam*)primitiveTeam;
+- (void)setPrimitiveTeam:(WBTeam*)value;
 
 
 

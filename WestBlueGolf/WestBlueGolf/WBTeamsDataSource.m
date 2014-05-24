@@ -7,16 +7,15 @@
 //
 
 #import "WBTeamsDataSource.h"
-#import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
+#import "WBTeamProfileTableViewController.h"
 
 #define SORT_KEY @"name"
 #define SECTION_KEY @"me"
 
 @implementation WBTeamsDataSource
-
 
 - (id)initWithViewController:(UIViewController *)aViewController {
 	self = [super initWithViewController:aViewController];
@@ -80,6 +79,28 @@
 	}
 	
 	return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (self.viewController.splitViewController) {
+		UIViewController *vc = nil;
+		for (UINavigationController *nc in self.viewController.splitViewController.viewControllers) {
+			vc = [nc topViewController];
+			if (vc != self.viewController) {
+				if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
+					/*WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
+					[(WBProfileTableViewController *)vc setSelectedPlayer:player];*/
+					//WBTeamProfileTableViewController *vc = [[WBTeamProfileTableViewController alloc] init];
+					//[vc.navigationController setViewControllers:@[vc]];
+				} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
+					WBTeam *team = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
+					[(WBTeamProfileTableViewController *)vc setSelectedTeam:team];
+				}
+			}
+		}
+	}
+	
+	//[tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
 }
 
 @end

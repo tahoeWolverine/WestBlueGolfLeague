@@ -1,5 +1,4 @@
 #import "WBCourse.h"
-#import "WBCoreDataManager.h"
 
 @interface WBCourse ()
 

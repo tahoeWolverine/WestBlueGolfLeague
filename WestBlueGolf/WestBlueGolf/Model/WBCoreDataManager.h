@@ -22,6 +22,7 @@ export -f regenGolf
 + (void)saveMainContext;
 + (void)saveContext:(NSManagedObjectContext *)moc;
 
++ (NSManagedObjectContext *)mainContext;
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)resetCoreDataStack;
 

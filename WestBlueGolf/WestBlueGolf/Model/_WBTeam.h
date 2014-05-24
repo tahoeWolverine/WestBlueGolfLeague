@@ -10,7 +10,7 @@ extern const struct WBTeamAttributes {
 
 extern const struct WBTeamRelationships {
 	__unsafe_unretained NSString *matchups;
-	__unsafe_unretained NSString *players;
+	__unsafe_unretained NSString *playerYearData;
 	__unsafe_unretained NSString *results;
 } WBTeamRelationships;
 
@@ -18,7 +18,7 @@ extern const struct WBTeamFetchedProperties {
 } WBTeamFetchedProperties;
 
 @class WBTeamMatchup;
-@class WBPlayer;
+@class WBPlayerYearData;
 @class WBResult;
 
 
@@ -57,9 +57,9 @@ extern const struct WBTeamFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *players;
+@property (nonatomic, strong) NSSet *playerYearData;
 
-- (NSMutableSet*)playersSet;
+- (NSMutableSet*)playerYearDataSet;
 
 
 
@@ -81,10 +81,10 @@ extern const struct WBTeamFetchedProperties {
 - (void)addMatchupsObject:(WBTeamMatchup*)value_;
 - (void)removeMatchupsObject:(WBTeamMatchup*)value_;
 
-- (void)addPlayers:(NSSet*)value_;
-- (void)removePlayers:(NSSet*)value_;
-- (void)addPlayersObject:(WBPlayer*)value_;
-- (void)removePlayersObject:(WBPlayer*)value_;
+- (void)addPlayerYearData:(NSSet*)value_;
+- (void)removePlayerYearData:(NSSet*)value_;
+- (void)addPlayerYearDataObject:(WBPlayerYearData*)value_;
+- (void)removePlayerYearDataObject:(WBPlayerYearData*)value_;
 
 - (void)addResults:(NSSet*)value_;
 - (void)removeResults:(NSSet*)value_;
@@ -111,8 +111,8 @@ extern const struct WBTeamFetchedProperties {
 
 
 
-- (NSMutableSet*)primitivePlayers;
-- (void)setPrimitivePlayers:(NSMutableSet*)value;
+- (NSMutableSet*)primitivePlayerYearData;
+- (void)setPrimitivePlayerYearData:(NSMutableSet*)value;
 
 
 
