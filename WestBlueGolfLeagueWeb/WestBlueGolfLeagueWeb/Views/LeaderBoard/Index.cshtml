@@ -1,0 +1,10 @@
+﻿
+<h2>Leader Boards</h2>
+
+<div ng-app="leaderBoards">
+    <ng-include src="'/Scripts/leaderBoards/tpl/leaderBoards.tpl.html'" />
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/leaderBoards");
+}

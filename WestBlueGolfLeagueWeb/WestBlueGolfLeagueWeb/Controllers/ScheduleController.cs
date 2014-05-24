@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
-    public class InformationController : Controller
+    public class ScheduleController : Controller
     {
-        //
-        // GET: /Information/
-        public ActionResult RulesAndInformation()
+        // GET: Schedule
+        public ActionResult Index()
         {
             return View();
-        }        
-	}
+        }
+    }
 }
