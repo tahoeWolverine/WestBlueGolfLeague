@@ -65,7 +65,7 @@
 	WBProfileTableViewController *vc = [segue destinationViewController];
 	NSIndexPath *path = self.parentDataSource.tableView.indexPathForSelectedRow;
 	NSIndexPath *adjustedPath = [NSIndexPath indexPathForRow:path.row inSection:0];
-	vc.selectedPlayer = (WBPlayer *)[self.fetchedResultsController objectAtIndexPath:adjustedPath];
+	vc.selectedPlayer = [(WBPlayerYearData *)[self.fetchedResultsController objectAtIndexPath:adjustedPath] player];
 }
 
 @end
