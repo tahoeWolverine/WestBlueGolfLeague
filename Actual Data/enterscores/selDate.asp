@@ -38,7 +38,7 @@ Set Conn = Server.CreateObject("ADODB.Connection")
 'Conn.Open odbcName(strCurrentYear)
 connectstr = connectstr & odbcName(strCurrentYear) & ";"
 Conn.Open connectstr
-Set RS = Conn.Execute("SELECT Week, Par, Date FROM WeekTable")
+Set RS = Conn.Execute("SELECT Week, Par, Date FROM WeekTable ORDER By Week")
 %>
 <form name="pickweek" action="selMatch.asp" method="GET">
 <br><br>
