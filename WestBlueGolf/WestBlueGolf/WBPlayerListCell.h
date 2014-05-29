@@ -10,9 +10,10 @@
 
 @interface WBPlayerListCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UILabel *playerNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *teamNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UILabel *handicapLabel;
 
 - (void)configureCellForPlayer:(WBPlayer *)player;
 

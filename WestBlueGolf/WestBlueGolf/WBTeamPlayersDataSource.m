@@ -8,6 +8,7 @@
 
 #import "WBTeamPlayersDataSource.h"
 #import "WBModels.h"
+#import "WBPlayerListCell.h"
 #import "WBProfileTableViewController.h"
 #import "WBResultTableViewCell.h"
 #import "WBTeamProfileDataSource.h"
@@ -23,7 +24,7 @@
 }
 
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
-	static NSString *CellIdentifier = @"TeamCell";
+	static NSString *CellIdentifier = @"PlayerListCell";
 	return CellIdentifier;
 }
 
@@ -52,8 +53,9 @@
 - (void)configureCell:(UITableViewCell *)cell
 		   withObject:(NSManagedObject *)object {
 	WBPlayerYearData *data = (WBPlayerYearData *)object;
-    cell.textLabel.text = data.player.name;
-	cell.detailTextLabel.text = [data.player currentHandicapString];
+	[(WBPlayerListCell *)cell configureCellForPlayer:data.player];
+    //cell.textLabel.text = data.player.name;
+	//cell.detailTextLabel.text = [data.player currentHandicapString];
 }
 
 - (NSString *)supportedSegueIdentifier {
