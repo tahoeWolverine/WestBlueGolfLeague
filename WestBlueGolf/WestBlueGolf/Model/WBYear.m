@@ -9,18 +9,25 @@
 
 @implementation WBYear
 
-+ (WBYear *)createYearWithValue:(NSInteger)year
++ (WBYear *)createYearWithYearId:(NSInteger)yearId
+						   value:(NSInteger)year
+					 isComplete:(BOOL)isComplete
 					  inContext:(NSManagedObjectContext *)moc {
 	WBYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
+	if (year == 0) {
+		NSLog(@"wat");
+	}
 	newYear.valueValue = year;
 	return newYear;
 }
 
-+ (WBYear *)yearWithValue:(NSInteger)year
++ (WBYear *)yearWithYearId:(NSInteger)yearId
+					 value:(NSInteger)year
+			   isComplete:(BOOL)isComplete
 				inContext:(NSManagedObjectContext *)moc {
 	WBYear *aYear = [WBYear findYearWithValue:year inContext:moc];
 	if (!aYear) {
-		aYear = [WBYear createYearWithValue:year inContext:moc];
+		aYear = [WBYear createYearWithYearId:yearId value:year isComplete:isComplete inContext:moc];
 	}
 	return aYear;
 }

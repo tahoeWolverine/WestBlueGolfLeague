@@ -7,20 +7,26 @@
 @implementation WBCourse
 
 + (WBCourse *)createCourseWithName:(NSString *)name
+						  courseId:(NSInteger)courseId
 							   par:(NSInteger)par
 						 inContext:(NSManagedObjectContext *)moc {
 	WBCourse *newCourse = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
+	newCourse.idValue = courseId;
 	newCourse.name = name;
 	newCourse.parValue = par;
 	return newCourse;
 }
 
-+ (WBCourse *)courseWithName:(NSString *)name par:(NSInteger)par inContext:(NSManagedObjectContext *)moc {
++ (WBCourse *)courseWithName:(NSString *)name courseId:(NSInteger)courseId par:(NSInteger)par inContext:(NSManagedObjectContext *)moc {
 	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithFormat:@"name = %@", name];
 	if (!course) {
-		course = [WBCourse createCourseWithName:name par:par inContext:moc];
+		course = [WBCourse createCourseWithName:name courseId:courseId par:par inContext:moc];
 	}
 	return course;
+}
+
++ (WBCourse *)courseWithId:(NSInteger)courseId {
+	return (WBCourse *)[WBCourse findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:courseId]];
 }
 
 - (NSString *)shortName {

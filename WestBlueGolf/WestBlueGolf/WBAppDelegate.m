@@ -154,10 +154,10 @@
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	[self subscribeToNotifications];
 	
-	BOOL auth = [TRInternalAppAuthService isAuthorized];
-	DLog(@"User is %@authorized for use", auth ? @"" : @"not ");
+	//BOOL auth = [TRInternalAppAuthService isAuthorized];
+	//DLog(@"User is %@authorized for use", auth ? @"" : @"not ");
 	//[self.window.rootViewController dismissViewControllerAnimated:NO completion:^{}];
-	[self authorizeUserForInternalApp];
+	//[self authorizeUserForInternalApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

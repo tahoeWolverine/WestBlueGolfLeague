@@ -12,6 +12,7 @@
         </userInfo>
     </entity>
     <entity name="WBCourse" representedClassName="WBCourse" syncable="YES">
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="par" attributeType="Integer 16" minValueString="0" defaultValueString="36" syncable="YES"/>
         <relationship name="weeks" toMany="YES" deletionRule="Nullify" destinationEntity="WBWeek" inverseName="course" inverseEntity="WBWeek" syncable="YES"/>
@@ -115,7 +116,7 @@
     </entity>
     <elements>
         <element name="WBBoardData" positionX="153" positionY="72" width="128" height="133"/>
-        <element name="WBCourse" positionX="-317" positionY="-171" width="128" height="88"/>
+        <element name="WBCourse" positionX="-317" positionY="-171" width="128" height="103"/>
         <element name="WBLeaderBoard" positionX="153" positionY="215" width="128" height="118"/>
         <element name="WBMatch" positionX="7" positionY="-277" width="128" height="88"/>
         <element name="WBPeopleEntity" positionX="153" positionY="-27" width="128" height="118"/>

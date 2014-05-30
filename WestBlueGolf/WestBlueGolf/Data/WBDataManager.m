@@ -64,15 +64,16 @@
 
 #pragma mark - Data calls
 
-- (void)loadAndCalculateForYear:(NSInteger)yearValue moc:(NSManagedObjectContext *)moc {
+- (void)loadAndCalculateForYear:(NSInteger)yearValue withJson:(NSDictionary *)responseObject {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 	[inputManager clearRefreshableDataForYearValue:yearValue];
-	[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
-	WBYear *year = [WBYear findYearWithValue:yearValue inContext:moc];
+	//[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
+	[inputManager createObjectsForYear:yearValue withJson:responseObject];
+	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[WBCoreDataManager mainContext]];
 	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicapsForYear:year moc:moc];
+	[handiManager calculateHandicapsForYear:year moc:[WBCoreDataManager mainContext]];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoardsForYear:year moc:moc];
+	[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
 	//[WBCoreDataManager saveContext:moc];
 }
 
@@ -85,10 +86,10 @@
 	if (!year) {
 		DLog(@"Processing Started");
 		__block typeof(self) weakSelf = self;
-		[WBAvailableYearsService requestAvailableYearsAndPopulate:^(BOOL success) {
+		[WBAvailableYearsService requestAvailableYearsAndPopulate:^(BOOL success, id responseObject) {
 			if (success) {
 				WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
-				[inputManager createYearsInContext:[WBCoreDataManager mainContext]];
+				[inputManager createYearsWithJson:responseObject];
 				[WBCoreDataManager saveMainContext];
 				
 				[weakSelf setThisYearValue:[WBYear newestYearInContext:[WBCoreDataManager mainContext]].valueValue inContext:[WBCoreDataManager mainContext]];
@@ -100,18 +101,18 @@
 }
 
 - (void)resetYearFromServer:(WBYear *)year {
-	[WBYearDataService requestYearDataAndPopulateForYear:year.valueValue completionBlock:^(BOOL success) {
+	[WBYearDataService requestYearDataAndPopulateForYear:year.valueValue completionBlock:^(BOOL success, id responseObject) {
 		if (success) {
-			[self resetYear:year];
+			[self resetYear:year withJson:responseObject];
 		}
 	}];
 }
 
-- (void)resetYear:(WBYear *)year {
+- (void)resetYear:(WBYear *)year withJson:(NSDictionary *)responseObject {
 	if (!year.weeks || year.weeks.count == 0) {
 		[[WBAppDelegate sharedDelegate] setLoading:YES];
 		DLog(@"Processing Started");
-		[self loadAndCalculateForYear:year.valueValue moc:year.managedObjectContext];
+		[self loadAndCalculateForYear:year.valueValue withJson:responseObject];
 
 		[[WBAppDelegate sharedDelegate] setLoading:NO];
 	}

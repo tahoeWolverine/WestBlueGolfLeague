@@ -2,10 +2,14 @@
 
 @interface WBYear : _WBYear {}
 
-+ (WBYear *)createYearWithValue:(NSInteger)year
++ (WBYear *)createYearWithYearId:(NSInteger)yearId
+						   value:(NSInteger)year
+					 isComplete:(BOOL)isComplete
 					  inContext:(NSManagedObjectContext *)moc;
 
-+ (WBYear *)yearWithValue:(NSInteger)year
++ (WBYear *)yearWithYearId:(NSInteger)yearId
+					 value:(NSInteger)year
+			   isComplete:(BOOL)isComplete
 				inContext:(NSManagedObjectContext *)moc;
 
 // Calls out to AppDelegate who owns the year selection

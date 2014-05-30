@@ -8,6 +8,6 @@
 
 @interface WBAvailableYearsService : NSObject
 
-+ (void)requestAvailableYearsAndPopulate:(void (^) (BOOL))completionBlock;
++ (void)requestAvailableYearsAndPopulate:(void (^) (BOOL, id))completionBlock;
 
 @end

@@ -8,6 +8,6 @@
 
 @interface WBYearDataService : NSObject
 
-+ (void)requestYearDataAndPopulateForYear:(NSInteger)year completionBlock:(void (^) (BOOL))completionBlock;
++ (void)requestYearDataAndPopulateForYear:(NSInteger)year completionBlock:(void (^) (BOOL, id))completionBlock;
 
 @end

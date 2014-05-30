@@ -11,7 +11,7 @@
 
 @implementation WBYearDataService
 
-+ (void)requestYearDataAndPopulateForYear:(NSInteger)year completionBlock:(void (^) (BOOL))completionBlock {
++ (void)requestYearDataAndPopulateForYear:(NSInteger)year completionBlock:(void (^) (BOOL, id))completionBlock {
 	NSURL *url = [NSURL URLWithString:@"http://westblue.digitalzebra.net/api/v1/data/2014"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -20,11 +20,11 @@
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		DLog(@"Dummy year data request Completed: %@", responseObject);
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			completionBlock(YES);
+			completionBlock(YES, responseObject);
 		}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		DLog(@"Failed");
-		completionBlock(NO);
+		completionBlock(NO, nil);
 	}];
 	[operation start];
 }
