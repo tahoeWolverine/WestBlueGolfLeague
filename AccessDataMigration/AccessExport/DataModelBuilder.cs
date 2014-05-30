@@ -515,7 +515,8 @@ namespace AccessExport
 
         private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
-            var week0Score = yearData.StartingHandicap;
+            var week0Score = yearData.Week0Score;
+            var isRookie = yearData.Rookie;
 
             int scoreIndex = 4;
 

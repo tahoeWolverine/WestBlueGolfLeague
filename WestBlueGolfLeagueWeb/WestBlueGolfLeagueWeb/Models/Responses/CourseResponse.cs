@@ -12,7 +12,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         {
             return new CourseResponse 
             {
-                Address = c.address,
                 Par = c.par,
                 Name = c.name,
                 Id = c.id,
@@ -24,7 +23,5 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public string Name { get; set; }
 
         public int Par { get; set; }
-
-        public string Address { get; set; }
     }
 }

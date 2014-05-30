@@ -33,6 +33,39 @@ namespace AccessExport
 
         static void Main(string[] args)
         {
+            #region temp handicap code
+            /*{
+                ScoreResult week0Score = new ScoreResult(47, 36, 0);
+                bool isRookie = true;
+                List<ScoreResult> scores = new List<ScoreResult> { new ScoreResult(53, 37, 2), new ScoreResult(49, 36, 5), new ScoreResult(47, 37, 6), new ScoreResult(45, 36, 15) };
+                DoHandicapForPlayer("Mike Tierney", 2013, week0Score, isRookie, scores);
+            }
+
+            {
+                ScoreResult week0Score = new ScoreResult(56, 36, 0);
+                bool isRookie = true;
+                List<ScoreResult> scores = new List<ScoreResult> { new ScoreResult(77, 36, 1), new ScoreResult(76, 37, 2) };
+                DoHandicapForPlayer("Ted Gonyeau", 2014, week0Score, isRookie, scores);
+            }
+
+
+            {
+                // iver fundaun
+                ScoreResult week0Score = new ScoreResult(43, 36, 0);
+                bool isRookie = false;
+                List<ScoreResult> scores = new List<ScoreResult>();
+                DoHandicapForPlayer("Iver Fundaun", 2014, week0Score, isRookie, scores);
+            }
+
+            // scott hanson
+            {
+                ScoreResult week0Score = new ScoreResult(39, 36, 0);
+                bool isRookie = false;
+                List<ScoreResult> scores = new List<ScoreResult> { new ScoreResult(40, 36, 1), new ScoreResult(41, 37, 2) };
+                DoHandicapForPlayer("scott hanson", 2014, week0Score, isRookie, scores);
+            }*/
+            #endregion
+
             try
             {
                 string ftpHost = string.Empty;
@@ -130,6 +163,95 @@ namespace AccessExport
             {
                 mysqlGenerator.DoInsert(connectionString, dataModel);
             });
+        }
+
+
+        // TODO: BEGIN TEMP HANDICAP CODE WHICH IS BEING TESTED
+        private class ScoreResult
+        {
+            public ScoreResult(int score, int par, int week)
+            {
+                this.Score = score;
+                this.Par = par;
+                this.Week = week;
+            }
+
+            public int Score { get; set; }
+            public int Par { get; set; }
+            public int Week { get; set; }
+        }
+
+        private static int CalcHandicapFromScores(int scoreTotal, int scoreCount)
+        {
+            double averageScoreAbovePar = ((double)scoreTotal / (double)scoreCount);
+            double remainder = averageScoreAbovePar - (scoreTotal / scoreCount);
+
+            return Math.Min((int)(averageScoreAbovePar + (remainder >= .5 ? 1 : 0)), 20);
+        }
+
+
+        private static void DoHandicapForPlayer(string playerName, int year, ScoreResult week0Score, bool isRookie, IEnumerable<ScoreResult> scores)
+        {
+            Console.WriteLine(playerName + " " + year);
+
+            LinkedList<ScoreResult> copiedScores = new LinkedList<ScoreResult>(scores);
+
+            int numberOfWeekZeroesToAdd = 1;
+
+            if (!isRookie)
+            {
+                numberOfWeekZeroesToAdd = copiedScores.Count == 4 ? 1 : 4 - copiedScores.Count;
+            }
+
+            for (int i = 0; i < numberOfWeekZeroesToAdd; i++)
+            {
+                copiedScores.AddLast(new ScoreResult(week0Score.Score, 36, 0));
+            }
+
+            if (copiedScores.Count >= 5)
+            {
+                var lastFiveScores = copiedScores.Skip(copiedScores.Count - 5);
+
+                int max = 0,
+                    handicapSum = 0,
+                    weekWithMax = 0;
+
+                LinkedList<int> weeksUsed = new LinkedList<int>();
+
+                foreach (var score in lastFiveScores)
+                {
+                    var handicapSplit = Math.Min(score.Score - score.Par, 20);
+
+                    if (handicapSplit > max)
+                    {
+                        max = handicapSplit;
+                        weekWithMax = score.Week;
+                    }
+
+                    weeksUsed.AddLast(score.Week);
+                    handicapSum += handicapSplit;
+                }
+
+                weeksUsed.Remove(weekWithMax);
+
+                Console.WriteLine(string.Join(",", weeksUsed));
+                Console.WriteLine(CalcHandicapFromScores(handicapSum - max, 4));
+            }
+            else
+            {
+                LinkedList<int> weeksUsed = new LinkedList<int>();
+
+                int sum = 0;
+
+                foreach (var score in copiedScores)
+                {
+                    weeksUsed.AddLast(score.Week);
+                    sum += Math.Min(score.Score - score.Par, 20);
+                }
+
+                Console.WriteLine(string.Join(",", weeksUsed));
+                Console.WriteLine(CalcHandicapFromScores(sum, copiedScores.Count));
+            }
         }
     }
 }
