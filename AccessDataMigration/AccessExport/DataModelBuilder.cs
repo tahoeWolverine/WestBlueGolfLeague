@@ -61,9 +61,10 @@ namespace AccessExport
             // Add fake team and fake players (these will be used later)
             var teamOfLostPlayers = new Team { Id = teamIndex++, Name = "Dummy Team", ValidTeam = false };
 
-            var noShowPlayer = new Player(playerIndex++) { Name = "No Show", CurrentHandicap = 0, ValidPlayer = false, Team = teamOfLostPlayers };
+            var noShowPlayer = new Player(playerIndex++) { Name = "No Show", CurrentHandicap = 0, ValidPlayer = false };
             namesToPlayers[noShowPlayer.Name] = noShowPlayer;
-            var nonLeagueSub = new Player(playerIndex++) { Name = "Non-League Sub", CurrentHandicap = 0, ValidPlayer = false, Team = teamOfLostPlayers };
+
+            var nonLeagueSub = new Player(playerIndex++) { Name = "Non-League Sub", CurrentHandicap = 0, ValidPlayer = false };
             namesToPlayers[nonLeagueSub.Name] = nonLeagueSub;
 
             for (int year = 1999; year < lastYear; year++)
@@ -85,6 +86,19 @@ namespace AccessExport
                     var newYear = new Year { Id = yearIndex++, Value = year, Complete = year == DateTime.Now.Year ? false : true };
                     yearIdToYear[newYear.Id] = newYear;
                     yearValueToYear[year] = newYear;
+
+                    // add year data for both no show and non-league sub
+                    {
+                        var noShowPlayerYd = new YearData { FinishingHandicap = 20, Id = yearDataIndex++, Player = noShowPlayer, StartingHandicap = 20, Rookie = false, Team = teamOfLostPlayers, Week0Score = 99, Year = newYear };
+                        yearDatas.Add(noShowPlayerYd);
+                        noShowPlayer.AddYearData(noShowPlayerYd);
+                    }
+
+                    {
+                        var nonLeagueSubYd = new YearData { FinishingHandicap = 20, Id = yearDataIndex++, Player = nonLeagueSub, StartingHandicap = 20, Rookie = false, Team = teamOfLostPlayers, Week0Score = 99, Year = newYear };
+                        yearDatas.Add(nonLeagueSubYd);
+                        nonLeagueSub.AddYearData(nonLeagueSubYd);
+                    }
 
                     // Data migration
                     DateTime migrationDate = DateTime.UtcNow;
@@ -217,9 +231,9 @@ namespace AccessExport
                                 setOfPlayers.Add(playerName);
                             }
 
-                            // Note that because we iterate over the years in chronological order,
-                            // the last team associated with the player will be their current team.
-                            player.Team = teamIdToTeam[playersTeam];
+                           
+                            // TODO: Needs to be something else
+                            //player.Team = teamIdToTeam[playersTeam];
 
                             // For years after 2009, current handicap will be updated when processing results.
                             player.CurrentHandicap = startingHandicap;
@@ -325,7 +339,10 @@ namespace AccessExport
                                         throw new InvalidOperationException("invalid player found in year not 2011: " + player1Name);
                                     }
 
-                                    invalidPlayer = new Player(playerIndex++) { Name = player1Name, Team = teamOfLostPlayers, ValidPlayer = false, CurrentHandicap = 0 };
+                                    invalidPlayer = new Player(playerIndex++) { Name = player1Name, ValidPlayer = false, CurrentHandicap = 0 };
+                                    var invalidPlayerYd = new YearData { Year = newYear, Week0Score = 99, StartingHandicap = 20, FinishingHandicap = 20, Id = yearDataIndex++, Team = teamOfLostPlayers, Rookie = false, Player = invalidPlayer };
+                                    invalidPlayer.AddYearData(invalidPlayerYd);
+                                    yearDatas.Add(invalidPlayerYd);
                                     extraInvalidPlayers.Add(invalidPlayer);
                                 }
 
@@ -344,7 +361,10 @@ namespace AccessExport
                                         throw new InvalidOperationException("invalid player found in year not 2011: " + player2Name);
                                     }
 
-                                    invalidPlayer = new Player(playerIndex++) { Name = player2Name, Team = teamOfLostPlayers, ValidPlayer = false, CurrentHandicap = 0 };
+                                    invalidPlayer = new Player(playerIndex++) { Name = player2Name, ValidPlayer = false, CurrentHandicap = 0 };
+                                    var invalidPlayerYd = new YearData { Year = newYear, Week0Score = 99, StartingHandicap = 20, FinishingHandicap = 20, Id = yearDataIndex++, Team = teamOfLostPlayers, Rookie = false, Player = invalidPlayer };
+                                    invalidPlayer.AddYearData(invalidPlayerYd);
+                                    yearDatas.Add(invalidPlayerYd);
                                     extraInvalidPlayers.Add(invalidPlayer);
                                 }
 

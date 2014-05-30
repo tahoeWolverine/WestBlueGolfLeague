@@ -51,10 +51,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
             return Ok(dby);
         }
 
-        [ResponseType(typeof(List<YearResponse>))]
+        [ResponseType(typeof(AvailableYearsResponse))]
         public IHttpActionResult GetAvailableYears()
         {
-            return Ok(db.years.ToList().Select(x => YearResponse.From(x)));
+            return Ok(new AvailableYearsResponse { AvailableYears = db.years.ToList().Select(x => YearResponse.From(x)).ToList() });
         }
 
         protected override void Dispose(bool disposing)

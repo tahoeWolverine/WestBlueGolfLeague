@@ -24,25 +24,6 @@ namespace AccessExport
 
         public int Id { get { return this.id; } }
 
-        public Team Team
-        {
-            get { return this.team; }
-            set
-            {
-                if (this.team != null)
-                {
-                    if (value.Id != this.team.Id) 
-                    {
-                        // TODO: Anything special to do with switched teams??
-                        //Console.WriteLine("Switched team: " + this.Name);
-                    }
-
-                    this.team.RemovePlayer(this);
-                }
-
-                value.AddPlayer(this); this.team = value;
-            }
-        }
         public string Name { get; set; }
         public int CurrentHandicap { get; set; }
         public bool ValidPlayer { get; set; }
