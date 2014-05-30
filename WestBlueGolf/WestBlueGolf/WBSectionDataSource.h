@@ -17,6 +17,8 @@
 + (WBSectionDataSource *)dataSourceWithParentDataSource:(WBMultiFetchDataSource *)parentDataSource;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 
+- (NSInteger)section;
+
 - (void)beginFetch;
 
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object;

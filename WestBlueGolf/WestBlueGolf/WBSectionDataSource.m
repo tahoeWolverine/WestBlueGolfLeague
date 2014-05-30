@@ -36,6 +36,17 @@
 	return self;
 }
 
+- (NSInteger)section {
+	NSInteger i = 0;
+	for (WBSectionDataSource *ds in self.parentDataSource.sectionDataSources) {
+		if (ds == self) {
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}
+
 - (void)beginFetch {
 	NSError *error = nil;
 	if (![[self fetchedResultsController] performFetch:&error]) {
@@ -121,7 +132,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// Deselect cell
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	[tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:[self section]] animated:YES];
 	
 	// Toggle 'selected' state
 	if ([self shouldExpand]) {
@@ -129,6 +140,8 @@
 		
 		// Store cell 'selected' state keyed on indexPath
 		NSNumber *selected = [NSNumber numberWithBool:isSelected];
+		
+		// Hack: create a new index path to make sure that different run-time objects don't get in the way
 		[self.selectedIndexes setObject:selected forKey:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
 		
 		// This is where magic happens...
