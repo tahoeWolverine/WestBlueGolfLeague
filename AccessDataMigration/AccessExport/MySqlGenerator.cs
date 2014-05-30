@@ -298,7 +298,7 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("teamMatchup")
-                .WithColumns("id", "status", "weekId", "matchComplete", "matchId")
+                .WithColumns("id", "playoffType", "weekId", "matchComplete", "matchId")
                 .WithValues(tm.Id, string.Empty, tm.Week.Id, tm.MatchComplete, tm.MatchId)
                 .ToString();
         }
@@ -316,8 +316,8 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("course")
-                .WithColumns("id", "name", "par", "address")
-                .WithValues(c.Id, c.Name, c.Par, string.Empty)
+                .WithColumns("id", "name", "par", "street", "state", "zip")
+                .WithValues(c.Id, c.Name, c.Par, c.Street, c.State, c.Zip)
                 .ToString();
         }
 
@@ -334,8 +334,8 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("player")
-                .WithColumns("id", "name", "currentHandicap", "favorite", "teamId", "validPlayer")
-                .WithValues(player.Id, player.Name, player.CurrentHandicap, false, player.Team.Id, player.ValidPlayer)
+                .WithColumns("id", "name", "currentHandicap", "favorite", "validPlayer")
+                .WithValues(player.Id, player.Name, player.CurrentHandicap, false, player.ValidPlayer)
                 .ToString();
         }
 

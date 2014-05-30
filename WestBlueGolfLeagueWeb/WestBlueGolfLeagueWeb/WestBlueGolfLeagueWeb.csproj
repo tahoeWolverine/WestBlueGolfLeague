@@ -229,6 +229,7 @@
     <Compile Include="Models\Entities\week.cs" />
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
+    <Compile Include="Models\Responses\AvailableYearsResponse.cs" />
     <Compile Include="Models\Responses\CourseResponse.cs" />
     <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />

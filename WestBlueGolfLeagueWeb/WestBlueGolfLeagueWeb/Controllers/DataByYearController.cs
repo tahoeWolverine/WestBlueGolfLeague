@@ -29,11 +29,12 @@ namespace WestBlueGolfLeagueWeb.Controllers
             // TODO: Invalid players might need to be added to this (no shows, etc)
             var yearDataWithPlayerForYear = db.playeryeardatas.Include(p => p.player).AsNoTracking().Where(x => x.year.value == year).ToList();
 
+            var weeksForYear = db.weeks.Where(w => w.year.value == year).Include(w => w.course).AsNoTracking().ToList();
+
             var teamsForYear = db.teams.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
             var leaderboards = db.leaderboards.AsNoTracking().ToList();
             var leaderBoardDataForYear = db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
-            var courses = db.courses.AsNoTracking().ToList();
-            var weeks = db.weeks.AsNoTracking().Where(w => w.year.value == year).ToList();
+            var courses = weeksForYear.Select(w => w.course).GroupBy(c => c.id).Select(g => g.First());
             var teamMatchupsForYear = db.teammatchups.Include(x => x.matchups).Include("matchups.results").Where(x => x.week.year.value == year).ToList();
 
             var dby = new DataByYear
@@ -44,16 +45,16 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList(),
                 Courses = courses.Select(x => CourseResponse.From(x)).ToList(),
-                Weeks = weeks.Select(x => WeekResponse.From(x)).ToList()
+                Weeks = weeksForYear.Select(x => WeekResponse.From(x)).ToList()
             };
 
             return Ok(dby);
         }
 
-        [ResponseType(typeof(List<YearResponse>))]
+        [ResponseType(typeof(AvailableYearsResponse))]
         public IHttpActionResult GetAvailableYears()
         {
-            return Ok(db.years.ToList().Select(x => YearResponse.From(x)));
+            return Ok(new AvailableYearsResponse { AvailableYears = db.years.ToList().Select(x => YearResponse.From(x)).ToList() });
         }
 
         protected override void Dispose(bool disposing)

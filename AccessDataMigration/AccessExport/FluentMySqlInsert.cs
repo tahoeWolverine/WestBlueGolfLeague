@@ -22,9 +22,13 @@ namespace AccessExport
 
             foreach (object obj in vals)
             {
-                var type = obj.GetType();
+                var type = obj == null ? null : obj.GetType();
 
-                if (type == typeof(string))
+                if (type == null)
+                {
+                    sb.Append("NULL");
+                }
+                else if (type == typeof(string))
                 {
                     sb.Append("'");
                     sb.Append(this.GetSafeStr((string)obj));
