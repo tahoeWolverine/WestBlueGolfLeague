@@ -107,6 +107,7 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="FluentMySqlInsert.cs" />
     <Compile Include="FtpUtil.cs" />
+    <Compile Include="HandicapResult.cs" />
     <Compile Include="Hasher.cs" />
     <Compile Include="MySqlGenerator.cs" />
     <Compile Include="NullableValue.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Entities\Week.cs" />
     <Compile Include="Entities\Year.cs" />
     <Compile Include="Entities\YearData.cs" />
+    <Compile Include="ScoreResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

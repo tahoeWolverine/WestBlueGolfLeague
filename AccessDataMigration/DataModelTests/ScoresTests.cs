@@ -67,10 +67,12 @@ namespace DataModelTests
         [TestMethod]
         public void BestNetScoreShouldBeThreeWayTie2013()
         {
+            var orderedData = this.bestNetScoreLbd2013.OrderBy(x => x.Rank).ToList();
             var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 1);
 
             netScoreData.First().Value.ShouldEqual(-8);
             netScoreData.Count().ShouldEqual(3);
+            orderedData.Count().ShouldBeGreaterThan(0);
         }
 
         [TestMethod]
