@@ -65,23 +65,30 @@ namespace DataModelTests
         }
 
         [TestMethod]
-        public void BestNetScoreShouldBeThreeWayTie2013()
+        public void BestNetScoreShouldBeNegative102013()
         {
             var orderedData = this.bestNetScoreLbd2013.OrderBy(x => x.Rank).ToList();
             var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 1);
 
-            netScoreData.First().Value.ShouldEqual(-8);
-            netScoreData.Count().ShouldEqual(3);
+            netScoreData.First().Value.ShouldEqual(-10);
+            netScoreData.Count().ShouldEqual(1);
             orderedData.Count().ShouldBeGreaterThan(0);
         }
 
         [TestMethod]
-        public void SecondBestNetScore2013ShouldHaveRank4()
+        public void SecondBestNetScore2013ShouldHaveRank2()
         {
-            var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 4);
+            var netScoreData = this.bestNetScoreLbd2013.Where(x => x.Rank == 2);
 
-            netScoreData.Count().ShouldEqual(7);
-            netScoreData.First().Value.ShouldEqual(-7);
+            netScoreData.Count().ShouldEqual(4);
+        }
+
+        public void ThirdBestNetScore2013ShouldHaveRank6()
+        {
+            var rank6Data = this.bestNetScoreLbd2013.Where(x => x.Rank == 6);
+
+            rank6Data.Count().ShouldEqual(6);
+            rank6Data.First().Value.ShouldEqual(-7);
         }
     }
 }

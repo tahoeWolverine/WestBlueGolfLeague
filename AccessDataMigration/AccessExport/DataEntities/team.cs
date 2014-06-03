@@ -1,4 +1,4 @@
-namespace WestBlueGolfLeagueWeb.Models.Entities
+namespace AccessExport.DataEntities
 {
     using System;
     using System.Collections.Generic;
@@ -6,28 +6,24 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("westbluegolf.player")]
-    public partial class player
+    [Table("westbluegolf.team")]
+    public partial class team
     {
-        public player()
+        public team()
         {
             leaderboarddatas = new HashSet<leaderboarddata>();
             playeryeardatas = new HashSet<playeryeardata>();
             results = new HashSet<result>();
-            matchups = new HashSet<matchup>();
+            teammatchups = new HashSet<teammatchup>();
         }
 
         public int id { get; set; }
 
         [Required]
         [StringLength(120)]
-        public string name { get; set; }
+        public string teamName { get; set; }
 
-        public int currentHandicap { get; set; }
-
-        public bool favorite { get; set; }
-
-        public bool validPlayer { get; set; }
+        public bool validTeam { get; set; }
 
         public DateTime? modifiedDate { get; set; }
 
@@ -37,6 +33,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public virtual ICollection<result> results { get; set; }
 
-        public virtual ICollection<matchup> matchups { get; set; }
+        public virtual ICollection<teammatchup> teammatchups { get; set; }
     }
 }

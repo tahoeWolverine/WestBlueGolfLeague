@@ -9,8 +9,6 @@ namespace AccessExport
 {
     public class Player
     {
-        private Team team;
-
         private List<YearData> yearData = new List<YearData>();
 
         private List<Result> allResults = new List<Result>();
