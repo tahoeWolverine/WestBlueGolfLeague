@@ -1,13 +1,15 @@
 ﻿<div>
     <ul class="nav nav-pills" ng-controller="boardGroupController">
-        <li ng-class="{ active: state.selectedGroup == 'players' }"><a href="#" ng-click="setBoardGroup('players')">Players</a></li>
-        <li ng-class="{ active: state.selectedGroup == 'teams' }"><a href="#" ng-click="setBoardGroup('teams')">Teams</a></li>
+        <li ng-class="{ active: state.selectedGroup == 'players' }"><a href="players/{{state.selectedBoard.players}}">Players</a></li>
+        <li ng-class="{ active: state.selectedGroup == 'teams' }"><a ng-href="teams/{{state.selectedBoard.teams}}">Teams</a></li>
     </ul>
 
     <div ng-controller="navController" class="row">
         <div class="list-group col-md-3">
-            <a ng-repeat="board in leaderboards" ng-click="getBoard(board.key)" class="list-group-item" href="#">{{board.name}}</a>
+            <a ng-repeat="board in leaderboards" class="list-group-item" ng-class="{ active: currentlySelectedBoard == board.key }" ng-href="{{group}}/{{board.key}}">{{board.name}}</a>
         </div>
-        <div class="col-md-9">leaderboard content here</div>
+        <div class="col-md-9">
+            <ng-view></ng-view>
+        </div>
     </div>
 </div>

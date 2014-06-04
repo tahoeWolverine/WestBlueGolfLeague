@@ -275,6 +275,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\leaderBoards\leaderBoards.js" />
+    <Content Include="Scripts\leaderBoards\tpl\leaderBoardContent.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoards.tpl.html" />
     <Content Include="Scripts\lib\angular-1.2.16.js" />
     <Content Include="Scripts\lib\angular-animate-1.2.16.js" />

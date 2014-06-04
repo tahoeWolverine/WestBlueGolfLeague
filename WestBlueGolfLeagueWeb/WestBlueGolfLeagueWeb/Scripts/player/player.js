@@ -19,8 +19,6 @@ angular.module("player", ['ngRoute', 'app'])
                 templateUrl: '/Scripts/player/tpl/playerResults.tpl.html',
                 controller: 'resultsController'
             });
-
-        
     }])
     .factory("routeState", function () {
 
