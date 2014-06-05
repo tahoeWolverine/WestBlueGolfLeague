@@ -40,7 +40,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var dby = new DataByYear
             {
                 PlayersForYear = yearDataWithPlayerForYear.Select(x => PlayerResponse.From(x)).ToList(),
-                LeaderboardDataForYear = leaderBoardDataForYear.Select(x => LeaderboardDataResponse.From(x)).ToList(),
+                LeaderboardDataForYear = leaderBoardDataForYear.Select(x => LeaderBoardDataResponse.From(x)).ToList(),
                 Leaderboards = leaderboards,
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList(),

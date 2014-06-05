@@ -204,6 +204,7 @@
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\LeaderBoardApiController.cs" />
     <Compile Include="Controllers\LeaderBoardController.cs" />
     <Compile Include="Controllers\matchupsController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
@@ -230,11 +231,13 @@
     <Compile Include="Models\Entities\week.cs" />
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
+    <Compile Include="Models\Responses\AvailableLeaderBoardsResponse.cs" />
     <Compile Include="Models\Responses\AvailableYearsResponse.cs" />
     <Compile Include="Models\Responses\CourseResponse.cs" />
+    <Compile Include="Models\Responses\FullLeaderBoardForYearResponse.cs" />
     <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />
-    <Compile Include="Models\Responses\LeaderboardDataResponse.cs" />
+    <Compile Include="Models\Responses\LeaderBoardDataResponse.cs" />
     <Compile Include="Models\Responses\MatchupResponse.cs" />
     <Compile Include="Models\Responses\PlayerResponse.cs" />
     <Compile Include="Models\Responses\ResultResponse.cs" />
