@@ -1,9 +1,38 @@
 ﻿
-angular.module('leaderBoards', ['app'])
-    .factory('leaderBoardState', function () {
+
+(function (module) {
+
+    //
+    // run
+    //
+    module.run(['$route', angular.noop]) // super hack to get ng-view to work in ng-include
+
+    //
+    // config
+    //
+    function LeaderBoardConfig($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/:boardType/:boardKey?', {
+                controller: 'boardController',
+                templateUrl: '/Scripts/leaderBoards/tpl/leaderBoardContent.tpl.html'
+            })
+            .otherwise({
+                redirectTo: '/player'
+            });
+
+        $locationProvider.html5Mode(true);
+    }
+    LeaderBoardConfig.$inject = ['$routeProvider', '$locationProvider'];
+
+    module.config(LeaderBoardConfig);
+
+    //
+    // services
+    //
+    function LeaderBoardState() {
 
         var state = {
-            selectedGroup: 'players',
+            selectedGroup: null,
             selectedBoard: {
                 players: null,
                 teams: null
@@ -13,64 +42,125 @@ angular.module('leaderBoards', ['app'])
         return {
             state: state
         }
-    })
-    .factory('leaderBoardService', function () {
+    }
+
+
+    function LeaderBoardService($http, $q) {
+
+        var cachedBoards = {
+            teams: null,
+            players: null
+        };
 
         return {
             getBoardsForGroup: function (group) {
-                if (group === 'teams') {
-                    
-                    return [{
-                        name: 'Points',
-                        key: 'points'
-                    },
-                    {
-                        name: 'Handicaps',
-                        key: 'handicaps'
-                    },
-                    {
-                        name: 'Most Improved',
-                        key: 'mostImproved'
-                    }];
+
+                var defer = $q.defer();
+
+                if (cachedBoards[group] !== null) {
+                    defer.resolve(cachedBoards[group]);
+                    return defer.promise;
                 }
 
-                return [
-                    {
-                        name: 'Player Handicap',
-                        key: 'playerHandicap'
-                    },
-                    {
-                        name: 'Player Something',
-                        key: 'handicaps'
-                    },
-                    {
-                        name: 'Another Player Board',
-                        key: 'mostImproved'
-                    }
-                ];
+                var httpPromise = $http({
+                    method: 'GET',
+                    url: '/api/v1/leaderboards'
+                })
+                .then(function (response) {
+                    cachedBoards.teams = [];
+                    cachedBoards.players = [];
+
+                    $.each(response.data.leaderBoards, function (index, value) {
+                        if (value.isPlayerBoard) {
+                            cachedBoards.players.push(value);
+                        }
+                        else {
+                            cachedBoards.teams.push(value);
+                        }
+                    });
+
+                    defer.resolve(cachedBoards[group]);
+                },
+                function () {
+                    defer.reject()
+                });
+
+                return defer.promise;
             }
         };
-    })
-    .controller('navController', ['$scope', 'leaderBoardState', 'leaderBoardService', function ($scope, leaderBoardState, leaderBoardService) {
+    }
+    LeaderBoardService.$inject = ['$http', '$q'];
+
+    module
+        .factory('leaderBoardService', LeaderBoardService)
+        .factory('leaderBoardState', LeaderBoardState);
+    
+
+    //
+    // controllers
+    //
+    function BoardController($routeParams, leaderBoardState, $location) {
+        // TODO: Fix intial board which is selected when no specific one is chosen in URL.
+        if ($routeParams.boardType !== 'players' && $routeParams.boardType !== 'teams') {
+            $location
+                .path('/players')
+                .replace();
+        }
+
+        leaderBoardState.state.selectedBoard[$routeParams.boardType] = $routeParams.boardKey;
+        leaderBoardState.state.selectedGroup = $routeParams.boardType;
+    }
+    BoardController.$inject = ['$routeParams', 'leaderBoardState', '$location'];
+
+
+    function NavController($scope, leaderBoardState, leaderBoardService) {
 
         $scope.getBoard = function (key) {
 
         };
-
-        //$scope.leaderboards = leaderBoardService.getBoardsForGroup(leaderBoardState.state.selectedGroup);
+               
+        $scope.currentlySelectedBoard = leaderBoardState.state.selectedBoard;
 
         $scope.$watch(function () { return leaderBoardState.state.selectedGroup }, function (newVal, oldVal) {
             if (newVal) {
-                $scope.leaderboards = leaderBoardService.getBoardsForGroup(newVal);
-            }
-        });
+                                                
+                leaderBoardService.getBoardsForGroup(newVal).then(function (data) {
 
-    }])
-    .controller('boardGroupController', ['$scope', 'leaderBoardState', function ($scope, leaderBoardState) {
+                    if (!data || data.length == 0) {
+                        debugger;
+                    }
+
+                    $scope.leaderBoards = data;
+
+                    if (!leaderBoardState.state.selectedBoard[leaderBoardState.state.selectedGroup]) {
+                        leaderBoardState.state.selectedBoard[leaderBoardState.state.selectedGroup] = data[0].key;
+                    }
+                });
+
+                $scope.group = newVal;
+            }
+        }, true);
+    }
+    NavController.$inject = ['$scope', 'leaderBoardState', 'leaderBoardService'];
+
+
+    function BoardGroupController($scope, leaderBoardState) {
 
         $scope.state = leaderBoardState.state;
 
         $scope.setBoardGroup = function (group) {
             leaderBoardState.state.selectedGroup = group;
         };
-    }]);
+    }
+    BoardGroupController.$inject = ['$scope', 'leaderBoardState'];
+
+    module
+        .controller("boardController", BoardController)
+        .controller('navController', NavController)
+        .controller('boardGroupController', BoardGroupController);
+
+})(angular.module('leaderBoards', ['app', 'ngRoute']));
+
+
+    
+    

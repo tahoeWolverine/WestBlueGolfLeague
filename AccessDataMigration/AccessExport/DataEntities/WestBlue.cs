@@ -1,4 +1,4 @@
-namespace WestBlueGolfLeagueWeb.Models.Entities
+namespace AccessExport.DataEntities
 {
     using System;
     using System.Data.Entity;
@@ -8,14 +8,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     public partial class WestBlue : DbContext
     {
         public WestBlue()
-            : base("name=WestBlueReadOnly")
+            : base("name=WestBlue")
         {
-        }
-
-        public WestBlue(bool needWriteAccess)
-            : base(needWriteAccess ? "name=WestBlue" : "name=WestBlueReadOnly")
-        {
-
         }
 
         public virtual DbSet<course> courses { get; set; }

@@ -6,11 +6,11 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses
 {
-    public class LeaderboardDataResponse
+    public class LeaderBoardDataResponse
     {
-        public static LeaderboardDataResponse From(leaderboarddata lbd)
+        public static LeaderBoardDataResponse From(leaderboarddata lbd)
         {
-            return new LeaderboardDataResponse
+            return new LeaderBoardDataResponse
             {
                 Id = lbd.id,
                 IsP = lbd.isPlayer,

@@ -1,0 +1,70 @@
+﻿@model WestBlueGolfLeagueWeb.Models.ViewModels.ResultsTableViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-md-2">
+        <ul>
+            @foreach (var t in this.Model.TeamsForYear)
+            {
+                if (t.id == this.Model.Team.id)
+                {
+                    <li>@t.teamName</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink(t.teamName, "Details", "ResultsTable", new { id = t.id }, null)</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-10">
+        <h4>@this.Model.Team.teamName</h4>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>0</th>
+                @foreach (var w in this.Model.WeeksForYear)
+                {
+                    <th>@w.seasonIndex</th>
+                }
+                <th>Handicap</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td>36</td>
+                @foreach (var w in this.Model.WeeksForYear)
+                {
+                    <td>@w.course.par</td>
+                }
+                <td></td>
+            </tr>
+            @foreach (var p in this.Model.PlayersForTeamForYear)
+            {
+                <tr>
+                    <td>@p.Player.name</td>
+                    <td>@p.YearData.week0Score</td>
+
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.matchup.teammatchup.weekId == w.id).FirstOrDefault();
+                        if (resultForWeekForPlayer == null)
+                        {
+                            <td></td>
+                        }
+                        else
+                        {
+                            <td>@resultForWeekForPlayer.score</td>
+                        }
+                    }
+                    <td>@p.Player.currentHandicap</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

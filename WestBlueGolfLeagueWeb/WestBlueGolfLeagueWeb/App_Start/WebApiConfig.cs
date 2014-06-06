@@ -20,6 +20,10 @@ namespace WestBlueGolfLeagueWeb
 
             config.Routes.MapHttpRoute(name: "AvailableYears", routeTemplate: "api/v1/availableYears", defaults: new { controller = "DataByYear", action = "GetAvailableYears" });
 
+            config.Routes.MapHttpRoute(name: "AvailableLeaderBoards", routeTemplate: "api/v1/leaderboards", defaults: new { controller = "LeaderBoardApi", action = "GetAvailableLeaderBoards" });
+
+            config.Routes.MapHttpRoute(name: "GetLeaderBoardByKey", routeTemplate: "api/v1/leaderboards/{key}", defaults: new { controller = "LeaderBoardApi", action = "GetLeaderBoard" });
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

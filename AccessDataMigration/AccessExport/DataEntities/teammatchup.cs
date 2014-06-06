@@ -1,4 +1,4 @@
-namespace WestBlueGolfLeagueWeb.Models.Entities
+namespace AccessExport.DataEntities
 {
     using System;
     using System.Collections.Generic;

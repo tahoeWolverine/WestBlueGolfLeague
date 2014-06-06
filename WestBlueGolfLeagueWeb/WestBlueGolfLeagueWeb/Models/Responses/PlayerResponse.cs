@@ -17,7 +17,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
                 CH = p.player.currentHandicap,
                 // p.favorite // I don't know what this value is for...
                 VP = p.player.validPlayer,
-                TId = p.player.teamId,
                 YD = PlayerYearDataResponse.From(p)
             };
         }
@@ -35,11 +34,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         /// Valid player
         /// </summary>
         public bool VP { get; set; }
-
-        /// <summary>
-        /// Team ID
-        /// </summary>
-        public int TId { get; set; }
 
         /// <summary>
         /// Year data for year requested.

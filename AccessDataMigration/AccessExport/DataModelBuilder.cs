@@ -235,9 +235,10 @@ namespace AccessExport
                             // TODO: Needs to be something else
                             //player.Team = teamIdToTeam[playersTeam];
 
-                            // For years after 2009, current handicap will be updated when processing results.
+                            // Current handicap will be updated by handicap code later
                             player.CurrentHandicap = startingHandicap;
 
+                            // finishing handicap will be updated later.
                             YearData yearData = new YearData 
                                                     { 
                                                         Player = player, 
@@ -442,11 +443,6 @@ namespace AccessExport
 
                             var teamMatchup = teamMatchups.First();
 
-                            //if (player1.Name == "Pete Mohs" && year == 2013)
-                            //{
-                            //    Debugger.Break();
-                            //}
-
                             MatchUp matchup = new MatchUp { Id = matchupIndex++, TeamMatchup = teamMatchup, Player1 = player1, Player2 = player2 };
                             allMatchUps.Add(matchup);
 
@@ -509,10 +505,12 @@ namespace AccessExport
 
                     if (yd.Year.Value >= 2011)
                     {
+                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else if (yd.Year.Value >= 2009)
                     {
+                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else
@@ -533,10 +531,14 @@ namespace AccessExport
 
         }
 
-        private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
+        private static void CalculateIncorrectHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.Week0Score;
             var isRookie = yearData.Rookie;
+
+            // Get all results for a player for the year.
+            var resultsForPlayerForYear = dataModel.Results.Where(x => x.Player.Id == player.Id && x.Matchup.TeamMatchup.Week.Year.Value == yearData.Year.Value).OrderBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex).ToList();
+
 
             int scoreIndex = 4;
 
@@ -547,10 +549,6 @@ namespace AccessExport
                 scores.Add(week0Score);
             }
 
-            // Get all results for a player for the year.
-            var allResultsForPlayer = dataModel.Results.Where(x => x.Player.Id == player.Id).ToList();
-
-            var resultsForPlayerForYear = dataModel.Results.Where(x => x.Player.Id == player.Id && x.Matchup.TeamMatchup.Week.Year.Value == yearData.Year.Value).OrderBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex);
 
             foreach (var result in resultsForPlayerForYear)
             {
@@ -575,6 +573,131 @@ namespace AccessExport
 
             yearData.FinishingHandicap = priorHandicapWithScores(scores, scoreIndex);
         }
+
+        private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
+        {
+            var week0Score = yearData.Week0Score;
+            var isRookie = yearData.Rookie;
+
+            // Get all results for a player for the year.
+            var resultsForPlayerForYear = dataModel.Results.Where(x => x.Player.Id == player.Id && x.Matchup.TeamMatchup.Week.Year.Value == yearData.Year.Value).OrderBy(x => x.Matchup.TeamMatchup.Week.SeasonIndex).ToList();
+
+            HandicapResult handicapResult = null, firstHandicapResult = null;
+
+            for (int i = resultsForPlayerForYear.Count - 1; i >= 0; i--)
+            {
+                var subResults = resultsForPlayerForYear.Take(i + 1);
+
+                handicapResult = HandicapsForResults(subResults, week0Score, isRookie);
+
+                // bleh this could be cleaned up.
+                if (i == 0) 
+                {
+                    resultsForPlayerForYear[i].PriorHandicap = week0Score - 36;
+                }
+
+                if (i == resultsForPlayerForYear.Count - 1)
+                {
+                    firstHandicapResult = handicapResult;
+                }
+                else 
+                {
+                    resultsForPlayerForYear[i + 1].PriorHandicap = handicapResult.Handicap;
+                }
+            }
+
+            // handicap result will be null if no results for the year yet.
+            if (firstHandicapResult != null)
+            {
+                if (isNewestYear)
+                {
+                    player.CurrentHandicap = firstHandicapResult.Handicap;
+                }
+
+                yearData.FinishingHandicap = firstHandicapResult.Handicap;
+            }
+        }
+
+        private static HandicapResult HandicapsForResults(IEnumerable<Result> results, int week0Score, bool isRookie)
+        {
+            LinkedList<ScoreResult> copiedScores = new LinkedList<ScoreResult>(results.Select(x => new ScoreResult(x)));
+
+            int numberOfWeekZeroesToAdd = 0;
+
+            // nasty... look at maybe cleaning up
+            if (copiedScores.Count == 4)
+            {
+                numberOfWeekZeroesToAdd = 1;
+            }
+            else if (copiedScores.Count < 4)
+            {
+                if (!isRookie)
+                {
+                    numberOfWeekZeroesToAdd = copiedScores.Count == 4 ? 1 : 4 - copiedScores.Count;
+                }
+                else
+                {
+                    numberOfWeekZeroesToAdd = 1;
+                }
+            }
+
+            for (int i = 0; i < numberOfWeekZeroesToAdd; i++)
+            {
+                copiedScores.AddLast(ScoreResult.CreateWeek0Score(week0Score));
+            }
+
+            if (copiedScores.Count >= 5)
+            {
+                var lastFiveScores = copiedScores.Skip(copiedScores.Count - 5);
+
+                int max = 0,
+                    handicapSum = 0,
+                    weekWithMax = 0;
+
+                LinkedList<int> weeksUsed = new LinkedList<int>();
+
+                foreach (var score in lastFiveScores)
+                {
+                    var handicapSplit = score.ScoreOverPar;
+
+                    if (handicapSplit > max)
+                    {
+                        max = handicapSplit;
+                        weekWithMax = score.Week;
+                    }
+
+                    weeksUsed.AddLast(score.Week);
+                    handicapSum += handicapSplit;
+                }
+
+                weeksUsed.Remove(weekWithMax);
+
+                return new HandicapResult { Handicap = CalcHandicapFromScores(handicapSum - max, 4), WeeksUsed = weeksUsed };
+            }
+            else
+            {
+                LinkedList<int> weeksUsed = new LinkedList<int>();
+
+                int sum = 0;
+
+                foreach (var score in copiedScores)
+                {
+                    weeksUsed.AddLast(score.Week);
+                    sum += score.ScoreOverPar;
+                }
+
+                return new HandicapResult { Handicap = CalcHandicapFromScores(sum, copiedScores.Count), WeeksUsed = weeksUsed };
+            }
+        }
+
+        private static int CalcHandicapFromScores(int scoreTotal, int scoreCount)
+        {
+            double averageScoreAbovePar = ((double)scoreTotal / (double)scoreCount);
+            double remainder = averageScoreAbovePar - (scoreTotal / scoreCount);
+
+            return Math.Min((int)(averageScoreAbovePar + (remainder >= .5 ? 1 : 0)), 20);
+        }
+
 
         // TODO: Update this method with correct handicap calculation (needs to factor in previous years (< 2011) and new/old player distinction)
         private static int priorHandicapWithScores(List<int> scores, int index)
