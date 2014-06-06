@@ -17,7 +17,9 @@
 	if (year == 0) {
 		NSLog(@"wat");
 	}
+	newYear.idValue = yearId;
 	newYear.valueValue = year;
+	newYear.isCompleteValue = isComplete;
 	return newYear;
 }
 

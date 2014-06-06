@@ -5,6 +5,7 @@
 
 const struct WBWeekAttributes WBWeekAttributes = {
 	.date = @"date",
+	.id = @"id",
 	.isBadData = @"isBadData",
 	.seasonIndex = @"seasonIndex",
 };
@@ -44,6 +45,11 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"idValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"isBadDataValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isBadData"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -63,6 +69,32 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 
 @dynamic date;
 
+
+
+
+
+
+@dynamic id;
+
+
+
+- (int16_t)idValue {
+	NSNumber *result = [self id];
+	return [result shortValue];
+}
+
+- (void)setIdValue:(int16_t)value_ {
+	[self setId:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveIdValue {
+	NSNumber *result = [self primitiveId];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveIdValue:(int16_t)value_ {
+	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+}
 
 
 

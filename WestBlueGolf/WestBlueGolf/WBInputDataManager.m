@@ -32,18 +32,36 @@
 //#define wbJsonKeyWeekIndex @"Week"
 //#define wbJsonKeyWeekDate @"Date"
 
-#define wbJsonKeyTeamId @"TeamID"
-#define wbJsonKeyTeamName @"TeamName"
-#define wbJsonKeyTeamDivision @"Division" // unused
+#define wbJsonKeyTeams @"teamsForYear"
+#define wbJsonKeyTeamId @"id"
+#define wbJsonKeyTeamName @"name"
+//#define wbJsonKeyTeamValie @"valid"
 
-#define wbJsonKeyUserId @"ID"
-#define wbJsonKeyUserName @"Username"
-#define wbJsonKeyUserPassword @"Password"
+//#define wbJsonKeyTeamId @"TeamID"
+//#define wbJsonKeyTeamName @"TeamName"
+//#define wbJsonKeyTeamDivision @"Division" // unused
 
-#define wbJsonKeyPlayerName @"PlayerName"
-#define wbJsonKeyPlayerTeam @"TeamID"
-#define wbJsonKeyPlayerStartScore @"Week0Score"
-#define wbJsonKeyPlayerIsRookie @"Status"
+//#define wbJsonKeyUserId @"ID"
+//#define wbJsonKeyUserName @"Username"
+//#define wbJsonKeyUserPassword @"Password"
+
+#define wbJsonKeyPlayers @"playersForYear"
+
+#define wbJsonKeyPlayerName @"name"
+#define wbJsonKeyPlayerId @"id"
+//#define wbJsonKeyPlayerCurrentTeam @"tId"
+#define wbJsonKeyPlayerCurrentHandicap @"ch"
+
+#define wbJsonKeyPlayerDataId @"id"
+#define wbJsonKeyPlayerDataStartingHandicap @"sh"
+#define wbJsonKeyPlayerDataFinishingHandicap @"fh"
+#define wbJsonKeyPlayerDataIsRookie @"isr"
+#define wbJsonKeyPlayerDataTeam @"tId"
+
+//#define wbJsonKeyPlayerName @"PlayerName"
+//#define wbJsonKeyPlayerTeam @"TeamID"
+//#define wbJsonKeyPlayerStartScore @"Week0Score"
+//#define wbJsonKeyPlayerIsRookie @"Status"
 
 #define wbJsonKeyMatchComplete @"MatchComplete"
 #define wbJsonKeyMatchId @"MatchID" // unused
@@ -71,7 +89,6 @@
 		yearId = [[elt objectForKey:wbJsonKeyYearId] integerValue];
 		yearValue = [[elt objectForKey:wbJsonKeyYearValue] integerValue];
 		isComplete = [[elt objectForKey:wbJsonKeyYearComplete] boolValue];
-		//TODO: add id and complete
 		[WBYear yearWithYearId:yearId value:yearValue isComplete:isComplete inContext:[WBCoreDataManager mainContext]];
 	}
 	
@@ -93,6 +110,7 @@
 		[WBCourse courseWithName:courseName courseId:courseId par:par inContext:moc];
 	}
 
+	// Weeks
 	NSArray *weekArray = [json objectForKey:wbJsonKeyWeeks];
 	WBCourse *course = nil;
 	NSString *weekDate = nil;
@@ -107,14 +125,13 @@
 		date = [self dateForString:weekDate];
 		courseId = [[elt objectForKey:wbJsonKeyWeekCourseId] integerValue];
 		course = [WBCourse courseWithId:courseId];
-		//TODO: Add weekId and badData to model
-		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekIndex inContext:moc];
+		[WBWeek createWeekWithDate:date inYear:year weekId:weekId forCourse:course seasonIndex:weekIndex badData:badData inContext:moc];
 	}
 	
 	//[WBCoreDataManager saveContext:moc];
 	
-	// team table
-	NSArray *teamArray = [self jsonFromData:[self fileDataForFilename:@"teamTable" year:year]];
+	// Teams
+	NSArray *teamArray = [json objectForKey:wbJsonKeyTeams];
 	NSString *teamName = nil;
 	NSInteger teamId = 0;
 	for (NSDictionary *elt in teamArray) {
@@ -126,22 +143,28 @@
 	//[WBCoreDataManager saveContext:moc];
 	
 	// player table
-	NSArray *playerArray = [self jsonFromData:[self fileDataForFilename:@"playerTable" year:year]];
+	NSArray *playerArray = [json objectForKey:wbJsonKeyPlayers];
 	WBTeam *playerTeam = nil;
 	WBPlayer *player = nil;
 	NSString *playerName = nil;
-	NSInteger startingHandicap = 0;
+	NSInteger playerId = 0, dataId = 0, startingHandicap = 0, finishingHandicap = 0, currentHandicap = 0;
 	teamId = 0;
 	BOOL isRookie = NO;
 	for (NSDictionary *elt in playerArray) {
+		playerId = [[elt objectForKey:wbJsonKeyPlayerId] integerValue];
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
-		teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
-		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
-		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] isEqualToString:@"NEW"];
+		currentHandicap = [[elt objectForKey:wbJsonKeyPlayerCurrentHandicap] integerValue] - 36;
+		//TODO: player id
+		player = [WBPlayer playerWithName:playerName currentHandicap:currentHandicap inContext:moc];
+		
+		// Player Year data parse
+		dataId = [[elt objectForKey:wbJsonKeyPlayerDataId] integerValue];
+		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerDataStartingHandicap] integerValue];
+		finishingHandicap = [[elt objectForKey:wbJsonKeyPlayerDataFinishingHandicap] integerValue];
+		isRookie = [[elt objectForKey:wbJsonKeyPlayerDataIsRookie] boolValue];
+		teamId = [[elt objectForKey:wbJsonKeyPlayerDataTeam] integerValue];
 		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
-		
-		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap inContext:moc];
-		
+		//TODO: data id
 		[WBPlayerYearData createPlayerYearDataForPlayer:player year:year onTeam:playerTeam withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
 	}
 	
@@ -170,7 +193,7 @@
 			//continue;
 		}
 		
-		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
+		week = [WBWeek findWeekWithSeasonIndex:weekId year:year];
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		if (!team1 || !team2) {
@@ -236,9 +259,13 @@
 		points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
 		
-		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
+		week = [WBWeek findWeekWithSeasonIndex:weekId year:year];
 		
 		if (team1Id == team2Id) {
+			if (!week.isBadDataValue) {
+				DLog(@"Bad data week not noticed by server");
+			}
+			
 			DLog(@"Match has same team on both sides");
 			week.isBadDataValue = YES;
 		}
@@ -275,6 +302,10 @@
 	for (WBWeek *week in year.weeks) {
 		matches = [WBMatch findWithPredicate:[NSPredicate predicateWithFormat:@"teamMatchup.week = %@", week] sortedBy:nil fetchLimit:0 moc:moc];
 		if (!matches || matches.count == 0) {
+			if (!week.isBadDataValue) {
+				DLog(@"Bad data week not noticed by server");
+			}
+			
 			DLog(@"week has no matches");
 			week.isBadDataValue = YES;
 		}
@@ -309,7 +340,7 @@
 	}
 
 	NSArray *weekArray = [self jsonFromData:weekData];
-	WBCourse *course = nil;
+	//WBCourse *course = nil;
 	NSString /**courseName = nil,*/ *weekDate = nil;
 	NSInteger /*par = 0,*/ weekId = 0;
 	NSDate *date = nil;
@@ -322,7 +353,7 @@
 		weekDate = [elt objectForKey:wbJsonKeyWeekDate];
 		date = [self dateForString:weekDate];
 
-		[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
+		//[WBWeek createWeekWithDate:date inYear:year forCourse:course seasonIndex:weekId inContext:moc];
 	}
 
 	//[WBCoreDataManager saveContext:moc];
@@ -361,9 +392,9 @@
 	BOOL isRookie = NO;
 	for (NSDictionary *elt in playerArray) {
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
-		teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
-		startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
-		isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] isEqualToString:@"NEW"];
+		//teamId = [[elt objectForKey:wbJsonKeyPlayerTeam] integerValue];
+		//startingHandicap = [[elt objectForKey:wbJsonKeyPlayerStartScore] integerValue] - 36;
+		//isRookie = [[elt objectForKey:wbJsonKeyPlayerIsRookie] isEqualToString:@"NEW"];
 		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
 		
 		player = [WBPlayer playerWithName:playerName currentHandicap:startingHandicap inContext:moc];
@@ -396,7 +427,7 @@
 			//continue;
 		}
 		
-		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
+		//week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
 		team1 = [WBTeam teamWithId:team1Id inContext:moc];
 		team2 = [WBTeam teamWithId:team2Id inContext:moc];
 		if (!team1 || !team2) {
@@ -462,7 +493,7 @@
 		points1 = [[elt objectForKey:wbJsonKeyResultPoints1] integerValue];
 		points2 = [[elt objectForKey:wbJsonKeyResultPoints2] integerValue];
 		
-		week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
+		//week = [WBWeek findWeekWithId:weekId inYear:year inContext:moc];
 		
 		if (team1Id == team2Id) {
 			DLog(@"Match has same team on both sides");

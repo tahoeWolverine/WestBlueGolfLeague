@@ -95,6 +95,7 @@
     </entity>
     <entity name="WBWeek" representedClassName="WBWeek" syncable="YES">
         <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isBadData" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="seasonIndex" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="WBCourse" inverseName="weeks" inverseEntity="WBCourse" syncable="YES"/>
@@ -105,6 +106,7 @@
         </userInfo>
     </entity>
     <entity name="WBYear" representedClassName="WBYear" syncable="YES">
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="value" attributeType="Integer 16" minValueString="0" syncable="YES"/>
         <relationship name="boardData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WBBoardData" inverseName="year" inverseEntity="WBBoardData" syncable="YES"/>
@@ -125,7 +127,7 @@
         <element name="WBResult" positionX="151" positionY="-322" width="128" height="133"/>
         <element name="WBTeam" positionX="9" positionY="-46" width="128" height="103"/>
         <element name="WBTeamMatchup" positionX="7" positionY="-189" width="128" height="133"/>
-        <element name="WBWeek" positionX="-162" positionY="-216" width="128" height="133"/>
-        <element name="WBYear" positionX="-162" positionY="-45" width="128" height="118"/>
+        <element name="WBWeek" positionX="-162" positionY="-216" width="128" height="148"/>
+        <element name="WBYear" positionX="-162" positionY="-45" width="128" height="133"/>
     </elements>
 </model>
