@@ -18,10 +18,11 @@
 
 @implementation WBPlayer
 
-+ (WBPlayer *)createPlayerWithName:(NSString *)name
-				   currentHandicap:(NSInteger)currentHandicap
-						 inContext:(NSManagedObjectContext *)moc {
-	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithName:name inContext:moc];
++ (WBPlayer *)createPlayerWithId:(NSInteger)playerId
+                            name:(NSString *)name
+                 currentHandicap:(NSInteger)currentHandicap
+                       inContext:(NSManagedObjectContext *)moc {
+	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithId:playerId name:name inContext:moc];
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
@@ -29,12 +30,13 @@
 	return newPlayer;
 }
 
-+ (WBPlayer *)playerWithName:(NSString *)name
-			 currentHandicap:(NSInteger)currentHandicap
-				   inContext:(NSManagedObjectContext *)moc {
++ (WBPlayer *)playerWithId:(NSInteger)playerId
+                      name:(NSString *)name
+           currentHandicap:(NSInteger)currentHandicap
+                 inContext:(NSManagedObjectContext *)moc {
 	WBPlayer *player = [[self class] playerWithName:name inContext:moc];
 	if (!player) {
-		player = [[self class] createPlayerWithName:name currentHandicap:currentHandicap inContext:moc];
+		player = [[self class] createPlayerWithId:playerId name:name currentHandicap:currentHandicap inContext:moc];
 	}
 	return player;
 }
@@ -54,6 +56,10 @@
 	return [self filterYearDataForYear:[WBYear thisYear]].team;
 }
 
++ (WBPlayer *)findWithId:(NSInteger)playerId {
+	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:playerId]];
+}
+
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc {
 	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil moc:moc];
 }
@@ -63,7 +69,7 @@
 }
 
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc {
-	[[self class] playerWithName:kNoShowPlayerName currentHandicap:25 inContext:moc];
+	[[self class] playerWithId:-1 name:kNoShowPlayerName currentHandicap:25 inContext:moc];
 }
 
 - (BOOL)isNoShowPlayer {

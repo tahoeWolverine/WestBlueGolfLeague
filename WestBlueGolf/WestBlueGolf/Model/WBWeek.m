@@ -31,7 +31,7 @@
 }
 
 + (WBWeek *)findWeekWithId:(NSInteger)weekId inYear:(WBYear *)year {
-	return (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"weekId = %@ && year = %@", [NSNumber numberWithInteger:weekId], year] sortedBy:nil];
+	return (WBWeek *)[WBWeek findFirstRecordWithFormat:@"id = %@ && year = %@", [NSNumber numberWithInteger:weekId], year];
 }
 
 + (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year {

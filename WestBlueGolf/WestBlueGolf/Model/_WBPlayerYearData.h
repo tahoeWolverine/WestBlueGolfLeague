@@ -6,6 +6,7 @@
 
 extern const struct WBPlayerYearDataAttributes {
 	__unsafe_unretained NSString *finishingHandicap;
+	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *isRookie;
 	__unsafe_unretained NSString *startingHandicap;
 } WBPlayerYearDataAttributes;
@@ -22,6 +23,7 @@ extern const struct WBPlayerYearDataFetchedProperties {
 @class WBPlayer;
 @class WBTeam;
 @class WBYear;
+
 
 
 
@@ -49,6 +51,20 @@ extern const struct WBPlayerYearDataFetchedProperties {
 - (void)setFinishingHandicapValue:(int16_t)value_;
 
 //- (BOOL)validateFinishingHandicap:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* id;
+
+
+
+@property int16_t idValue;
+- (int16_t)idValue;
+- (void)setIdValue:(int16_t)value_;
+
+//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -118,6 +134,15 @@ extern const struct WBPlayerYearDataFetchedProperties {
 
 - (int16_t)primitiveFinishingHandicapValue;
 - (void)setPrimitiveFinishingHandicapValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitiveId;
+- (void)setPrimitiveId:(NSNumber*)value;
+
+- (int16_t)primitiveIdValue;
+- (void)setPrimitiveIdValue:(int16_t)value_;
 
 
 

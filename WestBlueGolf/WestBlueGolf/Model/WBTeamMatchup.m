@@ -26,15 +26,19 @@
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1
 										andTeam:(WBTeam *)team2
 										forWeek:(WBWeek *)week
-										matchId:(NSInteger)matchId
+                                      matchupId:(NSInteger)matchupId
 								  matchComplete:(BOOL)matchComplete
 											moc:(NSManagedObjectContext *)moc {
 	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
-	newTeamMatchup.week = week;
-	newTeamMatchup.matchIdValue = matchId;
+	//newTeamMatchup.week = week;
+	newTeamMatchup.matchIdValue = matchupId;
 	newTeamMatchup.matchCompleteValue = matchComplete;
-	[newTeamMatchup addTeamsObject:team1];
-	[newTeamMatchup addTeamsObject:team2];
+	//[newTeamMatchup addTeamsObject:team1];
+	//[newTeamMatchup addTeamsObject:team2];
+
+    [week addTeamMatchupsObject:newTeamMatchup];
+    [team1 addMatchupsObject:newTeamMatchup];
+    [team2 addMatchupsObject:newTeamMatchup];
 	return newTeamMatchup;
 }
 

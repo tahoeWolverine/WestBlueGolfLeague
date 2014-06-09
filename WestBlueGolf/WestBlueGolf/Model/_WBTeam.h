@@ -5,7 +5,6 @@
 #import "WBPeopleEntity.h"
 
 extern const struct WBTeamAttributes {
-	__unsafe_unretained NSString *teamId;
 } WBTeamAttributes;
 
 extern const struct WBTeamRelationships {
@@ -22,7 +21,6 @@ extern const struct WBTeamFetchedProperties {
 @class WBResult;
 
 
-
 @interface WBTeamID : NSManagedObjectID {}
 @end
 
@@ -31,20 +29,6 @@ extern const struct WBTeamFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBTeamID*)objectID;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* teamId;
-
-
-
-@property int16_t teamIdValue;
-- (int16_t)teamIdValue;
-- (void)setTeamIdValue:(int16_t)value_;
-
-//- (BOOL)validateTeamId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -94,15 +78,6 @@ extern const struct WBTeamFetchedProperties {
 @end
 
 @interface _WBTeam (CoreDataGeneratedPrimitiveAccessors)
-
-
-- (NSNumber*)primitiveTeamId;
-- (void)setPrimitiveTeamId:(NSNumber*)value;
-
-- (int16_t)primitiveTeamIdValue;
-- (void)setPrimitiveTeamIdValue:(int16_t)value_;
-
-
 
 
 

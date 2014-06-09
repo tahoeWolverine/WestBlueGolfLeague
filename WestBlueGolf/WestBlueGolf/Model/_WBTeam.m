@@ -4,7 +4,6 @@
 #import "_WBTeam.h"
 
 const struct WBTeamAttributes WBTeamAttributes = {
-	.teamId = @"teamId",
 };
 
 const struct WBTeamRelationships WBTeamRelationships = {
@@ -42,40 +41,9 @@ const struct WBTeamFetchedProperties WBTeamFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"teamIdValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"teamId"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic teamId;
-
-
-
-- (int16_t)teamIdValue {
-	NSNumber *result = [self teamId];
-	return [result shortValue];
-}
-
-- (void)setTeamIdValue:(int16_t)value_ {
-	[self setTeamId:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitiveTeamIdValue {
-	NSNumber *result = [self primitiveTeamId];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveTeamIdValue:(int16_t)value_ {
-	[self setPrimitiveTeamId:[NSNumber numberWithShort:value_]];
-}
-
 
 
 
