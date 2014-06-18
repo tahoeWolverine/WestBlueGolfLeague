@@ -70,8 +70,8 @@
 	//[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
 	[inputManager createObjectsForYear:yearValue withJson:responseObject];
 	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[WBCoreDataManager mainContext]];
-	WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	[handiManager calculateHandicapsForYear:year moc:[WBCoreDataManager mainContext]];
+	//WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
+	//[handiManager calculateHandicapsForYear:year moc:[WBCoreDataManager mainContext]];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
 	[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
 	//[WBCoreDataManager saveContext:moc];

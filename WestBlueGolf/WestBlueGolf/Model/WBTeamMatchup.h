@@ -13,7 +13,7 @@ typedef enum {
 + (WBTeamMatchup *)createTeamMatchupBetweenTeam:(WBTeam *)team1
 										andTeam:(WBTeam *)team2
 										forWeek:(WBWeek *)week
-										matchId:(NSInteger)matchId
+                                      matchupId:(NSInteger)matchupId
 								  matchComplete:(BOOL)matchComplete
 											moc:(NSManagedObjectContext *)moc;
 

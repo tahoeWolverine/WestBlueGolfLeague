@@ -17,8 +17,7 @@
 @implementation WBTeam
 
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
-	WBTeam *newTeam = (WBTeam *)[self createPeopleWithName:name inContext:moc];
-	newTeam.teamIdValue = teamId;
+	WBTeam *newTeam = (WBTeam *)[self createPeopleWithId:teamId name:name inContext:moc];
 	return newTeam;
 }
 
@@ -31,7 +30,7 @@
 }
 
 + (WBTeam *)teamWithId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
-	return (WBTeam *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"teamId = %@", [NSNumber numberWithInteger:teamId]] sortedBy:nil moc:moc];
+	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:teamId]];
 }
 
 + (WBTeam *)myTeam {

@@ -2,7 +2,7 @@
 
 @interface WBPeopleEntity : _WBPeopleEntity {}
 
-+ (WBPeopleEntity *)createPeopleWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
++ (WBPeopleEntity *)createPeopleWithId:(NSInteger)peopleId name:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
 + (WBPeopleEntity *)leagueAverageInContext:(NSManagedObjectContext *)moc;
 - (BOOL)isLeagueAverage;

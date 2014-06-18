@@ -6,6 +6,7 @@
 
 extern const struct WBWeekAttributes {
 	__unsafe_unretained NSString *date;
+	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *isBadData;
 	__unsafe_unretained NSString *seasonIndex;
 } WBWeekAttributes;
@@ -22,6 +23,7 @@ extern const struct WBWeekFetchedProperties {
 @class WBCourse;
 @class WBTeamMatchup;
 @class WBYear;
+
 
 
 
@@ -45,6 +47,20 @@ extern const struct WBWeekFetchedProperties {
 
 
 //- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* id;
+
+
+
+@property int16_t idValue;
+- (int16_t)idValue;
+- (void)setIdValue:(int16_t)value_;
+
+//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -116,6 +132,15 @@ extern const struct WBWeekFetchedProperties {
 
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
+
+
+
+- (NSNumber*)primitiveId;
+- (void)setPrimitiveId:(NSNumber*)value;
+
+- (int16_t)primitiveIdValue;
+- (void)setPrimitiveIdValue:(int16_t)value_;
 
 
 

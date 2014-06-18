@@ -30,12 +30,14 @@
 @interface WBPlayer : _WBPlayer {}
 
 // Player specific create function
-+ (WBPlayer *)createPlayerWithName:(NSString *)name
-				   currentHandicap:(NSInteger)currentHandicap
-						 inContext:(NSManagedObjectContext *)moc;
-+ (WBPlayer *)playerWithName:(NSString *)name
-			 currentHandicap:(NSInteger)currentHandicap
-				   inContext:(NSManagedObjectContext *)moc;
++ (WBPlayer *)createPlayerWithId:(NSInteger)playerId
+                            name:(NSString *)name
+                 currentHandicap:(NSInteger)currentHandicap
+                       inContext:(NSManagedObjectContext *)moc;
++ (WBPlayer *)playerWithId:(NSInteger)playerId
+                      name:(NSString *)name
+           currentHandicap:(NSInteger)currentHandicap
+                 inContext:(NSManagedObjectContext *)moc;
 
 + (WBPlayer *)me;
 - (void)setPlayerToMe;
@@ -46,6 +48,7 @@
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;
 - (BOOL)isNoShowPlayer;
 
++ (WBPlayer *)findWithId:(NSInteger)playerId;
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;

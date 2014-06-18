@@ -14,20 +14,24 @@
 
 + (WBWeek *)createWeekWithDate:(NSDate *)date
 						inYear:(WBYear *)year
+						weekId:(NSInteger)weekId
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
+					   badData:(BOOL)badData
 					 inContext:(NSManagedObjectContext *)moc {
 	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newWeek.date = date;
 	newWeek.year = year;
+	newWeek.idValue = weekId;
 	newWeek.seasonIndexValue = seasonIndex;
+	newWeek.isBadDataValue = badData;
 	
 	[course addWeeksObject:newWeek];
 	return newWeek;
 }
 
-+ (WBWeek *)findWeekWithId:(NSInteger)weekId inYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc {
-	return (WBWeek *)[WBWeek findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"seasonIndex = %@ && year = %@", [NSNumber numberWithInteger:weekId], year] sortedBy:nil moc:moc];
++ (WBWeek *)findWeekWithId:(NSInteger)weekId inYear:(WBYear *)year {
+	return (WBWeek *)[WBWeek findFirstRecordWithFormat:@"id = %@ && year = %@", [NSNumber numberWithInteger:weekId], year];
 }
 
 + (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year {
