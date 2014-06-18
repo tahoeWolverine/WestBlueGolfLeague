@@ -1,0 +1,27 @@
+﻿
+<div class="row">
+    <a ui-sref="leaderBoards()">back to Leaderboards</a>
+
+    <div class="list-group col-sm-3 board-selector">
+        <div class="text-center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="currBoard = 'player'" ng-class="{ 'btn-primary active': showPlayerBoards() }">Player</button>
+                <button type="button" class="btn btn-default" ng-click="currBoard = 'team'" ng-class="{ 'btn-primary active': showTeamBoards() }">Team</button>
+            </div>
+        </div>
+
+        <div ng-show="showPlayerBoards()" class="list-group">
+            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'player', id: item.id })" class="list-group-item" ng-repeat="item in boards.player">{{item.name}}</a>
+        </div>
+
+        <div ng-show="showTeamBoards()" class="list-group">
+            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'team', id: item.id })" class="list-group-item" ng-repeat="item in boards.team">{{item.name}}</a>
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="details">
+            <ui-view></ui-view>
+        </div>
+    </div>
+</div>

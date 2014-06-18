@@ -1,0 +1,28 @@
+﻿<!-- TODO: this should be a directive -->
+<div class="row text-center board-group-toggle">
+    <div class="btn-group btn-group-lg">
+        <button type="button" class="btn btn-default" ng-click="currBoard = 'player'" ng-class="{ 'btn-primary active': showPlayerBoards() }">Player</button>
+        <button type="button" class="btn btn-default" ng-click="currBoard = 'team'" ng-class="{ 'btn-primary active': showTeamBoards() }">Team</button>
+    </div>
+</div>
+<div class="row board-group-heading">
+    <div class="col-sm-6">
+        <h2>Player</h2>
+    </div>
+    <div class="col-sm-6">
+        <h2>Team</h2>
+    </div>
+</div>
+<div class="row">
+    <div ng-class="{ boardVisible: showPlayerBoards() }" class="col-sm-6 board">
+        <div class="list-group">
+            <a ui-sref="detailsLayout.details({ boardGroup: 'player', id: item.id })" class="list-group-item" ng-repeat="item in boards.player">{{item.name}}</a>
+        </div>
+    </div>
+
+    <div ng-class="{ boardVisible: showTeamBoards() }" class="board col-sm-6">
+        <div class="list-group">
+            <a ui-sref="detailsLayout.details({ boardGroup: 'team', id: item.id })" class="list-group-item" ng-repeat="item in boards.team">{{item.name}}</a>
+        </div>
+    </div>
+</div>

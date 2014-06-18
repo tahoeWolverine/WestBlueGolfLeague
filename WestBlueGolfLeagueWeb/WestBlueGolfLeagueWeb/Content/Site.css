@@ -44,3 +44,32 @@ input[type="checkbox"].input-validation-error {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+
+/* Leaderboards */
+.board-group-toggle {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  
+  .board-group-toggle {
+    display: block;
+  }
+  
+  .board-selector {
+    display: none;
+  }
+  
+  .board-group-heading {
+    display: none;
+  }
+  
+  .board {
+    display: none;
+  }
+  
+  .boardVisible {
+    display: block;
+  }
+}
