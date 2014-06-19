@@ -179,7 +179,7 @@
 	for (NSDictionary *elt in playerArray) {
 		playerId = [[elt objectForKey:wbJsonKeyPlayerId] integerValue];
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
-		currentHandicap = [[elt objectForKey:wbJsonKeyPlayerCurrentHandicap] integerValue] - 36;
+		currentHandicap = [[elt objectForKey:wbJsonKeyPlayerCurrentHandicap] integerValue];// - 36;
 		player = [WBPlayer playerWithId:playerId name:playerName currentHandicap:currentHandicap inContext:moc];
 		
 		// Player Year data parse
@@ -272,13 +272,15 @@
             // Results
             firstResult = YES;
             for (result1Json in resultsJson) {
-                score = [[elt objectForKey:wbJsonKeyResultScore] integerValue];
-                priorHandicap = [[elt objectForKey:wbJsonKeyResultPriorHandicap] integerValue];
-                points = [[elt objectForKey:wbJsonKeyResultPoints] integerValue];
-                player1Id = [[elt objectForKey:wbJsonKeyResultPlayerId] integerValue];
-                team1Id = [[elt objectForKey:wbJsonKeyResultTeamId] integerValue];
+                score = [[result1Json objectForKey:wbJsonKeyResultScore] integerValue];
+                priorHandicap = [[result1Json objectForKey:wbJsonKeyResultPriorHandicap] integerValue];
+                points = [[result1Json objectForKey:wbJsonKeyResultPoints] integerValue];
+                player1Id = [[result1Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
+                team1Id = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];
                 
                 [WBResult createResultForMatch:match forPlayer:firstResult ? player1 : player2 team:firstResult ? team1 : team2 withPoints:points priorHandicap:priorHandicap score:score moc:moc];
+                
+                firstResult = NO;
             }
         }
     }
