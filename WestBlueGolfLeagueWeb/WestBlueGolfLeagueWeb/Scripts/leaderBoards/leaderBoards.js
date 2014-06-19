@@ -1,5 +1,170 @@
 ﻿
 
+// leaderboards
+angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
+
+// begin controllers.
+(function (module) {
+
+    function LeaderBoardsController($scope, $stateParams, $state, leaderBoards) {
+
+        $scope.boards = leaderBoards;
+
+        $scope.showTeamBoards = function () {
+            return $scope.currBoard === 'team';
+        };
+
+        $scope.showPlayerBoards = function () {
+            return $scope.currBoard !== 'team';
+        };
+    };
+         
+    function DetailsLayoutController($scope, $stateParams, $state, boards, boardStates) {
+              
+        $scope.boards = boards;
+              
+        // These funcs could be more generic.
+        $scope.showTeamBoards = function() {
+            return ((!$scope.currBoard && $scope.boardGroup === 'team') || $scope.currBoard === 'team');
+        };
+              
+        $scope.showPlayerBoards = function() {
+            return ((!$scope.currBoard && $scope.boardGroup !== 'team') || $scope.currBoard === 'player');
+        };
+              
+        $scope.boardGroup = $state.params.boardGroup;
+        $scope.currBoard = $state.params.boardGroup;
+              
+        // This controller won't get new-ed up until everything is resolved.
+        // this means that this won't fire the first time coming to this (from another state that isn't a child)
+        $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            if (toState.name === boardStates.DETAILS) {
+                $scope.boardGroup = toParams.boardGroup;
+                $scope.currBoard = toParams.boardGroup;
+            }
+        });
+    };
+
+    // TODO: remove this and inject the real one.
+    function FakeDetailsFetcher($timeout, $q, $stateParams) {
+        
+        return {
+            getDetails: function() {
+                var d = $q.defer();
+                
+                $timeout(function() {
+                    d.resolve({ value: 42 });
+                }, 590);
+    
+                return d.promise;
+            }
+        };
+    }
+
+    function DetailsController($state, $stateParams, $scope, detailsFetcher) {
+        $scope.id = $stateParams.id;
+
+        $scope.deets = detailsFetcher.getDetails();
+    };
+
+
+    module
+        .factory('detailsFetcher', ['$timeout', '$q', '$stateParams', FakeDetailsFetcher])
+        .controller('Details', ['$state', '$stateParams', '$scope', 'detailsFetcher', DetailsController])
+        .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])
+        .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', LeaderBoardsController]);
+
+})(angular.module('leaderBoards'));
+
+
+// Begin states here.
+(function (module) {
+
+    var leaderBoardStates = {
+        LEADER_BOARDS:             'leaderBoards',
+        DETAILS_LAYOUT:     'detailsLayout',
+        DETAILS:            'detailsLayout.details'
+    };
+
+    function leaderBoardsConfig($locationProvider, $urlRouterProvider, $stateProvider, boardStates) {
+
+        // TODO: remove this and inject the real implementation.
+        function FakeBoardDataResolve($timeout, $q, $stateParams) {
+            var boards = {
+                player: [],
+                team: []
+            };
+
+            for (var i = 0; i < 12; i++) {
+                boards.player.push({
+                    name: "player board " + i,
+                    id: i
+                });
+                boards.team.push({
+                    name: "team board " + i,
+                    id: i
+                });
+            }
+
+            var d = $q.defer();
+            $timeout(function() {
+                d.resolve(boards);
+            }, 290);
+
+            return d.promise;
+        }
+
+        FakeBoardDataResolve.$inject = ['$timeout', '$q', '$stateParams'];
+
+        $stateProvider
+            .state(boardStates.LEADER_BOARDS, {
+                url:    '/',
+                templateUrl:    '/Scripts/leaderBoards/tpl/leaderBoardsNew.tpl.html',
+                controller:    'LeaderBoards',
+                resolve: {
+                    leaderBoards: FakeBoardDataResolve
+                }
+            });
+
+        $stateProvider
+            .state(boardStates.DETAILS_LAYOUT, {
+                abstract: true,
+                url: '/leaderboarddata',
+                templateUrl: '/Scripts/leaderBoards/tpl/boardDataLayout.tpl.html',
+                controller: 'DetailsLayout',
+                resolve: {
+                    leaderBoards: FakeBoardDataResolve
+                }
+            });
+
+        $stateProvider
+            .state(boardStates.DETAILS, {
+                url: '/{boardGroup:team|player}/:id',
+                templateUrl: '/Scripts/leaderBoards/tpl/boardData.tpl.html',
+                controller: 'Details'
+            });
+
+
+        $urlRouterProvider.otherwise('/');
+
+        $locationProvider.html5Mode(true);
+    };
+
+    module
+        .constant('leaderBoardStates', leaderBoardStates)
+        .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', 'leaderBoardStates', leaderBoardsConfig]);
+
+})(angular.module('leaderBoards'));
+
+
+
+
+
+
+
+
+
+/*
 (function (module) {
 
     //
@@ -163,4 +328,4 @@
 
 
     
-    
+  */  
