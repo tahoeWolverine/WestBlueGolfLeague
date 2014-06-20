@@ -16,15 +16,15 @@
 
 @implementation WBTeam
 
-+ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
-	WBTeam *newTeam = (WBTeam *)[self createPeopleWithId:teamId name:name inContext:moc];
++ (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId real:(BOOL)real inContext:(NSManagedObjectContext *)moc {
+	WBTeam *newTeam = (WBTeam *)[self createPeopleWithId:teamId name:name real:real inContext:moc];
 	return newTeam;
 }
 
-+ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc {
++ (WBTeam *)teamWithName:(NSString *)name teamId:(NSInteger)teamId real:(BOOL)real inContext:(NSManagedObjectContext *)moc {
 	WBTeam *team = [[self class] teamWithId:teamId inContext:moc];
 	if (!team) {
-		team = [[self class] createTeamWithName:name teamId:teamId inContext:moc];
+		team = [[self class] createTeamWithName:name teamId:teamId real:real inContext:moc];
 	}
 	return team;
 }

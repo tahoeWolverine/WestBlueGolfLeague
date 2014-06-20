@@ -5,6 +5,7 @@
 @interface WBLeaderBoard : _WBLeaderBoard {}
 
 + (WBLeaderBoard *)createLeaderBoardWithName:(NSString *)name
+                                     boardId:(NSInteger)boardId
 										 key:(NSString *)key
 							   tablePriority:(NSInteger)tablePriority
 							   isPlayerBoard:(BOOL)isPlayerBoard
@@ -12,11 +13,14 @@
 
 // Lazy accessor
 + (WBLeaderBoard *)leaderBoardWithName:(NSString *)name
+                               boardId:(NSInteger)boardId
 								   key:(NSString *)key
 						 tablePriority:(NSInteger)tablePriority
 						 isPlayerBoard:(BOOL)isPlayerBoard
 								   moc:(NSManagedObjectContext *)moc;
 
 - (NSArray *)winnerData;
+
++ (WBLeaderBoard *)findWithId:(NSInteger)boardId;
 
 @end

@@ -7,7 +7,10 @@
 
 @implementation WBPeopleEntity
 
-+ (WBPeopleEntity *)createPeopleWithId:(NSInteger)peopleId name:(NSString *)name inContext:(NSManagedObjectContext *)moc {
++ (WBPeopleEntity *)createPeopleWithId:(NSInteger)peopleId
+                                  name:(NSString *)name
+                                  real:(BOOL)real
+                             inContext:(NSManagedObjectContext *)moc {
 	id entity = [self createEntityInContext:moc];
 	WBPeopleEntity *newPeople = (WBPeopleEntity *)entity;
     newPeople.idValue = peopleId;
@@ -18,7 +21,7 @@
 + (WBPeopleEntity *)leagueAverageInContext:(NSManagedObjectContext *)moc {
 	WBPeopleEntity *avg = (WBPeopleEntity *)[self findFirstRecordWithFormat:@"name = %@", LEAGUE_AVERAGE_NAME];
 	if (!avg) {
-		avg = [WBPeopleEntity createPeopleWithId:-1 name:LEAGUE_AVERAGE_NAME inContext:moc];
+		avg = [WBPeopleEntity createPeopleWithId:-1 name:LEAGUE_AVERAGE_NAME real:NO inContext:moc];
 	}
 	return avg;
 }
@@ -43,6 +46,10 @@
 
 	NSString *shortFirstName = [NSString stringWithFormat:@"%@.", [firstName substringToIndex:1]];
 	return [self.name stringByReplacingOccurrencesOfString:firstName withString:shortFirstName];
+}
+
++ (WBPeopleEntity *)findWithId:(NSInteger)peopleId {
+	return (WBPeopleEntity *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:peopleId]];
 }
 
 @end

@@ -73,8 +73,10 @@
 	//WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
 	//[handiManager calculateHandicapsForYear:year moc:[WBCoreDataManager mainContext]];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
+	//[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
+    [boardManager createLeaderBoardsForYear:year withJson:responseObject];
 	//[WBCoreDataManager saveContext:moc];
+    [WBCoreDataManager saveMainContext];
 }
 
 - (void)setupCoreData:(BOOL)reset {

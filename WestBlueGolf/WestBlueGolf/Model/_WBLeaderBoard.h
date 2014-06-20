@@ -5,6 +5,7 @@
 #import "WBManagedObject.h"
 
 extern const struct WBLeaderBoardAttributes {
+	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *isPlayerBoard;
 	__unsafe_unretained NSString *key;
 	__unsafe_unretained NSString *name;
@@ -25,6 +26,7 @@ extern const struct WBLeaderBoardFetchedProperties {
 
 
 
+
 @interface WBLeaderBoardID : NSManagedObjectID {}
 @end
 
@@ -33,6 +35,20 @@ extern const struct WBLeaderBoardFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (WBLeaderBoardID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* id;
+
+
+
+@property int16_t idValue;
+- (int16_t)idValue;
+- (void)setIdValue:(int16_t)value_;
+
+//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -106,6 +122,15 @@ extern const struct WBLeaderBoardFetchedProperties {
 @end
 
 @interface _WBLeaderBoard (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveId;
+- (void)setPrimitiveId:(NSNumber*)value;
+
+- (int16_t)primitiveIdValue;
+- (void)setPrimitiveIdValue:(int16_t)value_;
+
+
 
 
 - (NSNumber*)primitiveIsPlayerBoard;

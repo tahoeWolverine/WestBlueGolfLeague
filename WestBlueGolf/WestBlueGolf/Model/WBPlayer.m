@@ -9,7 +9,6 @@
 #import "WBWeek.h"
 #import "WBYear.h"
 
-#define kNoShowPlayerName @"xx No Show xx"
 #define kNoShowPlayerScore 99.0f
 
 @interface WBPlayer ()
@@ -21,11 +20,13 @@
 + (WBPlayer *)createPlayerWithId:(NSInteger)playerId
                             name:(NSString *)name
                  currentHandicap:(NSInteger)currentHandicap
+                            real:(BOOL)real
                        inContext:(NSManagedObjectContext *)moc {
-	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithId:playerId name:name inContext:moc];
+	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithId:playerId name:name real:real inContext:moc];
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
+    newPlayer.realValue = real;
 
 	return newPlayer;
 }
@@ -33,10 +34,11 @@
 + (WBPlayer *)playerWithId:(NSInteger)playerId
                       name:(NSString *)name
            currentHandicap:(NSInteger)currentHandicap
+                      real:(BOOL)real
                  inContext:(NSManagedObjectContext *)moc {
 	WBPlayer *player = [[self class] playerWithName:name inContext:moc];
 	if (!player) {
-		player = [[self class] createPlayerWithId:playerId name:name currentHandicap:currentHandicap inContext:moc];
+		player = [[self class] createPlayerWithId:playerId name:name currentHandicap:currentHandicap real:real inContext:moc];
 	}
 	return player;
 }
@@ -56,25 +58,21 @@
 	return [self filterYearDataForYear:[WBYear thisYear]].team;
 }
 
-+ (WBPlayer *)findWithId:(NSInteger)playerId {
-	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:playerId]];
-}
-
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc {
 	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil moc:moc];
 }
 
-+ (WBPlayer *)noShowPlayer {
+/*+ (WBPlayer *)noShowPlayer {
 	return [[self class] playerWithName:kNoShowPlayerName inContext:[[self class] context]];
 }
 
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc {
-	[[self class] playerWithId:-1 name:kNoShowPlayerName currentHandicap:25 inContext:moc];
+	[[self class] playerWithId:-1 name:kNoShowPlayerName currentHandicap:25 real:NO inContext:moc];
 }
 
 - (BOOL)isNoShowPlayer {
 	return [self.name isEqualToString:kNoShowPlayerName];
-}
+}*/
 
 + (WBPlayer *)me {
 	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"me = 1"];

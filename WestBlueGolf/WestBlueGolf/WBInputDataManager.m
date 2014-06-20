@@ -31,11 +31,12 @@
 #define wbJsonKeyTeams @"teamsForYear"
 #define wbJsonKeyTeamId @"id"
 #define wbJsonKeyTeamName @"name"
-//#define wbJsonKeyTeamValie @"valid"
+#define wbJsonKeyTeamValid @"valid"
 
 #define wbJsonKeyPlayers @"playersForYear"
 #define wbJsonKeyPlayerName @"name"
 #define wbJsonKeyPlayerId @"id"
+#define wbJsonKeyPlayerValid @"vp"
 //#define wbJsonKeyPlayerCurrentTeam @"tId"
 #define wbJsonKeyPlayerCurrentHandicap @"ch"
 
@@ -120,10 +121,12 @@
 	NSArray *teamArray = [json objectForKey:wbJsonKeyTeams];
 	NSString *teamName = nil;
 	NSInteger teamId = 0;
+    BOOL real = NO;
 	for (NSDictionary *elt in teamArray) {
 		teamName = [elt objectForKey:wbJsonKeyTeamName];
 		teamId = [[elt objectForKey:wbJsonKeyTeamId] integerValue];
-		[WBTeam teamWithName:teamName teamId:teamId inContext:moc];
+        real = [[elt objectForKey:wbJsonKeyTeamValid] boolValue];
+		[WBTeam teamWithName:teamName teamId:teamId real:real inContext:moc];
 	}
 	
 	//[WBCoreDataManager saveContext:moc];
@@ -141,7 +144,8 @@
 		playerId = [[elt objectForKey:wbJsonKeyPlayerId] integerValue];
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
 		currentHandicap = [[elt objectForKey:wbJsonKeyPlayerCurrentHandicap] integerValue];
-		player = [WBPlayer playerWithId:playerId name:playerName currentHandicap:currentHandicap inContext:moc];
+        real = [[elt objectForKey:wbJsonKeyPlayerValid] boolValue];
+		player = [WBPlayer playerWithId:playerId name:playerName currentHandicap:currentHandicap real:real inContext:moc];
 		
 		// Player Year data parse
         data = [elt objectForKey:wbJsonKeyPlayerData];
@@ -155,7 +159,7 @@
 	}
 	
 	// Create a player to catch all the no shows (ends up being conditional too)
-	[WBPlayer createNoShowPlayerInContext:moc];
+	//[WBPlayer createNoShowPlayerInContext:moc];
 	
 	//[WBCoreDataManager saveContext:moc];
 	
@@ -221,8 +225,8 @@
             player1Id = [[result1Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
             player2Id = [[result2Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
             
-            player1 = [WBPlayer findWithId:player1Id];
-            player2 = [WBPlayer findWithId:player2Id];
+            player1 = (WBPlayer *)[WBPlayer findWithId:player1Id];
+            player2 = (WBPlayer *)[WBPlayer findWithId:player2Id];
             if (!player1 || !player2) {
                 DLog(@"Bad Player Results");
                 continue;
@@ -288,7 +292,7 @@
 		}
 	}
 	
-	[WBCoreDataManager saveContext:moc];
+	//[WBCoreDataManager saveContext:moc];
 }
 
 - (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {

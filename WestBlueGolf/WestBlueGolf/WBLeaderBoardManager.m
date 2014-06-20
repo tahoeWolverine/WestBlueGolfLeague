@@ -17,7 +17,81 @@
 #define kDetailStringImprove @"improved from %ld to %ld"
 #define kDetailStringSingle @"occurred in Week %ld on %@"
 
+#define wbJsonKeyLeaderboards @"leaderboards"
+#define wbJsonKeyLeaderboardId @"id"
+#define wbJsonKeyLeaderboardPlayerBoard @"isPlayerBoard"
+#define wbJsonKeyLeaderboardKey @"key"
+//#define wbJsonKeyLeaderboardData @"leaderboarddatas"
+#define wbJsonKeyLeaderboardName @"name"
+#define wbJsonKeyLeaderboardPriority @"priority"
+
+#define wbJsonKeyLeaderboardData @"leaderboardDataForYear"
+#define wbJsonKeyLeaderboardDataDetail @"det"
+#define wbJsonKeyLeaderboardDataId @"id"
+//#define wbJsonKeyLeaderboardDataPlayerBoard @"isp"
+#define wbJsonKeyLeaderboardDataBoardId @"lbId"
+#define wbJsonKeyLeaderboardDataPlayerId @"pId"
+#define wbJsonKeyLeaderboardDataRank @"r"
+#define wbJsonKeyLeaderboardDataValue @"v"
+#define wbJsonKeyLeaderboardDataTeamId @"tId"
+
 @implementation WBLeaderBoardManager
+
+- (void)createLeaderBoardsForYear:(WBYear *)year withJson:(NSDictionary *)json {
+    NSManagedObjectContext *moc = [WBCoreDataManager mainContext];
+
+    // Leaderboards
+    NSArray *boardArray = [json objectForKey:wbJsonKeyLeaderboards];
+    
+    NSString *boardName = nil, *boardKey = nil;
+    NSInteger boardPriority = 0, boardId = 0;
+    BOOL isPlayerBoard = NO;
+	for (NSDictionary *elt in boardArray) {
+		boardId = [[elt objectForKey:wbJsonKeyLeaderboardId] integerValue];
+		boardName = [elt objectForKey:wbJsonKeyLeaderboardName];
+		boardKey = [elt objectForKey:wbJsonKeyLeaderboardKey];
+		boardPriority = [[elt objectForKey:wbJsonKeyLeaderboardPriority] integerValue];
+		isPlayerBoard = [[elt objectForKey:wbJsonKeyLeaderboardPlayerBoard] boolValue];
+        
+        [WBLeaderBoard leaderBoardWithName:boardName boardId:boardId key:boardKey tablePriority:boardPriority isPlayerBoard:isPlayerBoard moc:moc];
+	}
+    
+    // Leaderboard Data
+    NSArray *dataArray = [json objectForKey:wbJsonKeyLeaderboardData];
+    
+    NSString *dataDetail = nil, *dataValueStr = nil;
+    NSNumber *playerId = nil, *teamId = nil;
+    NSInteger dataId = 0, dataRank = 0, dataValue = 0;
+    WBPeopleEntity *people = nil;
+    WBLeaderBoard *board = nil;
+    for (NSDictionary *elt in dataArray) {
+		dataId = [[elt objectForKey:wbJsonKeyLeaderboardDataId] integerValue];
+		dataDetail = [elt objectForKey:wbJsonKeyLeaderboardDataDetail];
+		dataRank = [[elt objectForKey:wbJsonKeyLeaderboardDataRank] integerValue];
+		dataValueStr = [elt objectForKey:wbJsonKeyLeaderboardDataValue];
+		boardId = [[elt objectForKey:wbJsonKeyLeaderboardDataBoardId] integerValue];
+		teamId = [elt objectForKey:wbJsonKeyLeaderboardDataTeamId];
+		playerId = [elt objectForKey:wbJsonKeyLeaderboardDataPlayerId];
+        
+        if (dataValueStr && ![dataValueStr isKindOfClass:[NSNull class]] && ![dataValueStr isEqualToString:@""]) {
+            dataValue = [dataValueStr integerValue];
+        }
+
+        if (playerId && ![playerId isKindOfClass:[NSNull class]]) {
+            people = [WBPeopleEntity findWithId:[playerId integerValue]];
+        }
+
+        if (teamId && ![teamId isKindOfClass:[NSNull class]]) {
+            people = [WBPeopleEntity findWithId:[teamId integerValue]];
+        }
+        
+        board = [WBLeaderBoard findWithId:boardId];
+        
+        [WBBoardData createBoardDataForEntity:people leaderBoard:board dataId:dataId value:dataValue detailValue:dataDetail rank:dataRank year:year moc:moc];
+	}
+    
+    //[WBCoreDataManager saveContext:moc];
+}
 
 - (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
 	// Important team boards
@@ -103,10 +177,10 @@
 		return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
 	}];
 
-	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardTeamTopPercentage tablePriority:14 isPlayerBoard:NO moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Five Score" key:kLeaderboardTeamTopFivePercentage tablePriority:15 isPlayerBoard:NO moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"Triple Crown" key:kLeaderboardTeamTripleCrown tablePriority:16 isPlayerBoard:NO moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"Playoffs" key:kLeaderboardTeamPlayoffs tablePriority:17 isPlayerBoard:NO moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Score" boardId:-1 key:kLeaderboardTeamTopPercentage tablePriority:14 isPlayerBoard:NO moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Five Score" boardId:-1 key:kLeaderboardTeamTopFivePercentage tablePriority:15 isPlayerBoard:NO moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"Triple Crown" boardId:-1 key:kLeaderboardTeamTripleCrown tablePriority:16 isPlayerBoard:NO moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"Playoffs" boardId:-1 key:kLeaderboardTeamPlayoffs tablePriority:17 isPlayerBoard:NO moc:moc];
 	
 	// Triple crown board: Avg Points, Avg Score, Improved
 	
@@ -214,10 +288,10 @@
 		return @"";
 	}];
 
-	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Score" key:kLeaderboardPlayerTopPercentage tablePriority:17 isPlayerBoard:YES moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Ten Score" key:kLeaderboardPlayerTopTenPercentage tablePriority:18 isPlayerBoard:YES moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"Triple Crown" key:kLeaderboardPlayerTripleCrown tablePriority:19 isPlayerBoard:YES moc:moc];
-	[WBLeaderBoard leaderBoardWithName:@"Triple Crown 2" key:kLeaderboardPlayerTripleCrown2 tablePriority:20 isPlayerBoard:YES moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Score" boardId:-1 key:kLeaderboardPlayerTopPercentage tablePriority:17 isPlayerBoard:YES moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"% Weeks Top Ten Score" boardId:-1 key:kLeaderboardPlayerTopTenPercentage tablePriority:18 isPlayerBoard:YES moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"Triple Crown" boardId:-1 key:kLeaderboardPlayerTripleCrown tablePriority:19 isPlayerBoard:YES moc:moc];
+	[WBLeaderBoard leaderBoardWithName:@"Triple Crown 2" boardId:-1 key:kLeaderboardPlayerTripleCrown2 tablePriority:20 isPlayerBoard:YES moc:moc];
 	
 	// Pro Triple crown board: Avg Points, Avg Score, Total Wins
 	// Triple Crown: Avg Points, Avg Net Score, Improved
@@ -236,7 +310,7 @@
 							   moc:(NSManagedObjectContext *)moc
 				  valueCalculation:(CGFloat (^) (WBTeam *))valueCalculation
 				   detailValueCalc:(NSString * (^) (WBTeam *))detailValueCalc {
-	WBLeaderBoard *board = [WBLeaderBoard leaderBoardWithName:name key:key tablePriority:priority isPlayerBoard:NO moc:moc];
+	WBLeaderBoard *board = [WBLeaderBoard leaderBoardWithName:name boardId:-1 key:key tablePriority:priority isPlayerBoard:NO moc:moc];
 	CGFloat totalLeagueValue = 0, value = 0, teamCount = 0;
 	NSString *detailValue = nil;
 	NSArray *results = nil;
@@ -245,7 +319,7 @@
 		if (results && results.count > 0) {
 			value = valueCalculation(team);
 			detailValue = detailValueCalc(team);
-			[WBBoardData createBoardDataForEntity:team leaderBoard:board value:value detailValue:detailValue rank:0 year:year moc:moc];
+			[WBBoardData createBoardDataForEntity:team leaderBoard:board dataId:-1 value:value detailValue:detailValue rank:0 year:year moc:moc];
 			totalLeagueValue += value;
 			teamCount++;
 		}
@@ -253,7 +327,7 @@
 	
 	// Create league average for board
 	if (teamCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / teamCount) detailValue:nil rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / teamCount) detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];
@@ -270,7 +344,7 @@
 								 moc:(NSManagedObjectContext *)moc
 					valueCalculation:(CGFloat (^) (WBPlayer *))valueCalculation
 					 detailValueCalc:(NSString * (^) (WBPlayer *))detailValueCalc {
-	WBLeaderBoard *board = [WBLeaderBoard leaderBoardWithName:name key:key tablePriority:priority isPlayerBoard:YES moc:moc];
+	WBLeaderBoard *board = [WBLeaderBoard leaderBoardWithName:name boardId:-1 key:key tablePriority:priority isPlayerBoard:YES moc:moc];
 	CGFloat totalLeagueValue = 0, value = 0, playerCount = 0;
 	NSString *detailValue = nil;
 	NSArray *results = nil;
@@ -279,8 +353,8 @@
 		if (results && results.count > 0) {
 			value = valueCalculation(player);
 			detailValue = detailValueCalc(player);
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board value:value detailValue:detailValue rank:0 year:year moc:moc];
-			if (![player isNoShowPlayer]) {
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board dataId:-1 value:value detailValue:detailValue rank:0 year:year moc:moc];
+			if (!player.realValue) {
 				totalLeagueValue += value;
 				playerCount++;
 			}
@@ -289,7 +363,7 @@
 	
 	// Create league average for board
 	if (playerCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board value:(totalLeagueValue / playerCount) detailValue:nil rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / playerCount) detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];

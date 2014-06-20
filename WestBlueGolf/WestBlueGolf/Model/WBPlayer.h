@@ -27,16 +27,20 @@
 #define kLeaderboardPlayerTripleCrown @"tripleCrown"
 #define kLeaderboardPlayerTripleCrown2 @"tripleCrown2"
 
+#define kNoShowPlayerName @"No Show"
+
 @interface WBPlayer : _WBPlayer {}
 
 // Player specific create function
 + (WBPlayer *)createPlayerWithId:(NSInteger)playerId
                             name:(NSString *)name
                  currentHandicap:(NSInteger)currentHandicap
+                            real:(BOOL)real
                        inContext:(NSManagedObjectContext *)moc;
 + (WBPlayer *)playerWithId:(NSInteger)playerId
                       name:(NSString *)name
            currentHandicap:(NSInteger)currentHandicap
+                      real:(BOOL)real
                  inContext:(NSManagedObjectContext *)moc;
 
 + (WBPlayer *)me;
@@ -44,11 +48,10 @@
 - (void)setPlayerToNotMe;
 - (WBTeam *)currentTeam;
 
-+ (WBPlayer *)noShowPlayer;
+/*+ (WBPlayer *)noShowPlayer;
 + (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;
-- (BOOL)isNoShowPlayer;
+- (BOOL)isNoShowPlayer;*/
 
-+ (WBPlayer *)findWithId:(NSInteger)playerId;
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;

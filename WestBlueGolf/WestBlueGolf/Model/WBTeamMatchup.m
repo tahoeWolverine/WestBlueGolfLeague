@@ -139,7 +139,7 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+			if (result.team == team && ![result.player.name isEqualToString:kNoShowPlayerName]) {
 				total += result.pointsValue;
 			}
 		}
@@ -156,7 +156,7 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+			if (result.team == team && ![result.player.name isEqualToString:kNoShowPlayerName]) {
 				total += result.scoreValue;
 			}
 		}
@@ -173,7 +173,7 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+			if (result.team == team && ![result.player.name isEqualToString:kNoShowPlayerName]) {
 				total += result.priorHandicapValue;
 			}
 		}
@@ -193,7 +193,7 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.team == team && ![result.player.name isEqualToString:@"xx No Show xx"]) {
+			if (result.team == team && ![result.player.name isEqualToString:kNoShowPlayerName]) {
 				total += [result netScoreDifference];
 			}
 		}
