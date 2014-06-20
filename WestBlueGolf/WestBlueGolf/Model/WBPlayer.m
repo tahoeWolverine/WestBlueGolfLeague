@@ -22,7 +22,8 @@
                  currentHandicap:(NSInteger)currentHandicap
                             real:(BOOL)real
                        inContext:(NSManagedObjectContext *)moc {
-	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithId:playerId name:name real:real inContext:moc];
+	WBPlayer *newPlayer = (WBPlayer *)[self createPeopleWithName:name real:real inContext:moc];
+    newPlayer.idValue = playerId;
 	newPlayer.currentHandicapValue = currentHandicap;
 	newPlayer.meValue = NO;
 	newPlayer.favoriteValue = NO;
@@ -76,6 +77,10 @@
 
 + (WBPlayer *)me {
 	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"me = 1"];
+}
+
++ (WBPlayer *)findWithId:(NSInteger)playerId {
+	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:playerId]];
 }
 
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc {

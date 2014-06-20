@@ -6,6 +6,7 @@
 
 extern const struct WBPlayerAttributes {
 	__unsafe_unretained NSString *currentHandicap;
+	__unsafe_unretained NSString *id;
 } WBPlayerAttributes;
 
 extern const struct WBPlayerRelationships {
@@ -20,6 +21,7 @@ extern const struct WBPlayerFetchedProperties {
 @class WBMatch;
 @class WBResult;
 @class WBPlayerYearData;
+
 
 
 
@@ -45,6 +47,20 @@ extern const struct WBPlayerFetchedProperties {
 - (void)setCurrentHandicapValue:(int16_t)value_;
 
 //- (BOOL)validateCurrentHandicap:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* id;
+
+
+
+@property int16_t idValue;
+- (int16_t)idValue;
+- (void)setIdValue:(int16_t)value_;
+
+//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -101,6 +117,15 @@ extern const struct WBPlayerFetchedProperties {
 
 - (int16_t)primitiveCurrentHandicapValue;
 - (void)setPrimitiveCurrentHandicapValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitiveId;
+- (void)setPrimitiveId:(NSNumber*)value;
+
+- (int16_t)primitiveIdValue;
+- (void)setPrimitiveIdValue:(int16_t)value_;
 
 
 

@@ -17,7 +17,8 @@
 @implementation WBTeam
 
 + (WBTeam *)createTeamWithName:(NSString *)name teamId:(NSInteger)teamId real:(BOOL)real inContext:(NSManagedObjectContext *)moc {
-	WBTeam *newTeam = (WBTeam *)[self createPeopleWithId:teamId name:name real:real inContext:moc];
+	WBTeam *newTeam = (WBTeam *)[self createPeopleWithName:name real:real inContext:moc];
+    newTeam.idValue = teamId;
 	return newTeam;
 }
 
@@ -35,6 +36,10 @@
 
 + (WBTeam *)myTeam {
 	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"me = 1"];
+}
+
++ (WBTeam *)findWithId:(NSInteger)teamId {
+	return (WBTeam *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:teamId]];
 }
 
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc {

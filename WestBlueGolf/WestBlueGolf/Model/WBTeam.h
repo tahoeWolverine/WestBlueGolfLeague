@@ -31,6 +31,7 @@
 + (WBTeam *)teamWithId:(NSInteger)teamId inContext:(NSManagedObjectContext *)moc;
 + (WBTeam *)myTeam;
 
++ (WBTeam *)findWithId:(NSInteger)teamId;
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
 - (NSArray *)filterMatchupsForYear:(WBYear *)year;

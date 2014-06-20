@@ -6,7 +6,6 @@
 
 extern const struct WBPeopleEntityAttributes {
 	__unsafe_unretained NSString *favorite;
-	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *me;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *real;
@@ -20,7 +19,6 @@ extern const struct WBPeopleEntityFetchedProperties {
 } WBPeopleEntityFetchedProperties;
 
 @class WBBoardData;
-
 
 
 
@@ -49,20 +47,6 @@ extern const struct WBPeopleEntityFetchedProperties {
 - (void)setFavoriteValue:(BOOL)value_;
 
 //- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* id;
-
-
-
-@property int16_t idValue;
-- (int16_t)idValue;
-- (void)setIdValue:(int16_t)value_;
-
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -133,15 +117,6 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 - (BOOL)primitiveFavoriteValue;
 - (void)setPrimitiveFavoriteValue:(BOOL)value_;
-
-
-
-
-- (NSNumber*)primitiveId;
-- (void)setPrimitiveId:(NSNumber*)value;
-
-- (int16_t)primitiveIdValue;
-- (void)setPrimitiveIdValue:(int16_t)value_;
 
 
 

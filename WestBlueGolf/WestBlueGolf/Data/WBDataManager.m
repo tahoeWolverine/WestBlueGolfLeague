@@ -32,7 +32,7 @@
 - (void)setupData {
 	// Setup year (could be preference of some kind, but for now, newest)
 	WBYear *year = [WBYear newestYearInContext:[WBCoreDataManager mainContext]];
-	if (!year) {
+	if (!year || [year needsRefresh]) {
 		//self.loading = YES;
 		[[WBAppDelegate sharedDelegate] setLoading:YES];
 		
@@ -76,6 +76,10 @@
 	//[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
     [boardManager createLeaderBoardsForYear:year withJson:responseObject];
 	//[WBCoreDataManager saveContext:moc];
+    
+    // Finalize year data
+    year.dataCompleteValue = YES;
+    
     [WBCoreDataManager saveMainContext];
 }
 
@@ -111,7 +115,7 @@
 }
 
 - (void)resetYear:(WBYear *)year withJson:(NSDictionary *)responseObject {
-	if (!year.weeks || year.weeks.count == 0) {
+	if ([year needsRefresh]) {
 		[[WBAppDelegate sharedDelegate] setLoading:YES];
 		DLog(@"Processing Started");
 		[self loadAndCalculateForYear:year.valueValue withJson:responseObject];

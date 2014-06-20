@@ -20,6 +20,7 @@
 	newYear.idValue = yearId;
 	newYear.valueValue = year;
 	newYear.isCompleteValue = isComplete;
+    newYear.dataCompleteValue = NO; // Set no til full data comes down
 	return newYear;
 }
 
@@ -66,7 +67,7 @@
 }
 
 - (BOOL)needsRefresh {
-	return !self.weeks || self.weeks.count == 0;
+	return !self.dataCompleteValue || !self.weeks || self.weeks.count == 0;
 }
 
 @end

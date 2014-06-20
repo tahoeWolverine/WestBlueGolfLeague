@@ -59,8 +59,8 @@
     // Leaderboard Data
     NSArray *dataArray = [json objectForKey:wbJsonKeyLeaderboardData];
     
-    NSString *dataDetail = nil, *dataValueStr = nil;
-    NSNumber *playerId = nil, *teamId = nil;
+    NSString *dataDetail = nil;
+    NSNumber *playerId = nil, *teamId = nil, *dataValueNum = nil;
     NSInteger dataId = 0, dataRank = 0, dataValue = 0;
     WBPeopleEntity *people = nil;
     WBLeaderBoard *board = nil;
@@ -68,21 +68,21 @@
 		dataId = [[elt objectForKey:wbJsonKeyLeaderboardDataId] integerValue];
 		dataDetail = [elt objectForKey:wbJsonKeyLeaderboardDataDetail];
 		dataRank = [[elt objectForKey:wbJsonKeyLeaderboardDataRank] integerValue];
-		dataValueStr = [elt objectForKey:wbJsonKeyLeaderboardDataValue];
+		dataValueNum = [elt objectForKey:wbJsonKeyLeaderboardDataValue];
 		boardId = [[elt objectForKey:wbJsonKeyLeaderboardDataBoardId] integerValue];
 		teamId = [elt objectForKey:wbJsonKeyLeaderboardDataTeamId];
 		playerId = [elt objectForKey:wbJsonKeyLeaderboardDataPlayerId];
         
-        if (dataValueStr && ![dataValueStr isKindOfClass:[NSNull class]] && ![dataValueStr isEqualToString:@""]) {
-            dataValue = [dataValueStr integerValue];
+        if (dataValueNum && ![dataValueNum isKindOfClass:[NSNull class]]) {
+            dataValue = [dataValueNum integerValue];
         }
 
         if (playerId && ![playerId isKindOfClass:[NSNull class]]) {
-            people = [WBPeopleEntity findWithId:[playerId integerValue]];
+            people = [WBPlayer findWithId:[playerId integerValue]];
         }
 
         if (teamId && ![teamId isKindOfClass:[NSNull class]]) {
-            people = [WBPeopleEntity findWithId:[teamId integerValue]];
+            people = [WBTeam findWithId:[teamId integerValue]];
         }
         
         board = [WBLeaderBoard findWithId:boardId];

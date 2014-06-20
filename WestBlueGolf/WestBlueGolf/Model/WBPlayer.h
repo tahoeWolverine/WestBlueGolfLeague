@@ -54,6 +54,7 @@
 
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
++ (WBPlayer *)findWithId:(NSInteger)playerId;
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
 - (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData;
 - (NSArray *)filterResultsForYear:(WBYear *)year goodData:(BOOL)goodData sorts:(NSArray *)sorts;

@@ -5,6 +5,7 @@
 
 const struct WBPlayerAttributes WBPlayerAttributes = {
 	.currentHandicap = @"currentHandicap",
+	.id = @"id",
 };
 
 const struct WBPlayerRelationships WBPlayerRelationships = {
@@ -47,6 +48,11 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
+	if ([key isEqualToString:@"idValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -74,6 +80,32 @@ const struct WBPlayerFetchedProperties WBPlayerFetchedProperties = {
 
 - (void)setPrimitiveCurrentHandicapValue:(int16_t)value_ {
 	[self setPrimitiveCurrentHandicap:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic id;
+
+
+
+- (int16_t)idValue {
+	NSNumber *result = [self id];
+	return [result shortValue];
+}
+
+- (void)setIdValue:(int16_t)value_ {
+	[self setId:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveIdValue {
+	NSNumber *result = [self primitiveId];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveIdValue:(int16_t)value_ {
+	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
 }
 
 
