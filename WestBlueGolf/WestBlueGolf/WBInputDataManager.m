@@ -52,6 +52,7 @@
 #define wbJsonKeyTeamMatchupOriginalId @"mId" // unused
 #define wbJsonKeyTeamMatchupWeekId @"wId"
 #define wbJsonKeyTeamMatchupComplete @"mc"
+#define wbJsonKeyTeamMatchupTeams @"teamIds"
 
 #define wbJsonKeyMatches @"matchups"
 #define wbJsonKeyMatchId @"id"
@@ -172,7 +173,7 @@
     WBWeek *week = nil;
     WBMatch *match = nil;
     NSInteger team1Id = -1, team2Id = -1, matchupId = 0, player1Id = 0, player2Id = 0, score = 0, priorHandicap = 0, points = 0;
-    NSArray *matchesJson = nil, *resultsJson = nil;
+    NSArray *matchesJson = nil, *resultsJson = nil, *teamsJson = nil;
     NSDictionary *matchJson = nil, *result1Json = nil, *result2Json = nil;
     BOOL matchComplete = NO, firstResult = YES;
     for (NSDictionary *elt in teamMatchupArray) {
@@ -184,17 +185,24 @@
 			//continue;
 		}
         
-        matchesJson = [elt objectForKey:wbJsonKeyMatches];
-        if (!matchesJson || matchesJson.count == 0) {
+        teamsJson = [elt objectForKey:wbJsonKeyTeamMatchupTeams];
+        
+        if (!teamsJson || teamsJson.count < 2) {
+            DLog(@"Not enough teams in matchup");
             continue;
         }
+        
+        team1Id = [[teamsJson objectAtIndex:0] integerValue];
+        team2Id = [[teamsJson objectAtIndex:1] integerValue];
+        
+        
 
-        matchJson = matchesJson.count > 0 ? matchesJson[0] : nil;
+        /*matchJson = matchesJson.count > 0 ? matchesJson[0] : nil;
         resultsJson = [matchJson objectForKey:wbJsonKeyResults];
         result1Json = resultsJson.count == 2 ? resultsJson[0] : nil;
         result2Json = resultsJson.count == 2 ? resultsJson[1] : nil;
 		team1Id = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];
-        team2Id = [[result2Json objectForKey:wbJsonKeyResultTeamId] integerValue];
+        team2Id = [[result2Json objectForKey:wbJsonKeyResultTeamId] integerValue];*/
         
         team1 = [WBTeam teamWithId:team1Id inContext:moc];
         team2 = [WBTeam teamWithId:team2Id inContext:moc];
@@ -217,6 +225,11 @@
         matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchupId:matchupId matchComplete:matchComplete moc:moc];
         
         // Matches
+        matchesJson = [elt objectForKey:wbJsonKeyMatches];
+        if (!matchesJson || matchesJson.count == 0) {
+            continue;
+        }
+        
         for (matchJson in matchesJson) {
             resultsJson = [matchJson objectForKey:wbJsonKeyResults];
             result1Json = resultsJson.count == 2 ? resultsJson[0] : nil;
