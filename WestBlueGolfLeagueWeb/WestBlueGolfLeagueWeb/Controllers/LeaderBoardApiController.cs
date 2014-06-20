@@ -41,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             // validate that we have a valid key.
 
             var leaderBoard = db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
-            var leaderBoardDatas = db.leaderboarddatas.Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
+            var leaderBoardDatas = db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
 
             var lbdResponse = await leaderBoard;
 
@@ -52,7 +52,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var datas = await leaderBoardDatas;
 
-            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => LeaderBoardDataResponse.From(x)) });
+            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => new LeaderBoardDataWebResponse(x)) });
         }
 
         protected override void Dispose(bool disposing)

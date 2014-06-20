@@ -11,11 +11,11 @@
         </div>
 
         <div ng-show="showPlayerBoards()" class="list-group">
-            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'player', id: item.id })" class="list-group-item" ng-repeat="item in boards.player">{{item.name}}</a>
+            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'player', id: item.key })" class="list-group-item" ng-repeat="item in boards.player">{{item.name}}</a>
         </div>
 
         <div ng-show="showTeamBoards()" class="list-group">
-            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'team', id: item.id })" class="list-group-item" ng-repeat="item in boards.team">{{item.name}}</a>
+            <a ui-sref-active="active" ui-sref="detailsLayout.details({ boardGroup: 'team', id: item.key })" class="list-group-item" ng-repeat="item in boards.team">{{item.name}}</a>
         </div>
     </div>
 

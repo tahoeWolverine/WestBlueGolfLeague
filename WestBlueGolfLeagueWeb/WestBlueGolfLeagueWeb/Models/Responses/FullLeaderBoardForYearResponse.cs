@@ -7,6 +7,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 {
     public class FullLeaderBoardForYearResponse
     {
-        public IEnumerable<LeaderBoardDataResponse> LeaderBoardData { get; set; }
+        public IEnumerable<LeaderBoardDataWebResponse> LeaderBoardData { get; set; }
     }
 }

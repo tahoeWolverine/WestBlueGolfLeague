@@ -231,6 +231,8 @@
     <Compile Include="Models\Entities\week.cs" />
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
+    <Compile Include="Models\Responses\LeaderBoardDataWebResponse.cs" />
+    <Compile Include="Models\Responses\LeaderBoardResponse.cs" />
     <Compile Include="Models\Responses\AvailableLeaderBoardsResponse.cs" />
     <Compile Include="Models\Responses\AvailableYearsResponse.cs" />
     <Compile Include="Models\Responses\CourseResponse.cs" />
@@ -280,8 +282,6 @@
     <Content Include="Scripts\leaderBoards\leaderBoards.js" />
     <Content Include="Scripts\leaderBoards\tpl\boardData.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\boardDataLayout.tpl.html" />
-    <Content Include="Scripts\leaderBoards\tpl\leaderBoardContent.tpl.html" />
-    <Content Include="Scripts\leaderBoards\tpl\leaderBoards.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoardsNew.tpl.html" />
     <Content Include="Scripts\lib\angular\angular-1.2.16.js" />
     <Content Include="Scripts\lib\angular\angular-animate-1.2.16.js" />

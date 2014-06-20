@@ -136,6 +136,7 @@ namespace AccessExport
             //
             // Begin MySql specific stuff
             //
+
             var dataModelInserts = new StringBuilder();
 
             var mysqlGenerator = new MySqlGenerator();
