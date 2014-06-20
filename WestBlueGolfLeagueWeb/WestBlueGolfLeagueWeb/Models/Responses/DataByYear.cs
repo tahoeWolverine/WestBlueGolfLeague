@@ -11,7 +11,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public List<PlayerResponse> PlayersForYear { get; set; }
         public List<LeaderBoardDataResponse> LeaderboardDataForYear { get; set; }
         public List<TeamResponse> TeamsForYear { get; set; }
-        public List<leaderboard> Leaderboards { get; set; }
+        public List<LeaderBoardResponse> Leaderboards { get; set; }
         public List<TeamMatchupResponse> TeamMatchups { get; set; }
         public List<CourseResponse> Courses { get; set; }
 

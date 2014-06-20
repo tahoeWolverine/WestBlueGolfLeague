@@ -759,8 +759,6 @@ namespace AccessExport
 
                 TeamBoard(dataModel, "Total Match Wins", "team_total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
 
-                TeamBoard(dataModel, "Total Match Wins", "team_total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
-
                 TeamBoard(dataModel, "Points in a Week", "team_most_points_in_week", teamsForYear, year, false, (team, dm) => team.MostPointsInWeekForYear(year));
 
                 TeamBoard(dataModel, "Avg Margin of Victory", "team_avg_margin_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfVictoryForYear(year));

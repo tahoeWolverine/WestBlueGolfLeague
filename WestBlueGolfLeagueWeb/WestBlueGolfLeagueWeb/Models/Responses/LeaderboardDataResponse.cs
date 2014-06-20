@@ -16,6 +16,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
                 IsP = lbd.isPlayer,
                 LbId = lbd.leaderBoardId,
                 PId = lbd.playerId,
+                V = lbd.value,
                 TId = lbd.teamId,
                 // Year = lbd.yearId // This is really implied based on the API.
                 R = lbd.rank,
@@ -54,5 +55,10 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         /// Details
         /// </summary>
         public string Det { get; set; }
+
+        /// <summary>
+        /// Value
+        /// </summary>
+        public double V { get; set; }
     }
 }
