@@ -1,5 +1,11 @@
 ﻿
-<div>
+<div ng-show="isLoading" class="loading-indicator-parent">
+    <div class="loading-indicator">
+        <i class="fa fa-spin fa-spinner"></i>
+    </div>
+</div>
+
+<div ng-hide="isLoading">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -10,8 +16,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="boardData in leaderBoardData.leaderBoardData | orderBy:'rank'">
-                <td>{{boardData.rank}}</td>
-                <td>{{boardData.entityName}}</td>
+                <td class="col-md-2">{{boardData.rank}}</td>
+                <td class="col-md-4">{{boardData.entityName}}</td>
                 <td>{{boardData.value}}</td>
             </tr>
         </tbody>

@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -28,6 +29,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         [ResponseType(typeof(AvailableLeaderBoardsResponse))]
         public async Task<IHttpActionResult> GetAvailableLeaderBoards()
         {
+
             db.Configuration.ProxyCreationEnabled = false;
 
             var leaderboards = await db.leaderboards.AsNoTracking().ToListAsync();
@@ -39,7 +41,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public async Task<IHttpActionResult> GetLeaderBoard(string key)
         {
             // validate that we have a valid key.
-
             var leaderBoard = db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
             var leaderBoardDatas = db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
 

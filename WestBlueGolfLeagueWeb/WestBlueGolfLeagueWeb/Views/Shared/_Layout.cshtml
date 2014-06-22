@@ -23,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Players", "Index", "Player")</li>
                     <li>@Html.ActionLink("Schedule", "Index", "Schedule")</li>
-                    <li>@Html.ActionLink("Leader Boards", "Index", "LeaderBoard")</li>
+                    <li>@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" })</li>
                     <li>@Html.ActionLink("Rules & Information", "RulesAndInformation", "Information")</li>
                     <li>@Html.ActionLink("Results Tables", "Index", "ResultsTable")</li>
                 </ul>
