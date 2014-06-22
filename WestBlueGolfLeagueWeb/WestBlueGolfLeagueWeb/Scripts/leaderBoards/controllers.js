@@ -1,7 +1,7 @@
 ﻿// begin controllers.
 (function (module) {
 
-    function Root($scope) {
+    function Root($scope, leaderBoardStates) {
 
         // Everything below this line in this controller is stupid... resolves are stupid.
 
@@ -9,9 +9,9 @@
         $scope.isLoading = true;
         
         function handleStateTransitionBegin(event, toState, toParams, fromState, fromParams) {
-            /*if (toState.resolve) {
+            if (toState.resolve && toState.name === leaderBoardStates.LEADER_BOARDS) {
                 $scope.isLoading = true;
-            }*/
+            }
         };
 
         function handleStateTransitionEndOrError(event, toState, toParams, fromState, fromParams, error) {
@@ -19,7 +19,9 @@
                 // do something here for error.
             }
 
-            $scope.isLoading = false;
+            if (toState.resolve) {
+                $scope.isLoading = false;
+            }
         };
 
         $scope.$on('$stateChangeStart', handleStateTransitionBegin);
@@ -80,7 +82,7 @@
     };
 
     module
-        .controller('Root', ['$scope', Root])
+        .controller('Root', ['$scope', 'leaderBoardStates', Root])
         .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', 'leaderBoardDetails', DetailsController])
         .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])
         .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', LeaderBoardsController]);
