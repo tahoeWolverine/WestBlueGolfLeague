@@ -9,9 +9,9 @@
         $scope.isLoading = true;
         
         function handleStateTransitionBegin(event, toState, toParams, fromState, fromParams) {
-            if (toState.resolve) {
+            /*if (toState.resolve) {
                 $scope.isLoading = true;
-            }
+            }*/
         };
 
         function handleStateTransitionEndOrError(event, toState, toParams, fromState, fromParams, error) {
@@ -66,20 +66,22 @@
         });
     };
 
-    function DetailsController($state, $stateParams, $scope, leaderBoardService) {
+    function DetailsController($state, $stateParams, $scope, leaderBoardService, leaderBoardDetails) {
         $scope.id = $stateParams.id;
 
-        $scope.isLoading = true;
+        $scope.leaderBoardData = leaderBoardDetails.data;
 
+        // uncomment to use spinners and not resolve.
+        /*$scope.isLoading = true;
         leaderBoardService.getBoardDetails($stateParams.id).then(function (response) {
             $scope.isLoading = false;
             $scope.leaderBoardData = (response.data);
-        });
+        });*/
     };
 
     module
         .controller('Root', ['$scope', Root])
-        .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', DetailsController])
+        .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', 'leaderBoardDetails', DetailsController])
         .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])
         .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', LeaderBoardsController]);
 

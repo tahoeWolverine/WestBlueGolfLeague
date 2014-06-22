@@ -44,7 +44,13 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
             .state(boardStates.DETAILS, {
                 url: '/{boardGroup:team|player}/:id',
                 templateUrl: '/Scripts/leaderBoards/tpl/boardData.tpl.html',
-                controller: 'Details'
+                controller: 'Details',
+                resolve: {
+                    leaderBoardDetails: ['resolveLeaderBoardService', '$stateParams', function (lbs, $stateParams) {
+                        return lbs.getBoardDetails($stateParams.id);
+                    }],
+                    resolveLeaderBoardService: 'leaderBoardService'
+                }
             });
 
 

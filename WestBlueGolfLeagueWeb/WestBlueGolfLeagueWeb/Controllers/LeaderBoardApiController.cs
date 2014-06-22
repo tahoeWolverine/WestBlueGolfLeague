@@ -29,7 +29,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
         [ResponseType(typeof(AvailableLeaderBoardsResponse))]
         public async Task<IHttpActionResult> GetAvailableLeaderBoards()
         {
-
             db.Configuration.ProxyCreationEnabled = false;
 
             var leaderboards = await db.leaderboards.AsNoTracking().ToListAsync();
