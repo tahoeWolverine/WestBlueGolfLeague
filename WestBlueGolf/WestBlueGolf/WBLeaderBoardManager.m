@@ -97,7 +97,7 @@
 	// Important team boards
 	NSArray *teams = [WBTeam findAllForYear:year inContext:moc];
 	
-	[self calculateTeamBoardWithName:@"Team Ranking" key:kLeaderboardTeamAveragePoints priority:1 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
+	[self calculateTeamBoardWithName:@"Team Ranking" key:kLeaderboardTeamTotalPoints priority:1 teams:teams year:year ascending:NO moc:moc valueCalculation:^(WBTeam *team) {
 		return (CGFloat)[team totalPointsForYear:year];
 	} detailValueCalc:^(WBTeam *team) {
 		return [NSString stringWithFormat:kDetailStringWeeks, (long)[team filterMatchupsForYear:year].count];

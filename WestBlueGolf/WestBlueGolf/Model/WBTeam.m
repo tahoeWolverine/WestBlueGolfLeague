@@ -506,7 +506,7 @@
 #pragma mark - Leaderboard fetches
 
 - (WBBoardData *)findTotalPointsBoardData {
-	return [WBBoardData findWithBoardKey:kLeaderboardTeamAveragePoints peopleEntity:self];
+	return [WBBoardData findWithBoardKey:kLeaderboardTeamTotalPoints peopleEntity:self];
 }
 
 - (WBBoardData *)findHandicapBoardData {

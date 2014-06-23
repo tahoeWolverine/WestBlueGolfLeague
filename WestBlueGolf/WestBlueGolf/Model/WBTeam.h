@@ -4,19 +4,21 @@
 @class WBYear;
 
 // LeaderBoard keys
-#define kLeaderboardTeamAverageHandicap @"averageHandicap"
-#define kLeaderboardTeamAverageMarginVictory @"averageMarginOfVictory"
-#define kLeaderboardTeamAverageMarginNetVictory @"averageMarginOfNetVictory"
-#define kLeaderboardTeamAverageNet @"averageNet"
-#define kLeaderboardTeamAverageOpponentNetScore @"averageOpponentNetScore"
-#define kLeaderboardTeamAverageOpponentScore @"averageOpponentScore"
-#define kLeaderboardTeamAveragePoints @"averagePoints"
-#define kLeaderboardTeamAverageScore @"averageScore"
-#define kLeaderboardTeamIndividualWinLossRatio @"individualWinLossRatio"
-#define kLeaderboardTeamMaxWeekPoints @"maxWeekPoints"
-#define kLeaderboardTeamTotalImproved @"totalImproved"
-#define kLeaderboardTeamTotalWins @"totalWins"
-#define kLeaderboardTeamWeeklyWinLossRatio @"weeklyWinLossRatio"
+#define kLeaderboardTeamTotalPoints @"team_ranking"
+
+#define kLeaderboardTeamAverageHandicap @"team_average_handicap"
+#define kLeaderboardTeamAverageMarginVictory @"team_avg_margin_victory"
+#define kLeaderboardTeamAverageMarginNetVictory @"team_avg_margin_net_victory"
+#define kLeaderboardTeamAverageNet @"team_avg_net_score"
+#define kLeaderboardTeamAverageOpponentNetScore @"team_avg_opp_net_score"
+#define kLeaderboardTeamAverageOpponentScore @"team_avg_opp_score"
+//#define kLeaderboardTeamAveragePoints @"averagePoints" derived from total points
+#define kLeaderboardTeamAverageScore @"team_avg_score"
+#define kLeaderboardTeamIndividualWinLossRatio @"team_ind_win_loss_record"
+#define kLeaderboardTeamMaxWeekPoints @"team_most_points_in_week"
+#define kLeaderboardTeamTotalImproved @"team_season_improvement"
+#define kLeaderboardTeamTotalWins @"team_total_match_wins"
+#define kLeaderboardTeamWeeklyWinLossRatio @"team_win_loss_ratio"
 
 #define kLeaderboardTeamTopPercentage @"topPercentage"
 #define kLeaderboardTeamTopFivePercentage @"topFivePercentage"

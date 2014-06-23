@@ -255,6 +255,10 @@
 }
 
 - (WBTeam *)teamWithName:(NSString *)name {
+    if (name && name.length > 0 && [[name substringToIndex:1] isEqualToString:@"*"]) {
+        name = [name substringFromIndex:1];
+    }
+    
 	for (WBTeam *team in self.teams) {
 		if ([team.name isEqualToString:name]) {
 			return team;
