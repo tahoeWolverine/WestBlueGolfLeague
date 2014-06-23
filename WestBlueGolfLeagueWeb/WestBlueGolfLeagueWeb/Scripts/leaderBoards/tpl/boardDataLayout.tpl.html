@@ -1,6 +1,6 @@
 ﻿
 <div class="row">
-    <a ui-sref="leaderBoards()">back to Leaderboards</a>
+    <a ui-sref="landingPage()">back to Leaderboards</a>
 
     <div class="list-group col-sm-3 board-selector">
         <div class="text-center">
@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-sm-9">
-        <div class="details">
+        <div class="details" ng-hide="isLoading">
             <ui-view></ui-view>
         </div>
     </div>

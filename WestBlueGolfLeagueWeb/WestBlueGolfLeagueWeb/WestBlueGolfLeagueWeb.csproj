@@ -257,10 +257,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fontawesome\font-awesome.css" />
+    <Content Include="Content\fontawesome\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\leaderBoards\controllers.js" />
+    <Content Include="Scripts\leaderBoards\services.js" />
+    <Content Include="Scripts\leaderBoards\tpl\index.tpl.html" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -268,6 +274,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Scripts\lib\jquery\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\lib\jquery\jquery-2.1.0.intellisense.js" />
@@ -282,7 +292,7 @@
     <Content Include="Scripts\leaderBoards\leaderBoards.js" />
     <Content Include="Scripts\leaderBoards\tpl\boardData.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\boardDataLayout.tpl.html" />
-    <Content Include="Scripts\leaderBoards\tpl\leaderBoardsNew.tpl.html" />
+    <Content Include="Scripts\leaderBoards\tpl\leaderBoardsLandingPage.tpl.html" />
     <Content Include="Scripts\lib\angular\angular-1.2.16.js" />
     <Content Include="Scripts\lib\angular\angular-animate-1.2.16.js" />
     <Content Include="Scripts\lib\angular\angular-cookies-1.2.16.js" />

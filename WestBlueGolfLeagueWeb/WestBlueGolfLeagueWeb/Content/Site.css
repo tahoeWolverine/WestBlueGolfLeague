@@ -51,6 +51,20 @@ input[type="checkbox"].input-validation-error {
   display: none;
 }
 
+.loading-indicator-parent {
+    width: 100%;
+    display: table;
+}
+
+.loading-indicator {
+    font-size: 4em;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    height: 400px;
+}
+
+
 @media (max-width: 767px) {
   
   .board-group-toggle {

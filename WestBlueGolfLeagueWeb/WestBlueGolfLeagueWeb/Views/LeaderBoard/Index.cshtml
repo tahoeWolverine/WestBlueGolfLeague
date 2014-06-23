@@ -6,9 +6,16 @@
 <h2>Leader Boards</h2>
 
 <div ng-app="leaderBoards">
-    <ui-view></ui-view>
+    <div ng-controller="Root">
+        <div ng-show ="isLoading" class="loading-indicator-parent">
+            <div class="loading-indicator">
+                <i class="fa fa-spin fa-spinner"></i>
+            </div>
+        </div>
+        <ui-view ng-hide="isLoading"></ui-view>
+    </div>
 </div>
 
 @section scripts {
-    @Scripts.Render("~/bundles/leaderBoards");
+    @Scripts.Render("~/bundles/leaderBoards")
 }

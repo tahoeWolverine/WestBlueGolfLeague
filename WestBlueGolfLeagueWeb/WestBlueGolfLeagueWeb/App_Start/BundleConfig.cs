@@ -34,12 +34,13 @@ namespace WestBlueGolfLeagueWeb
             bundles.Add(new ScriptBundle("~/bundles/app").Include("~/Scripts/main/*.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/player").Include("~/Scripts/player/player.js", "~/Scripts/player/*.js"));
-            bundles.Add(new ScriptBundle("~/bundles/leaderBoards").Include("~/Scripts/player/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
+            bundles.Add(new ScriptBundle("~/bundles/leaderBoards").Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
 
             bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/fontawesome/font-awesome.css",
                       "~/Content/site.css"));
 
             //BundleTable.EnableOptimizations = true;
