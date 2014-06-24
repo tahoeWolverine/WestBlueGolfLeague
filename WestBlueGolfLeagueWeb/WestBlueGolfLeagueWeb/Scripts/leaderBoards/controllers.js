@@ -1,7 +1,7 @@
 ﻿// begin controllers.
 (function (module) {
 
-    function Root($scope, leaderBoardStates) {
+    function Root($scope, leaderBoardStates, $state, errorStates) {
 
         // Everything below this line in this controller is stupid... resolves are stupid.
 
@@ -15,8 +15,18 @@
         };
 
         function handleStateTransitionEndOrError(event, toState, toParams, fromState, fromParams, error) {
+
+            var errorStateToGoTo = errorStates.GENERAL_ERROR;
+
             if (error) {
-                // do something here for error.
+                if (toState.name === leaderBoardStates.DETAILS) {
+                    if (error.status === 404) {
+                        $state.go(leaderBoardStates.LEADER_BOARDS, { error: errorStates.UNKNOWN_LEADERBOARD });
+                    }
+                    else if (error.status === 500) {
+                        errorStateToGoTo = errorStates.ERROR_LOADING_LEADERBOARD;
+                    }
+                }
             }
 
             if (toState.resolve) {
@@ -29,9 +39,23 @@
         $scope.$on('$stateChangeError', handleStateTransitionEndOrError);
     };
 
-    function LeaderBoardsController($scope, $stateParams, $state, leaderBoards) {
+    function LeaderBoardsController($scope, $stateParams, $state, leaderBoards, errorStates) {
 
         $scope.boards = leaderBoards;
+
+        $scope.errorMessage = "";
+
+        if ($stateParams.error) {
+            if ($stateParams.error === errorStates.UNKNOWN_LEADERBOARD) {
+                $scope.errorMessage = "Unknown leader board. Please select from one of the available.";
+            }
+            else if ($stateParams.error === errorStates.ERROR_LOADING_LEADERBOARD) {
+                $scope.errorMessage = "There was an error loading your leader board, please select another.";
+            }
+            else {
+                $scope.errorMessage = "There was an error loading leader board data :(";
+            }
+        }
 
         $scope.showTeamBoards = function () {
             return $scope.currBoard === 'team';
@@ -82,9 +106,9 @@
     };
 
     module
-        .controller('Root', ['$scope', 'leaderBoardStates', Root])
+        .controller('Root', ['$scope', 'leaderBoardStates', '$state', 'errorStates', Root])
         .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', 'leaderBoardDetails', DetailsController])
         .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])
-        .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', LeaderBoardsController]);
+        .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', 'errorStates', LeaderBoardsController]);
 
 })(angular.module('leaderBoards'));

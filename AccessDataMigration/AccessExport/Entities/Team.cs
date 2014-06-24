@@ -243,7 +243,7 @@ namespace AccessExport
             int value = 0;
             foreach (var result in results)
             {
-                value = result.ScoreDifference;
+                value = result.NetScoreDifference;
                 if (value < 60)
                 {
                     totalScore += value;

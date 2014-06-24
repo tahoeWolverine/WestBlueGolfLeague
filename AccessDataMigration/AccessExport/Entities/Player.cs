@@ -147,8 +147,8 @@ namespace AccessExport
             int value = 0;
             foreach (var result in results)
             {
-                value = result.GetOpponentResult().ScoreDifference;
-                if (value < 60)
+                value = result.GetOpponentResult().Score;
+                if (value < 89)
                 {
                     totalOpponentScore += value;
                     opponentCount++;
@@ -200,7 +200,7 @@ namespace AccessExport
             int roundCount = 0;
             foreach (var result in results)
             {
-                totalRoundScore += result.ScoreDifference;
+                totalRoundScore += result.Score;
                 roundCount++;
             }
 

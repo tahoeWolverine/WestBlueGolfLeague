@@ -11,11 +11,17 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
         DETAILS:            'detailsLayout.details'
     };
 
+    var errorStates = {
+        UNKNOWN_LEADERBOARD: 'unknown',
+        GENERAL_ERROR: 'generalError',
+        ERROR_LOADING_LEADERBOARD: 'errorLoadingLeaderBoard'
+    };
+
     function leaderBoardsConfig($locationProvider, $urlRouterProvider, $stateProvider, boardStates) {
         
         $stateProvider
             .state(boardStates.LEADER_BOARDS, {
-                url:    '/',
+                url:    '/?error',
                 templateUrl:    '/Scripts/leaderBoards/tpl/leaderBoardsLandingPage.tpl.html',
                 controller:    'LeaderBoards',
                 resolve: {
@@ -54,13 +60,14 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
             });
 
 
-        $urlRouterProvider.otherwise('/');
+        //$urlRouterProvider.otherwise('/');
 
         $locationProvider.html5Mode(true);
     };
 
     module
         .constant('leaderBoardStates', leaderBoardStates)
+        .constant('errorStates', errorStates)
         .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', 'leaderBoardStates', leaderBoardsConfig]);
 
 })(angular.module('leaderBoards'));

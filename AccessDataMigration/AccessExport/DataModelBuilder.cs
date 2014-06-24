@@ -740,7 +740,7 @@ namespace AccessExport
 
                 TeamBoard(dataModel, "Team Ranking", "team_ranking", teamsForYear, year, false, (team, dm) => team.TotalPointsForYear(year));
 
-                TeamBoard(dataModel, "Average Handicap", "team_average_handicap", teamsForYear, year, true, (team, dm) => team.AverageHandicapForYear(year));
+                TeamBoard(dataModel, "Average Handicap", "team_avg_handicap", teamsForYear, year, true, (team, dm) => team.AverageHandicapForYear(year));
 
                 TeamBoard(dataModel, "Win/Loss Ratio", "team_win_loss_ratio", teamsForYear, year, false, (team, dm) => team.RecordRatioForYear(year));
 
@@ -755,15 +755,15 @@ namespace AccessExport
 
                 TeamBoard(dataModel, "Average Net Score", "team_avg_net_score", teamsForYear, year, true, (team, dm) => team.AverageNetScoreForYear(year));
 
-                TeamBoard(dataModel, "Ind. W/L Ratio", "team_ind_win_loss_record", teamsForYear, year, true, (team, dm) => team.IndividualRecordRatioForYear(year));
+                TeamBoard(dataModel, "Ind. W/L Ratio", "team_ind_win_loss_record", teamsForYear, year, false, (team, dm) => team.IndividualRecordRatioForYear(year));
 
                 TeamBoard(dataModel, "Total Match Wins", "team_total_match_wins", teamsForYear, year, false, (team, dm) => team.IndividualRecordForYear(year)[0]);
 
                 TeamBoard(dataModel, "Points in a Week", "team_most_points_in_week", teamsForYear, year, false, (team, dm) => team.MostPointsInWeekForYear(year));
 
-                TeamBoard(dataModel, "Avg Margin of Victory", "team_avg_margin_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfVictoryForYear(year));
+                TeamBoard(dataModel, "Avg. Margin of Victory", "team_avg_margin_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfVictoryForYear(year));
 
-                TeamBoard(dataModel, "Avg Margin of Net Victory", "team_avg_margin_net_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfNetVictoryForYear(year));
+                TeamBoard(dataModel, "Avg. Margin of Net Victory", "team_avg_margin_net_victory", teamsForYear, year, false, (team, dm) => team.AverageMarginOfNetVictoryForYear(year));
 
 
                 var allPlayersForYear = dataModel.Players.Where(p => p.YearDatas.Any(yd => yd.Year.Value == year.Value) && p.ValidPlayer).ToList();
@@ -774,7 +774,7 @@ namespace AccessExport
 
                 PlayerBoard(dataModel, "Handicap", "player_handicap", allPlayersForYear, year, true, (p, dm) => p.FinishingHandicapInYear(year));
 
-                PlayerBoard(dataModel, "Average Points", "player_average_points", allPlayersForYear, year, false, (p, dm) => p.AveragePointsInYear(year));
+                PlayerBoard(dataModel, "Average Points", "player_avg_points", allPlayersForYear, year, false, (p, dm) => p.AveragePointsInYear(year));
 
                 PlayerBoard(dataModel, "Win/Loss Ratio", "player_win_loss_ratio", allPlayersForYear, year, false, (p, dm) => p.RecordRatioForYear(year));
 
@@ -782,11 +782,11 @@ namespace AccessExport
 
                 PlayerBoard(dataModel, "Avg. Opp. Score", "player_avg_opp_score", allPlayersForYear, year, true, (p, dm) => p.AverageOpponentScoreForYear(year));
 
-                PlayerBoard(dataModel, "Avg. Opp. Net Score", "player_avg_opp_score", allPlayersForYear, year, true, (p, dm) => p.AverageOpponentNetScoreForYear(year));
+                PlayerBoard(dataModel, "Avg. Opp. Net Score", "player_avg_opp_net_score", allPlayersForYear, year, true, (p, dm) => p.AverageOpponentNetScoreForYear(year));
 
-                PlayerBoard(dataModel, "Average Score", "player_average_score", allPlayersForYear, year, true, (p, dm) => p.AverageScoreForYear(year));
+                PlayerBoard(dataModel, "Average Score", "player_avg_score", allPlayersForYear, year, true, (p, dm) => p.AverageScoreForYear(year));
 
-                PlayerBoard(dataModel, "Average Net Score", "player_average_net_score", allPlayersForYear, year, true, (p, dm) => p.AverageNetScoreForYear(year));
+                PlayerBoard(dataModel, "Average Net Score", "player_avg_net_score", allPlayersForYear, year, true, (p, dm) => p.AverageNetScoreForYear(year));
 
                 PlayerBoard(dataModel, "Points in a Match", "player_points_in_match", allPlayersForYear, year, false, (p, dm) => p.MostPointsInMatchForYear(year));
 
@@ -796,7 +796,7 @@ namespace AccessExport
 
                 PlayerBoard(dataModel, "Avg. Margin of Victory", "player_avg_margin_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfVictoryForYear(year));
 
-                PlayerBoard(dataModel, "Avg. Margin of Net Victory", "player_avg_net_margin_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfNetVictoryForYear(year));
+                PlayerBoard(dataModel, "Avg. Margin of Net Victory", "player_avg_margin_net_victory", allPlayersForYear, year, false, (p, dm) => p.AverageMarginOfNetVictoryForYear(year));
 
                 PlayerBoard(dataModel, "Total Rounds", "player_total_rounds_for_year", allPlayersForYear, year, false, (p, dm) => p.TotalRoundsForYear(year));
             }
@@ -833,6 +833,7 @@ namespace AccessExport
                 if (results.Count() == 0) continue;
 
                 double value = valueFunc(team, dataModel);
+                value = Math.Round(value, 3);
                 LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value, LeaderBoard = lb, Year = year };
                 datasWhichNeedRanks.Add(lbd);
 
@@ -860,6 +861,7 @@ namespace AccessExport
                 }
 
                 double value = valueFunc(player, dataModel);
+                value = Math.Round(value, 3);
                 LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, LeaderBoard = lb, Year = year };
 
                 datasToSort.Add(lbd);
