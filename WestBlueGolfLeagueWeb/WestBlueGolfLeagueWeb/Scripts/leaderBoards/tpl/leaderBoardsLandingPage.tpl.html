@@ -1,4 +1,8 @@
 ﻿<!-- TODO: this should be a directive -->
+<div class="alert alert-danger alert-dismissable" ng-show="errorMessage">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{errorMessage}}
+</div>
 <div class="row text-center board-group-toggle">
     <div class="btn-group btn-group-lg">
         <button type="button" class="btn btn-default" ng-click="currBoard = 'player'" ng-class="{ 'btn-primary active': showPlayerBoards() }">Player</button>

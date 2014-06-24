@@ -38,6 +38,7 @@ namespace WestBlueGolfLeagueWeb
 
             bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));
 
+            // TODO: possibly change this path to make fonts work correctly?
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/fontawesome/font-awesome.css",

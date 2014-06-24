@@ -18,7 +18,7 @@ namespace AccessExport
 
         public Result GetOpponentResult()
         {
-            return this.Matchup.Result1.Id == this.Id ? this.Matchup.Result1 : this.Matchup.Result2;
+            return this.Matchup.Result1.Id == this.Id ? this.Matchup.Result2 : this.Matchup.Result1;
         }
 
         public int ScoreDifference { get { return this.Score - this.Matchup.TeamMatchup.Week.Course.Par; } }
