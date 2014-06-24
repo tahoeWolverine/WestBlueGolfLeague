@@ -84,10 +84,158 @@
         
         board = [WBLeaderBoard findWithId:boardId];
         
+        if (!dataDetail || [dataDetail isEqualToString:@""]) {
+            if ([people isKindOfClass:[WBTeam class]]) {
+                NSString * (^detailValueCalc)(WBTeam *) = nil;
+                detailValueCalc = [self detailBlockForTeamBoard:board.key year:year];
+                dataDetail = detailValueCalc((WBTeam *)people);
+            } else {
+                NSString * (^detailValueCalc)(WBPlayer *) = nil;
+                detailValueCalc = [self detailBlockForPlayerBoard:board.key year:year];
+                dataDetail = detailValueCalc((WBPlayer *)people);
+            }
+        }
+        
         [WBBoardData createBoardDataForEntity:people leaderBoard:board dataId:dataId value:dataValue detailValue:dataDetail rank:dataRank year:year moc:moc];
 	}
     
     //[WBCoreDataManager saveContext:moc];
+}
+
+- (NSString * (^)(WBTeam *))detailBlockForTeamBoard:(NSString *)key year:(WBYear *)year {
+    if ([key isEqualToString:kLeaderboardTeamTotalPoints]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringWeeks, (long)[team filterMatchupsForYear:year].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageHandicap]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringPlayers, (long)[team filterPlayersForYear:year].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamWeeklyWinLossRatio]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringRecord, [team recordStringForYear:year]];
+        };
+    }else if ([key isEqualToString:kLeaderboardTeamTotalImproved]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringPlayers, (long)[team filterPlayersForYear:year].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageOpponentScore]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalOpponentResultsForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageOpponentNetScore]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalOpponentResultsForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageScore]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageNet]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamIndividualWinLossRatio]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringRecord, [team individualRecordStringForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamTotalWins]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringWeeks, (long)[team filterMatchupsForYear:year].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamMaxWeekPoints]) {
+        return ^NSString *(WBTeam *team) {
+            NSInteger index = [team seasonIndexForMostPointsInWeekForYear:year];
+            return [NSString stringWithFormat:kDetailStringSingle, (long)index, [WBWeek findWeekWithSeasonIndex:index year:year].course.name];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageMarginVictory]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardTeamAverageMarginNetVictory]) {
+        return ^NSString *(WBTeam *team) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[team totalResultsForYear:year]];
+        };
+    }
+    
+    return ^NSString *(WBTeam *team) {
+        return @"";
+    };
+}
+
+- (NSString * (^)(WBPlayer *))detailBlockForPlayerBoard:(NSString *)key year:(WBYear *)year {
+    if ([key isEqualToString:kLeaderboardPlayerMinScore]) {
+        return ^NSString *(WBPlayer *player) {
+            NSInteger index = [player seasonIndexForLowRoundForYear:year];
+            return [NSString stringWithFormat:kDetailStringSingle, (long)index, [WBWeek findWeekWithSeasonIndex:index year:year].course.name];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerMinNet]) {
+        return ^NSString *(WBPlayer *player) {
+            NSInteger index = [player seasonIdexForLowNetForYear:year];
+            return [NSString stringWithFormat:kDetailStringSingle, (long)index, [WBWeek findWeekWithSeasonIndex:index year:year].course.name];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerHandicap]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAveragePoints]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerWinLossRatio]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringRecord, [player recordStringForYear:year]];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerTotalImproved]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringImprove, (long)[player filterYearDataForYear:year].startingHandicapValue, (long)[player filterYearDataForYear:year].finishingHandicapValue];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageOpponentScore]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageOpponentNetScore]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageScore]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageNet]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerMaxPoints]) {
+        return ^NSString *(WBPlayer *player) {
+            NSInteger index = [player seasonIndexForMostPointsInMatchForYear:year];
+            return [NSString stringWithFormat:kDetailStringSingle, (long)index, [WBWeek findWeekWithSeasonIndex:index year:year].course.name];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerTotalPoints]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerTotalWins]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageMarginVictory]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerAverageMarginNetVictory]) {
+        return ^NSString *(WBPlayer *player) {
+            return [NSString stringWithFormat:kDetailStringMatches, (long)[player filterResultsForYear:year goodData:YES].count];
+        };
+    } else if ([key isEqualToString:kLeaderboardPlayerTotalRounds]) {
+        return ^NSString *(WBPlayer *player) {
+            return @"";
+        };
+    }
+    
+    return ^NSString *(WBPlayer *player) {
+        return @"";
+    };
 }
 
 - (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
