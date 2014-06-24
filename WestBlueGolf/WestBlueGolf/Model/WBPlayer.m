@@ -261,7 +261,9 @@
 	fmt.minimumFractionDigits = 1;
 	WBBoardData *data = [self findAveragePointsBoardData];
 	NSNumber *avg = [NSNumber numberWithFloat:data.value.floatValue];
-	return avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] : @"0.0";
+	return !data ? @"N/A" :
+            avg.floatValue != 0.0f ? [fmt stringFromNumber:avg] :
+            @"0.0";
 }
 
 - (NSString *)averageScoreString {
@@ -282,7 +284,8 @@
 - (NSString *)improvedString {
 	WBBoardData *data = [self findImprovedBoardData];
 	NSInteger improved = data.valueValue;
-	return [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
+	return !data ? @"N/A" :
+            [NSString stringWithFormat:@"%@%ld", improved >= 0 ? @"+" : @"", (long)improved];
 }
 
 // Calculated strictly with the object model, no thread-context needed
