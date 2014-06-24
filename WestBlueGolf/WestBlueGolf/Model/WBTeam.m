@@ -10,6 +10,9 @@
 #import "WBWeek.h"
 #import "WBYear.h"
 
+#define kDifferenceMax 60
+#define kScoreMax   90
+
 @interface WBTeam ()
 
 @end
@@ -253,7 +256,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result scoreDifference];
-		if (value < 60) {
+		if (value < kDifferenceMax) {
 			totalScore += value;
 			roundCount++;
 		}
@@ -278,7 +281,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result netScoreDifference];
-		if (value < 30) {
+		if (value < kDifferenceMax) {
 			totalScore += value;
 			roundCount++;
 		}
@@ -297,7 +300,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [result netScoreDifference];
-		if (value < 60) {
+		if (value < kDifferenceMax) {
 			roundCount++;
 		}
 	}
@@ -317,7 +320,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] scoreDifference];
-		if (value < 60) {
+		if (value < kDifferenceMax) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}
@@ -338,7 +341,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] netScoreDifference];
-		if (value < 60) {
+		if (value < kDifferenceMax) {
 			totalOpponentScore += value;
 			opponentCount++;
 		}
@@ -357,7 +360,7 @@
 	NSInteger value = 0;
 	for (WBResult *result in results) {
 		value = [[result opponentResult] netScoreDifference];
-		if (value < 60) {
+		if (value < kDifferenceMax) {
 			opponentCount++;
 		}
 	}
@@ -421,7 +424,7 @@
 	for (WBResult *result in results) {
 		playerValue = [result scoreDifference];
 		oppValue = [[result opponentResult] scoreDifference];
-		if (oppValue < 60) {
+		if (oppValue < kDifferenceMax) {
 			totalMargin += oppValue - playerValue;
 			roundCount++;
 		}
@@ -447,7 +450,7 @@
 	for (WBResult *result in results) {
 		playerValue = [result netScoreDifference];
 		oppValue = [[result opponentResult] netScoreDifference];
-		if (oppValue < 30) {
+		if (oppValue < kDifferenceMax) {
 			totalMargin += oppValue - playerValue;
 			roundCount++;
 		}

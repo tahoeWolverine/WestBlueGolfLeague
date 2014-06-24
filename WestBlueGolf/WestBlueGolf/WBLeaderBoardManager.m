@@ -60,22 +60,19 @@
     NSArray *dataArray = [json objectForKey:wbJsonKeyLeaderboardData];
     
     NSString *dataDetail = nil;
-    NSNumber *playerId = nil, *teamId = nil, *dataValueNum = nil;
-    NSInteger dataId = 0, dataRank = 0, dataValue = 0;
+    NSNumber *playerId = nil, *teamId = nil;
+    NSInteger dataId = 0, dataRank = 0;
+    CGFloat dataValue = 0.0f;
     WBPeopleEntity *people = nil;
     WBLeaderBoard *board = nil;
     for (NSDictionary *elt in dataArray) {
 		dataId = [[elt objectForKey:wbJsonKeyLeaderboardDataId] integerValue];
 		dataDetail = [elt objectForKey:wbJsonKeyLeaderboardDataDetail];
 		dataRank = [[elt objectForKey:wbJsonKeyLeaderboardDataRank] integerValue];
-		dataValueNum = [elt objectForKey:wbJsonKeyLeaderboardDataValue];
+		dataValue = [[elt objectForKey:wbJsonKeyLeaderboardDataValue] floatValue];
 		boardId = [[elt objectForKey:wbJsonKeyLeaderboardDataBoardId] integerValue];
 		teamId = [elt objectForKey:wbJsonKeyLeaderboardDataTeamId];
 		playerId = [elt objectForKey:wbJsonKeyLeaderboardDataPlayerId];
-        
-        if (dataValueNum && ![dataValueNum isKindOfClass:[NSNull class]]) {
-            dataValue = [dataValueNum integerValue];
-        }
 
         if (playerId && ![playerId isKindOfClass:[NSNull class]]) {
             people = [WBPlayer findWithId:[playerId integerValue]];

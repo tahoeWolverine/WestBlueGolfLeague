@@ -6,7 +6,7 @@
 // LeaderBoard keys
 #define kLeaderboardTeamTotalPoints @"team_ranking"
 
-#define kLeaderboardTeamAverageHandicap @"team_average_handicap"
+#define kLeaderboardTeamAverageHandicap @"team_avg_handicap"
 #define kLeaderboardTeamAverageMarginVictory @"team_avg_margin_victory"
 #define kLeaderboardTeamAverageMarginNetVictory @"team_avg_margin_net_victory"
 #define kLeaderboardTeamAverageNet @"team_avg_net_score"

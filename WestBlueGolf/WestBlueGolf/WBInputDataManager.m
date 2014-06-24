@@ -159,23 +159,20 @@
 		[WBPlayerYearData createPlayerYearDataWithId:dataId forPlayer:player year:year onTeam:playerTeam withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
 	}
 	
-	// Create a player to catch all the no shows (ends up being conditional too)
-	//[WBPlayer createNoShowPlayerInContext:moc];
-	
 	//[WBCoreDataManager saveContext:moc];
 	
 	// Team Matchups
     NSArray *teamMatchupArray = [json objectForKey:wbJsonKeyTeamMatchups];
 	
     WBTeamMatchup *matchup = nil;
-    WBTeam *team1 = nil, *team2 = nil;
+    WBTeam *team1 = nil, *team2 = nil, *team = nil;
     WBPlayer *player1 = nil, *player2 = nil;
     WBWeek *week = nil;
     WBMatch *match = nil;
     NSInteger team1Id = -1, team2Id = -1, matchupId = 0, player1Id = 0, player2Id = 0, score = 0, priorHandicap = 0, points = 0;
     NSArray *matchesJson = nil, *resultsJson = nil, *teamsJson = nil;
     NSDictionary *matchJson = nil, *result1Json = nil, *result2Json = nil;
-    BOOL matchComplete = NO, firstResult = YES;
+    BOOL matchComplete = NO;
     for (NSDictionary *elt in teamMatchupArray) {
         weekId = [[elt objectForKey:wbJsonKeyTeamMatchupWeekId] integerValue];
 		matchupId = [[elt objectForKey:wbJsonKeyTeamMatchupId] integerValue];
@@ -194,15 +191,6 @@
         
         team1Id = [[teamsJson objectAtIndex:0] integerValue];
         team2Id = [[teamsJson objectAtIndex:1] integerValue];
-        
-        
-
-        /*matchJson = matchesJson.count > 0 ? matchesJson[0] : nil;
-        resultsJson = [matchJson objectForKey:wbJsonKeyResults];
-        result1Json = resultsJson.count == 2 ? resultsJson[0] : nil;
-        result2Json = resultsJson.count == 2 ? resultsJson[1] : nil;
-		team1Id = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];
-        team2Id = [[result2Json objectForKey:wbJsonKeyResultTeamId] integerValue];*/
         
         team1 = [WBTeam teamWithId:team1Id inContext:moc];
         team2 = [WBTeam teamWithId:team2Id inContext:moc];
@@ -248,17 +236,16 @@
             match = [WBMatch createMatchForTeamMatchup:matchup player1:player1 player2:player2 moc:moc];
             
             // Results
-            firstResult = YES;
             for (result1Json in resultsJson) {
                 score = [[result1Json objectForKey:wbJsonKeyResultScore] integerValue];
                 priorHandicap = [[result1Json objectForKey:wbJsonKeyResultPriorHandicap] integerValue];
                 points = [[result1Json objectForKey:wbJsonKeyResultPoints] integerValue];
-                player1Id = [[result1Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
-                team1Id = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];
+                playerId = [[result1Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
+                player = playerId == player1Id ? player1 : player2;
+                teamId = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];
+                team = teamId == team1Id ? team1 : team2;
                 
-                [WBResult createResultForMatch:match forPlayer:firstResult ? player1 : player2 team:firstResult ? team1 : team2 withPoints:points priorHandicap:priorHandicap score:score moc:moc];
-                
-                firstResult = NO;
+                [WBResult createResultForMatch:match forPlayer:player team:team withPoints:points priorHandicap:priorHandicap score:score moc:moc];
             }
         }
     }

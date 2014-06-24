@@ -4,11 +4,11 @@
 @class WBYear;
 
 // Leaderboard keys
-#define kLeaderboardPlayerAverageNet @"player_average_net_score"
+#define kLeaderboardPlayerAverageNet @"player_avg_net_score"
 #define kLeaderboardPlayerAverageOpponentNetScore @"player_avg_opp_net_score"
 #define kLeaderboardPlayerAverageOpponentScore @"player_avg_opp_score"
-#define kLeaderboardPlayerAveragePoints @"player_average_points"
-#define kLeaderboardPlayerAverageScore @"player_average_score"
+#define kLeaderboardPlayerAveragePoints @"player_avg_points"
+#define kLeaderboardPlayerAverageScore @"player_avg_score"
 #define kLeaderboardPlayerHandicap @"player_handicap"
 #define kLeaderboardPlayerMaxPoints @"player_points_in_match"
 #define kLeaderboardPlayerMinNet @"player_net_best_score"
@@ -20,7 +20,7 @@
 #define kLeaderboardPlayerWinLossRatio @"player_win_loss_ratio"
 
 #define kLeaderboardPlayerAverageMarginVictory @"player_avg_margin_victory"
-#define kLeaderboardPlayerAverageMarginNetVictory @"player_avg_net_margin_victory"
+#define kLeaderboardPlayerAverageMarginNetVictory @"player_avg_margin_net_victory"
 
 #define kLeaderboardPlayerTopPercentage @"topPercentage"
 #define kLeaderboardPlayerTopTenPercentage @"topTenPercentage"
