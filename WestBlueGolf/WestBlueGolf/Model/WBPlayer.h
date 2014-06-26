@@ -47,6 +47,7 @@
 + (WBPlayer *)me;
 - (void)setPlayerToMe;
 - (void)setPlayerToNotMe;
+- (void)toggleFavorite;
 - (WBTeam *)currentTeam;
 
 /*+ (WBPlayer *)noShowPlayer;

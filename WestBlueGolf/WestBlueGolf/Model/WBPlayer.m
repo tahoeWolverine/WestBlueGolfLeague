@@ -4,6 +4,7 @@
 #import "WBMatch.h"
 #import "WBPlayerYearData.h"
 #import "WBResult.h"
+#import "WBSettings.h"
 #import "WBTeam.h"
 #import "WBTeamMatchup.h"
 #import "WBWeek.h"
@@ -48,11 +49,28 @@
 	self.meValue = YES;
 	self.favoriteValue = YES;
 	[self currentTeam].meValue = YES;
+    
+    [[WBSettings sharedSettings] setMePlayer:self];
+    [[WBSettings sharedSettings] addFavoritePlayer:self];
 }
 
 - (void)setPlayerToNotMe {
 	self.meValue = NO;
 	[self currentTeam].meValue = NO;
+    
+    [[WBSettings sharedSettings] clearMePlayer];
+    [[WBSettings sharedSettings] removeFavoritePlayer:self];
+}
+
+- (void)toggleFavorite {
+    self.favoriteValue = !self.favoriteValue;
+    
+    WBSettings *settings = [WBSettings sharedSettings];
+    if (self.favoriteValue) {
+        [settings addFavoritePlayer:self];
+    } else {
+        [settings removeFavoritePlayer:self];
+    }
 }
 
 - (WBTeam *)currentTeam {

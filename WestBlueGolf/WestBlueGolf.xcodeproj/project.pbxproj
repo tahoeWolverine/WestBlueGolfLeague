@@ -90,6 +90,7 @@
 		A50E163E18972418008933A5 /* WBTeamMatchup.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162818972418008933A5 /* WBTeamMatchup.m */; };
 		A50E163F18972418008933A5 /* WBWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162A18972418008933A5 /* WBWeek.m */; };
 		A50E164018972418008933A5 /* WBYear.m in Sources */ = {isa = PBXBuildFile; fileRef = A50E162C18972418008933A5 /* WBYear.m */; };
+		A52206FC195C747D0042E439 /* WBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A52206FB195C747D0042E439 /* WBSettings.m */; };
 		A52FC24C18A59FC1004C9580 /* WBCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */; };
 		A52FC24F18A5A324004C9580 /* WBFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = A52FC24E18A5A324004C9580 /* WBFileSystem.m */; };
 		A532D1AA190F1FD60074E243 /* matchTable2014.json in Resources */ = {isa = PBXBuildFile; fileRef = A532D1A4190F1FD60074E243 /* matchTable2014.json */; };
@@ -297,6 +298,8 @@
 		A50E162A18972418008933A5 /* WBWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBWeek.m; path = Model/WBWeek.m; sourceTree = "<group>"; };
 		A50E162B18972418008933A5 /* WBYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBYear.h; path = Model/WBYear.h; sourceTree = "<group>"; };
 		A50E162C18972418008933A5 /* WBYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBYear.m; path = Model/WBYear.m; sourceTree = "<group>"; };
+		A52206FA195C747D0042E439 /* WBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSettings.h; sourceTree = "<group>"; };
+		A52206FB195C747D0042E439 /* WBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBSettings.m; sourceTree = "<group>"; };
 		A52FC24A18A59FC1004C9580 /* WBCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WBCoreDataManager.h; path = Model/WBCoreDataManager.h; sourceTree = "<group>"; };
 		A52FC24B18A59FC1004C9580 /* WBCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WBCoreDataManager.m; path = Model/WBCoreDataManager.m; sourceTree = "<group>"; };
 		A52FC24D18A5A324004C9580 /* WBFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBFileSystem.h; sourceTree = "<group>"; };
@@ -682,6 +685,8 @@
 				A56F21AB18CE0CFA00BF5CEE /* WBInputDataManager.m */,
 				A56F21A718CE0C0900BF5CEE /* WBLeaderBoardManager.h */,
 				A56F21A818CE0C0900BF5CEE /* WBLeaderBoardManager.m */,
+				A52206FA195C747D0042E439 /* WBSettings.h */,
+				A52206FB195C747D0042E439 /* WBSettings.m */,
 				A5692212192FCAF600E18CC6 /* WBYearDataService.h */,
 				A5692213192FCAF600E18CC6 /* WBYearDataService.m */,
 			);
@@ -1122,6 +1127,7 @@
 				A50E163618972418008933A5 /* _WBYear.m in Sources */,
 				A5AAA57818D2389500AC2912 /* WBMultiFetchDataSource.m in Sources */,
 				480C2B5618BB2A550027F051 /* WBTeamProfileTableViewController.m in Sources */,
+				A52206FC195C747D0042E439 /* WBSettings.m in Sources */,
 				A5692211192FC79100E18CC6 /* WBAvailableYearsService.m in Sources */,
 				A50E163518972418008933A5 /* _WBWeek.m in Sources */,
 				A50E163F18972418008933A5 /* WBWeek.m in Sources */,
