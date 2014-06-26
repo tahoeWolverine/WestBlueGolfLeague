@@ -263,6 +263,9 @@ This method seems bugged so we alloc the table with a footer initially
 #pragma mark - HorizontalPickerView Delegate Methods
 
 - (NSString *)horizontalPickerView:(V8HorizontalPickerView *)picker titleForElementAtIndex:(NSInteger)index {
+    if (self.weekTitleArray.count < index) {
+        return @"-/-";
+    }
 	return [self.weekTitleArray objectAtIndex:index];
 }
 

@@ -9,11 +9,13 @@
 #import "WBYearDataService.h"
 #import <AFNetworking/AFNetworking.h>
 
+#define kEndpointYearData @"http://westblue.digitalzebra.net/api/v1/data/%ld"
+
 @implementation WBYearDataService
 
 + (void)requestYearDataAndPopulateForYear:(NSInteger)year completionBlock:(void (^) (BOOL, id))completionBlock {
-	NSURL *url = [NSURL URLWithString:@"http://westblue.digitalzebra.net/api/v1/data/2014"];
-	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
+    NSString *urlString = [NSString stringWithFormat:kEndpointYearData, (long)year];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0];
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];

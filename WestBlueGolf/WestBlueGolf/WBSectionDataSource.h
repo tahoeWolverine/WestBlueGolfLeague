@@ -21,6 +21,7 @@
 
 - (void)beginFetch;
 
+- (NSString *)sectionName;
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptorsForFetch;

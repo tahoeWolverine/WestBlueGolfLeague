@@ -15,7 +15,13 @@
 - (id)initWithViewController:(UIViewController *)aViewController {
 	self = [super initWithViewController:aViewController];
 	if (self) {
-		[self addSectionDataSource:[WBTeamResultsDataSource dataSourceWithParentDataSource:self]];
+        WBTeamResultsDataSource *results = (WBTeamResultsDataSource *)[WBTeamResultsDataSource dataSourceWithParentDataSource:self];
+        results.futureWeeks = NO;
+        WBTeamResultsDataSource *schedule = (WBTeamResultsDataSource *)[WBTeamResultsDataSource dataSourceWithParentDataSource:self];
+        schedule.futureWeeks = YES;
+        
+		[self addSectionDataSource:results];
+		[self addSectionDataSource:schedule];
 		[self addSectionDataSource:[WBTeamPlayersDataSource dataSourceWithParentDataSource:self]];
 	}
 	return self;

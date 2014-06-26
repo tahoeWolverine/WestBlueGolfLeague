@@ -23,6 +23,10 @@
 	return multi.selectedTeam;
 }
 
+- (NSString *)sectionName {
+    return @"Team Members";
+}
+
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	static NSString *CellIdentifier = @"PlayerListCell";
 	return CellIdentifier;

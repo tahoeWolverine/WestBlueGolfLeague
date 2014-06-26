@@ -1,6 +1,7 @@
 #import "WBYear.h"
 #import "WBAppDelegate.h"
 #import "WBTeam.h"
+#import "WBTeamMatchup.h"
 #import "WBWeek.h"
 
 @interface WBYear ()
@@ -35,6 +36,17 @@
 	return aYear;
 }
 
++ (NSInteger)todayYear {
+    NSDate *currentDate = [NSDate date];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [calendar components:NSYearCalendarUnit fromDate:currentDate]; // Get necessary date components
+    return [components year];
+}
+
+- (BOOL)isPast {
+    return self.valueValue < [WBYear todayYear];
+}
+
 + (WBYear *)thisYear {
 	return [self thisYearInContext:[self context]];
 }
@@ -66,8 +78,17 @@
 	return [[self.weeks sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]]][0] seasonIndexValue];
 }
 
+- (BOOL)isIncomplete {
+    return !self.dataCompleteValue || !self.weeks || self.weeks.count == 0 || [self isPast];
+}
+
 - (BOOL)needsRefresh {
-	return !self.dataCompleteValue || !self.weeks || self.weeks.count == 0;
+	return [self isIncomplete] || [self oldestIncompleteWeekHasPast];
+}
+
+- (BOOL)oldestIncompleteWeekHasPast {
+    WBTeamMatchup *oldestIncompleteMatchup = (WBTeamMatchup *)[WBTeamMatchup findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"matchComplete = 0 && week.year = %@", self] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"week.date" ascending:YES]]];
+    return [oldestIncompleteMatchup.week.date timeIntervalSinceNow] <= 0;
 }
 
 @end

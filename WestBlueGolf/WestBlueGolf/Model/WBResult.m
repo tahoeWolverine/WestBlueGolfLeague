@@ -30,8 +30,10 @@
 		ALog(@"Attempting to add result for player not in match");
 	}
 	
-	if (match.results.count > 0 && [(WBResult *)match.results.allObjects[0] pointsValue] + points > 24) {
-		ALog(@"Attempting to add result with points totalling greater than 24");
+	if (points > 24 || (match.results.count > 0 && [(WBResult *)match.results.allObjects[0] pointsValue] + points > 24)) {
+		//ALog(@"Attempting to add result with points totalling greater than 24");
+        DLog(@"Attempting to add result with points totalling greater than 24");
+        points = 0;
 	}
 	
 	WBResult *newResult = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];

@@ -57,6 +57,10 @@
 
 #pragma mark - Overridable methods
 
+- (NSString *)sectionName {
+    return nil;
+}
+
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	return nil;
 }

@@ -20,12 +20,15 @@
 	return multi.selectedTeam;
 }
 
+- (NSString *)sectionName {
+    return self.futureWeeks ? @"Upcoming Matches" : @"Team Results";
+}
+
 - (NSString *)cellIdentifierForObject:(NSManagedObject *)object {
 	static NSString *CellIdentifier = @"TeamResultsCell";
 	static NSString *IncompleteCellIdentifier = @"IncompleteTeamResultsCell";
 
-	WBTeamMatchup *matchup = (WBTeamMatchup *)object;
-	return matchup.matchCompleteValue ? CellIdentifier : IncompleteCellIdentifier;
+	return self.futureWeeks ? IncompleteCellIdentifier : CellIdentifier;
 }
 
 - (NSString *)entityName {
@@ -37,12 +40,12 @@
 }
 
 - (NSArray *)sortDescriptorsForFetch {
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:self.futureWeeks];
 	return @[sortOrderDescriptor];
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@", [self selectedTeam], [WBYear thisYear]];
+	return [NSPredicate predicateWithFormat:@"%@ IN teams && week.year = %@ && matchComplete = %@", [self selectedTeam], [WBYear thisYear], @(!self.futureWeeks)];
 }
 
 - (void)configureCell:(UITableViewCell *)cell

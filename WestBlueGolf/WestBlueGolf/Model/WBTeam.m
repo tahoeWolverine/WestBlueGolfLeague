@@ -61,11 +61,11 @@
 	} else {
 		results = [self.results.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && match.teamMatchup.week.seasonIndex < %@", year, seasonIndex]];
 	}
-	return  results;
+	return results;
 }
 
 - (NSArray *)filterMatchupsForYear:(WBYear *)year {
-	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@ && week.isBadData = 0", year]];
+	return [self.matchups.allObjects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"week.year = %@ && week.isBadData = 0 && matchComplete = 1", year]];
 }
 
 - (NSArray *)filterPlayerDataForYear:(WBYear *)year {

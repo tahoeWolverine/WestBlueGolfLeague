@@ -10,6 +10,6 @@
 
 @interface WBTeamResultsDataSource : WBSectionDataSource
 
-//@property (strong, nonatomic) WBTeam *selectedTeam;
+@property (assign, nonatomic) BOOL futureWeeks;
 
 @end

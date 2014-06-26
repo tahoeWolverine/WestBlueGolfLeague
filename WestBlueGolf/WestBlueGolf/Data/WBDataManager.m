@@ -33,14 +33,13 @@
 	// Setup year (could be preference of some kind, but for now, newest)
 	WBYear *year = [WBYear newestYearInContext:[WBCoreDataManager mainContext]];
 	if (!year || [year needsRefresh]) {
-		//self.loading = YES;
 		[[WBAppDelegate sharedDelegate] setLoading:YES];
 		
 		// Try to pull the first data for the app
-		[self setupCoreData:YES];
-	}
-	
-	self.yearSelection = year.valueValue;
+		[self setupCoreData:[year isIncomplete]];
+	} else {
+        self.yearSelection = year.valueValue;
+    }
 }
 
 #pragma mark - Important properties
@@ -67,15 +66,12 @@
 - (void)loadAndCalculateForYear:(NSInteger)yearValue withJson:(NSDictionary *)responseObject {
 	WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
 	[inputManager clearRefreshableDataForYearValue:yearValue];
-	//[inputManager loadJsonDataForYearValue:yearValue fromContext:moc];
 	[inputManager createObjectsForYear:yearValue withJson:responseObject];
 	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[WBCoreDataManager mainContext]];
-	//WBHandicapManager *handiManager = [[WBHandicapManager alloc] init];
-	//[handiManager calculateHandicapsForYear:year moc:[WBCoreDataManager mainContext]];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
-	//[boardManager calculateLeaderBoardsForYear:year moc:[WBCoreDataManager mainContext]];
     [boardManager createLeaderBoardsForYear:year withJson:responseObject];
-	//[WBCoreDataManager saveContext:moc];
+
+    //[WBCoreDataManager saveContext:moc];
     
     // Finalize year data
     year.dataCompleteValue = YES;
@@ -85,9 +81,11 @@
 
 - (void)setupCoreData:(BOOL)reset {
 	if (reset) {
+        //TODO: Save favorites/me
 		[[WBCoreDataManager sharedManager] resetManagedObjectContextAndPersistentStore];
 	}
 	
+    // Pull available years if we haven't yet, or if we're into the next year (if we're into next year, the year will already have been deleted via reset)
 	WBYear *year = [WBYear newestYearInContext:[WBCoreDataManager mainContext]];
 	if (!year) {
 		DLog(@"Processing Started");
@@ -102,8 +100,13 @@
 			}
 		}];
 	} else {
-		self.yearSelection = year.valueValue;
+		[self setThisYearValue:year.valueValue inContext:[WBCoreDataManager mainContext]];
 	}
+}
+
+- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
+    WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
+    [inputManager clearRefreshableDataForYearValue:yearValue];
 }
 
 - (void)resetYearFromServer:(WBYear *)year {
@@ -112,16 +115,16 @@
 			[self resetYear:year withJson:responseObject];
 		}
 	}];
+    
+    year.dataCompleteValue = NO;
 }
 
 - (void)resetYear:(WBYear *)year withJson:(NSDictionary *)responseObject {
-	if ([year needsRefresh]) {
-		[[WBAppDelegate sharedDelegate] setLoading:YES];
-		DLog(@"Processing Started");
-		[self loadAndCalculateForYear:year.valueValue withJson:responseObject];
+    [[WBAppDelegate sharedDelegate] setLoading:YES];
+    DLog(@"Processing Started");
+    [self loadAndCalculateForYear:year.valueValue withJson:responseObject];
 
-		[[WBAppDelegate sharedDelegate] setLoading:NO];
-	}
+    [[WBAppDelegate sharedDelegate] setLoading:NO];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:WBYearChangedLoadingFinishedNotification object:nil];
 }

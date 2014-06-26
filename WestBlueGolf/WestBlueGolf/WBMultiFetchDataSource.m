@@ -72,6 +72,10 @@
 	[self.sectionDataSources[indexPath.section] tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.sectionDataSources[section] sectionName];
+}
+
 - (WBSectionDataSource *)dataSourceForSegueIdentifier:(NSString *)segueIdentifier {
 	for (WBSectionDataSource *dataSource in self.sectionDataSources) {
 		if ([[dataSource supportedSegueIdentifier] isEqualToString:segueIdentifier]) {
