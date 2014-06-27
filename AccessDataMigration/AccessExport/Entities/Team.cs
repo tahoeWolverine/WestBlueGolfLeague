@@ -161,7 +161,7 @@ namespace AccessExport
         {
             var record = this.RecordForYear(year);
 
-            double totalWins = (double)record[0] + ((double)record[1] / 2.0);
+            double totalWins = (double)record[0] + ((double)record[2] / 2.0);
             int totalWeeks = record[0] + record[1] + record[2];
 
             if (totalWeeks == 0)
