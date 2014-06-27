@@ -8,12 +8,13 @@
 
 #import "WBProfileTableViewController.h"
 #import "MBProgressHUD/MBProgressHUD.h"
+#import "ProfilePictureCropperViewController.h"
 #import "WBAppDelegate.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileDataSource.h"
-#import "ProfilePictureCropperViewController.h"
+#import "WBSettings.h"
 
 @interface WBProfileTableViewController () <UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UISplitViewControllerDelegate, ProfilePictureCropperViewControllerDelegate>
 
@@ -203,7 +204,7 @@
 			[selected setPlayerToMe];
 			[(WBAppDelegate *)[UIApplication sharedApplication].delegate setProfileTabPlayer];
 		} else {
-			selected.favoriteValue = !selected.favoriteValue;
+            [selected toggleFavorite];
 		}
 		[WBCoreDataManager saveContext:selected.managedObjectContext];
 	}

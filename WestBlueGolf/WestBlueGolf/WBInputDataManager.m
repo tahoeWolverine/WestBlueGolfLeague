@@ -9,6 +9,7 @@
 #import "WBInputDataManager.h"
 #import "WBCoreDataManager.h"
 #import "WBModels.h"
+#import "WBSettings.h"
 
 #define wbJsonKeyYears @"availableYears"
 
@@ -141,12 +142,22 @@
     NSDictionary *data = nil;
 	teamId = 0;
 	BOOL isRookie = NO;
+    NSInteger mePlayerId = [[WBSettings sharedSettings].mePlayerId integerValue];
+    NSArray *favoritePlayerIds = [[WBSettings sharedSettings] favoritePlayerIds];
 	for (NSDictionary *elt in playerArray) {
 		playerId = [[elt objectForKey:wbJsonKeyPlayerId] integerValue];
 		playerName = [elt objectForKey:wbJsonKeyPlayerName];
 		currentHandicap = [[elt objectForKey:wbJsonKeyPlayerCurrentHandicap] integerValue];
         real = [[elt objectForKey:wbJsonKeyPlayerValid] boolValue];
 		player = [WBPlayer playerWithId:playerId name:playerName currentHandicap:currentHandicap real:real inContext:moc];
+        
+        if (playerId == mePlayerId) {
+            player.meValue = YES;
+        }
+        
+        if ([favoritePlayerIds containsObject:player.id]) {
+            player.favoriteValue = YES;
+        }
 		
 		// Player Year data parse
         data = [elt objectForKey:wbJsonKeyPlayerData];
@@ -156,7 +167,7 @@
 		isRookie = [[data objectForKey:wbJsonKeyPlayerDataIsRookie] boolValue];
 		teamId = [[data objectForKey:wbJsonKeyPlayerDataTeam] integerValue];
 		playerTeam = [WBTeam teamWithId:teamId inContext:moc];
-		[WBPlayerYearData createPlayerYearDataWithId:dataId forPlayer:player year:year onTeam:playerTeam withStartingHandicap:startingHandicap withFinishingHandicap:startingHandicap isRookie:isRookie moc:moc];
+		[WBPlayerYearData createPlayerYearDataWithId:dataId forPlayer:player year:year onTeam:playerTeam withStartingHandicap:startingHandicap withFinishingHandicap:finishingHandicap isRookie:isRookie moc:moc];
 	}
 	
 	//[WBCoreDataManager saveContext:moc];

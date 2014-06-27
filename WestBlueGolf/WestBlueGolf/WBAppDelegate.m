@@ -17,6 +17,7 @@
 #import "WBModels.h"
 #import "WBNotifications.h"
 #import "WBProfileTableViewController.h"
+#import "WBSettings.h"
 #import "WBYearDataService.h"
 
 @interface WBAppDelegate ()
@@ -42,17 +43,9 @@
 //#endif
 
 	[self subscribeToNotifications];
+
+    //[WBSettings configureStandardDefaults];
 	
-	/*// Setup year (could be preference of some kind, but for now, newest)
-	WBYear *year = [WBYear newestYearInContext:[[WBCoreDataManager sharedManager] managedObjectContext]];
-	if (!year) {
-		self.loading = YES;
-		
-		// Try to pull the first data for the app
-		[self setupCoreData:YES];
-	}
-	
-	self.yearSelection = year.valueValue;*/
 	self.dataManager = [WBDataManager dataManager];
 	[self.dataManager setupData];
 	
