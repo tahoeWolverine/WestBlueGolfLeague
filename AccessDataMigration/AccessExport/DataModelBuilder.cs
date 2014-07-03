@@ -435,11 +435,12 @@ namespace AccessExport
                                 throw new ArgumentException("Teams can only play eachother in week 0 and 2011.");
                             }
 
+                            // AGerber - 7/3/2014 allow no show/no show matches to show up in data.
                             // Don't do anything with invalid players that play themselves!
-                            if (player1.Id == 1 && player2.Id == 1)
-                            {
-                                continue;
-                            }
+                            //if (player1.Id == 1 && player2.Id == 1)
+                            //{
+                            //    continue;
+                            //}
 
                             var teamMatchup = teamMatchups.First();
 
@@ -833,7 +834,6 @@ namespace AccessExport
                 if (results.Count() == 0) continue;
 
                 double value = valueFunc(team, dataModel);
-                value = Math.Round(value, 3);
                 LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value, LeaderBoard = lb, Year = year };
                 datasWhichNeedRanks.Add(lbd);
 
@@ -861,7 +861,6 @@ namespace AccessExport
                 }
 
                 double value = valueFunc(player, dataModel);
-                value = Math.Round(value, 3);
                 LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, LeaderBoard = lb, Year = year };
 
                 datasToSort.Add(lbd);

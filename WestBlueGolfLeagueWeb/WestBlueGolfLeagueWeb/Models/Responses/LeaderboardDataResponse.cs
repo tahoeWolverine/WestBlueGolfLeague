@@ -10,6 +10,27 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
     {
         public static LeaderBoardDataResponse From(leaderboarddata lbd)
         {
+            // TODO: where is the best place to do this kind of thing??
+
+            /*
+            player
+            
+            win/loss ratio needs 3 decimal
+            best net score needs +/-
+            season improvement needs +/-
+            avg. opp. net score needs +/-
+            avg. net score needs +/-
+            avg. margin of victory needs +/-
+            avg. margin of net victory needs +/-
+
+
+            team
+
+            win/loss ratio needs 3 decimal
+            season improvement needs +/-
+            */
+
+
             return new LeaderBoardDataResponse
             {
                 Id = lbd.id,
