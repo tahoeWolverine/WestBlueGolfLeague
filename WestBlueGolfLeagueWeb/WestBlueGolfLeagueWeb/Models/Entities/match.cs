@@ -6,10 +6,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("westbluegolf.matchup")]
-    public partial class matchup
+    [Table("westbluegolf.match")]
+    public partial class match
     {
-        public matchup()
+        public match()
         {
             results = new HashSet<result>();
             players = new HashSet<player>();

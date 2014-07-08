@@ -17,16 +17,16 @@ namespace WestBlueGolfLeagueWeb.Controllers
         private WestBlue db = new WestBlue();
 
         // GET: api/matchups
-        public IQueryable<matchup> Getmatchups()
+        public IQueryable<match> Getmatchups()
         {
             return db.matchups;
         }
 
         // GET: api/matchups/5
-        [ResponseType(typeof(matchup))]
+        [ResponseType(typeof(match))]
         public IHttpActionResult Getmatchup(int id)
         {
-            matchup matchup = db.matchups.Find(id);
+            match matchup = db.matchups.Find(id);
             if (matchup == null)
             {
                 return NotFound();

@@ -1,13 +1,13 @@
 ﻿SET SQL_SAFE_UPDATES=0;
 
 DELETE FROM teamMatchupToTeam;
-DELETE FROM matchupToPlayer;
+DELETE FROM matchToPlayer;
 DELETE FROM dataMigration;
 DELETE FROM leaderBoardData;
 DELETE FROM leaderBoard;
 DELETE FROM playerYearData;
 DELETE FROM result;
-DELETE FROM matchup;
+DELETE FROM `match`;
 DELETE FROM teamMatchup;
 DELETE FROM pairing;
 DELETE FROM startTime;

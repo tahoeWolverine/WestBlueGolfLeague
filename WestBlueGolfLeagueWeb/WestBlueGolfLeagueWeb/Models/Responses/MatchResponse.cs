@@ -5,11 +5,11 @@ using System.Web;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses
 {
-    public class MatchupResponse
+    public class MatchResponse
     {
-        internal static MatchupResponse From(Entities.matchup x)
+        internal static MatchResponse From(Entities.match x)
         {
-            return new MatchupResponse
+            return new MatchResponse
             {
                 Id = x.id,
                 Results = x.results.Select(r => ResultResponse.From(r)).ToList()

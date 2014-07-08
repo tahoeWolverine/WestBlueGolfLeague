@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual DbSet<datamigration> datamigrations { get; set; }
         public virtual DbSet<leaderboard> leaderboards { get; set; }
         public virtual DbSet<leaderboarddata> leaderboarddatas { get; set; }
-        public virtual DbSet<matchup> matchups { get; set; }
+        public virtual DbSet<match> matchups { get; set; }
         public virtual DbSet<pairing> pairings { get; set; }
         public virtual DbSet<player> players { get; set; }
         public virtual DbSet<playeryeardata> playeryeardatas { get; set; }
@@ -78,15 +78,15 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .Property(e => e.detail)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<matchup>()
+            modelBuilder.Entity<match>()
                 .HasMany(e => e.results)
                 .WithRequired(e => e.matchup)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<matchup>()
+            modelBuilder.Entity<match>()
                 .HasMany(e => e.players)
                 .WithMany(e => e.matchups)
-                .Map(m => m.ToTable("matchuptoplayer", "westbluegolf").MapLeftKey("matchupId").MapRightKey("playerId"));
+                .Map(m => m.ToTable("matchtoplayer", "westbluegolf").MapLeftKey("matchId").MapRightKey("playerId"));
 
             modelBuilder.Entity<pairing>()
                 .Property(e => e.pairingText)

@@ -219,7 +219,7 @@
     <Compile Include="Models\Entities\datamigration.cs" />
     <Compile Include="Models\Entities\leaderboard.cs" />
     <Compile Include="Models\Entities\leaderboarddata.cs" />
-    <Compile Include="Models\Entities\matchup.cs" />
+    <Compile Include="Models\Entities\match.cs" />
     <Compile Include="Models\Entities\pairing.cs" />
     <Compile Include="Models\Entities\player.cs" />
     <Compile Include="Models\Entities\playeryeardata.cs" />
@@ -240,7 +240,7 @@
     <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />
     <Compile Include="Models\Responses\LeaderBoardDataResponse.cs" />
-    <Compile Include="Models\Responses\MatchupResponse.cs" />
+    <Compile Include="Models\Responses\MatchResponse.cs" />
     <Compile Include="Models\Responses\PlayerResponse.cs" />
     <Compile Include="Models\Responses\ResultResponse.cs" />
     <Compile Include="Models\Responses\TeamMatchupResponse.cs" />

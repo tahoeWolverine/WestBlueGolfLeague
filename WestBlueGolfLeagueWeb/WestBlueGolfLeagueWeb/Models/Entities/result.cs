@@ -21,11 +21,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int playerId { get; set; }
 
-        public int matchupId { get; set; }
+        public int matchId { get; set; }
 
         public int yearId { get; set; }
 
-        public virtual matchup matchup { get; set; }
+        public virtual match matchup { get; set; }
 
         public virtual player player { get; set; }
 

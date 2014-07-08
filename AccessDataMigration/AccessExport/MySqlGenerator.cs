@@ -248,7 +248,7 @@ namespace AccessExport
         private string GetResultsInsert(Result m)
         {
             return new FluentMySqlInsert("result")
-                .WithColumns("id", "priorHandicap", "score", "points", "teamId", "playerId", "matchupId", "yearId")
+                .WithColumns("id", "priorHandicap", "score", "points", "teamId", "playerId", "matchId", "yearId")
                 .WithValues(m.Id, m.PriorHandicap, m.Score, m.Points, m.Team.Id, m.Player.Id, m.Matchup.Id, m.Year.Id)
                 .ToString();
         }
@@ -256,7 +256,7 @@ namespace AccessExport
         private string GetMatchupInsert(MatchUp m)
         {
             return
-                new FluentMySqlInsert("matchup")
+                new FluentMySqlInsert("match")
                 .WithColumns("id", "teamMatchupId")
                 .WithValues(m.Id, m.TeamMatchup.Id)
                 .ToString();
@@ -264,13 +264,13 @@ namespace AccessExport
 
         private string GetMatchupToPlayerInsert(MatchUp m)
         {
-            var insert1 = new FluentMySqlInsert("matchupToPlayer")
-                .WithColumns("playerId", "matchupId")
+            var insert1 = new FluentMySqlInsert("matchToPlayer")
+                .WithColumns("playerId", "matchId")
                 .WithValues(m.Player1.Id, m.Id)
                 .ToString();
 
-            var insert2 = new FluentMySqlInsert("matchupToPlayer")
-                .WithColumns("playerId", "matchupId")
+            var insert2 = new FluentMySqlInsert("matchToPlayer")
+                .WithColumns("playerId", "matchId")
                 .WithValues(m.Player2.Id, m.Id)
                 .ToString();
 
