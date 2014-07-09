@@ -13,5 +13,7 @@ namespace AccessExport.Entities
         public bool IsPlayerBoard { get; set; }
         public int Priority { get; set; }
         public string Key { get; set; }
+
+        public int FormatType { get; set; }
     }
 }

@@ -28,6 +28,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         [StringLength(50)]
         public string key { get; set; }
 
+        public int formatType { get; set; }
+
         public virtual ICollection<leaderboarddata> leaderboarddatas { get; set; }
     }
 }

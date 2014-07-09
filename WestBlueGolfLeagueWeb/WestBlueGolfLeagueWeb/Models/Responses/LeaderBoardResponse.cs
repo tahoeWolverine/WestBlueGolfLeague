@@ -15,6 +15,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.Key = leaderboard.key;
             this.IsPlayerBoard = leaderboard.isPlayerBoard;
             this.Priority = leaderboard.priority;
+            this.FormatType = leaderboard.formatType;
 
             if (leaderboard.leaderboarddatas != null)
             {
@@ -33,6 +34,8 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public int Id { get; set; }
 
         public int Priority { get; set; }
+
+        public int FormatType { get; set; }
 
         public IEnumerable<LeaderBoardDataResponse> LeaderBoardDatas { get; set; }
     }

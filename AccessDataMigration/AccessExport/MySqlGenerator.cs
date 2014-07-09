@@ -240,8 +240,8 @@ namespace AccessExport
         private string GetLeaderBoardInsert(LeaderBoard l)
         {
             return new FluentMySqlInsert("leaderBoard")
-               .WithColumns("id", "name", "priority", "isPlayerBoard", "key")
-               .WithValues(l.Id, l.Name, l.Priority, l.IsPlayerBoard, l.Key)
+               .WithColumns("id", "name", "priority", "isPlayerBoard", "key", "formatType")
+               .WithValues(l.Id, l.Name, l.Priority, l.IsPlayerBoard, l.Key, l.FormatType)
                .ToString();
         }
 
