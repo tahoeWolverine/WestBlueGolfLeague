@@ -824,6 +824,26 @@ namespace AccessExport
             return lb;
         }
 
+        // TODO: implement this method.
+        private string FormatLeaderBoardValue(double value, int format)
+        {
+            switch (format)
+            {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 0:
+                default:
+
+                    break;
+            }
+
+            return Convert.ToString(value);
+        }
+
         private void TeamBoard(DataModel dataModel, string name, string key, ICollection<Team> teams, Year year, bool isAsc, Func<Team, DataModel, double> valueFunc, int formatType = 0)
         {
             LeaderBoard lb = this.LeaderBoardByKey(dataModel, key, false, name, formatType);
@@ -837,7 +857,7 @@ namespace AccessExport
                 if (results.Count() == 0) continue;
 
                 double value = valueFunc(team, dataModel);
-                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value, LeaderBoard = lb, Year = year };
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = false, Team = team, Value = value, FormattedValue = FormatLeaderBoardValue(value, formatType), LeaderBoard = lb, Year = year };
                 datasWhichNeedRanks.Add(lbd);
 
                 dataModel.LeaderBoardDatas.Add(lbd);
@@ -864,7 +884,7 @@ namespace AccessExport
                 }
 
                 double value = valueFunc(player, dataModel);
-                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, LeaderBoard = lb, Year = year };
+                LeaderBoardData lbd = new LeaderBoardData { Id = LeaderBoardDataIdIndex++, IsPlayer = true, Player = player, Value = value, FormattedValue = FormatLeaderBoardValue(value, formatType), LeaderBoard = lb, Year = year };
 
                 datasToSort.Add(lbd);
                 dataModel.LeaderBoardDatas.Add(lbd);

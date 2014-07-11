@@ -18,5 +18,6 @@ namespace AccessExport.Entities
         public LeaderBoard LeaderBoard { get; set; }
         public string Detail { get; set; }
         public Year Year { get; set; }
+        public string FormattedValue { get; set; }
     }
 }

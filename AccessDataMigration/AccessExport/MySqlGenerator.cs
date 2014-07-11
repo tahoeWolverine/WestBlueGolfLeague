@@ -232,8 +232,8 @@ namespace AccessExport
             NullableValue<int> teamId = l.IsPlayer ? new NullableValue<int>() : new NullableValue<int>(l.Team.Id);
 
             return new FluentMySqlInsert("leaderBoardData")
-               .WithColumns("id", "rank", "value", "leaderBoardId", "yearId", "isPlayer", "teamId", "playerId", "detail")
-               .WithValues(l.Id, l.Rank, l.Value, l.LeaderBoard.Id, l.Year.Id, l.IsPlayer, teamId, playerId, l.Detail ?? string.Empty)
+               .WithColumns("id", "rank", "value", "leaderBoardId", "yearId", "isPlayer", "teamId", "playerId", "detail", "formattedValue")
+               .WithValues(l.Id, l.Rank, l.Value, l.LeaderBoard.Id, l.Year.Id, l.IsPlayer, teamId, playerId, l.Detail ?? string.Empty, l.FormattedValue)
                .ToString();
         }
 
