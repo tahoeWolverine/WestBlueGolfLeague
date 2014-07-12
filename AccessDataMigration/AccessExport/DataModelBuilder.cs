@@ -757,7 +757,7 @@ namespace AccessExport
 
                 TeamBoard(dataModel, "Average Score", "team_avg_score", teamsForYear, year, true, (team, dm) => team.AverageScoreForYear(year));
 
-                TeamBoard(dataModel, "Average Net Score", "team_avg_net_score", teamsForYear, year, true, (team, dm) => team.AverageNetScoreForYear(year));
+                TeamBoard(dataModel, "Average Net Score", "team_avg_net_score", teamsForYear, year, true, (team, dm) => team.AverageNetScoreForYear(year), NetDifference);
 
                 TeamBoard(dataModel, "Ind. W/L Ratio", "team_ind_win_loss_record", teamsForYear, year, false, (team, dm) => team.IndividualRecordRatioForYear(year), Ratio);
 
@@ -830,18 +830,14 @@ namespace AccessExport
             switch (format)
             {
                 case 1:
-
+                    return string.Format("{0:0.000}", value);
                     break;
                 case 2:
-
-                    break;
+                    return string.Format("{0:+0.##;-0.##}", value);
                 case 0:
                 default:
-
-                    break;
+                    return string.Format("{0:0.##}", value);
             }
-
-            return Convert.ToString(value);
         }
 
         private void TeamBoard(DataModel dataModel, string name, string key, ICollection<Team> teams, Year year, bool isAsc, Func<Team, DataModel, double> valueFunc, int formatType = 0)

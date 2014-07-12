@@ -18,7 +18,7 @@
             <tr ng-repeat="boardData in leaderBoardData.leaderBoardData | orderBy:'rank'">
                 <td class="col-md-2">{{boardData.rank}}</td>
                 <td class="col-md-4">{{boardData.entityName}}</td>
-                <td>{{boardData.value}}</td>
+                <td>{{boardData.formattedValue}}</td>
             </tr>
         </tbody>
     </table>

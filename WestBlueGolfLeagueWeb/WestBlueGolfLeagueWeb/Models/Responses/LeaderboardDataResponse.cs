@@ -41,7 +41,8 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
                 TId = lbd.teamId,
                 // Year = lbd.yearId // This is really implied based on the API.
                 R = lbd.rank,
-                Det = lbd.detail
+                Det = lbd.detail,
+                FV = lbd.formattedValue
             };
         }
 
@@ -81,5 +82,10 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         /// Value
         /// </summary>
         public double V { get; set; }
+
+        /// <summary>
+        /// Formatted value (eg. "+1")
+        /// </summary>
+        public string FV { get; set; }
     }
 }

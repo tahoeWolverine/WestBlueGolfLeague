@@ -14,6 +14,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.Rank = boardData.rank;
             this.EntityId = boardData.isPlayer ? boardData.player.id : boardData.team.id;
             this.EntityName = boardData.isPlayer ? boardData.player.name : boardData.team.teamName;
+            this.FormattedValue = boardData.formattedValue;
         }
 
         public string EntityName { get; set; }
@@ -23,5 +24,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public int Rank { get; set; }
 
         public double Value { get; set; }
+
+        public string FormattedValue { get; set; }
     }
 }

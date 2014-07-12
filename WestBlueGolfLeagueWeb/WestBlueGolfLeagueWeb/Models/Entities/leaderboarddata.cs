@@ -35,5 +35,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual player player { get; set; }
 
         public virtual team team { get; set; }
+
+        [StringLength(45)]
+        public string formattedValue { get; set; }
     }
 }
