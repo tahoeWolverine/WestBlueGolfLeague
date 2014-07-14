@@ -55,7 +55,7 @@
 #define wbJsonKeyTeamMatchupComplete @"mc"
 #define wbJsonKeyTeamMatchupTeams @"teamIds"
 
-#define wbJsonKeyMatches @"matchups"
+#define wbJsonKeyMatches @"matches"
 #define wbJsonKeyMatchId @"id"
 
 #define wbJsonKeyResults @"results"
