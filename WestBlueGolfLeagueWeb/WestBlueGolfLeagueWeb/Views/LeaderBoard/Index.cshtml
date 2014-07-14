@@ -7,12 +7,12 @@
 
 <div ng-app="leaderBoards">
     <div ng-controller="Root">
-        <div ng-show ="isLoading" class="loading-indicator-parent">
+        <div ng-show="isLoading" class="loading-indicator-parent">
             <div class="loading-indicator">
                 <i class="fa fa-spin fa-spinner"></i>
             </div>
         </div>
-        <ui-view ng-hide="isLoading"></ui-view>
+        <div ui-view ng-hide="isLoading" class="fade-in"></div>
     </div>
 </div>
 

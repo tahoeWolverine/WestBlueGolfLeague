@@ -64,6 +64,25 @@ input[type="checkbox"].input-validation-error {
     height: 400px;
 }
 
+.fade-in.ng-enter.ng-enter-active {
+   opacity: 1;
+}
+
+.fade-in.ng-enter {
+    -webkit-transition: 0.2s ease-in all;
+    -moz-transition: 0.2s ease-in all;
+    -o-transition: 0.2s ease-in all;
+    transition: 0.2s ease-in all;
+    opacity: 0;
+}
+
+/*.fade-in.ng-enter, .fade-in.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.fade-in.ng-leave, .fade-in.ng-enter.ng-enter-active {
+
+}*/
 
 @media (max-width: 767px) {
   

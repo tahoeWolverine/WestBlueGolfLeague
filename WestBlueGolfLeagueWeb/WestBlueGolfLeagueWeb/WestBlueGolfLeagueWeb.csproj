@@ -206,7 +206,6 @@
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\LeaderBoardApiController.cs" />
     <Compile Include="Controllers\LeaderBoardController.cs" />
-    <Compile Include="Controllers\matchupsController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ResultsTableController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
