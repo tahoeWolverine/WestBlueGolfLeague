@@ -266,7 +266,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
-    <Content Include="Scripts\leaderBoards\tpl\index.tpl.html" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
