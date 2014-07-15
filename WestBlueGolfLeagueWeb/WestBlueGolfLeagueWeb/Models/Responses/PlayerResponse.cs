@@ -10,14 +10,21 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
     {
         public static PlayerResponse From(playeryeardata p)
         {
-            return new PlayerResponse 
+            var pr = From(p.player);
+
+            pr.YD = PlayerYearDataResponse.From(p);
+
+            return pr;
+        }
+
+        public static PlayerResponse From(player p)
+        {
+            return new PlayerResponse
             {
-                Id = p.player.id,
-                Name = p.player.name,
-                CH = p.player.currentHandicap,
-                // p.favorite // I don't know what this value is for...
-                VP = p.player.validPlayer,
-                YD = PlayerYearDataResponse.From(p)
+                Id = p.id,
+                Name = p.name,
+                CH = p.currentHandicap,
+                VP = p.validPlayer,
             };
         }
 

@@ -1,14 +1,29 @@
-﻿@model List<WestBlueGolfLeagueWeb.Models.Entities.player>
+﻿@model WestBlueGolfLeagueWeb.Models.ViewModels.PlayerListViewModel
 
 @{
     ViewBag.Title = "Players";
 }
 
-<ul>
 
-@foreach (var player in this.Model)
+<script>
+    var playerYearData = @Html.Raw(JsonHelpers.ToJson(this.Model.PlayersForYear));
+</script>
+
+
+<div ng-app="playerList" class="ng-cloak">
+    <div ng-controller="list">
+        <div ng-repeat="item in playerData">
+            {{item.name}} -- {{item.ch}}
+        </div>
+    </div>
+</div>
+
+@*<ul>
+
+@foreach (var player in this.Model.PlayersForYear)
 {
-    <li>@Html.ActionLink(player.name, "Details", "Player", new { id = player.id }, null)</li>
+    <li>@Html.ActionLink(player.Name, "Details", "Player", new { id = player.Id }, null)</li>
 }
 
-</ul>
+</ul>*@
+

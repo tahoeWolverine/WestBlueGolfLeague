@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using System.Data.Entity;
+using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.ViewModels;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -15,9 +18,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
         // GET: /Player/
         public ActionResult Index()
         {
-            var players = db.players.Where(p => p.validPlayer).ToList();
+            var playersForYear = db.GetPlayersForYear();
 
-            return View(players);
+            return View(new PlayerListViewModel { PlayersForYear = playersForYear.Select(x => PlayerResponse.From(x)) });
         }
 
         //
