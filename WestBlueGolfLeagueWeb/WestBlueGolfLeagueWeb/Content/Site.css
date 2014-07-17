@@ -84,6 +84,11 @@ input[type="checkbox"].input-validation-error {
 
 }*/
 
+.player-list-item {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 @media (max-width: 767px) {
   
   .board-group-toggle {

@@ -11,11 +11,7 @@
 
 
 <div ng-app="playerList" class="ng-cloak">
-    <div ng-controller="list">
-        <div ng-repeat="item in playerData">
-            {{item.name}} -- {{item.ch}}
-        </div>
-    </div>
+    <div ng-include="'/Scripts/player/tpl/playerList.tpl.html'"></div>
 </div>
 
 @*<ul>
