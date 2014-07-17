@@ -39,6 +39,7 @@
 
 - (void)beginFetch {
 	if ([(WBAppDelegate *)[UIApplication sharedApplication].delegate loading]) {
+        DLog(@"Datasource did not fetch data because more data is being loaded");
 		return;
 	}
 	
@@ -89,6 +90,7 @@
     NSInteger count = [[self.fetchedResultsController sections] count];
     
 	if (count == 0) {
+        DLog(@"No Sections Available for datasource");
 		count = 1;
 	}
 	
@@ -170,6 +172,8 @@
 		[fetchRequest setPredicate:[self fetchPredicate]];
         
         [fetchRequest setSortDescriptors:[self sortDescriptorsForFetch]];
+        
+        //NSArray *results = [[[WBCoreDataManager sharedManager] managedObjectContext] executeFetchRequest:fetchRequest error:nil];
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".

@@ -19,7 +19,7 @@
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		DLog(@"Year data request Completed: %@", responseObject);
+		//DLog(@"Year data request Completed: %@", responseObject);
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			completionBlock(YES, responseObject);
 		}];
