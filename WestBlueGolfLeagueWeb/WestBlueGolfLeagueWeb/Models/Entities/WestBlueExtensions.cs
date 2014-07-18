@@ -17,7 +17,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
             return westBlue.playeryeardatas
                         .Include(p => p.player)
-                        .Include("player.team")
                         .AsNoTracking()
                         .Where(x => x.year.value == year)
                         .Select(x => x.player)
