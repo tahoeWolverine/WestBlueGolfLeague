@@ -269,6 +269,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
+    <Content Include="Scripts\lib\angular\angular-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-animate-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-cookies-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-resource-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-route-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-touch-1.2.20.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -299,12 +305,6 @@
     <Content Include="Scripts\leaderBoards\tpl\boardData.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\boardDataLayout.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoardsLandingPage.tpl.html" />
-    <Content Include="Scripts\lib\angular\angular-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-animate-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-cookies-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-resource-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-route-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-touch-1.2.16.js" />
     <Content Include="Scripts\lib\angular-ui-router-0.2.10.js" />
     <Content Include="Scripts\main\app.js" />
     <Content Include="Scripts\main\test.tpl.html" />
