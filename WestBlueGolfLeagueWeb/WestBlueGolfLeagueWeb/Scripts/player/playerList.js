@@ -5,13 +5,32 @@ angular.module('playerList', ['ngAnimate', 'ui.router']);
 (function (module) {
 
 
+    module
+        .filter('chunkPlayers', function () {
+            return function (playerList) {
+                var newArr = [],
+                    subArr = [];
 
+                for (var i = 0; i < playerList.length; i++) {
+                    if (i % 3 == 0) {
+                        subArr = [];
+                        subArr.push(playerList[i]);
+                        newArr.push(subArr);
+                    }
+                    else {
+                        subArr.push(playerList[i]);
+                    }
+                }
+
+                return newArr;
+            };
+        });
 
 
 })(angular.module('playerList'));
 
 angular
-    .module('playerList', ['ngAnimate', 'ui.router'])
+    .module('playerList')
     .factory('playerListService', ['$window', '$q', '$timeout', function ($window, $q, $timeout) {
 
         var playerYearData = $window.playerYearData;
@@ -37,7 +56,7 @@ angular
 
         playerListService.getPlayersForYear().then(function (result) {
 
-            var sortedResult = $filter('orderBy')(result, 'name');
+            /*var sortedResult = $filter('orderBy')(result, 'name');
 
             var newArr = [],
                 subArr = [];
@@ -53,8 +72,8 @@ angular
                 }
             }
 
-            //console.log(newArr);
+            //console.log(newArr);*/
 
-            $scope.playerData = newArr;
+            $scope.playerData = result;
         });
     }]);

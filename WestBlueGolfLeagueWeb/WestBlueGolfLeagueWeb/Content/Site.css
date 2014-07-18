@@ -10,7 +10,6 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
 select,
 textarea {
     max-width: 280px;
@@ -89,25 +88,49 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1em;
 }
 
+
+.header-link-small {
+    display: none;
+}
+
+
+@media (max-width: 992px) {
+    .header-link-small {
+        display: inline;
+    }
+
+    .header-link {
+        display: none;
+    }
+}
+
 @media (max-width: 767px) {
   
-  .board-group-toggle {
-    display: block;
-  }
+    .header-link-small {
+        display: none;
+    }
+
+    .header-link {
+        display: inline;
+    }
+
+    .board-group-toggle {
+        display: block;
+    }
   
-  .board-selector {
-    display: none;
-  }
+    .board-selector {
+        display: none;
+    }
   
-  .board-group-heading {
-    display: none;
-  }
+    .board-group-heading {
+        display: none;
+    }
   
-  .board {
-    display: none;
-  }
+    .board {
+        display: none;
+    }
   
-  .boardVisible {
-    display: block;
-  }
+    .boardVisible {
+        display: block;
+    }
 }

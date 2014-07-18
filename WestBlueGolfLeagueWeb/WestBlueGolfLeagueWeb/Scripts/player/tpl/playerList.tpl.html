@@ -1,8 +1,25 @@
 ﻿
 <div ng-controller="list">
-    <div ng-repeat="row in playerData">
-        <div class="row">
-            <div ng-repeat="item in row" class="col-sm-4 player-list-item">{{item.name}} -- {{item.ch}}</div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control player-search" placeholder="Enter player name" ng-model="nameSearchText">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            </div>
         </div>
     </div>
+    <div class="row">
+        <div ng-repeat="player in filteredPlayerData = ( playerData | orderBy:'name' | filter: {'name': nameSearchText} )" class="col-sm-4 player-list-item">
+            {{player.name}} -- {{player.ch}}
+        </div>
+        <div ng-show="filteredPlayerData.length == 0" class="col-sm-12">
+            no players found!
+        </div>
+    </div>
+
+    <!--<div class="row">
+        <div ng-repeat="item in row" class="col-sm-4 player-list-item">{{item.name}} -- {{item.ch}}</div>
+    </div>-->
+
 </div>
