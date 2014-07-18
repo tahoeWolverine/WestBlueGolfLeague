@@ -88,11 +88,25 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1em;
 }
 
+.clear-icon {
+    position: absolute;
+    text-align: center;
+    line-height: 34px;
+    width: 34px;
+    cursor: pointer;
+    right: 44px;
+    font-size: 1.2em;
+    z-index: 9;
+}
+
+.clear-icon:hover {
+    color: red;
+}
+
 
 .header-link-small {
     display: none;
 }
-
 
 @media (max-width: 992px) {
     .header-link-small {

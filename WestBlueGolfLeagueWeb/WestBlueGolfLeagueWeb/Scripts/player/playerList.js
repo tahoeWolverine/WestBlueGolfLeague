@@ -4,8 +4,8 @@ angular.module('playerList', ['ngAnimate', 'ui.router']);
 
 (function (module) {
 
-
     module
+        // TODO: might not need this... remove this if not needed.
         .filter('chunkPlayers', function () {
             return function (playerList) {
                 var newArr = [],
@@ -31,6 +31,18 @@ angular.module('playerList', ['ngAnimate', 'ui.router']);
 
 angular
     .module('playerList')
+    .directive('focusMe', function () {
+        return {
+            link: function (scope, element, attrs) {
+
+                var element = element[0];
+                
+                if (element.focus) {
+                    element.focus();
+                }
+            }
+        };
+    })
     .factory('playerListService', ['$window', '$q', '$timeout', function ($window, $q, $timeout) {
 
         var playerYearData = $window.playerYearData;
@@ -51,29 +63,7 @@ angular
 
     .controller('list', ['$scope', 'playerListService', '$filter', function ($scope, playerListService, $filter) {
 
-        $scope.wat = 'wattt';
-        //$scope.playerData = [];
-
         playerListService.getPlayersForYear().then(function (result) {
-
-            /*var sortedResult = $filter('orderBy')(result, 'name');
-
-            var newArr = [],
-                subArr = [];
-
-            for (var i = 0; i < sortedResult.length; i++) {
-                if (i % 3 == 0) {
-                    subArr = [];
-                    subArr.push(sortedResult[i]);
-                    newArr.push(subArr);
-                }
-                else {
-                    subArr.push(sortedResult[i]);
-                }
-            }
-
-            //console.log(newArr);*/
-
             $scope.playerData = result;
         });
     }]);

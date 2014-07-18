@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
-                <input type="text" class="form-control player-search" placeholder="Enter player name" ng-model="nameSearchText">
+                <input type="text" focus-me class="form-control player-search" placeholder="Enter player name" ng-model="nameSearchText">
+                <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''"><i class="fa fa-times"></i></span>
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
             </div>
         </div>
@@ -17,9 +18,4 @@
             no players found!
         </div>
     </div>
-
-    <!--<div class="row">
-        <div ng-repeat="item in row" class="col-sm-4 player-list-item">{{item.name}} -- {{item.ch}}</div>
-    </div>-->
-
 </div>
