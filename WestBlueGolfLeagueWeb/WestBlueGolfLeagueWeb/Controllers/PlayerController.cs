@@ -18,9 +18,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
         // GET: /Player/
         public ActionResult Index()
         {
-            var playersForYear = db.GetPlayersForYear();
+            var playersForYear = db.GetPlayersWithTeamsForYear();
 
-            return View(new PlayerListViewModel { PlayersForYear = playersForYear.Select(x => PlayerResponse.From(x)) });
+            return View(new PlayerListViewModel { PlayersForYear = playersForYear.Select(x => new { Name = x.Item1.name, CH = x.Item1.currentHandicap, TeamName = x.Item2.teamName, Id = x.Item1.id }) });
         }
 
         //

@@ -1,6 +1,5 @@
 ﻿
 <div ng-controller="list">
-    
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
@@ -12,7 +11,15 @@
     </div>
     <div class="row">
         <div ng-repeat="player in filteredPlayerData = ( playerData | orderBy:'name' | filter: {'name': nameSearchText} )" class="col-sm-4 player-list-item">
-            {{player.name}} -- {{player.ch}}
+            <div class="row">
+                <a href="/Player/Details/{{player.id}}/">
+                    <div class="col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
+                    <div class="col-xs-6 player-list-item-name">
+                        <div class="player-list-item-playername">{{player.name}}</div>
+                        <div class="player-list-item-teamname">{{player.teamName}}</div>
+                    </div>
+                </a>
+            </div>
         </div>
         <div ng-show="filteredPlayerData.length == 0" class="col-sm-12">
             no players found!

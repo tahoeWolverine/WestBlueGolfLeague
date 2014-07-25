@@ -84,8 +84,49 @@ input[type="checkbox"].input-validation-error {
 }*/
 
 .player-list-item {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+}
+
+.player-list-item-playername {
+    font-size: 1.2em;
+}
+
+.player-list-item-name, .player-list-item-image {
+    height: 3.2em;
+}
+
+.player-list-item-image {
+    line-height: 3.2em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.player-list-item-image .fa-user {
+    font-size: 2em;
+    line-height: 1.6em;
+}
+
+.player-list-item:hover .fa-user {
+    font-size: 2.4em;
+    line-height: 1.3333333em;
+}
+
+.player-list-item-teamname {
+    color: #999;
+}
+
+.player-list-item > div:hover {
+  
+}
+
+.player-list-item a {
+    color: black;
+    display: block;
+}
+
+.player-list-item a:hover {
+    background: red;
 }
 
 .clear-icon {
@@ -102,6 +143,7 @@ input[type="checkbox"].input-validation-error {
 .clear-icon:hover {
     color: red;
 }
+
 
 
 .header-link-small {

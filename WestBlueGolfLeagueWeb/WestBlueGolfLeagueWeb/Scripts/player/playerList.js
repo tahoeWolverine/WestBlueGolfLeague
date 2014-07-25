@@ -1,6 +1,6 @@
 ﻿
 
-angular.module('playerList', ['ngAnimate', 'ui.router']);
+angular.module('playerList', ['ui.router']);
 
 (function (module) {
 
