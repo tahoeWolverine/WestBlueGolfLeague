@@ -1,22 +1,24 @@
 ﻿
-<div ng-controller="list">
-    <div class="row">
-        <div class="col-md-6">
+<div ng-controller="list" class="player-list">
+    <div class="player-list-input row">
+        <div class="col-md-6 col-xs-12">
             <div class="input-group">
-                <input type="text" focus-me class="form-control player-search" placeholder="Enter player name" ng-model="nameSearchText">
+                <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="Enter player name" ng-model="nameSearchText">
                 <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''"><i class="fa fa-times"></i></span>
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row player-list-players">
         <div ng-repeat="player in filteredPlayerData = ( playerData | orderBy:'name' | filter: {'name': nameSearchText} )" class="col-sm-4 player-list-item">
             <div class="row">
-                <a href="/Player/Details/{{player.id}}/">
-                    <div class="col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
-                    <div class="col-xs-6 player-list-item-name">
-                        <div class="player-list-item-playername">{{player.name}}</div>
-                        <div class="player-list-item-teamname">{{player.teamName}}</div>
+                <a href="/Player/Details/{{player.id}}/" tabindex="{{$index + 1}}">
+                    <div class="player-list-item-wrapper">
+                        <div class="col-sm-2 col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
+                        <div class="col-sm-6 col-xs-10 player-list-item-name">
+                            <div class="player-list-item-playername">{{player.name}}</div>
+                            <div class="player-list-item-teamname">{{player.teamName}}</div>
+                        </div>
                     </div>
                 </a>
             </div>
