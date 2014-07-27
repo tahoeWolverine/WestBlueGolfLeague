@@ -1,6 +1,6 @@
 ﻿
 
-angular.module('playerList', ['ui.router']);
+angular.module('playerList', ['app', 'ui.router']);
 
 (function (module) {
 
@@ -27,23 +27,7 @@ angular.module('playerList', ['ui.router']);
         });
 
 
-})(angular.module('playerList'));
-
-angular
-    .module('playerList')
-    .directive('focusMe', function () {
-        return {
-            link: function (scope, element, attrs) {
-
-                var element = element[0];
-                
-                if (element.focus) {
-                    element.focus();
-                }
-            }
-        };
-    })
-    .factory('playerListService', ['$window', '$q', '$timeout', function ($window, $q, $timeout) {
+    var PlayerListService = function ($window, $q, $timeout) {
 
         var playerYearData = $window.playerYearData;
 
@@ -53,17 +37,30 @@ angular
                 // This is kind of goofy but I want to keep an async contract in case
                 // we return this data from http or something else which is async in the future.
                 var defer = $q.defer();
-                
+
                 defer.resolve(playerYearData);
 
                 return defer.promise;
             }
         };
-    }])
+    };
 
-    .controller('list', ['$scope', 'playerListService', '$filter', function ($scope, playerListService, $filter) {
+
+    var ListController = function ($scope, playerListService, $filter) {
 
         playerListService.getPlayersForYear().then(function (result) {
             $scope.playerData = result;
         });
-    }]);
+
+        $scope.$watch('nameSearchText', function (newVal, oldVal) {
+            $scope.scrollToTop();
+        });
+    };
+
+    module
+        .controller('list', ['$scope', 'playerListService', '$filter', ListController])
+        .factory('playerListService', ['$window', '$q', '$timeout', PlayerListService]);
+
+})(angular.module('playerList'));
+
+    

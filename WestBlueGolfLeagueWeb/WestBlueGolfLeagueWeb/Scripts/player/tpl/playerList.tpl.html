@@ -4,12 +4,12 @@
         <div class="col-md-6 col-xs-12">
             <div class="input-group">
                 <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="Enter player name" ng-model="nameSearchText">
-                <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''"><i class="fa fa-times"></i></span>
+                <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''; focusMe()"><i class="fa fa-times"></i></span>
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
             </div>
         </div>
     </div>
-    <div class="row player-list-players">
+    <div class="row player-list-players" scroll-to-top>
         <div ng-repeat="player in filteredPlayerData = ( playerData | orderBy:'name' | filter: {'name': nameSearchText} )" class="col-sm-4 player-list-item">
             <div class="row">
                 <a href="/Player/Details/{{player.id}}/" tabindex="{{$index + 1}}">
@@ -23,8 +23,8 @@
                 </a>
             </div>
         </div>
-        <div ng-show="filteredPlayerData.length == 0" class="col-sm-12">
-            no players found!
+        <div ng-show="filteredPlayerData.length == 0" class="col-sm-12 player-list-no-players">
+            <h4>No players found for &#39;{{nameSearchText}}&#39;</h4>
         </div>
     </div>
 </div>

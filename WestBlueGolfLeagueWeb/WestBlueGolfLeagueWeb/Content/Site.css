@@ -84,7 +84,6 @@ input[type="checkbox"].input-validation-error {
 }*/
 
 
-
 .player-list-item {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
@@ -96,6 +95,7 @@ input[type="checkbox"].input-validation-error {
     height: 60px;
     padding-right: 15px;
     background: rgba(255,255,255,.5);
+    width: 100%;
 }
 
 .player-list-players {
