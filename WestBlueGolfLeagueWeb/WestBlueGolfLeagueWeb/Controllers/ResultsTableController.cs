@@ -9,10 +9,8 @@ using WestBlueGolfLeagueWeb.Models.ViewModels;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
-    public class ResultsTableController : Controller
+    public class ResultsTableController : WestBlueDbMvcController
     {
-        private WestBlue db = new WestBlue();
-
         // GET: ResultsTable
         public ActionResult Index()
         {
@@ -21,7 +19,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
         public ActionResult Details(int? id)
         {
-            var allTeamsForYear = db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == DateTime.Now.Year)).ToList();
+            var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == DateTime.Now.Year)).ToList();
 
             if (allTeamsForYear.Count() == 0)
             {
@@ -33,9 +31,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 id = allTeamsForYear.First().id;
             }
 
-            var team = db.teams.Where(x => x.id == id).FirstOrDefault();
+            var team = this.Db.teams.Where(x => x.id == id).FirstOrDefault();
 
-            var yearDatasForYearForTeam = db.playeryeardatas
+            var yearDatasForYearForTeam = this.Db.playeryeardatas
                             .Include(y => y.player)
                             .Include("player.results")
                             .Include("player.results.year")
@@ -43,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                             .Where(y => y.year.value == DateTime.Now.Year && y.teamId == id)
                             .ToList();
 
-            var weeksForYear = db.weeks.Include(w => w.course).Where(w => w.year.value == DateTime.Now.Year).OrderBy(x => x.seasonIndex).ToList();
+            var weeksForYear = this.Db.weeks.Include(w => w.course).Where(w => w.year.value == DateTime.Now.Year).OrderBy(x => x.seasonIndex).ToList();
 
             if (team == null)
             {
@@ -67,15 +65,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
                                                                             .OrderBy(r => r.matchup.teammatchup.week.seasonIndex)
                                                         })
             });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

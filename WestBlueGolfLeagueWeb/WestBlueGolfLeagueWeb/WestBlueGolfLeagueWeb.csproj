@@ -208,8 +208,8 @@
     <Compile Include="Controllers\LeaderBoardController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ResultsTableController.cs" />
-    <Compile Include="Controllers\ScheduleController.cs" />
-    <Compile Include="Controllers\TopScoreController.cs" />
+    <Compile Include="Controllers\WestBlueDbApiController.cs" />
+    <Compile Include="Controllers\WestBlueDbMvcController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +247,7 @@
     <Compile Include="Models\Responses\TeamResponse.cs" />
     <Compile Include="Models\Responses\WeekResponse.cs" />
     <Compile Include="Models\Responses\YearResponse.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\PlayerListViewModel.cs" />
     <Compile Include="Models\ViewModels\PlayerResultsViewModel.cs" />
     <Compile Include="Models\ViewModels\ResultsTableViewModel.cs" />
@@ -269,6 +270,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
+    <Content Include="Scripts\lib\angular\angular-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-animate-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-cookies-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-resource-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-route-1.2.20.js" />
+    <Content Include="Scripts\lib\angular\angular-touch-1.2.20.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -299,12 +306,6 @@
     <Content Include="Scripts\leaderBoards\tpl\boardData.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\boardDataLayout.tpl.html" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoardsLandingPage.tpl.html" />
-    <Content Include="Scripts\lib\angular\angular-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-animate-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-cookies-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-resource-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-route-1.2.16.js" />
-    <Content Include="Scripts\lib\angular\angular-touch-1.2.16.js" />
     <Content Include="Scripts\lib\angular-ui-router-0.2.10.js" />
     <Content Include="Scripts\main\app.js" />
     <Content Include="Scripts\main\test.tpl.html" />
@@ -313,6 +314,7 @@
     <Content Include="Scripts\player\playerList.js" />
     <Content Include="Scripts\player\player.js" />
     <Content Include="Scripts\player\tpl\playerHandicaps.tpl.html" />
+    <Content Include="Scripts\player\tpl\playerList.tpl.html" />
     <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -336,10 +338,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Information\RulesAndInformation.cshtml" />
-    <Content Include="Views\TopScore\Index.cshtml" />
     <Content Include="Views\Player\Details.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
-    <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\LeaderBoard\Index.cshtml" />
     <Content Include="Views\ResultsTable\Index.cshtml" />
     <Content Include="Views\ResultsTable\Details.cshtml" />

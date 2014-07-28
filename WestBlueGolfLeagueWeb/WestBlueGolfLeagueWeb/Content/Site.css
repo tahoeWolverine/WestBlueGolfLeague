@@ -10,7 +10,6 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
 select,
 textarea {
     max-width: 280px;
@@ -84,25 +83,129 @@ input[type="checkbox"].input-validation-error {
 
 }*/
 
+
+.player-list-item {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+}
+
+.player-list-input {
+    z-index: 5;
+    position: fixed;
+    height: 60px;
+    padding-right: 15px;
+    background: rgba(255,255,255,.5);
+    width: 100%;
+}
+
+.player-list-players {
+    padding-top: 60px;
+}
+
+.player-list-input > div {
+    margin-top: 18px;
+}
+
+.player-list-item-playername {
+    font-size: 1.2em;
+}
+
+.player-list-item-name, .player-list-item-image {
+    height: 3.2em;
+}
+
+.player-list-item-image {
+    line-height: 3.2em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.player-list-item-image .fa-user {
+    font-size: 2em;
+    line-height: 1.6em; /* this is 3.2 / 2 */
+}
+
+/*.player-list-item .fa-user {*/
+.player-list-item-wrapper:hover .fa-user {
+    font-size: 2.4em;
+    line-height: 1.3333333em; /* this is 3.2 / 2.4. */
+}
+
+.player-list-item-teamname {
+    color: #999;
+}
+
+.player-list-item > div:hover {
+  
+}
+
+.player-list-item a {
+    color: black;
+    display: block;
+}
+
+.player-list-item a:hover {
+    background: red;
+}
+
+.clear-icon {
+    position: absolute;
+    text-align: center;
+    line-height: 34px;
+    width: 34px;
+    cursor: pointer;
+    right: 44px;
+    font-size: 1.2em;
+    z-index: 9;
+}
+
+.clear-icon:hover {
+    color: red;
+}
+
+
+
+.header-link-small {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .header-link-small {
+        display: inline;
+    }
+
+    .header-link {
+        display: none;
+    }
+}
+
 @media (max-width: 767px) {
   
-  .board-group-toggle {
-    display: block;
-  }
+    .header-link-small {
+        display: none;
+    }
+
+    .header-link {
+        display: inline;
+    }
+
+    .board-group-toggle {
+        display: block;
+    }
   
-  .board-selector {
-    display: none;
-  }
+    .board-selector {
+        display: none;
+    }
   
-  .board-group-heading {
-    display: none;
-  }
+    .board-group-heading {
+        display: none;
+    }
   
-  .board {
-    display: none;
-  }
+    .board {
+        display: none;
+    }
   
-  .boardVisible {
-    display: block;
-  }
+    .boardVisible {
+        display: block;
+    }
 }

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using WestBlueGolfLeagueWeb.Models.ViewModels;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : WestBlueDbMvcController
     {
         public ActionResult Index()
         {
-            return View();
+            int selectedYear = DateTimeOffset.Now.Year;
+            
+            var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
+
+            return View(new HomeViewModel { TeamRankingDataForYear = rankingValuesForYear, SelectedYear = selectedYear });
         }
 
         public ActionResult About()
