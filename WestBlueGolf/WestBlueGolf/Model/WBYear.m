@@ -88,7 +88,9 @@
 
 - (BOOL)oldestIncompleteWeekHasPast {
     WBTeamMatchup *oldestIncompleteMatchup = (WBTeamMatchup *)[WBTeamMatchup findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"matchComplete = 0 && week.year = %@", self] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"week.date" ascending:YES]]];
-    return [oldestIncompleteMatchup.week.date timeIntervalSinceNow] <= 0;
+    NSDate *dateOfOldestIncomplete = oldestIncompleteMatchup.week.date;
+    NSDate *twoDaysLater = [dateOfOldestIncomplete dateByAddingTimeInterval:60*60*24*2];
+    return [twoDaysLater timeIntervalSinceNow] <= 0;
 }
 
 @end

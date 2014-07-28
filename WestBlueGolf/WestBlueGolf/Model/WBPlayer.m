@@ -180,9 +180,7 @@
 }
 
 - (NSInteger)thisYearHandicap {
-	WBYear *thisYear = [WBYear thisYear];
-	WBYear *newestYear = [WBYear newestYearInContext:self.managedObjectContext];
-	return thisYear == newestYear ? self.currentHandicapValue : [self finishingHandicapInYear:thisYear];
+	return [self findHandicapBoardData].valueValue;
 }
 
 - (NSString *)currentHandicapString {
