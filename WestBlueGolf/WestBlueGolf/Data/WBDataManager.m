@@ -104,10 +104,10 @@
 	}
 }
 
-- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
+/*- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
     WBInputDataManager *inputManager = [[WBInputDataManager alloc] init];
     [inputManager clearRefreshableDataForYearValue:yearValue];
-}
+}*/
 
 - (void)resetYearFromServer:(WBYear *)year {
 	[WBYearDataService requestYearDataAndPopulateForYear:year.valueValue completionBlock:^(BOOL success, id responseObject) {

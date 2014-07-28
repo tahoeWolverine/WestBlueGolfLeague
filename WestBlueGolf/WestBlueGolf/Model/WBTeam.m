@@ -239,7 +239,7 @@
 	NSInteger totalHandicap = 0;
 	NSArray *players = [self filterPlayersForYear:year];
 	for (WBPlayer *player in players) {
-		totalHandicap += player.currentHandicapValue;
+		totalHandicap += [player thisYearHandicap];
 	}
 	return (CGFloat)totalHandicap / (CGFloat)players.count;
 }
@@ -498,7 +498,8 @@
 		return nil;
 	}
 	
-	if ([(WBPlayer *)players[players.count - 1] finishingHandicapInYear:year] == 0) {
+    //TODO: Does this work for players that actually have a 0 handicap?
+	if ([(WBPlayer *)players[players.count - 1] thisYearHandicap] == 0) {
 		// Year isn't done
 		DLog(@"Unfinished Year");
 	}

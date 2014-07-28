@@ -293,7 +293,7 @@
 // Calculated strictly with the object model, no thread-context needed
 - (NSInteger)improvedInYear:(WBYear *)year {
 	NSInteger starting = [self startingHandicapInYear:year];
-	NSInteger ending = [year isNewestYear] ? self.currentHandicapValue : [self finishingHandicapInYear:year];
+	NSInteger ending = [self finishingHandicapInYear:year];
 	return starting != INT32_MAX ? ending - starting : 0;
 }
 

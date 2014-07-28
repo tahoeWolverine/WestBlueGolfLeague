@@ -20,6 +20,6 @@
 - (void)setupCoreData:(BOOL)reset;
 - (void)resetYearFromServer:(WBYear *)year;
 
-- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue;
+//- (void)clearRefreshableDataForYearValue:(NSInteger)yearValue;
 
 @end
