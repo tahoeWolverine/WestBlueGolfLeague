@@ -41,7 +41,9 @@
 	WBPlayer *player = [[self class] playerWithName:name inContext:moc];
 	if (!player) {
 		player = [[self class] createPlayerWithId:playerId name:name currentHandicap:currentHandicap real:real inContext:moc];
-	}
+	} else {
+        player.currentHandicapValue = currentHandicap;
+    }
 	return player;
 }
 
@@ -180,7 +182,7 @@
 }
 
 - (NSInteger)thisYearHandicap {
-	return [self findHandicapBoardData].valueValue;
+    return [self finishingHandicapInYear:[WBYear thisYear]];
 }
 
 - (NSString *)currentHandicapString {

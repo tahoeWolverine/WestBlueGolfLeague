@@ -33,7 +33,9 @@
 	WBLeaderBoard *board = (WBLeaderBoard *)[WBLeaderBoard findFirstRecordWithFormat:@"key = %@ && isPlayerBoard = %@", key, [NSNumber numberWithBool:isPlayerBoard]];
 	if (!board) {
 		board = [WBLeaderBoard createLeaderBoardWithName:name boardId:boardId key:key tablePriority:tablePriority isPlayerBoard:isPlayerBoard moc:moc];
-	}
+	} else {
+        board.tablePriorityValue = tablePriority;
+    }
 	return board;
 }
 

@@ -30,11 +30,8 @@
 								  matchComplete:(BOOL)matchComplete
 											moc:(NSManagedObjectContext *)moc {
 	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
-	//newTeamMatchup.week = week;
 	newTeamMatchup.matchIdValue = matchupId;
 	newTeamMatchup.matchCompleteValue = matchComplete;
-	//[newTeamMatchup addTeamsObject:team1];
-	//[newTeamMatchup addTeamsObject:team2];
 
     [week addTeamMatchupsObject:newTeamMatchup];
     [team1 addMatchupsObject:newTeamMatchup];

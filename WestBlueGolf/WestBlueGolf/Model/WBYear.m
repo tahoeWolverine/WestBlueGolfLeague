@@ -32,7 +32,9 @@
 	WBYear *aYear = [WBYear findYearWithValue:year inContext:moc];
 	if (!aYear) {
 		aYear = [WBYear createYearWithYearId:yearId value:year isComplete:isComplete inContext:moc];
-	}
+	} else {
+        aYear.isCompleteValue = isComplete;
+    }
 	return aYear;
 }
 

@@ -21,7 +21,10 @@
 	WBCourse *course = (WBCourse *)[WBCourse findFirstRecordWithFormat:@"name = %@", name];
 	if (!course) {
 		course = [WBCourse createCourseWithName:name courseId:courseId par:par inContext:moc];
-	}
+	} else {
+        course.name = name;
+        course.parValue = par;
+    }
 	return course;
 }
 

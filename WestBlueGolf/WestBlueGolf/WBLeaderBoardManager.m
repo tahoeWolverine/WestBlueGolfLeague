@@ -188,7 +188,7 @@
         };
     } else if ([key isEqualToString:kLeaderboardPlayerTotalImproved]) {
         return ^NSString *(WBPlayer *player) {
-            return [NSString stringWithFormat:kDetailStringImprove, (long)[player filterYearDataForYear:year].startingHandicapValue, (long)[player thisYearHandicap]];
+            return [NSString stringWithFormat:kDetailStringImprove, (long)[player startingHandicapInYear:year], (long)[player thisYearHandicap]];
         };
     } else if ([key isEqualToString:kLeaderboardPlayerAverageOpponentScore]) {
         return ^NSString *(WBPlayer *player) {
@@ -368,7 +368,7 @@
 	[self calculatePlayerBoardWithName:@"Season Improvement" key:kLeaderboardPlayerTotalImproved priority:6 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
 		return (CGFloat)[player improvedInYear:year];
 	} detailValueCalc:^(WBPlayer *player) {
-		return [NSString stringWithFormat:kDetailStringImprove, (long)[player filterYearDataForYear:year].startingHandicapValue, (long)[player thisYearHandicap]];
+		return [NSString stringWithFormat:kDetailStringImprove, (long)[player startingHandicapInYear:year], (long)[player thisYearHandicap]];
 	}];
 
 	[self calculatePlayerBoardWithName:@"Avg. Opp. Score" key:kLeaderboardPlayerAverageOpponentScore priority:7 players:players year:year ascending:YES moc:moc valueCalculation:^(WBPlayer *player) {
