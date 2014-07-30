@@ -89,6 +89,10 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1.2em;
 }
 
+.player-list-input input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, FontAwesome;
+}
+
 .player-list-input {
     z-index: 5;
     position: fixed;
@@ -99,11 +103,11 @@ input[type="checkbox"].input-validation-error {
 }
 
 .player-list-players {
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 .player-list-input > div {
-    margin-top: 18px;
+    margin-top: 14px;
 }
 
 .player-list-item-playername {
