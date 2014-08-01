@@ -1290,8 +1290,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
-					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
-					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
@@ -1406,8 +1404,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
-					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
-					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
@@ -1428,8 +1424,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					WestBlueGolf/Frameworks,
-					/Users/U0107552/WestBlueGolfLeague/WestBlueGolf/WestBlueGolf/Frameworks,
-					/Users/U0107552/Documents/Sources/WestBlueGolfLeague/WestBlueGolf/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
