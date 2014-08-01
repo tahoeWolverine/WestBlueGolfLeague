@@ -105,9 +105,14 @@
         });*/
     };
 
+    function DetailsTitleController($scope, leaderBoardDetails) {
+        $scope.leaderBoardTitle = leaderBoardDetails.data.leaderBoard.name;
+    };
+
     module
         .controller('Root', ['$scope', 'leaderBoardStates', '$state', 'errorStates', Root])
         .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', 'leaderBoardDetails', DetailsController])
+        .controller('DetailsTitle', ['$scope', 'leaderBoardDetails', DetailsTitleController])
         .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])
         .controller('LeaderBoards', ['$scope', '$stateParams', '$state', 'leaderBoards', 'errorStates', LeaderBoardsController]);
 
