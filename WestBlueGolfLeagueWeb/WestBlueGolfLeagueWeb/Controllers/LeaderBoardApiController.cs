@@ -38,19 +38,19 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public async Task<IHttpActionResult> GetLeaderBoard(string key)
         {
             // validate that we have a valid key.
-            var leaderBoard = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
+            var leaderBoardAsyncList = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
             var leaderBoardDatas = this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
 
-            var lbdResponse = await leaderBoard;
+            var leaderBoardList = await leaderBoardAsyncList;
 
-            if (lbdResponse.Count() != 1)
+            if (leaderBoardList.Count() != 1)
             {
                 return NotFound();
             }
 
             var datas = await leaderBoardDatas;
 
-            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => new LeaderBoardDataWebResponse(x)) });
+            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoardList.First()) });
         }
 
         private bool leaderboarddataExists(int id)
