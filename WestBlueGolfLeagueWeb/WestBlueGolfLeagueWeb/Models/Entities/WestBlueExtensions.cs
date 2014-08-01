@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 {
     public static class WestBlueExtensions
     {
-        public static IEnumerable<player> GetPlayersForYear(this WestBlue westBlue, int year = 0, bool includeInvalidPlayers = false)
+        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year = 0, bool includeInvalidPlayers = false)
         {
             if (year == 0)
             {
@@ -17,11 +17,13 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
             return westBlue.playeryeardatas
                         .Include(p => p.player)
+                        .Include(p => p.team)
                         .AsNoTracking()
                         .Where(x => x.year.value == year)
-                        .Select(x => x.player)
-                        .Where(x => includeInvalidPlayers ? true : x.validPlayer)
-                        .ToList();
+                        .ToList()
+                        .Where(x => includeInvalidPlayers ? true : x.player.validPlayer)
+                        .Select(x => Tuple.Create(x.player, x.team));
         }
+
     }
 }

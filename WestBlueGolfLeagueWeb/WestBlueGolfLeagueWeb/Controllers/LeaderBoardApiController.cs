@@ -15,23 +15,21 @@ using WestBlueGolfLeagueWeb.Models.Responses;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
-    public class LeaderBoardApiController : ApiController
+    public class LeaderBoardApiController : WestBlueDbApiController
     {
-        private WestBlue db = new WestBlue();
-
         // GET: api/LeaderBoardApi
         public IQueryable<leaderboarddata> Getleaderboarddatas()
         {
-            return db.leaderboarddatas;
+            return this.Db.leaderboarddatas;
         }
 
         // GET: api/LeaderBoardApi/5
         [ResponseType(typeof(AvailableLeaderBoardsResponse))]
         public async Task<IHttpActionResult> GetAvailableLeaderBoards()
         {
-            db.Configuration.ProxyCreationEnabled = false;
+            this.Db.Configuration.ProxyCreationEnabled = false;
 
-            var leaderboards = await db.leaderboards.AsNoTracking().ToListAsync();
+            var leaderboards = await this.Db.leaderboards.AsNoTracking().ToListAsync();
 
             return Ok(new AvailableLeaderBoardsResponse { LeaderBoards = leaderboards });
         }
@@ -40,8 +38,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public async Task<IHttpActionResult> GetLeaderBoard(string key)
         {
             // validate that we have a valid key.
-            var leaderBoard = db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
-            var leaderBoardDatas = db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
+            var leaderBoard = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
+            var leaderBoardDatas = this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
 
             var lbdResponse = await leaderBoard;
 
@@ -55,18 +53,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
             return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => new LeaderBoardDataWebResponse(x)) });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool leaderboarddataExists(int id)
         {
-            return db.leaderboarddatas.Count(e => e.id == id) > 0;
+            return this.Db.leaderboarddatas.Count(e => e.id == id) > 0;
         }
     }
 }

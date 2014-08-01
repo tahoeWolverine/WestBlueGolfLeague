@@ -11,10 +11,8 @@ using System.Data.Entity;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
-    public class DataByYearController : ApiController
+    public class DataByYearController : WestBlueDbApiController
     {
-        private WestBlue db = new WestBlue();
-
         // GET: api/DataByYear
         [ResponseType(typeof(DataByYear))]
         public IHttpActionResult GetDataForYear(int year)
@@ -24,18 +22,18 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 return BadRequest("year not in valid range");
             }
 
-            db.Configuration.ProxyCreationEnabled = false;
+            this.Db.Configuration.ProxyCreationEnabled = false;
             
             // TODO: Invalid players might need to be added to this (no shows, etc)
-            var yearDataWithPlayerForYear = db.playeryeardatas.Include(p => p.player).AsNoTracking().Where(x => x.year.value == year).ToList();
+            var yearDataWithPlayerForYear = this.Db.playeryeardatas.Include(p => p.player).AsNoTracking().Where(x => x.year.value == year).ToList();
 
-            var weeksForYear = db.weeks.Where(w => w.year.value == year).Include(w => w.course).AsNoTracking().ToList();
+            var weeksForYear = this.Db.weeks.Where(w => w.year.value == year).Include(w => w.course).AsNoTracking().ToList();
 
-            var teamsForYear = db.teams.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
-            var leaderboards = db.leaderboards.AsNoTracking().ToList();
-            var leaderBoardDataForYear = db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
+            var teamsForYear = this.Db.teams.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
+            var leaderboards = this.Db.leaderboards.AsNoTracking().ToList();
+            var leaderBoardDataForYear = this.Db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
             var courses = weeksForYear.Select(w => w.course).GroupBy(c => c.id).Select(g => g.First());
-            var teamMatchupsForYear = db.teammatchups.Include(x => x.teams).Include(x => x.matchups).Include("matchups.results").Where(x => x.week.year.value == year).ToList();
+            var teamMatchupsForYear = this.Db.teammatchups.Include(x => x.teams).Include(x => x.matchups).Include("matchups.results").Where(x => x.week.year.value == year).ToList();
 
             /*Dictionary<int, leaderboard> leaderboardIdToLeaderboard = new Dictionary<int,leaderboard>();
 
@@ -68,16 +66,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         [ResponseType(typeof(AvailableYearsResponse))]
         public IHttpActionResult GetAvailableYears()
         {
-            return Ok(new AvailableYearsResponse { AvailableYears = db.years.ToList().Select(x => YearResponse.From(x)).ToList() });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return Ok(new AvailableYearsResponse { AvailableYears = this.Db.years.ToList().Select(x => YearResponse.From(x)).ToList() });
         }
     }
 }

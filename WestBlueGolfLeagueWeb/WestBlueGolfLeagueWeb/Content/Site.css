@@ -83,9 +83,73 @@ input[type="checkbox"].input-validation-error {
 
 }*/
 
+
 .player-list-item {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+}
+
+.player-list-input input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, FontAwesome;
+}
+
+.player-list-input {
+    z-index: 5;
+    position: fixed;
+    height: 60px;
+    padding-right: 15px;
+    background: rgba(255,255,255,.5);
+    width: 100%;
+}
+
+.player-list-players {
+    padding-top: 50px;
+}
+
+.player-list-input > div {
+    margin-top: 14px;
+}
+
+.player-list-item-playername {
+    font-size: 1.2em;
+}
+
+.player-list-item-name, .player-list-item-image {
+    height: 3.2em;
+}
+
+.player-list-item-image {
+    line-height: 3.2em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.player-list-item-image .fa-user {
+    font-size: 2em;
+    line-height: 1.6em; /* this is 3.2 / 2 */
+}
+
+/*.player-list-item .fa-user {*/
+.player-list-item-wrapper:hover .fa-user {
+    font-size: 2.4em;
+    line-height: 1.3333333em; /* this is 3.2 / 2.4. */
+}
+
+.player-list-item-teamname {
+    color: #999;
+}
+
+.player-list-item > div:hover {
+  
+}
+
+.player-list-item a {
+    color: black;
+    display: block;
+}
+
+.player-list-item a:hover {
+    background: red;
 }
 
 .clear-icon {
@@ -102,6 +166,7 @@ input[type="checkbox"].input-validation-error {
 .clear-icon:hover {
     color: red;
 }
+
 
 
 .header-link-small {

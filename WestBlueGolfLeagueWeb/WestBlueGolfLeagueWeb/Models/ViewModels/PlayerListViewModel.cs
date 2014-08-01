@@ -5,6 +5,6 @@ namespace WestBlueGolfLeagueWeb.Models.ViewModels
 {
     public class PlayerListViewModel
     {
-        public IEnumerable<PlayerResponse> PlayersForYear { get; set; }
+        public IEnumerable<object> PlayersForYear { get; set; }
     }
 }
