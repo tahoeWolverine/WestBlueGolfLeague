@@ -41,13 +41,17 @@ input[type="checkbox"].input-validation-error {
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+    display: none !important;
 }
 
 
 /* Leaderboards */
 .board-group-toggle {
-  display: none;
+    display: none;
+}
+
+.board-group-toggle-details, .board-group-toggle {
+    margin-bottom: 1em;
 }
 
 .loading-indicator-parent {
@@ -89,6 +93,10 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1.2em;
 }
 
+.player-list-input input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, FontAwesome;
+}
+
 .player-list-input {
     z-index: 5;
     position: fixed;
@@ -99,11 +107,12 @@ input[type="checkbox"].input-validation-error {
 }
 
 .player-list-players {
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 .player-list-input > div {
-    margin-top: 18px;
+    margin-top: 14px;
+    position: relative;
 }
 
 .player-list-item-playername {
@@ -154,7 +163,8 @@ input[type="checkbox"].input-validation-error {
     line-height: 34px;
     width: 34px;
     cursor: pointer;
-    right: 44px;
+    right: 24px;
+    top: 0;
     font-size: 1.2em;
     z-index: 9;
 }
@@ -162,8 +172,6 @@ input[type="checkbox"].input-validation-error {
 .clear-icon:hover {
     color: red;
 }
-
-
 
 .header-link-small {
     display: none;
@@ -174,13 +182,25 @@ input[type="checkbox"].input-validation-error {
         display: inline;
     }
 
+    .player-list-input .col-xs-12 {
+        width: 75%;
+    }
+
     .header-link {
         display: none;
     }
 }
 
 @media (max-width: 767px) {
-  
+
+    .player-list-input {
+        padding-right: 0px;
+    }
+
+    .player-list-input .col-xs-12 {
+        width: inherit;
+    }
+
     .header-link-small {
         display: none;
     }

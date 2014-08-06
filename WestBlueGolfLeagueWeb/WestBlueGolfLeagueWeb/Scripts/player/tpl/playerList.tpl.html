@@ -1,12 +1,9 @@
 ﻿
 <div ng-controller="list" class="player-list">
     <div class="player-list-input row">
-        <div class="col-md-6 col-xs-12">
-            <div class="input-group">
-                <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="Enter player name" ng-model="nameSearchText">
-                <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''; focusMe()"><i class="fa fa-times"></i></span>
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            </div>
+        <div class="col-md-5 col-xs-12">
+            <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="&#xF002; Enter player name" ng-model="nameSearchText">
+            <span class="clear-icon" ng-show="nameSearchText" ng-click="nameSearchText = ''; focusMe()"><i class="fa fa-times"></i></span>
         </div>
     </div>
     <div class="row player-list-players" scroll-to-top>
