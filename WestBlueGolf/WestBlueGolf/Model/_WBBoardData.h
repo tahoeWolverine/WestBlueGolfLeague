@@ -6,6 +6,7 @@
 
 extern const struct WBBoardDataAttributes {
 	__unsafe_unretained NSString *detailValue;
+	__unsafe_unretained NSString *displayValue;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *rank;
 	__unsafe_unretained NSString *value;
@@ -23,6 +24,7 @@ extern const struct WBBoardDataFetchedProperties {
 @class WBLeaderBoard;
 @class WBPeopleEntity;
 @class WBYear;
+
 
 
 
@@ -47,6 +49,16 @@ extern const struct WBBoardDataFetchedProperties {
 
 
 //- (BOOL)validateDetailValue:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* displayValue;
+
+
+
+//- (BOOL)validateDisplayValue:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -127,6 +139,12 @@ extern const struct WBBoardDataFetchedProperties {
 
 - (NSString*)primitiveDetailValue;
 - (void)setPrimitiveDetailValue:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveDisplayValue;
+- (void)setPrimitiveDisplayValue:(NSString*)value;
 
 
 

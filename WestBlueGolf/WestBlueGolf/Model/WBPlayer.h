@@ -50,10 +50,6 @@
 - (void)toggleFavorite;
 - (WBTeam *)currentTeam;
 
-/*+ (WBPlayer *)noShowPlayer;
-+ (void)createNoShowPlayerInContext:(NSManagedObjectContext *)moc;
-- (BOOL)isNoShowPlayer;*/
-
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
 
 + (WBPlayer *)findWithId:(NSInteger)playerId;
@@ -68,36 +64,11 @@
 - (NSInteger)thisYearHandicap;
 - (NSString *)currentHandicapString;
 
-- (NSArray *)recordForYear:(WBYear *)year;
-- (CGFloat)recordRatioForYear:(WBYear *)year;
 - (NSString *)recordStringForYear:(WBYear *)year;
 
-- (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;
-- (NSString *)lowRoundString;
 - (NSInteger)seasonIndexForLowRoundForYear:(WBYear *)year;
-
-- (NSInteger)lowNetForYear:(WBYear *)year;
-- (NSString *)lowNetString;
 - (NSInteger)seasonIdexForLowNetForYear:(WBYear *)year;
-
-- (CGFloat)averagePointsInYear:(WBYear *)year;
-- (NSString *)averagePointsString;
-
-- (NSInteger)improvedInYear:(WBYear *)year;
-- (NSString *)improvedString;
-
-- (CGFloat)averageScoreForYear:(WBYear *)year;
-- (NSString *)averageScoreString;
-- (CGFloat)averageNetScoreForYear:(WBYear *)year;
-- (CGFloat)averageOpponentScoreForYear:(WBYear *)year;
-- (CGFloat)averageOpponentNetScoreForYear:(WBYear *)year;
-
-- (NSInteger)mostPointsInMatchForYear:(WBYear *)year;
 - (NSInteger)seasonIndexForMostPointsInMatchForYear:(WBYear *)year;
-- (NSInteger)totalPointsForYear:(WBYear *)year;
-
-- (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year;
-- (CGFloat)averageMarginOfNetVictoryForYear:(WBYear *)year;
 
 - (WBBoardData *)findHandicapBoardData;
 - (WBBoardData *)findWinLossBoardData;

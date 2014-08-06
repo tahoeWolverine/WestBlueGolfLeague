@@ -21,7 +21,7 @@
 	self.rankLabel.text = [data rankString];
 	self.peopleName.text = data.peopleEntity.name;
 	
-	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+	/*NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	NSNumber *avg = [NSNumber numberWithFloat:data.valueValue];
 	if ([avg floatValue] == 0) {
 		self.peopleValue.text = @"0";
@@ -34,7 +34,9 @@
 	} else {
 		fmt.minimumFractionDigits = 3;
 		self.peopleValue.text = [NSString stringWithFormat:@"%@%@", avg.floatValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:avg]];
-	}
+	}*/
+    
+    self.peopleValue.text = data.displayValue;
 
 	if (data.detailValue) {
 		self.detailLabel.text = data.detailValue;

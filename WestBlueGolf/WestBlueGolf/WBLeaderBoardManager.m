@@ -33,6 +33,7 @@
 #define wbJsonKeyLeaderboardDataPlayerId @"pId"
 #define wbJsonKeyLeaderboardDataRank @"r"
 #define wbJsonKeyLeaderboardDataValue @"v"
+#define wbJsonKeyLeaderboardDataDisplayValue @"fv"
 #define wbJsonKeyLeaderboardDataTeamId @"tId"
 
 @implementation WBLeaderBoardManager
@@ -59,7 +60,7 @@
     // Leaderboard Data
     NSArray *dataArray = [json objectForKey:wbJsonKeyLeaderboardData];
     
-    NSString *dataDetail = nil;
+    NSString *dataDetail = nil, *displayValue;
     NSNumber *playerId = nil, *teamId = nil;
     NSInteger dataId = 0, dataRank = 0;
     CGFloat dataValue = 0.0f;
@@ -70,6 +71,7 @@
 		dataDetail = [elt objectForKey:wbJsonKeyLeaderboardDataDetail];
 		dataRank = [[elt objectForKey:wbJsonKeyLeaderboardDataRank] integerValue];
 		dataValue = [[elt objectForKey:wbJsonKeyLeaderboardDataValue] floatValue];
+		displayValue = [elt objectForKey:wbJsonKeyLeaderboardDataDisplayValue];
 		boardId = [[elt objectForKey:wbJsonKeyLeaderboardDataBoardId] integerValue];
 		teamId = [elt objectForKey:wbJsonKeyLeaderboardDataTeamId];
 		playerId = [elt objectForKey:wbJsonKeyLeaderboardDataPlayerId];
@@ -96,7 +98,7 @@
             }
         }
         
-        [WBBoardData createBoardDataForEntity:people leaderBoard:board dataId:dataId value:dataValue detailValue:dataDetail rank:dataRank year:year moc:moc];
+        [WBBoardData createBoardDataForEntity:people leaderBoard:board dataId:dataId value:dataValue displayValue:displayValue detailValue:dataDetail rank:dataRank year:year moc:moc];
 	}
     
     //[WBCoreDataManager saveContext:moc];
@@ -238,7 +240,7 @@
     };
 }
 
-- (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
+/*- (void)calculateLeaderBoardsForYear:(WBYear *)year moc:(NSManagedObjectContext *)moc {
 	// Important team boards
 	NSArray *teams = [WBTeam findAllForYear:year inContext:moc];
 	
@@ -464,7 +466,7 @@
 		if (results && results.count > 0) {
 			value = valueCalculation(team);
 			detailValue = detailValueCalc(team);
-			[WBBoardData createBoardDataForEntity:team leaderBoard:board dataId:-1 value:value detailValue:detailValue rank:0 year:year moc:moc];
+			[WBBoardData createBoardDataForEntity:team leaderBoard:board dataId:-1 value:value displayValue:@"" detailValue:detailValue rank:0 year:year moc:moc];
 			totalLeagueValue += value;
 			teamCount++;
 		}
@@ -472,7 +474,7 @@
 	
 	// Create league average for board
 	if (teamCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / teamCount) detailValue:nil rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / teamCount) displayValue:@"" detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];
@@ -498,7 +500,7 @@
 		if (results && results.count > 0) {
 			value = valueCalculation(player);
 			detailValue = detailValueCalc(player);
-			[WBBoardData createBoardDataForEntity:player leaderBoard:board dataId:-1 value:value detailValue:detailValue rank:0 year:year moc:moc];
+			[WBBoardData createBoardDataForEntity:player leaderBoard:board dataId:-1 value:value displayValue:@"" detailValue:detailValue rank:0 year:year moc:moc];
 			if (!player.realValue) {
 				totalLeagueValue += value;
 				playerCount++;
@@ -508,7 +510,7 @@
 	
 	// Create league average for board
 	if (playerCount > 0) {
-		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / playerCount) detailValue:nil rank:0 year:year moc:moc];
+		[WBBoardData createBoardDataForEntity:[WBPeopleEntity leagueAverageInContext:moc] leaderBoard:board dataId:-1 value:(totalLeagueValue / playerCount) displayValue:@"" detailValue:nil rank:0 year:year moc:moc];
 	}
 	
 	[self assignRanksForBoard:board year:year ascending:ascending moc:moc];
@@ -544,6 +546,6 @@
 	for (WBLeaderBoard *board in boards) {
 		[board deleteEntityInContext:moc];
 	}
-}
+}*/
 
 @end

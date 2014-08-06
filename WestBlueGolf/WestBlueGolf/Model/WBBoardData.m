@@ -11,6 +11,7 @@
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
                                    dataId:(NSInteger)dataId
 									value:(CGFloat)value
+                             displayValue:(NSString *)displayValue
 							  detailValue:(NSString *)detailValue
 									 rank:(NSInteger)rank
 									 year:(WBYear *)year
@@ -23,6 +24,7 @@
 	WBBoardData *data = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
     data.idValue = dataId;
 	data.valueValue = value;
+    data.displayValue = displayValue;
 	data.detailValue = detailValue;
 	data.rankValue = rank;
 	

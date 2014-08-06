@@ -5,6 +5,7 @@
 
 const struct WBBoardDataAttributes WBBoardDataAttributes = {
 	.detailValue = @"detailValue",
+	.displayValue = @"displayValue",
 	.id = @"id",
 	.rank = @"rank",
 	.value = @"value",
@@ -68,6 +69,13 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 
 
 @dynamic detailValue;
+
+
+
+
+
+
+@dynamic displayValue;
 
 
 

@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="WBBoardData" representedClassName="WBBoardData" syncable="YES">
         <attribute name="detailValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayValue" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="rank" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="value" attributeType="Double" defaultValueString="0" syncable="YES"/>
@@ -122,7 +123,7 @@
         </userInfo>
     </entity>
     <elements>
-        <element name="WBBoardData" positionX="7" positionY="90" width="128" height="148"/>
+        <element name="WBBoardData" positionX="7" positionY="90" width="128" height="163"/>
         <element name="WBCourse" positionX="-317" positionY="-171" width="128" height="103"/>
         <element name="WBLeaderBoard" positionX="153" positionY="99" width="128" height="133"/>
         <element name="WBMatch" positionX="7" positionY="-288" width="128" height="88"/>

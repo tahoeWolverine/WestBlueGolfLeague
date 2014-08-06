@@ -11,6 +11,6 @@
 @interface WBLeaderBoardManager : NSObject
 
 - (void)createLeaderBoardsForYear:(WBYear *)year withJson:(NSDictionary *)json;
-- (void)clearLeaderBoardsInContext:(NSManagedObjectContext *)moc;
+//- (void)clearLeaderBoardsInContext:(NSManagedObjectContext *)moc;
 
 @end

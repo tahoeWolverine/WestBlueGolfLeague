@@ -32,7 +32,7 @@
 			self.winner.text = [NSString stringWithFormat:@"%ld Leaders", (long)winners.count];
 		}
 
-		NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+		/*NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 		NSNumber *valueNum = [NSNumber numberWithFloat:data.valueValue];
 		if ([valueNum floatValue] == 0) {
 			self.winnerValue.text = @"0";
@@ -45,7 +45,9 @@
 		} else {
 			fmt.minimumFractionDigits = 3;
 			self.winnerValue.text = [NSString stringWithFormat:@"%@%@", valueNum.floatValue > 0.0 ? @"0" : @"", [fmt stringFromNumber:valueNum]];
-		}
+		}*/
+        
+        self.winnerValue.text = data.displayValue;
 	}
 }
 

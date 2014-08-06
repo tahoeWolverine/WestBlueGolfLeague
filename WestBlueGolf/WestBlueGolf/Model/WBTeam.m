@@ -108,14 +108,14 @@
 }
 
 // Calculated strictly with the object model, no thread-context needed
-- (NSInteger)totalPointsForYear:(WBYear *)year {
+/*- (NSInteger)totalPointsForYear:(WBYear *)year {
 	NSArray *filtered = [self filterResultsForYear:year goodData:YES];
 	NSInteger total = 0;
 	for (WBResult *result in filtered) {
 		total += result.pointsValue;
 	}
 	return total;
-}
+}*/
 
 // Calculated strictly with the object model, no thread-context needed
 - (NSInteger)totalPointsForYearBeforeWeek:(WBWeek *)week {
@@ -131,7 +131,7 @@
 	NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
 	fmt.minimumFractionDigits = 1;
 	NSInteger matchupCount = [self filterMatchupsForYear:[WBYear thisYear]].count;
-	NSInteger total = [self totalPointsForYear:[WBYear thisYear]];
+	NSInteger total = [self findTotalPointsBoardData].valueValue;
 	NSNumber *avg = [NSNumber numberWithFloat:(CGFloat)total / (CGFloat)matchupCount];
 	return matchupCount != 0 ? [fmt stringFromNumber:avg] : @"N/A";
 }
@@ -142,12 +142,12 @@
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }
 
-- (CGFloat)individualRecordRatioForYear:(WBYear *)year {
+/*- (CGFloat)individualRecordRatioForYear:(WBYear *)year {
 	NSArray *record = [self individualRecordForYear:year];
 	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
 	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
 	return totalWins / totalWeeks;
-}
+}*/
 
 - (NSArray *)individualRecordForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -175,12 +175,12 @@
 }
 
 // Calculated strictly with the object model, no thread-context needed
-- (CGFloat)recordRatioForYear:(WBYear *)year {
+/*- (CGFloat)recordRatioForYear:(WBYear *)year {
 	NSArray *record = [self recordForYear:year];
 	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
 	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
 	return totalWins / totalWeeks;
-}
+}*/
 
 - (NSArray *)recordForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -220,7 +220,7 @@
 	return @[[NSNumber numberWithInteger:wins], [NSNumber numberWithInteger:losses], [NSNumber numberWithInteger:ties]];
 }
 
-// Calculated strictly with the object model, no thread-context needed
+/*// Calculated strictly with the object model, no thread-context needed
 - (NSInteger)improvedInYear:(WBYear *)year {
 	NSInteger totalImproved = 0;
 	for (WBPlayer *player in [self filterPlayersForYear:year]) {
@@ -290,24 +290,6 @@
 	return totalScore / roundCount;
 }
 
-- (NSInteger)totalResultsForYear:(WBYear *)year {
-	NSArray *results = [self filterResultsForYear:year goodData:YES];
-	if (!results || results.count == 0) {
-		return 0.0;
-	}
-	
-	CGFloat roundCount = 0;
-	NSInteger value = 0;
-	for (WBResult *result in results) {
-		value = [result netScoreDifference];
-		if (value < kDifferenceMax) {
-			roundCount++;
-		}
-	}
-	
-	return roundCount;
-}
-
 // Calculated strictly with the object model, no thread-context needed
 - (CGFloat)averageOpponentScoreForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -348,6 +330,24 @@
 	}
 	
 	return totalOpponentScore / opponentCount;
+}*/
+
+- (NSInteger)totalResultsForYear:(WBYear *)year {
+	NSArray *results = [self filterResultsForYear:year goodData:YES];
+	if (!results || results.count == 0) {
+		return 0.0;
+	}
+	
+	CGFloat roundCount = 0;
+	NSInteger value = 0;
+	for (WBResult *result in results) {
+		value = [result netScoreDifference];
+		if (value < kDifferenceMax) {
+			roundCount++;
+		}
+	}
+	
+	return roundCount;
 }
 
 - (NSInteger)totalOpponentResultsForYear:(WBYear *)year {
@@ -387,7 +387,7 @@
 	return weeks;
 }
 
-- (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
+/*- (NSInteger)mostPointsInWeekForYear:(WBYear *)year {
 	NSInteger maxPoints = 0;
 	for (NSNumber *weekPoints in [self resultWeekArrayForYear:year]) {
 		if ([weekPoints integerValue] > maxPoints) {
@@ -396,7 +396,7 @@
 	}
 	
 	return maxPoints;
-}
+}*/
 
 - (NSInteger)seasonIndexForMostPointsInWeekForYear:(WBYear *)year {
 	NSInteger maxPoints = 0, maxPointsIndex = -1, loopIndex = 0;
@@ -411,7 +411,7 @@
 	return maxPointsIndex;
 }
 
-// Calculated strictly with the object model, no thread-context needed
+/*// Calculated strictly with the object model, no thread-context needed
 - (CGFloat)averageMarginOfVictoryForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
@@ -461,7 +461,7 @@
 	}
 	
 	return totalMargin / roundCount;
-}
+}*/
 
 - (NSInteger)rankPriorToWeek:(WBWeek *)week {
 	NSInteger cachedRank = [[WBCoreDataManager sharedManager] rankForTeam:self priorToWeek:week];

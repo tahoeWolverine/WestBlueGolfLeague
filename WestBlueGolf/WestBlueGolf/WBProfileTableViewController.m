@@ -148,11 +148,11 @@
 	WBPlayer *player = self.selectedPlayer;
 	if (player) {
 		self.winLossLabel.text = [player recordStringForYear:[WBYear thisYear]];
-		self.handicapLabel.text = [player currentHandicapString];
-		self.lowRoundLabel.text = [player lowRoundString];
-		self.averagePointsLabel.text = [player averagePointsString];
-		self.improvedLabel.text = [player improvedString];
-		self.lowNetLabel.text = [player lowNetString];
+		self.handicapLabel.text = [player findHandicapBoardData].displayValue;
+		self.lowRoundLabel.text = [player findLowScoreBoardData].displayValue;
+		self.averagePointsLabel.text = [player findAveragePointsBoardData].displayValue;
+		self.improvedLabel.text = [player findImprovedBoardData].displayValue;
+		self.lowNetLabel.text = [player findLowNetBoardData].displayValue;
 	} else {
 		self.winLossLabel.text = @"-";
 		self.handicapLabel.text = @"-";

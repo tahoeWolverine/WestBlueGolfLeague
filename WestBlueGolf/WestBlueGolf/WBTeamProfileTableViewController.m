@@ -64,7 +64,7 @@
 	self.averagePointsLabel.text = [team averagePointsString];
 	self.winLossLabel.text = [team recordStringForYear:year];
 	self.winLossAllLabel.text = [team individualRecordStringForYear:year];
-	self.improvedLabel.text = [team improvedString];
+	self.improvedLabel.text = [team findImprovedBoardData].displayValue;
 	
 	self.navigationItem.title = self.selectedTeam.name ?: @"No Team Selected";
 }

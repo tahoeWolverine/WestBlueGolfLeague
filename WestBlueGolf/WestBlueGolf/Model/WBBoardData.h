@@ -7,6 +7,7 @@
 							  leaderBoard:(WBLeaderBoard *)leaderBoard
                                    dataId:(NSInteger)dataId
 									value:(CGFloat)value
+                             displayValue:(NSString *)displayValue
 							  detailValue:(NSString *)detailValue
 									 rank:(NSInteger)rank
 									 year:(WBYear *)year

@@ -154,12 +154,12 @@
 	return [NSString stringWithFormat:@"%@-%@%@%@", record[0], record[1], hasTies ? @"-" : @"", hasTies ? record[2] : @""];
 }
 
-- (CGFloat)recordRatioForYear:(WBYear *)year {
+/*- (CGFloat)recordRatioForYear:(WBYear *)year {
 	NSArray *record = [self recordForYear:year];
 	CGFloat totalWins = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[2] floatValue] / 2.0f;
 	CGFloat totalWeeks = [(NSNumber *)record[0] floatValue] + [(NSNumber *)record[1] floatValue] + [(NSNumber *)record[2] floatValue];
 	return totalWeeks > 0 ? totalWins / totalWeeks : 0.0f;
-}
+}*/
 
 // Calculated strictly with the object model, no thread-context needed
 - (NSArray *)recordForYear:(WBYear *)year {
@@ -193,7 +193,7 @@
 	return [NSString stringWithFormat:@"%@%ld", isPositive ? @"+" : @"", (long)handi];
 }
 
-- (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc {
+/*- (NSInteger)lowRoundForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@ && match.teamMatchup.week.isBadData = 0", year, self];
 	NSArray *sorts = @[[NSSortDescriptor sortDescriptorWithKey:@"score" ascending:YES]];
 	WBResult *result = (WBResult *)[WBResult findFirstRecordWithPredicate:pred sortedBy:sorts moc:moc];
@@ -207,7 +207,7 @@
 - (NSString *)lowRoundString {
 	NSNumber *value = [self findLowScoreBoardData].value;
 	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
-}
+}*/
 
 - (NSInteger)seasonIndexForLowRoundForYear:(WBYear *)year {
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"match.teamMatchup.week.year = %@ && player = %@ && match.teamMatchup.week.isBadData = 0", year, self];
@@ -220,7 +220,7 @@
 	return result.match.teamMatchup.week.seasonIndexValue;
 }
 
-// Calculated strictly with the object model, no thread-context needed
+/*// Calculated strictly with the object model, no thread-context needed
 - (NSInteger)lowNetForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
 	if (results && results.count > 0) {
@@ -241,7 +241,7 @@
 - (NSString *)lowNetString {
 	NSNumber *value = [self findLowNetBoardData].value;
 	return [NSString stringWithFormat:@"%@", value ?: @"N/A"];
-}
+}*/
 
 - (NSInteger)seasonIdexForLowNetForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -259,7 +259,7 @@
 	return index;
 }
 
-// Calculated strictly with the object model, no thread-context needed
+/*// Calculated strictly with the object model, no thread-context needed
 - (CGFloat)averagePointsInYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
 	if (results && results.count > 0) {
@@ -409,7 +409,7 @@
 	}
 	
 	return mostPoints;
-}
+}*/
 
 - (NSInteger)seasonIndexForMostPointsInMatchForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
@@ -428,7 +428,7 @@
 	return seasonIndex;
 }
 
-// Calculated strictly with the object model, no thread-context needed
+/*// Calculated strictly with the object model, no thread-context needed
 - (NSInteger)totalPointsForYear:(WBYear *)year {
 	NSArray *results = [self filterResultsForYear:year goodData:YES];
 	if (!results || results.count == 0) {
@@ -493,7 +493,7 @@
 	}
 	
 	return totalMargin / roundCount;
-}
+}*/
 
 #pragma mark - Leaderboard fetches
 
@@ -518,6 +518,10 @@
 }
 
 - (WBBoardData *)findLowNetBoardData {
+	return [WBBoardData findWithBoardKey:kLeaderboardPlayerMinNet peopleEntity:self];
+}
+
+- (WBBoardData *)findRecordBoardData {
 	return [WBBoardData findWithBoardKey:kLeaderboardPlayerMinNet peopleEntity:self];
 }
 
