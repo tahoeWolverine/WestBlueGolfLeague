@@ -85,6 +85,16 @@
 }
 
 + (WBPlayer *)firstPlayer {
+    WBPlayer *me = [WBPlayer me];
+    if (me) {
+        return me;
+    }
+    
+    NSArray *favorites = [WBPlayer favorites];
+    if (favorites && favorites.count > 0) {
+        return favorites[0];
+    }
+    
     NSArray *onePlayer = [[self class] findWithPredicate:nil sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]] fetchLimit:1 moc:[WBCoreDataManager mainContext]];
 
     return onePlayer && onePlayer.count > 0 ? (WBPlayer *)onePlayer[0] : nil;
@@ -104,6 +114,10 @@
 
 + (WBPlayer *)me {
 	return (WBPlayer *)[[self class] findFirstRecordWithFormat:@"me = 1"];
+}
+
++ (NSArray *)favorites {
+    return [[self class] findWithPredicate:[NSPredicate predicateWithFormat:@"favorite = 1"] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 }
 
 + (WBPlayer *)findWithId:(NSInteger)playerId {
