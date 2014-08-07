@@ -44,8 +44,13 @@
 
 - (WBPlayer *)selectedPlayer {
 	if (!_selectedPlayer) {
-		_selectedPlayer = [WBPlayer me];
-		[(WBProfileTableViewController *)self.viewController setTabName:_selectedPlayer ? [_selectedPlayer firstName] : @"You"];
+        WBProfileTableViewController *tab = (WBProfileTableViewController *)self.viewController;
+        if ([tab isMeTab]) {
+            _selectedPlayer = [WBPlayer me];
+            [(WBProfileTableViewController *)self.viewController setTabName:_selectedPlayer ? [_selectedPlayer firstName] : @"You"];
+        } else {
+            _selectedPlayer = [WBPlayer firstPlayer];
+        }
 	}
 	
 	return _selectedPlayer;

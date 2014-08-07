@@ -1,5 +1,6 @@
 #import "WBPlayer.h"
 #import "WBBoardData.h"
+#import "WBCoreDataManager.h"
 #import "WBCourse.h"
 #import "WBMatch.h"
 #import "WBPlayerYearData.h"
@@ -81,6 +82,10 @@
 
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc {
 	return (WBPlayer *)[[self class] findFirstRecordWithPredicate:[NSPredicate predicateWithFormat:@"name = %@", name] sortedBy:nil moc:moc];
+}
+
++ (WBPlayer *)firstPlayer {
+    return (WBPlayer *)[[self class] findWithPredicate:nil sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]] fetchLimit:1 moc:[WBCoreDataManager mainContext]][0];
 }
 
 /*+ (WBPlayer *)noShowPlayer {

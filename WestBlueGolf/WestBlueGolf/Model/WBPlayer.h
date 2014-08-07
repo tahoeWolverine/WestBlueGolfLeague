@@ -51,6 +51,7 @@
 - (WBTeam *)currentTeam;
 
 + (WBPlayer *)playerWithName:(NSString *)name inContext:(NSManagedObjectContext *)moc;
++ (WBPlayer *)firstPlayer;
 
 + (WBPlayer *)findWithId:(NSInteger)playerId;
 + (NSArray *)findAllForYear:(WBYear *)year inContext:(NSManagedObjectContext *)moc;

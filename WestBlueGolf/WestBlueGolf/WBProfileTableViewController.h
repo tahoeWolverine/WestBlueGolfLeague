@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Mike Harlow. All rights reserved.
 //
 
-//#import "WBEntityDetailViewController.h"
-
 @class WBPlayer;
 
 @interface WBProfileTableViewController : UITableViewController
@@ -24,5 +22,7 @@
 - (void)setSelectedPlayer:(WBPlayer *)selectedPlayer;
 
 - (void)setTabName:(NSString *)name;
+
+- (BOOL)isMeTab;
 
 @end

@@ -25,7 +25,7 @@
 
 @property (strong, nonatomic) WBDataManager *dataManager;
 
-@property (strong, nonatomic) WBPlayersSplitDelegate *splitDelegate;
+@property (strong, nonatomic) NSMutableArray *splitDelegates;
 
 @end
 
@@ -56,13 +56,16 @@
 	[self.window setTintColor:kEmeraldColor];
 
 	// Split view hack
+    self.splitDelegates = [NSMutableArray array];
 	UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
-	id vc = [tbc.viewControllers objectAtIndex:0];
-	if ([vc isKindOfClass:[UISplitViewController class]]) {
-		UISplitViewController *svc = (UISplitViewController *)vc;
-        self.splitDelegate = [[WBPlayersSplitDelegate alloc] init];
-		[svc setDelegate:self.splitDelegate];
-	}
+	for (UIViewController *vc in tbc.viewControllers) {
+        if ([vc isKindOfClass:[UISplitViewController class]]) {
+            UISplitViewController *svc = (UISplitViewController *)vc;
+            WBPlayersSplitDelegate *sd = [[WBPlayersSplitDelegate alloc] init];
+            [self.splitDelegates addObject:sd];
+            [svc setDelegate:sd];
+        }
+    }
 	
     return YES;
 }

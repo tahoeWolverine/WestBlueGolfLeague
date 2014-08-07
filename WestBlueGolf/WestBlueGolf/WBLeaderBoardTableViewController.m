@@ -35,4 +35,15 @@
 	self.navigationItem.title = self.selectedLeaderboard.name;
 }
 
+- (WBLeaderBoard *)selectedLeaderboard {
+    return self.boardDataSource.selectedLeaderBoard;
+}
+
+- (void)setSelectedLeaderboard:(WBLeaderBoard *)selectedLeaderboard {
+    if (self.boardDataSource.selectedLeaderBoard != selectedLeaderboard) {
+        self.boardDataSource.selectedLeaderBoard = selectedLeaderboard;
+        [self.boardDataSource resetTableAndFetchedResultsController];
+    }
+}
+
 @end

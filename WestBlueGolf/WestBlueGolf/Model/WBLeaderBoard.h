@@ -22,5 +22,6 @@
 - (NSArray *)winnerData;
 
 + (WBLeaderBoard *)findWithId:(NSInteger)boardId;
++ (WBLeaderBoard *)firstLeaderboard;
 
 @end

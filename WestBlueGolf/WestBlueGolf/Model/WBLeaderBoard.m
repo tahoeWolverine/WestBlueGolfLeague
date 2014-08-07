@@ -1,6 +1,7 @@
 #import "WBLeaderBoard.h"
 #import "WBBoardData.h"
 #import "WBPeopleEntity.h"
+#import "WBTeam.h"
 #import "WBYear.h"
 
 @interface WBLeaderBoard ()
@@ -45,6 +46,14 @@
 
 + (WBLeaderBoard *)findWithId:(NSInteger)boardId {
 	return (WBLeaderBoard *)[[self class] findFirstRecordWithFormat:@"id = %@", [NSNumber numberWithInteger:boardId]];
+}
+
++ (WBLeaderBoard *)findWithKey:(NSString *)key {
+	return (WBLeaderBoard *)[[self class] findFirstRecordWithFormat:@"key = %@", key];
+}
+
++ (WBLeaderBoard *)firstLeaderboard {
+    return (WBLeaderBoard *)[WBLeaderBoard findWithKey:kLeaderboardTeamTotalPoints];
 }
 
 @end

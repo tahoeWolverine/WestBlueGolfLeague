@@ -50,4 +50,11 @@ typedef enum {
 	}
 }
 
+- (WBLeaderBoard *)selectedLeaderBoard {
+    if (!_selectedLeaderBoard) {
+        _selectedLeaderBoard = [WBLeaderBoard firstLeaderboard];
+    }
+    return _selectedLeaderBoard;
+}
+
 @end

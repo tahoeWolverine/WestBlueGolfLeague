@@ -10,6 +10,8 @@
 
 @interface WBLeaderBoardTableViewController : UITableViewController
 
-@property (strong, nonatomic) WBLeaderBoard *selectedLeaderboard;
+// Fake selectedPlayer property passthrough
+- (WBLeaderBoard *)selectedLeaderboard;
+- (void)setSelectedLeaderboard:(WBLeaderBoard *)selectedLeaderboard;
 
 @end

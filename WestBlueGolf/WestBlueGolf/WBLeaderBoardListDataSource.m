@@ -8,6 +8,7 @@
 
 #import "WBLeaderBoardListDataSource.h"
 #import "WBLeaderBoardListCell.h"
+#import "WBLeaderBoardTableViewController.h"
 
 #define SORT_KEY @"tablePriority"
 
@@ -60,6 +61,21 @@
 	WBLeaderBoard *leaderBoard = (WBLeaderBoard *)object;
 	WBLeaderBoardListCell *leaderBoardCell = (WBLeaderBoardListCell *)cell;
 	[leaderBoardCell configureCellForLeaderBoard:leaderBoard];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (self.viewController.splitViewController) {
+		UIViewController *vc = nil;
+		for (UINavigationController *nc in self.viewController.splitViewController.viewControllers) {
+			vc = [nc topViewController];
+			if (vc != self.viewController) {
+                WBLeaderBoard *board = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
+                [(WBLeaderBoardTableViewController *)vc setSelectedLeaderboard:board];
+			}
+		}
+	}
+	
+	//[tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
 }
 
 @end
