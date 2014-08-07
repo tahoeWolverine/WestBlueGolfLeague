@@ -16,6 +16,7 @@
 #import "WBLeaderBoardManager.h"
 #import "WBModels.h"
 #import "WBNotifications.h"
+#import "WBPlayersSplitDelegate.h"
 #import "WBProfileTableViewController.h"
 #import "WBSettings.h"
 #import "WBYearDataService.h"
@@ -23,6 +24,8 @@
 @interface WBAppDelegate ()
 
 @property (strong, nonatomic) WBDataManager *dataManager;
+
+@property (strong, nonatomic) WBPlayersSplitDelegate *splitDelegate;
 
 @end
 
@@ -57,7 +60,8 @@
 	id vc = [tbc.viewControllers objectAtIndex:0];
 	if ([vc isKindOfClass:[UISplitViewController class]]) {
 		UISplitViewController *svc = (UISplitViewController *)vc;
-		svc.delegate = svc.viewControllers[1];
+        self.splitDelegate = [[WBPlayersSplitDelegate alloc] init];
+		[svc setDelegate:self.splitDelegate];
 	}
 	
     return YES;

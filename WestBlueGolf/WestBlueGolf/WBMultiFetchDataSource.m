@@ -94,4 +94,13 @@
 	}
 }
 
+- (void)resetTableAndFetchedResultsController {
+    for (WBSectionDataSource *sds in self.sectionDataSources) {
+        sds.fetchedResultsController = nil;
+        [sds beginFetch];
+    }
+	
+	[self.tableView reloadData];
+}
+
 @end

@@ -87,13 +87,14 @@
 		for (UINavigationController *nc in self.viewController.splitViewController.viewControllers) {
 			vc = [nc topViewController];
 			if (vc != self.viewController) {
+                WBTeam *team = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
 				if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
-					/*WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
-					[(WBProfileTableViewController *)vc setSelectedPlayer:player];*/
-					//WBTeamProfileTableViewController *vc = [[WBTeamProfileTableViewController alloc] init];
-					//[vc.navigationController setViewControllers:@[vc]];
+					UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+                    UIViewController *sbvc = [storyboard instantiateViewControllerWithIdentifier:@"TeamProfileView"];
+					WBTeamProfileTableViewController *teamVc = (WBTeamProfileTableViewController *)sbvc;
+                    [teamVc setSelectedTeam:team];
+					[nc setViewControllers:@[teamVc]];
 				} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
-					WBTeam *team = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
 					[(WBTeamProfileTableViewController *)vc setSelectedTeam:team];
 				}
 			}

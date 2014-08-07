@@ -97,10 +97,16 @@ typedef enum {
 		for (UINavigationController *nc in self.viewController.splitViewController.viewControllers) {
 			vc = [nc topViewController];
 			if (vc != self.viewController) {
+                WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
 				if ([vc isKindOfClass:[WBProfileTableViewController class]]) {
-					WBPlayer *player = [[(WBEntityDataSource *)tableView.dataSource fetchedResultsController] objectAtIndexPath:tableView.indexPathForSelectedRow];
 					[(WBProfileTableViewController *)vc setSelectedPlayer:player];
-				}
+				} else if ([vc isKindOfClass:[WBTeamProfileTableViewController class]]) {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+                    UIViewController *sbvc = [storyboard instantiateViewControllerWithIdentifier:@"PlayerProfileView"];
+                    WBProfileTableViewController *playerVc = (WBProfileTableViewController *)sbvc;
+                    [playerVc setSelectedPlayer:player];
+                    [nc setViewControllers:@[playerVc]];
+                }
 			}
 		}
 	}

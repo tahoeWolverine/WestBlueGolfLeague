@@ -8,9 +8,8 @@
 
 #import "WBTeamProfileTableViewController.h"
 #import "WBModels.h"
-#import "WBProfileTableViewController.h"
-#import "WBTeamProfileDataSource.h"
 #import "WBResultTableViewCell.h"
+#import "WBTeamProfileDataSource.h"
 
 @interface WBTeamProfileTableViewController ()
 
@@ -55,6 +54,12 @@
 
 - (void)setSelectedTeam:(WBTeam *)selectedTeam {
 	self.dataSource.selectedTeam = selectedTeam;
+    
+    /*if ([self isMeTab]) {
+		[self setTabName:selectedPlayer ? [selectedPlayer firstName] : @"You"];
+	}*/
+	[self.dataSource resetTableAndFetchedResultsController];
+	[self refreshTeamHighlights];
 }
 
 - (void)refreshTeamHighlights {
