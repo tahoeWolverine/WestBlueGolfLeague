@@ -85,7 +85,9 @@
 }
 
 + (WBPlayer *)firstPlayer {
-    return (WBPlayer *)[[self class] findWithPredicate:nil sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]] fetchLimit:1 moc:[WBCoreDataManager mainContext]][0];
+    NSArray *onePlayer = [[self class] findWithPredicate:nil sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]] fetchLimit:1 moc:[WBCoreDataManager mainContext]];
+
+    return onePlayer && onePlayer.count > 0 ? (WBPlayer *)onePlayer[0] : nil;
 }
 
 /*+ (WBPlayer *)noShowPlayer {
