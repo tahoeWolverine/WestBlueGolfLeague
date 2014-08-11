@@ -1,5 +1,5 @@
 ﻿
-<div ng-controller="list" class="player-list">
+<div class="player-list">
     <div class="player-list-input row">
         <div class="col-md-5 col-xs-12">
             <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="&#xF002; Enter player name" ng-model="nameSearchText">
@@ -9,7 +9,7 @@
     <div class="row player-list-players" scroll-to-top>
         <div ng-repeat="player in filteredPlayerData = ( playerData | orderBy:'name' | filter: {'name': nameSearchText} )" class="col-sm-4 player-list-item">
             <div class="row">
-                <a href="/Player/Details/{{player.id}}/" tabindex="{{$index + 1}}">
+                <a ui-sref="playerDetails({ id: player.id })" tabindex="{{$index + 1}}">
                     <div class="player-list-item-wrapper">
                         <div class="col-sm-2 col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
                         <div class="col-sm-6 col-xs-10 player-list-item-name">

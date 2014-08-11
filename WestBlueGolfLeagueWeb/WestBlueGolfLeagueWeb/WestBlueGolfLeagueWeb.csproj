@@ -206,6 +206,7 @@
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\LeaderBoardApiController.cs" />
     <Compile Include="Controllers\LeaderBoardController.cs" />
+    <Compile Include="Controllers\PlayerApiController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ResultsTableController.cs" />
     <Compile Include="Controllers\WestBlueDbApiController.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Models\Responses\AvailableYearsResponse.cs" />
     <Compile Include="Models\Responses\CourseResponse.cs" />
     <Compile Include="Models\Responses\FullLeaderBoardForYearResponse.cs" />
+    <Compile Include="Models\Responses\PlayerProfileData.cs" />
     <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />
     <Compile Include="Models\Responses\LeaderBoardDataResponse.cs" />
@@ -313,6 +315,7 @@
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\player\playerList.js" />
     <Content Include="Scripts\player\player.js" />
+    <Content Include="Scripts\player\tpl\playerDetails.tpl.html" />
     <Content Include="Scripts\player\tpl\playerHandicaps.tpl.html" />
     <Content Include="Scripts\player\tpl\playerList.tpl.html" />
     <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
@@ -346,6 +349,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PlayerApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
