@@ -54,13 +54,21 @@
 }
 
 + (WBWeek *)finalPlayoffWeekInYear:(WBYear *)year {
-	NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:@"year = %@ && ANY teamMatchups.matchId > 0", year] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]] fetchLimit:1 moc:year.managedObjectContext];
+    //NSString *format = @"year = %@ && ANY teamMatchups.matchId > 0";
+    NSString *format = @"year = %@";
+	NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:format, year] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]] fetchLimit:1 moc:year.managedObjectContext];
 	return weeks && weeks.count > 0 ? weeks[0] : nil;
 }
 
 + (WBWeek *)firstPlayoffWeekInYear:(WBYear *)year {
-	NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:@"year = %@ && ANY teamMatchups.matchId > 0", year] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]] fetchLimit:2 moc:year.managedObjectContext];
+    //NSString *format = @"year = %@ && ANY teamMatchups.matchId > 0";
+    NSString *format = @"year = %@";
+	NSArray *weeks = [WBWeek findWithPredicate:[NSPredicate predicateWithFormat:format, year] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"seasonIndex" ascending:NO]] fetchLimit:2 moc:year.managedObjectContext];
 	return weeks && weeks.count > 1 ? weeks[1] : nil;
+}
+
+- (BOOL)alreadyTookPlace {
+    return [self.date timeIntervalSinceNow] < 0;
 }
 
 @end

@@ -18,11 +18,17 @@
 
 @implementation WBLeaderBoardTableViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.boardDataSource = [WBLeaderBoardParentDataSource dataSourceWithViewController:self];
+        self.boardDataSource.selectedLeaderBoard = self.selectedLeaderboard;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.boardDataSource = [WBLeaderBoardParentDataSource dataSourceWithViewController:self];
-	self.boardDataSource.selectedLeaderBoard = self.selectedLeaderboard;
 
     self.tableView.dataSource = self.boardDataSource;
 	self.tableView.delegate = self.boardDataSource;

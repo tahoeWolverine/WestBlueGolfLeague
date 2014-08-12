@@ -14,6 +14,7 @@
 + (WBWeek *)findWeekWithSeasonIndex:(NSInteger)seasonIndex year:(WBYear *)year;
 
 - (NSString *)pairingLabel;
+- (BOOL)alreadyTookPlace;
 
 + (WBWeek *)finalPlayoffWeekInYear:(WBYear *)year;
 + (WBWeek *)firstPlayoffWeekInYear:(WBYear *)year;
