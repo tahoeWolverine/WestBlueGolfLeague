@@ -13,7 +13,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public string AveragePoints { get; set; }
         public string LowNet { get; set; }
         public string Improved { get; set; }
-
+        public IEnumerable<PlayerProfileResult> ResultsForYear { get; set; }
         
     }
 }

@@ -29,7 +29,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             int year = DateTimeOffset.UtcNow.Year;
 
             // get leaderboards for player.
-            IEnumerable<leaderboarddata> leaderBoardDatas = await this.Db
+            var boardData = this.Db
                 .leaderboarddatas
                 .Include(x => x.leaderboard)
                 .AsNoTracking()
@@ -42,6 +42,23 @@ namespace WestBlueGolfLeagueWeb.Controllers
                         x.leaderboard.key == "player_season_improvement") &&
                         x.year.value == year).ToListAsync();
 
+            var results =
+                this.Db
+                    .results
+                    .Include(x => x.matchup)
+                    .Include(x => x.matchup.teammatchup.week)
+                    .Include(x => x.matchup.results)
+                    .Include(x => x.matchup.teammatchup.teams)
+                    .Include(x => x.player)
+                    .Where(
+                        x =>
+                            x.playerId == player.id &&
+                            x.year.value == year
+                    ).ToListAsync();
+                   
+            IEnumerable<leaderboarddata> leaderBoardDatas = await boardData;
+            IEnumerable<result> resultsForYear = await results;
+
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
 
             return Ok(
@@ -52,7 +69,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     Handicap = keyToBoardData["player_handicap"].formattedValue, 
                     Improved = keyToBoardData["player_season_improvement"].formattedValue, 
                     LowNet = keyToBoardData["player_net_best_score"].formattedValue, 
-                    LowScore = keyToBoardData["player_best_score"].formattedValue 
+                    LowScore = keyToBoardData["player_best_score"].formattedValue,
+                    ResultsForYear = resultsForYear.Select(x => new PlayerProfileResult(player, x))
                 });
         }
     }

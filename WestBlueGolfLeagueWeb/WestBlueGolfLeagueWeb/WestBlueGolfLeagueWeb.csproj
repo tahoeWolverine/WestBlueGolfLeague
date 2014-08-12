@@ -239,6 +239,7 @@
     <Compile Include="Models\Responses\CourseResponse.cs" />
     <Compile Include="Models\Responses\FullLeaderBoardForYearResponse.cs" />
     <Compile Include="Models\Responses\PlayerProfileData.cs" />
+    <Compile Include="Models\Responses\PlayerProfileResult.cs" />
     <Compile Include="Models\Responses\PlayerYearDataResponse.cs" />
     <Compile Include="Models\Responses\DataByYear.cs" />
     <Compile Include="Models\Responses\LeaderBoardDataResponse.cs" />
