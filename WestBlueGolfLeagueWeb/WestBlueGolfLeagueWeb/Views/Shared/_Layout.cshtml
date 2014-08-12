@@ -22,7 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Players", "Index", "Player")</li>
+                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" })</li>
                     <li>@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" })</li>
                     <li>@Html.ActionLink("Rules & Information", "RulesAndInformation", "Information")</li>
                     <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable")</li>

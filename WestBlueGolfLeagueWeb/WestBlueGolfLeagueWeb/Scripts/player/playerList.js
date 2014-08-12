@@ -58,7 +58,7 @@ angular.module('playerList', ['app', 'ui.router']);
     };
 
     module
-        .controller('list', ['$scope', 'playerListService', '$filter', ListController])
+        .controller('PlayerList', ['$scope', 'playerListService', '$filter', ListController])
         .factory('playerListService', ['$window', '$q', '$timeout', PlayerListService]);
 
 })(angular.module('playerList'));

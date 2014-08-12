@@ -14,7 +14,7 @@ namespace WestBlueGolfLeagueWeb
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(name: "PlayerPage", 
-                url: "Player/Details/{id}/{*catchall}", defaults: new { controller = "Player", action = "Details" });
+                url: "Player/{*catchall}", defaults: new { controller = "Player", action = "Index" });
 
             routes.MapRoute(name: "LeaderBoards",
                 url: "LeaderBoards/{*catchall}", defaults: new { controller = "LeaderBoard", action = "Index" });

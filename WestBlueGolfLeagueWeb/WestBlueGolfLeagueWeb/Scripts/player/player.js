@@ -1,43 +1,52 @@
 ﻿
-angular.module("player", ['ngRoute', 'app'])
-    .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+
+(function (player) {
+
+    function PlayerConfig($locationProvider, $urlRouterProvider, $stateProvider) {
+
+        $stateProvider
+            .state('playerList', {
+                url: '/',
+                templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
+                controller: 'PlayerList'
+            });
+
+        $stateProvider
+            .state('playerDetails', {
+                url: '/:id',
+                templateUrl: '/Scripts/player/tpl/playerDetails.tpl.html',
+                controller: 'PlayerDetails as playerDetails',
+                resolve: {
+                    profileData: ['resolvedPlayerProfileService', '$stateParams', function (profileService, $stateParams) {
+                        return profileService.getPlayerData($stateParams.id);
+                    }],
+                    resolvedPlayerProfileService: 'PlayerProfileService'
+                }
+            });
 
         $locationProvider.html5Mode(true);
+    };
 
-        $routeProvider
-            .when('/', {
-                template: 'home. go to <a href="test">test</a>'
-            })
-            .when('/test', {
-                template: 'hello world test'
-            })
-            .when('/handicaps/:year?', {
-                templateUrl: '/Scripts/player/tpl/playerHandicaps.tpl.html',
-                controller: 'handicapsController'
-            })
-            .when('/results/:year?', {
-                templateUrl: '/Scripts/player/tpl/playerResults.tpl.html',
-                controller: 'resultsController'
-            });
-    }])
-    .factory("routeState", function () {
+    function PlayerDetails(profileData) {
+        this.profileData = profileData.data;
+    };
 
-        var state = {
-            stateValue: -1
+    function PlayerProfileService($http) {
+        return {
+            getPlayerData: function (id) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/v1/playerProfile/' + id
+                });
+            }
         };
+    };
 
-        return state;
-    })
-    .controller("handicapsController", ['$routeParams', '$scope', 'routeState', function ($routeParams, $scope, routeState) {
-        routeState.stateValue = 0;
-        $scope.year = $routeParams.year;
-    }])
-    .controller('resultsController', ['$routeParams', '$scope', 'routeState', function ($routeParams, $scope, routeState) {
-        routeState.stateValue = 1;
-        $scope.year = $routeParams.year;
-    }])
-    .controller('navController', ['$scope', 'routeState', function ($scope, routeState) {
+    player
+        .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', PlayerConfig])
+        .controller('PlayerDetails', ['profileData', PlayerDetails])
+        .factory('PlayerProfileService', ['$http', PlayerProfileService]);
 
-        $scope.currState = routeState;
+})(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList']));
 
-    }]);
+  

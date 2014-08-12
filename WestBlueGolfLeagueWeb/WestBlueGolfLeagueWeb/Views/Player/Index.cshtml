@@ -4,14 +4,17 @@
     ViewBag.Title = "Players";
 }
 
+@section head {
+    <base href="/Player/" />
+}
 
 <script>
     var playerYearData = @Html.Raw(JsonHelpers.ToJson(this.Model.PlayersForYear));
 </script>
 
 
-<div ng-app="playerList" class="ng-cloak">
-    <div ng-include="'/Scripts/player/tpl/playerList.tpl.html'"></div>
+<div ng-app="player" class="ng-cloak">
+    <div ui-view></div>
 </div>
 
 
