@@ -60,7 +60,7 @@
 	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"M/dd"];
 	for (WBWeek *week in weeks) {
-		if (week.teamMatchups && week.teamMatchups.count > 0) {
+		if (![week alreadyTookPlace] || (week.teamMatchups && week.teamMatchups.count > 0)) {
 			[self.weekTitleArray addObject:[dateFormatter stringFromDate:week.date]];
 			[self.seasonIndexArray addObject:week.seasonIndex];
 		}

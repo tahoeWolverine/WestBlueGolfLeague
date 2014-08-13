@@ -263,42 +263,46 @@
 	
 	WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
 	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
-	WBTeamMatchup *oneFourMatch = firstWeekMatchups[0];
-	oneFourMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-	WBTeamMatchup *twoThreeMatch = firstWeekMatchups[1];
-	twoThreeMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-    if (firstWeekMatchups.count > 2) {
-        WBTeamMatchup *fiveEightMatch = firstWeekMatchups[2];
-        fiveEightMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-    }
-    if (firstWeekMatchups.count > 3) {
-        WBTeamMatchup *sixSevenMatch = firstWeekMatchups[3];
-        sixSevenMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-    }
-    if (firstWeekMatchups.count > 4) {
-        WBTeamMatchup *nineTenMatch = firstWeekMatchups[4];
-        nineTenMatch.playoffTypeValue = WBPlayoffTypeLexis;
+    if (firstWeekMatchups && firstWeekMatchups.count == 5) {
+        WBTeamMatchup *oneFourMatch = firstWeekMatchups[0];
+        oneFourMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        WBTeamMatchup *twoThreeMatch = firstWeekMatchups[1];
+        twoThreeMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        if (firstWeekMatchups.count > 2) {
+            WBTeamMatchup *fiveEightMatch = firstWeekMatchups[2];
+            fiveEightMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (firstWeekMatchups.count > 3) {
+            WBTeamMatchup *sixSevenMatch = firstWeekMatchups[3];
+            sixSevenMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (firstWeekMatchups.count > 4) {
+            WBTeamMatchup *nineTenMatch = firstWeekMatchups[4];
+            nineTenMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
     }
 	
 	WBWeek *finalPlayoffWeek = [WBWeek finalPlayoffWeekInYear:year];
 	NSArray *finalWeekMatchups = [finalPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
-	WBTeamMatchup *oneTwoMatch = finalWeekMatchups[0];
-	oneTwoMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-    if (finalWeekMatchups.count > 1) {
-        WBTeamMatchup *threeFourMatch = finalWeekMatchups[1];
-        threeFourMatch.playoffTypeValue = WBPlayoffTypeBronze;
-    }
-    if (finalWeekMatchups.count > 2) {
-        WBTeamMatchup *fiveSixMatch = finalWeekMatchups[2];
-        fiveSixMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-    }
-    if (finalWeekMatchups.count > 3) {
-        WBTeamMatchup *sevenEightMatch = finalWeekMatchups[3];
-        sevenEightMatch.playoffTypeValue = WBPlayoffTypeLexis;
-    }
-    if (finalWeekMatchups.count > 4) {
-        WBTeamMatchup *lastMatch = finalWeekMatchups[4];
-        lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
+    if (finalWeekMatchups && finalWeekMatchups.count == 5) {
+        WBTeamMatchup *oneTwoMatch = finalWeekMatchups[0];
+        oneTwoMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        if (finalWeekMatchups.count > 1) {
+            WBTeamMatchup *threeFourMatch = finalWeekMatchups[1];
+            threeFourMatch.playoffTypeValue = WBPlayoffTypeBronze;
+        }
+        if (finalWeekMatchups.count > 2) {
+            WBTeamMatchup *fiveSixMatch = finalWeekMatchups[2];
+            fiveSixMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (finalWeekMatchups.count > 3) {
+            WBTeamMatchup *sevenEightMatch = finalWeekMatchups[3];
+            sevenEightMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
+        if (finalWeekMatchups.count > 4) {
+            WBTeamMatchup *lastMatch = finalWeekMatchups[4];
+            lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
     }
 
 	//[WBCoreDataManager saveContext:moc];
@@ -307,7 +311,7 @@
 	NSArray *matches = nil;
 	for (WBWeek *week in year.weeks) {
 		matches = [WBMatch findWithPredicate:[NSPredicate predicateWithFormat:@"teamMatchup.week = %@", week] sortedBy:nil fetchLimit:0 moc:moc];
-		if (!matches || matches.count == 0) {
+		if ([week alreadyTookPlace] && (!matches || matches.count == 0)) {
 			if (!week.isBadDataValue) {
 				DLog(@"Bad data week not noticed by server");
 			}

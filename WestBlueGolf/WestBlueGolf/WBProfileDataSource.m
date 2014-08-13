@@ -75,7 +75,7 @@
 }
 
 - (NSPredicate *)fetchPredicate {
-	return [NSPredicate predicateWithFormat:@"player = %@ && match.teamMatchup.week.year = %@", self.selectedPlayer, [WBYear thisYear]];
+	return [NSPredicate predicateWithFormat:@"player = %@ && match.teamMatchup.week.year = %@ && match.teamMatchup.week.isBadData = 0", self.selectedPlayer, [WBYear thisYear]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell

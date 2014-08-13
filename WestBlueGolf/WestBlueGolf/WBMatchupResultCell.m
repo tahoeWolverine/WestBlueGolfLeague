@@ -21,11 +21,8 @@
 	//DLog(@"%ld", (long)matchup.week.seasonIndexValue);
 
 	NSArray *displayStrings = [matchup displayStrings];
-    DLog(@"displayStrings: %@", displayStrings);
+    //DLog(@"displayStrings: %@", displayStrings);
     TRAssert(displayStrings && displayStrings.count > 3, @"Display string didn't have 4 strings as needed");
-    if ([displayStrings[0] isEqualToString:@"Mulligans"]) {
-        DLog(@"");
-    }
 	self.team1NameLabel.text = displayStrings[0];
 	self.team1NameSmall.text = displayStrings[0];
 	self.team2NameLabel.text = displayStrings[3];
