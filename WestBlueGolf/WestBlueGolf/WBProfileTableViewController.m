@@ -146,7 +146,9 @@
 
 - (void)refreshPlayerHighlights {
 	WBPlayer *player = self.selectedPlayer;
-	if (player) {
+    WBYear *year = [WBYear thisYear];
+    NSArray *results = [player filterResultsForYear:year goodData:YES];
+	if (player && results && results.count > 0) {
 		self.winLossLabel.text = [player recordStringForYear:[WBYear thisYear]];
 		self.handicapLabel.text = [player findHandicapBoardData].displayValue;
 		self.lowRoundLabel.text = [player findLowScoreBoardData].displayValue;
@@ -154,8 +156,14 @@
 		self.improvedLabel.text = [player findImprovedBoardData].displayValue;
 		self.lowNetLabel.text = [player findLowNetBoardData].displayValue;
 	} else {
-		self.winLossLabel.text = @"-";
-		self.handicapLabel.text = @"-";
+        WBPlayerYearData *data = [player filterYearDataForYear:year];
+        if (data) {
+            self.handicapLabel.text = [NSString stringWithFormat:@"%@", data.startingHandicap];
+        } else {
+            self.handicapLabel.text = @"-";
+        }
+
+		self.winLossLabel.text = @"0-0";
 		self.lowRoundLabel.text =  @"-";
 		self.averagePointsLabel.text = @"-";
 		self.improvedLabel.text = @"-";

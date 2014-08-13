@@ -58,8 +58,6 @@
 		   withObject:(NSManagedObject *)object {
 	WBPlayerYearData *data = (WBPlayerYearData *)object;
 	[(WBPlayerListCell *)cell configureCellForPlayer:data.player];
-    //cell.textLabel.text = data.player.name;
-	//cell.detailTextLabel.text = [data.player currentHandicapString];
 }
 
 - (NSString *)supportedSegueIdentifier {
@@ -68,10 +66,10 @@
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	WBProfileTableViewController *vc = [segue destinationViewController];
+    WBProfileTableViewController *pvc = (WBProfileTableViewController *)[segue destinationViewController];
 	NSIndexPath *path = self.parentDataSource.tableView.indexPathForSelectedRow;
 	NSIndexPath *adjustedPath = [NSIndexPath indexPathForRow:path.row inSection:0];
-	vc.selectedPlayer = [(WBPlayerYearData *)[self.fetchedResultsController objectAtIndexPath:adjustedPath] player];
+	pvc.selectedPlayer = [(WBPlayerYearData *)[self.fetchedResultsController objectAtIndexPath:adjustedPath] player];
 }
 
 @end

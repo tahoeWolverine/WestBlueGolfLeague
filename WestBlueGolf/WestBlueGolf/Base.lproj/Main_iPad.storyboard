@@ -92,7 +92,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Ora-CE-qum">
-                            <rect key="frame" x="0.0" y="64" width="768" height="124"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="124"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="La7-wm-qyP">
@@ -228,7 +228,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileResultsCell" rowHeight="90" id="iuL-ue-6UK" customClass="WBResultTableViewCell">
-                                <rect key="frame" x="0.0" y="210" width="768" height="90"/>
+                                <rect key="frame" x="0.0" y="146" width="768" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iuL-ue-6UK" id="P9o-VI-VNs">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="89"/>
@@ -761,6 +761,7 @@
                                     <outlet property="handicapLabel" destination="jzp-9D-0AO" id="Ogo-er-cJO"/>
                                     <outlet property="playerNameLabel" destination="r1V-f1-OQ3" id="hMa-6F-oz3"/>
                                     <outlet property="profilePicture" destination="97L-el-2Ok" id="GwZ-tI-ruC"/>
+                                    <segue destination="buB-2X-u3v" kind="push" identifier="WBTeamPlayerSegue" id="LhM-rQ-NNG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -928,4 +929,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="LhM-rQ-NNG"/>
+    </inferredMetricsTieBreakers>
 </document>

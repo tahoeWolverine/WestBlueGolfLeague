@@ -38,6 +38,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    [self refreshName];
+}
+
+- (void)refreshName {
 	self.navigationItem.title = self.selectedLeaderboard.name;
 }
 
@@ -49,6 +53,7 @@
     if (self.boardDataSource.selectedLeaderBoard != selectedLeaderboard) {
         self.boardDataSource.selectedLeaderBoard = selectedLeaderboard;
         [self.boardDataSource resetTableAndFetchedResultsController];
+        [self refreshName];
     }
 }
 

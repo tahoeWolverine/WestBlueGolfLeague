@@ -153,7 +153,8 @@
 	NSInteger total = 0;
 	for (WBMatch *match in self.matches) {
 		for (WBResult *result in match.results) {
-			if (result.team == team && ![result.player.name isEqualToString:kNoShowPlayerName]) {
+            // We actually want to include No Shows in this to not give the impression that the teams score was lower
+			if (result.team == team /*&& ![result.player.name isEqualToString:kNoShowPlayerName]*/) {
 				total += result.scoreValue;
 			}
 		}
