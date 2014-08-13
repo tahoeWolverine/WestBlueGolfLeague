@@ -8,7 +8,7 @@
             .state('playerList', {
                 url: '/',
                 templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
-                controller: 'PlayerList'
+                controller: 'PlayerList as pList'
             });
 
         $stateProvider

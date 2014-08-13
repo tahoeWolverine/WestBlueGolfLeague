@@ -47,12 +47,13 @@ angular.module('playerList', ['app', 'ui.router']);
 
 
     var ListController = function ($scope, playerListService, $filter) {
+        var self = this;
 
         playerListService.getPlayersForYear().then(function (result) {
-            $scope.playerData = result;
+            self.playerData = result;
         });
 
-        $scope.$watch('nameSearchText', function (newVal, oldVal) {
+        $scope.$watch(function () { return self.nameSearchText; }, function (newVal, oldVal) {
             $scope.scrollToTop();
         });
     };

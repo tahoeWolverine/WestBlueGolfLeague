@@ -61,6 +61,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
 
+            // TODO: handle players that don't have leaderboard data yet.
+
             return Ok(
                 new PlayerProfileData 
                 { 
