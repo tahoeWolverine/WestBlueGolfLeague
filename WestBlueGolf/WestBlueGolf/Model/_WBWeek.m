@@ -7,6 +7,7 @@ const struct WBWeekAttributes WBWeekAttributes = {
 	.date = @"date",
 	.id = @"id",
 	.isBadData = @"isBadData",
+	.pairing = @"pairing",
 	.seasonIndex = @"seasonIndex",
 };
 
@@ -52,6 +53,11 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 	}
 	if ([key isEqualToString:@"isBadDataValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isBadData"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"pairingValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"pairing"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -120,6 +126,32 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 
 - (void)setPrimitiveIsBadDataValue:(BOOL)value_ {
 	[self setPrimitiveIsBadData:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic pairing;
+
+
+
+- (int16_t)pairingValue {
+	NSNumber *result = [self pairing];
+	return [result shortValue];
+}
+
+- (void)setPairingValue:(int16_t)value_ {
+	[self setPairing:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitivePairingValue {
+	NSNumber *result = [self primitivePairing];
+	return [result shortValue];
+}
+
+- (void)setPrimitivePairingValue:(int16_t)value_ {
+	[self setPrimitivePairing:[NSNumber numberWithShort:value_]];
 }
 
 

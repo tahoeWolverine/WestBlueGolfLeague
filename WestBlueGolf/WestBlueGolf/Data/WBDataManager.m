@@ -70,6 +70,10 @@
 	WBYear *year = [WBYear findYearWithValue:yearValue inContext:[WBCoreDataManager mainContext]];
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
     [boardManager createLeaderBoardsForYear:year withJson:responseObject];
+    
+    if (inputManager.buildPlayoffMatchups) {
+        [inputManager createPlayoffSpeculationsForYear:year];
+    }
 
     //[WBCoreDataManager saveContext:moc];
     

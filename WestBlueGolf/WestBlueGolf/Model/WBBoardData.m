@@ -45,4 +45,8 @@
 	return (WBBoardData *)[[self class] findFirstRecordWithFormat:@"leaderBoard.key = %@ && peopleEntity = %@ && year = %@", key, entity, [WBYear thisYear]];
 }
 
++ (NSArray *)findAllWithBoardKey:(NSString *)key {
+    return [[self class] findWithPredicate:[NSPredicate predicateWithFormat:@"leaderBoard.key = %@ && year = %@", key, [WBYear thisYear]] sortedBy:@[[NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO]]];
+}
+
 @end

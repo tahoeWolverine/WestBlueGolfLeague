@@ -17,6 +17,7 @@
 						weekId:(NSInteger)weekId
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
+                       pairing:(NSInteger)pairing
 					   badData:(BOOL)badData
 					 inContext:(NSManagedObjectContext *)moc {
 	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
@@ -24,6 +25,7 @@
 	newWeek.year = year;
 	newWeek.idValue = weekId;
 	newWeek.seasonIndexValue = seasonIndex;
+    newWeek.pairingValue = pairing;
 	newWeek.isBadDataValue = badData;
 	
 	[course addWeeksObject:newWeek];
@@ -39,13 +41,12 @@
 }
 
 - (NSString *)pairingLabel {
-	NSInteger mod = self.seasonIndexValue % 3;
-	switch (mod) {
-		case 1:
-			return PAIRING_FIRST_MATCH;
+	switch (self.pairingValue) {
 		case 2:
+			return PAIRING_FIRST_MATCH;
+		case 3:
 			return PAIRING_SECOND_MATCH;
-		case 0:
+		case 4:
 			return PAIRING_THIRD_MATCH;
 		default:
 			break;

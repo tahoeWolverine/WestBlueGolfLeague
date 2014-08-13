@@ -16,5 +16,6 @@
 - (NSString *)rankString;
 
 + (WBBoardData *)findWithBoardKey:(NSString *)key peopleEntity:(WBPeopleEntity *)entity;
++ (NSArray *)findAllWithBoardKey:(NSString *)key;
 
 @end

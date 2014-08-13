@@ -103,7 +103,7 @@
 	NSArray *weekArray = [json objectForKey:wbJsonKeyWeeks];
 	WBCourse *course = nil;
 	NSString *weekDate = nil;
-	NSInteger weekId, weekIndex = 0;
+	NSInteger weekId = 0, weekIndex = 0, pairing = 0;
 	BOOL badData = NO;
 	NSDate *date = nil;
 	for (NSDictionary *elt in weekArray) {
@@ -114,7 +114,27 @@
 		date = [self dateForString:weekDate];
 		courseId = [[elt objectForKey:wbJsonKeyWeekCourseId] integerValue];
 		course = [WBCourse courseWithId:courseId];
-		[WBWeek createWeekWithDate:date inYear:year weekId:weekId forCourse:course seasonIndex:weekIndex badData:badData inContext:moc];
+        
+        pairing = weekIndex % 3 + 1;
+        if (pairing == 1) {
+            pairing = 4;
+        }
+        
+        if (weekIndex > 9) {
+            pairing--;
+            if (pairing == 1) {
+                pairing = 4;
+            }
+        }
+        
+        if (weekIndex > 16) {
+            pairing--;
+            if (pairing == 1) {
+                pairing = 4;
+            }
+        }
+        
+		[WBWeek createWeekWithDate:date inYear:year weekId:weekId forCourse:course seasonIndex:weekIndex pairing:pairing badData:badData inContext:moc];
 	}
 	
 	[WBCoreDataManager saveContext:moc];
@@ -261,49 +281,7 @@
         }
     }
 	
-	WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
-	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
-    if (firstWeekMatchups && firstWeekMatchups.count == 5) {
-        WBTeamMatchup *oneFourMatch = firstWeekMatchups[0];
-        oneFourMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-        WBTeamMatchup *twoThreeMatch = firstWeekMatchups[1];
-        twoThreeMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-        if (firstWeekMatchups.count > 2) {
-            WBTeamMatchup *fiveEightMatch = firstWeekMatchups[2];
-            fiveEightMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-        }
-        if (firstWeekMatchups.count > 3) {
-            WBTeamMatchup *sixSevenMatch = firstWeekMatchups[3];
-            sixSevenMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-        }
-        if (firstWeekMatchups.count > 4) {
-            WBTeamMatchup *nineTenMatch = firstWeekMatchups[4];
-            nineTenMatch.playoffTypeValue = WBPlayoffTypeLexis;
-        }
-    }
-	
-	WBWeek *finalPlayoffWeek = [WBWeek finalPlayoffWeekInYear:year];
-	NSArray *finalWeekMatchups = [finalPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
-    if (finalWeekMatchups && finalWeekMatchups.count == 5) {
-        WBTeamMatchup *oneTwoMatch = finalWeekMatchups[0];
-        oneTwoMatch.playoffTypeValue = WBPlayoffTypeChampionship;
-        if (finalWeekMatchups.count > 1) {
-            WBTeamMatchup *threeFourMatch = finalWeekMatchups[1];
-            threeFourMatch.playoffTypeValue = WBPlayoffTypeBronze;
-        }
-        if (finalWeekMatchups.count > 2) {
-            WBTeamMatchup *fiveSixMatch = finalWeekMatchups[2];
-            fiveSixMatch.playoffTypeValue = WBPlayoffTypeConsolation;
-        }
-        if (finalWeekMatchups.count > 3) {
-            WBTeamMatchup *sevenEightMatch = finalWeekMatchups[3];
-            sevenEightMatch.playoffTypeValue = WBPlayoffTypeLexis;
-        }
-        if (finalWeekMatchups.count > 4) {
-            WBTeamMatchup *lastMatch = finalWeekMatchups[4];
-            lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
-        }
-    }
+	[self assignPlayoffSpotsForYear:year];
 
 	//[WBCoreDataManager saveContext:moc];
 	
@@ -341,6 +319,142 @@
 	}
     
     [WBCoreDataManager saveMainContext];
+}
+
+- (void)createPlayoffSpeculationsForYear:(WBYear *)year {
+    WBTeamMatchup *matchup = nil;
+    WBBoardData *team1Data = nil, *team2Data = nil;
+    NSInteger matchupId = rand();
+    BOOL matchComplete = NO;
+    NSManagedObjectContext *moc = [WBCoreDataManager mainContext];
+    NSInteger team1Index = 0, team2Index = 0;
+    
+    WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
+	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+    if (!firstWeekMatchups || firstWeekMatchups.count < 5) {
+        // We need to build out 5 matchups for the expected teams
+        NSArray *teamData = [WBBoardData findAllWithBoardKey:kLeaderboardTeamTotalPoints];
+        for (NSInteger i = 0; i < 5; ++i) {
+            switch (i) {
+                case 0:
+                    team1Index = 0;
+                    team2Index = 3;
+                    break;
+                case 1:
+                    team1Index = 1;
+                    team2Index = 2;
+                    break;
+                case 2:
+                    team1Index = 4;
+                    team2Index = 7;
+                    break;
+                case 3:
+                    team1Index = 5;
+                    team2Index = 6;
+                    break;
+                case 4:
+                    team1Index = 8;
+                    team2Index = 9;
+                    break;
+                default:
+                    ALog(@"Bad index");
+                    break;
+            }
+            team1Data = teamData[team1Index];
+            team2Data = teamData[team2Index];
+            matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:(WBTeam *)team1Data.peopleEntity andTeam:(WBTeam *)team2Data.peopleEntity forWeek:firstPlayoffWeek matchupId:matchupId matchComplete:matchComplete moc:moc];
+            matchupId++;
+        }
+    }
+    
+    WBWeek *finalPlayoffWeek = [WBWeek finalPlayoffWeekInYear:year];
+	NSArray *finalWeekMatchups = [finalPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+    if (!finalWeekMatchups || finalWeekMatchups.count < 5) {
+        // We need to build out 5 matchups for the expected teams
+        NSArray *teams = [WBBoardData findAllWithBoardKey:kLeaderboardTeamTotalPoints];
+        for (NSInteger i = 0; i < 5; ++i) {switch (i) {
+            case 0:
+                team1Index = 0;
+                team2Index = 1;
+                break;
+            case 1:
+                team1Index = 2;
+                team2Index = 3;
+                break;
+            case 2:
+                team1Index = 4;
+                team2Index = 5;
+                break;
+            case 3:
+                team1Index = 7;
+                team2Index = 8;
+                break;
+            case 4:
+                team1Index = 6;
+                team2Index = 9;
+                break;
+            default:
+                ALog(@"Bad index");
+                break;
+        }
+            team1Data = teams[team1Index];
+            team2Data = teams[team2Index];
+            matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:(WBTeam *)team1Data.peopleEntity andTeam:(WBTeam *)team2Data.peopleEntity forWeek:finalPlayoffWeek matchupId:matchupId matchComplete:matchComplete moc:moc];
+            matchupId++;
+        }
+    }
+    
+    [self assignPlayoffSpotsForYear:year];
+}
+
+- (void)assignPlayoffSpotsForYear:(WBYear *)year {
+    WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
+	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+    if (firstWeekMatchups && firstWeekMatchups.count == 5) {
+        WBTeamMatchup *oneFourMatch = firstWeekMatchups[0];
+        oneFourMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        WBTeamMatchup *twoThreeMatch = firstWeekMatchups[1];
+        twoThreeMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        if (firstWeekMatchups.count > 2) {
+            WBTeamMatchup *fiveEightMatch = firstWeekMatchups[2];
+            fiveEightMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (firstWeekMatchups.count > 3) {
+            WBTeamMatchup *sixSevenMatch = firstWeekMatchups[3];
+            sixSevenMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (firstWeekMatchups.count > 4) {
+            WBTeamMatchup *nineTenMatch = firstWeekMatchups[4];
+            nineTenMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
+    } else {
+        self.buildPlayoffMatchups = YES;
+    }
+	
+	WBWeek *finalPlayoffWeek = [WBWeek finalPlayoffWeekInYear:year];
+	NSArray *finalWeekMatchups = [finalPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+    if (finalWeekMatchups && finalWeekMatchups.count == 5) {
+        WBTeamMatchup *oneTwoMatch = finalWeekMatchups[0];
+        oneTwoMatch.playoffTypeValue = WBPlayoffTypeChampionship;
+        if (finalWeekMatchups.count > 1) {
+            WBTeamMatchup *threeFourMatch = finalWeekMatchups[1];
+            threeFourMatch.playoffTypeValue = WBPlayoffTypeBronze;
+        }
+        if (finalWeekMatchups.count > 2) {
+            WBTeamMatchup *fiveSixMatch = finalWeekMatchups[2];
+            fiveSixMatch.playoffTypeValue = WBPlayoffTypeConsolation;
+        }
+        if (finalWeekMatchups.count > 3) {
+            WBTeamMatchup *sevenEightMatch = finalWeekMatchups[3];
+            sevenEightMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
+        if (finalWeekMatchups.count > 4) {
+            WBTeamMatchup *lastMatch = finalWeekMatchups[4];
+            lastMatch.playoffTypeValue = WBPlayoffTypeLexis;
+        }
+    } else {
+        self.buildPlayoffMatchups = YES;
+    }
 }
 
 #pragma mark - Helper functions

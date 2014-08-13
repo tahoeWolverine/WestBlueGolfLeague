@@ -7,6 +7,7 @@
 						weekId:(NSInteger)weekId
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
+                       pairing:(NSInteger)pairing
 					   badData:(BOOL)badData
 					 inContext:(NSManagedObjectContext *)moc;
 
