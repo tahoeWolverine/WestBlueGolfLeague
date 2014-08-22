@@ -148,11 +148,28 @@ namespace AccessExport
 
                             if (week.SeasonIndex != 0)
                             {
+                                week.PairingId = ((week.SeasonIndex - 1) % 3) + 1;
                                 allWeeks.Add(week);
                             }
+                            else
+                            {
+                                week.PairingId = 1;
+                            }
+
+                            //
+                            // TODO: Manually set some week indexes for 2014.
+                            //
 
                             weekTempIdToWeek[week.SeasonIndex] = week;
                         }
+                    }
+
+                    // Now that we are done processing weeks, assign playoff values to each one.
+                    var lastTwoWeeksOfYear = weekTempIdToWeek.Values.OrderByDescending(x => x.SeasonIndex).Take(2);
+
+                    foreach (var week in lastTwoWeeksOfYear)
+                    {
+                        week.IsPlayoff = true;
                     }
 
                     // Teams

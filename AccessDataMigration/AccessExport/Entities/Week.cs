@@ -14,5 +14,7 @@ namespace AccessExport
         public int SeasonIndex { get; set; }
         public Year Year { get; set; }
         public bool IsBadData { get; set; }
+        public bool IsPlayoff { get; set; }
+        public int PairingId { get; set; }
     }
 }
