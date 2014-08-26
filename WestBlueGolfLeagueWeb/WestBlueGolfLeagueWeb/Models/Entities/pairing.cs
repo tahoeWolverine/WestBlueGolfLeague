@@ -11,7 +11,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     {
         public pairing()
         {
-            teammatchups = new HashSet<teammatchup>();
+            weeks = new HashSet<week>();
         }
 
         public int id { get; set; }
@@ -19,6 +19,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         [StringLength(45)]
         public string pairingText { get; set; }
 
-        public virtual ICollection<teammatchup> teammatchups { get; set; }
+        public virtual ICollection<week> weeks { get; set; }
     }
 }

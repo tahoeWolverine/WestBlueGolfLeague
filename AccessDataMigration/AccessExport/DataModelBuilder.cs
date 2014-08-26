@@ -157,11 +157,24 @@ namespace AccessExport
                             }
 
                             //
-                            // TODO: Manually set some week indexes for 2014.
+                            // TODO: Manually set some pairing indexes for 2014.
                             //
 
                             weekTempIdToWeek[week.SeasonIndex] = week;
                         }
+                    }
+
+                    if (year == 2014)
+                    {
+                        weekTempIdToWeek[10].PairingId = 3;
+                        weekTempIdToWeek[11].PairingId = 1;
+                        weekTempIdToWeek[12].PairingId = 2;
+                        weekTempIdToWeek[13].PairingId = 3;
+                        weekTempIdToWeek[14].PairingId = 1;
+                        weekTempIdToWeek[15].PairingId = 2;
+                        weekTempIdToWeek[16].PairingId = 3;
+                        weekTempIdToWeek[17].PairingId = 3;
+                        weekTempIdToWeek[18].PairingId = 1;
                     }
 
                     // Now that we are done processing weeks, assign playoff values to each one.

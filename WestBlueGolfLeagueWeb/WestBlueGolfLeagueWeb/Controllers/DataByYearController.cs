@@ -33,7 +33,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var leaderboards = this.Db.leaderboards.AsNoTracking().ToList();
             var leaderBoardDataForYear = this.Db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
             var courses = weeksForYear.Select(w => w.course).GroupBy(c => c.id).Select(g => g.First());
-            var teamMatchupsForYear = this.Db.teammatchups.Include(x => x.teams).Include(x => x.matchups).Include("matchups.results").Where(x => x.week.year.value == year).ToList();
+            var teamMatchupsForYear = this.Db.teammatchups.Include(x => x.teams).Include(x => x.matches).Include("matches.results").Where(x => x.week.year.value == year).ToList();
 
             /*Dictionary<int, leaderboard> leaderboardIdToLeaderboard = new Dictionary<int,leaderboard>();
 
