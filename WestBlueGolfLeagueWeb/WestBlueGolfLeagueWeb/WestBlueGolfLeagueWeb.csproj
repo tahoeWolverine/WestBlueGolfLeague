@@ -232,6 +232,7 @@
     <Compile Include="Models\Entities\week.cs" />
     <Compile Include="Models\Entities\WestBlue.cs" />
     <Compile Include="Models\Entities\year.cs" />
+    <Compile Include="Models\Playoffs\PlayoffPredictor.cs" />
     <Compile Include="Models\Responses\LeaderBoardDataWebResponse.cs" />
     <Compile Include="Models\Responses\LeaderBoardResponse.cs" />
     <Compile Include="Models\Responses\AvailableLeaderBoardsResponse.cs" />

@@ -16,5 +16,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public List<CourseResponse> Courses { get; set; }
 
         public List<WeekResponse> Weeks { get; set; }
+
+        public List<pairing> Pairings { get; set; }
     }
 }

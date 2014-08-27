@@ -31,23 +31,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var teamsForYear = this.Db.teams.AsNoTracking().Where(x => x.playeryeardatas.Any(y => y.year.value == year)).ToList();
             var leaderboards = this.Db.leaderboards.AsNoTracking().ToList();
+            var pairings = this.Db.pairings.AsNoTracking().ToList();
             var leaderBoardDataForYear = this.Db.leaderboarddatas.AsNoTracking().Where(x => x.year.value == year).ToList();
             var courses = weeksForYear.Select(w => w.course).GroupBy(c => c.id).Select(g => g.First());
             var teamMatchupsForYear = this.Db.teammatchups.Include(x => x.teams).Include(x => x.matches).Include("matches.results").Where(x => x.week.year.value == year).ToList();
-
-            /*Dictionary<int, leaderboard> leaderboardIdToLeaderboard = new Dictionary<int,leaderboard>();
-
-            foreach (var leaderboard in leaderboards)
-            {
-                leaderboardIdToLeaderboard[leaderboard.id] = leaderboard;
-            }
-
-            var dataGrouping = leaderBoardDataForYear.GroupBy(x => x.leaderBoardId);
-
-            foreach (var group in dataGrouping)
-            {
-                leaderboardIdToLeaderboard[group.Key].leaderboarddatas = group.ToList();
-            }*/
 
             var dby = new DataByYear
             {
@@ -57,7 +44,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList(),
                 Courses = courses.Select(x => CourseResponse.From(x)).ToList(),
-                Weeks = weeksForYear.Select(x => WeekResponse.From(x)).ToList()
+                Weeks = weeksForYear.Select(x => WeekResponse.From(x)).ToList(),
+                Pairings = pairings
             };
 
             return Ok(dby);
