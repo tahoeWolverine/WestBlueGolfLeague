@@ -18,6 +18,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
                 SeasonIndex = w.seasonIndex,
                 BadData = w.isBadData,
                 PairingId = w.pairingId,
+                IsPlayoff = w.isPlayoff,
                 Id = w.id,
             };
         }
@@ -35,5 +36,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public int Id { get; set; }
 
         public int PairingId { get; set; }
+
+        public bool IsPlayoff { get; set; }
     }
 }

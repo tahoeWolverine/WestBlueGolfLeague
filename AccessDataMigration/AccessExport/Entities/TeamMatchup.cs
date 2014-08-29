@@ -14,5 +14,7 @@ namespace AccessExport
         public bool MatchComplete { get; set; }
         public Week Week { get; set; }
         public int MatchId { get; set; }
+        public int MatchOrderInWeek { get; set; }
+        public string PlayoffType { get; set; }
     }
 }

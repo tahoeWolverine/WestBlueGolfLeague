@@ -25,5 +25,24 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .Select(x => Tuple.Create(x.player, x.team));
         }
 
+        public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
+        {
+            return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);
+        }
+
+        public static int PointsFor(this teammatchup tm, team team)
+        {
+            return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
+        }
+
+        public static bool WasWin(this result r)
+        {
+            return r.points > 12;
+        }
+
+        public static bool WasLoss(this result r)
+        {
+            return r.points < 12;
+        }
     }
 }
