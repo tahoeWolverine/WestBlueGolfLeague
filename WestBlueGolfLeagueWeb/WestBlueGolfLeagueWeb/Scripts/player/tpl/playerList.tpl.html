@@ -9,7 +9,7 @@
     <div class="row player-list-players" scroll-to-top>
         <div ng-repeat="player in filteredPlayerData = ( pList.playerData | orderBy:'name' | filter: {'name': pList.nameSearchText} )" class="col-sm-4 player-list-item">
             <div class="row">
-                <a ui-sref="playerDetails({ id: player.id })" tabindex="{{$index + 1}}">
+                <a ui-sref="playerDetails.playerProfile({ id: player.id })" tabindex="{{$index + 1}}">
                     <div class="player-list-item-wrapper">
                         <div class="col-sm-2 col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
                         <div class="col-sm-6 col-xs-10 player-list-item-name">

@@ -321,8 +321,10 @@
     <Content Include="Scripts\player\playerList.js" />
     <Content Include="Scripts\player\player.js" />
     <Content Include="Scripts\player\tpl\playerDetails.tpl.html" />
+    <Content Include="Scripts\player\tpl\playerDetailsLayout.tpl.html" />
     <Content Include="Scripts\player\tpl\playerHandicaps.tpl.html" />
     <Content Include="Scripts\player\tpl\playerList.tpl.html" />
+    <Content Include="Scripts\player\tpl\playerListWrapper.tpl.html" />
     <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />

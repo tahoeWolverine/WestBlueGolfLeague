@@ -7,15 +7,29 @@
         $stateProvider
             .state('playerList', {
                 url: '/',
-                templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
-                controller: 'PlayerList as pList'
+                templateUrl: '/Scripts/player/tpl/playerListWrapper.tpl.html',
             });
 
         $stateProvider
             .state('playerDetails', {
+                abstract: true,
+                templateUrl: '/Scripts/player/tpl/playerDetailsLayout.tpl.html',
+                controller: 'PlayerDetailsLayout'
+            });
+
+        $stateProvider
+            .state('playerDetails.playerProfile', {
                 url: '/:id',
-                templateUrl: '/Scripts/player/tpl/playerDetails.tpl.html',
-                controller: 'PlayerDetails as playerDetails',
+                views: {
+                    /*playerList: {
+                        templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
+                        controller: 'PlayerList as pList'
+                    },*/
+                    playerDetails: {
+                        templateUrl: '/Scripts/player/tpl/playerDetails.tpl.html',
+                        controller: 'PlayerDetails as playerDetails'
+                    }
+                },
                 resolve: {
                     profileData: ['resolvedPlayerProfileService', '$stateParams', function (profileService, $stateParams) {
                         return profileService.getPlayerData($stateParams.id);
@@ -42,10 +56,28 @@
         };
     };
 
+    function PlayerDetailsLayout() {
+
+    };
+
+    function PlayerListDirective() {
+        return {
+            templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
+            controller: 'PlayerList',
+            controllerAs: 'pList',
+            restrict: 'A',
+            link: function () {
+
+            }
+        };
+    };
+
     player
         .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', PlayerConfig])
         .controller('PlayerDetails', ['profileData', PlayerDetails])
-        .factory('PlayerProfileService', ['$http', PlayerProfileService]);
+        .controller('PlayerDetailsLayout', PlayerDetailsLayout)
+        .factory('PlayerProfileService', ['$http', PlayerProfileService])
+        .directive('playerList', PlayerListDirective);
 
 })(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList']));
 

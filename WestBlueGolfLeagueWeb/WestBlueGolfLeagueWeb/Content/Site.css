@@ -87,6 +87,22 @@ input[type="checkbox"].input-validation-error {
 
 }*/
 
+.player-details-player-list .col-sm-4 {
+    width: 100%;
+}
+
+.player-details-profile {
+    padding-left: 300px;
+}
+
+.player-details-player-list {
+    padding-top: 50px;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    overflow-y: scroll;
+    z-index: 10;
+}
 
 .player-list-item {
     margin-top: 1.2em;
