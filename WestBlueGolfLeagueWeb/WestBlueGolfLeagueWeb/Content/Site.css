@@ -92,16 +92,23 @@ input[type="checkbox"].input-validation-error {
 }
 
 .player-details-profile {
-    padding-left: 300px;
+    z-index: 10;
+}
+
+.details-layout {
+    padding-left: 340px;
 }
 
 .player-details-player-list {
     padding-top: 50px;
+    margin-left: -340px;
+    width: 340px;
+    background: white;
     top: 0;
     bottom: 0;
     position: fixed;
     overflow-y: scroll;
-    z-index: 10;
+    z-index: 5;
 }
 
 .player-list-item {
@@ -115,16 +122,13 @@ input[type="checkbox"].input-validation-error {
 
 .player-list-input {
     z-index: 5;
-    position: fixed;
+    /*position: fixed;*/
     height: 60px;
     padding-right: 15px;
     background: rgba(255,255,255,.5);
     width: 100%;
 }
 
-.player-list-players {
-    padding-top: 50px;
-}
 
 .player-list-input > div {
     margin-top: 14px;
