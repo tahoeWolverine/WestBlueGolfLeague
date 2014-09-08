@@ -96,13 +96,13 @@ input[type="checkbox"].input-validation-error {
 }
 
 .details-layout {
-    padding-left: 340px;
+    padding-left: 280px;
 }
 
 .player-details-player-list {
     padding-top: 50px;
-    margin-left: -340px;
-    width: 340px;
+    margin-left: -280px;
+    width: 280px;
     background: white;
     top: 0;
     bottom: 0;
@@ -124,9 +124,8 @@ input[type="checkbox"].input-validation-error {
     z-index: 5;
     /*position: fixed;*/
     height: 60px;
-    padding-right: 15px;
     background: rgba(255,255,255,.5);
-    width: 100%;
+    max-width: 400px;
 }
 
 
@@ -147,7 +146,18 @@ input[type="checkbox"].input-validation-error {
     line-height: 3.2em;
     text-align: center;
     vertical-align: middle;
+    float: left;
+    width: 25%;
+    margin-left: -15px;
 }
+
+player-list-item-name {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+}
+
+
 
 .player-list-item-image .fa-user {
     font-size: 2em;
@@ -173,8 +183,8 @@ input[type="checkbox"].input-validation-error {
     display: block;
 }
 
-.player-list-item a:hover {
-    background: red;
+.player-list a:hover, .player-list a:active, .player-list a:focus {
+    text-decoration: none;
 }
 
 .clear-icon {
@@ -212,10 +222,6 @@ input[type="checkbox"].input-validation-error {
 }
 
 @media (max-width: 767px) {
-
-    .player-list-input {
-        padding-right: 0px;
-    }
 
     .player-list-input .col-xs-12 {
         width: inherit;

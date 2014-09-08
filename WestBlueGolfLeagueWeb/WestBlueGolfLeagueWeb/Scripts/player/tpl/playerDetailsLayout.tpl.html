@@ -1,9 +1,13 @@
-﻿<div class="row details-layout">
-    <div class="player-details-player-list">
+﻿<div class="details-layout">
+    <div class="container player-details-player-list">
         <div player-list></div>
     </div>
     <!-- TODO: Player with profile ID of 37 gets a 500 when calling the profile endpoint. -->
-    <div class="col-md-12 player-details-profile">
-        <div ui-view="playerDetails"></div>
+    <div class="container-fluid player-details-profile">
+        <div class="row">
+            <div class="col-md-12">
+                <div ui-view="playerDetails"></div>
+            </div>
+        </div>
     </div>
 </div>
