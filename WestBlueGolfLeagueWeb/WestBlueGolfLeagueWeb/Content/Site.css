@@ -93,10 +93,20 @@ input[type="checkbox"].input-validation-error {
 
 .player-details-profile {
     z-index: 10;
+	position: relative;
+	background-color: white;
 }
 
 .details-layout {
     padding-left: 280px;
+}
+
+.details-layout.toggled {
+	padding-left: 0;
+}
+
+.details-layout.toggled .player-details-player-list {
+	margin-left: 0px;
 }
 
 .player-details-player-list {

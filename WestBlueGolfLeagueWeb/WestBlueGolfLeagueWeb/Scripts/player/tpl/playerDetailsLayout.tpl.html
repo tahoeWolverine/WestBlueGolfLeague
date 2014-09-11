@@ -1,4 +1,4 @@
-﻿<div class="details-layout">
+﻿<div class="details-layout" ng-class="toggled">
     <div class="container player-details-player-list">
         <div player-list></div>
     </div>
@@ -6,6 +6,8 @@
     <div class="container-fluid player-details-profile">
         <div class="row">
             <div class="col-md-12">
+				<button ng-click="toggled='toggled'">Close</button>
+				<button ng-click="toggled=''">Open</button>
                 <div ui-view="playerDetails"></div>
             </div>
         </div>
