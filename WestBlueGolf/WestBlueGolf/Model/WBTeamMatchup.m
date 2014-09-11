@@ -28,10 +28,12 @@
 										forWeek:(WBWeek *)week
                                       matchupId:(NSInteger)matchupId
 								  matchComplete:(BOOL)matchComplete
+                                    playoffType:(WBPlayoffType)playoffType
 											moc:(NSManagedObjectContext *)moc {
 	WBTeamMatchup *newTeamMatchup = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
 	newTeamMatchup.matchIdValue = matchupId;
 	newTeamMatchup.matchCompleteValue = matchComplete;
+    newTeamMatchup.playoffTypeValue = playoffType;
 
     [week addTeamMatchupsObject:newTeamMatchup];
     [team1 addMatchupsObject:newTeamMatchup];

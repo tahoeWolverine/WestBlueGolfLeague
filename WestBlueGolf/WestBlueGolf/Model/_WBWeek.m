@@ -7,6 +7,7 @@ const struct WBWeekAttributes WBWeekAttributes = {
 	.date = @"date",
 	.id = @"id",
 	.isBadData = @"isBadData",
+	.isPlayoff = @"isPlayoff",
 	.pairing = @"pairing",
 	.seasonIndex = @"seasonIndex",
 };
@@ -53,6 +54,11 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 	}
 	if ([key isEqualToString:@"isBadDataValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isBadData"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"isPlayoffValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isPlayoff"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -126,6 +132,32 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 
 - (void)setPrimitiveIsBadDataValue:(BOOL)value_ {
 	[self setPrimitiveIsBadData:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic isPlayoff;
+
+
+
+- (BOOL)isPlayoffValue {
+	NSNumber *result = [self isPlayoff];
+	return [result boolValue];
+}
+
+- (void)setIsPlayoffValue:(BOOL)value_ {
+	[self setIsPlayoff:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsPlayoffValue {
+	NSNumber *result = [self primitiveIsPlayoff];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsPlayoffValue:(BOOL)value_ {
+	[self setPrimitiveIsPlayoff:[NSNumber numberWithBool:value_]];
 }
 
 

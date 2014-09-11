@@ -305,6 +305,12 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [[self tableView] endUpdates];
+    
+    [self refreshContentDisplay];
+}
+
+- (void)refreshContentDisplay {
+    // Override in derrived classes
 }
 
 @end

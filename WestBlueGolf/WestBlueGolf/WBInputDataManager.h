@@ -10,12 +10,12 @@
 
 @interface WBInputDataManager : NSObject
 
-@property (assign, nonatomic) BOOL buildPlayoffMatchups;
+//@property (assign, nonatomic) BOOL buildPlayoffMatchups;
 
 - (void)createYearsWithJson:(NSDictionary *)json;
 - (void)createObjectsForYear:(NSInteger)yearValue withJson:(NSDictionary *)json;
 - (void)clearRefreshableDataForYearValue:(NSInteger)yearValue;
 
-- (void)createPlayoffSpeculationsForYear:(WBYear *)year;
+//- (void)createPlayoffSpeculationsForYear:(WBYear *)year;
 
 @end

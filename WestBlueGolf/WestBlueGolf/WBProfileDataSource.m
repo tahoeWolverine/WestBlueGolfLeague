@@ -85,4 +85,8 @@
 	[resultCell configureCellForResult:result];
 }
 
+- (void)refreshContentDisplay {
+    [(WBProfileTableViewController *)self.viewController refreshPlayerHighlights];
+}
+
 @end

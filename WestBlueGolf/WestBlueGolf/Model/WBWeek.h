@@ -8,6 +8,7 @@
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
                        pairing:(NSInteger)pairing
+                     isPlayoff:(BOOL)isPlayoff
 					   badData:(BOOL)badData
 					 inContext:(NSManagedObjectContext *)moc;
 

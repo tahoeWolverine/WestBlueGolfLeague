@@ -31,5 +31,6 @@
 - (NSManagedObject *)objectAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)resetSelectedCells;
+- (void)refreshContentDisplay;
 
 @end

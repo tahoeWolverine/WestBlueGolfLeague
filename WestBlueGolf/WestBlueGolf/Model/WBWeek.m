@@ -18,6 +18,7 @@
 					 forCourse:(WBCourse *)course
 				   seasonIndex:(NSInteger)seasonIndex
                        pairing:(NSInteger)pairing
+                     isPlayoff:(BOOL)isPlayoff
 					   badData:(BOOL)badData
 					 inContext:(NSManagedObjectContext *)moc {
 	WBWeek *newWeek = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:moc];
@@ -26,6 +27,7 @@
 	newWeek.idValue = weekId;
 	newWeek.seasonIndexValue = seasonIndex;
     newWeek.pairingValue = pairing;
+    newWeek.isPlayoffValue = isPlayoff;
 	newWeek.isBadDataValue = badData;
 	
 	[course addWeeksObject:newWeek];

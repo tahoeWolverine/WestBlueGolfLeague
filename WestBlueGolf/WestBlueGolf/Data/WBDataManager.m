@@ -71,9 +71,9 @@
 	WBLeaderBoardManager *boardManager = [[WBLeaderBoardManager alloc] init];
     [boardManager createLeaderBoardsForYear:year withJson:responseObject];
     
-    if (inputManager.buildPlayoffMatchups) {
+    /*if (inputManager.buildPlayoffMatchups) {
         [inputManager createPlayoffSpeculationsForYear:year];
-    }
+    }*/
 
     //[WBCoreDataManager saveContext:moc];
     

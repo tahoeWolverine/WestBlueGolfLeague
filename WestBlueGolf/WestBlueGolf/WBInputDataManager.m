@@ -28,6 +28,8 @@
 #define wbJsonKeyWeekIndex @"seasonIndex"
 #define wbJsonKeyWeekBadData @"badData"
 #define wbJsonKeyWeekCourseId @"courseId"
+#define wbJsonKeyWeekPairingId @"pairingId"
+#define wbJsonKeyWeekIsPlayoff @"isPlayoff"
 
 #define wbJsonKeyTeams @"teamsForYear"
 #define wbJsonKeyTeamId @"id"
@@ -54,6 +56,13 @@
 #define wbJsonKeyTeamMatchupWeekId @"wId"
 #define wbJsonKeyTeamMatchupComplete @"mc"
 #define wbJsonKeyTeamMatchupTeams @"teamIds"
+#define wbJsonKeyTeamMatchupPlayoffType @"playoffType"
+
+#define wbJsonValueTeamMatchupPlayoffTypeNone @""
+#define wbJsonValueTeamMatchupPlayoffTypeChampionship @"championship"
+#define wbJsonValueTeamMatchupPlayoffTypeThirdPlace @"thirdplace"
+#define wbJsonValueTeamMatchupPlayoffTypeConsolation @"consolation"
+#define wbJsonValueTeamMatchupPlayoffTypeLexisNexis @"lexisnexis"
 
 #define wbJsonKeyMatches @"matches"
 #define wbJsonKeyMatchId @"id"
@@ -103,8 +112,8 @@
 	NSArray *weekArray = [json objectForKey:wbJsonKeyWeeks];
 	WBCourse *course = nil;
 	NSString *weekDate = nil;
-	NSInteger weekId = 0, weekIndex = 0, pairing = 0;
-	BOOL badData = NO;
+	NSInteger weekId = 0, weekIndex = 0, /*pairing = 0,*/ pairingId;
+	BOOL badData = NO, isPlayoff = NO;
 	NSDate *date = nil;
 	for (NSDictionary *elt in weekArray) {
 		weekId = [[elt objectForKey:wbJsonKeyWeekId] integerValue];
@@ -114,9 +123,12 @@
 		date = [self dateForString:weekDate];
 		courseId = [[elt objectForKey:wbJsonKeyWeekCourseId] integerValue];
 		course = [WBCourse courseWithId:courseId];
-        
-        pairing = weekIndex % 3 + 1;
-        if (pairing == 1) {
+		pairingId = [[elt objectForKey:wbJsonKeyWeekPairingId] integerValue];
+		isPlayoff = [[elt objectForKey:wbJsonKeyWeekIsPlayoff] boolValue];
+
+        /*pairing = weekIndex % 3 + 1;
+         Hard-coded pairing logic
+         if (pairing == 1) {
             pairing = 4;
         }
         
@@ -132,9 +144,9 @@
             if (pairing == 1) {
                 pairing = 4;
             }
-        }
+        }*/
         
-		[WBWeek createWeekWithDate:date inYear:year weekId:weekId forCourse:course seasonIndex:weekIndex pairing:pairing badData:badData inContext:moc];
+		[WBWeek createWeekWithDate:date inYear:year weekId:weekId forCourse:course seasonIndex:weekIndex pairing:pairingId + 1 isPlayoff:isPlayoff badData:badData inContext:moc];
 	}
 	
 	[WBCoreDataManager saveContext:moc];
@@ -200,14 +212,19 @@
     WBPlayer *player1 = nil, *player2 = nil;
     WBWeek *week = nil;
     WBMatch *match = nil;
+    WBPlayoffType playoffType = WBPlayoffTypeNone;
     NSInteger team1Id = -1, team2Id = -1, matchupId = 0, player1Id = 0, player2Id = 0, score = 0, priorHandicap = 0, points = 0;
     NSArray *matchesJson = nil, *resultsJson = nil, *teamsJson = nil;
     NSDictionary *matchJson = nil, *result1Json = nil, *result2Json = nil;
+    NSString *playoffTypeStr = @"";
     BOOL matchComplete = NO;
     for (NSDictionary *elt in teamMatchupArray) {
         weekId = [[elt objectForKey:wbJsonKeyTeamMatchupWeekId] integerValue];
 		matchupId = [[elt objectForKey:wbJsonKeyTeamMatchupId] integerValue];
 		matchComplete = [[elt objectForKey:wbJsonKeyTeamMatchupComplete] boolValue];
+		playoffTypeStr = [elt objectForKey:wbJsonKeyTeamMatchupPlayoffType];
+        playoffType = [self playoffTypeForString:playoffTypeStr];
+        
 		if (!matchComplete) {
 			DLog(@"Incomplete Match in received data");
 			//continue;
@@ -241,7 +258,7 @@
             }
         }
         
-        matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchupId:matchupId matchComplete:matchComplete moc:moc];
+        matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchupId:matchupId matchComplete:matchComplete playoffType:playoffType moc:moc];
         
         // Matches
         matchesJson = [elt objectForKey:wbJsonKeyMatches];
@@ -281,7 +298,7 @@
         }
     }
 	
-	[self assignPlayoffSpotsForYear:year];
+	//[self assignPlayoffSpotsForYear:year];
 
 	//[WBCoreDataManager saveContext:moc];
 	
@@ -300,6 +317,24 @@
 	}
 	
 	//[WBCoreDataManager saveContext:moc];
+}
+
+- (WBPlayoffType)playoffTypeForString:(NSString *)playoffTypeStr {
+    if (!playoffTypeStr || ![playoffTypeStr isKindOfClass:[NSString class]]) {
+        return WBPlayoffTypeNone;
+    }
+    
+    if ([playoffTypeStr isEqualToString:wbJsonValueTeamMatchupPlayoffTypeChampionship]) {
+        return WBPlayoffTypeChampionship;
+    } else if ([playoffTypeStr isEqualToString:wbJsonValueTeamMatchupPlayoffTypeThirdPlace]) {
+        return WBPlayoffTypeBronze;
+    } else if ([playoffTypeStr isEqualToString:wbJsonValueTeamMatchupPlayoffTypeConsolation]) {
+        return WBPlayoffTypeConsolation;
+    } else if ([playoffTypeStr isEqualToString:wbJsonValueTeamMatchupPlayoffTypeLexisNexis]) {
+        return WBPlayoffTypeLexis;
+    } else {
+        return WBPlayoffTypeNone;
+    }
 }
 
 - (void)clearRefreshableDataForYearValue:(NSInteger)yearValue {
@@ -321,7 +356,9 @@
     [WBCoreDataManager saveMainContext];
 }
 
-- (void)createPlayoffSpeculationsForYear:(WBYear *)year {
+/* Old code for playoff prediction
+ 
+ - (void)createPlayoffSpeculationsForYear:(WBYear *)year {
     WBTeamMatchup *matchup = nil;
     WBBoardData *team1Data = nil, *team2Data = nil;
     NSInteger matchupId = rand();
@@ -405,9 +442,11 @@
     }
     
     [self assignPlayoffSpotsForYear:year];
-}
+}*/
 
-- (void)assignPlayoffSpotsForYear:(WBYear *)year {
+/* Old code for playoff sectioning
+ 
+ - (void)assignPlayoffSpotsForYear:(WBYear *)year {
     WBWeek *firstPlayoffWeek = [WBWeek firstPlayoffWeekInYear:year];
 	NSArray *firstWeekMatchups = [firstPlayoffWeek.teamMatchups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
     if (firstWeekMatchups && firstWeekMatchups.count == 5) {
@@ -455,7 +494,7 @@
     } else {
         self.buildPlayoffMatchups = YES;
     }
-}
+}*/
 
 #pragma mark - Helper functions
 
