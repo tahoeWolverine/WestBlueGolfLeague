@@ -1,24 +1,22 @@
 ﻿
 <div class="player-list">
     <div class="player-list-input row">
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-12">
             <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="&#xF002; Enter player name" ng-model="pList.nameSearchText">
             <span class="clear-icon" ng-show="pList.nameSearchText" ng-click="pList.nameSearchText = ''; pList.focusMe()"><i class="fa fa-times"></i></span>
         </div>
     </div>
     <div class="row player-list-players" scroll-to-top>
         <div ng-repeat="player in filteredPlayerData = ( pList.playerData | orderBy:'name' | filter: {'name': pList.nameSearchText} )" class="col-sm-4 player-list-item">
-            <div class="row">
-                <a ui-sref="playerDetails({ id: player.id })" tabindex="{{$index + 1}}">
-                    <div class="player-list-item-wrapper">
-                        <div class="col-sm-2 col-xs-2 player-list-item-image"><i class="fa fa-user"></i></div>
-                        <div class="col-sm-6 col-xs-10 player-list-item-name">
-                            <div class="player-list-item-playername">{{player.name}}</div>
-                            <div class="player-list-item-teamname">{{player.teamName}}</div>
-                        </div>
+            <a ui-sref="playerDetails.playerProfile({ id: player.id })" tabindex="{{$index + 1}}">
+                <div class="player-list-item-wrapper">
+                    <div class="player-list-item-image"><i class="fa fa-user"></i></div>
+                    <div class="player-list-item-name">
+                        <div class="player-list-item-playername">{{player.name}}</div>
+                        <div class="player-list-item-teamname">{{player.teamName}}</div>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
         <div ng-show="filteredPlayerData.length == 0" class="col-sm-12 player-list-no-players">
             <h4>No players found for &#39;{{pList.nameSearchText}}&#39;</h4>

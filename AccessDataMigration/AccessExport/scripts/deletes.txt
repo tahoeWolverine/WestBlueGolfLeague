@@ -9,7 +9,6 @@ DELETE FROM playerYearData;
 DELETE FROM result;
 DELETE FROM `match`;
 DELETE FROM teamMatchup;
-DELETE FROM pairing;
 DELETE FROM startTime;
 DELETE FROM week;
 DELETE FROM year;

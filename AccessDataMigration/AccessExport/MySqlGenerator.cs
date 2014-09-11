@@ -299,7 +299,7 @@ namespace AccessExport
             return
                 new FluentMySqlInsert("teamMatchup")
                 .WithColumns("id", "playoffType", "weekId", "matchComplete", "matchId")
-                .WithValues(tm.Id, string.Empty, tm.Week.Id, tm.MatchComplete, tm.MatchId)
+                .WithValues(tm.Id, tm.PlayoffType, tm.Week.Id, tm.MatchComplete, tm.MatchId)
                 .ToString();
         }
 
@@ -352,8 +352,8 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("week")
-                .WithColumns("id", "date", "courseId", "yearId", "isBadData", "seasonIndex")
-                .WithValues(week.Id, week.Date, week.Course.Id, week.Year.Id, week.IsBadData, week.SeasonIndex)
+                .WithColumns("id", "date", "courseId", "yearId", "isBadData", "seasonIndex", "isPlayoff", "pairingId")
+                .WithValues(week.Id, week.Date, week.Course.Id, week.Year.Id, week.IsBadData, week.SeasonIndex, week.IsPlayoff, week.PairingId)
                 .ToString();
         }
     }

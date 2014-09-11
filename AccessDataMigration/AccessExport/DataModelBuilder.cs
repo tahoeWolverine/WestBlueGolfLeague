@@ -115,6 +115,7 @@ namespace AccessExport
                     // Weeks
                     cmd.CommandText = "SELECT * FROM WeekTable";
                     Dictionary<int, Week> weekTempIdToWeek = new Dictionary<int, Week>();
+                    Dictionary<int, int> weekIdToTeamMatchupIndex = new Dictionary<int, int>();
 
                     using (var weekReader = cmd.ExecuteReader())
                     {
@@ -148,11 +149,42 @@ namespace AccessExport
 
                             if (week.SeasonIndex != 0)
                             {
+                                week.PairingId = ((week.SeasonIndex - 1) % 3) + 1;
                                 allWeeks.Add(week);
                             }
+                            else
+                            {
+                                week.PairingId = 1;
+                            }
+
+                            //
+                            // TODO: Manually set some pairing indexes for 2014.
+                            //
 
                             weekTempIdToWeek[week.SeasonIndex] = week;
+                            weekIdToTeamMatchupIndex[week.SeasonIndex] = 0;
                         }
+                    }
+
+                    if (year == 2014)
+                    {
+                        weekTempIdToWeek[10].PairingId = 3;
+                        weekTempIdToWeek[11].PairingId = 1;
+                        weekTempIdToWeek[12].PairingId = 2;
+                        weekTempIdToWeek[13].PairingId = 3;
+                        weekTempIdToWeek[14].PairingId = 1;
+                        weekTempIdToWeek[15].PairingId = 2;
+                        weekTempIdToWeek[16].PairingId = 3;
+                        weekTempIdToWeek[17].PairingId = 3;
+                        weekTempIdToWeek[18].PairingId = 1;
+                    }
+
+                    // Now that we are done processing weeks, assign playoff values to each one.
+                    var lastTwoWeeksOfYear = weekTempIdToWeek.Values.OrderByDescending(x => x.SeasonIndex).Take(2);
+
+                    foreach (var week in lastTwoWeeksOfYear)
+                    {
+                        week.IsPlayoff = true;
                     }
 
                     // Teams
@@ -231,7 +263,7 @@ namespace AccessExport
                                 setOfPlayers.Add(playerName);
                             }
 
-                           
+
                             // TODO: Needs to be something else
                             //player.Team = teamIdToTeam[playersTeam];
 
@@ -239,13 +271,14 @@ namespace AccessExport
                             player.CurrentHandicap = startingHandicap;
 
                             // finishing handicap will be updated later.
-                            YearData yearData = new YearData 
-                                                    { 
-                                                        Player = player, 
-                                                        Rookie = isRookie, 
-                                                        StartingHandicap = startingHandicap, 
-                                                        FinishingHandicap = startingHandicap, 
-                                                        Year = yearValueToYear[year], Id = yearDataIndex++, 
+                            YearData yearData = new YearData
+                                                    {
+                                                        Player = player,
+                                                        Rookie = isRookie,
+                                                        StartingHandicap = startingHandicap,
+                                                        FinishingHandicap = startingHandicap,
+                                                        Year = yearValueToYear[year],
+                                                        Id = yearDataIndex++,
                                                         Team = teamIdToTeam[playersTeam],
                                                         Week0Score = week0Score == -1 ? 0 : week0Score // only years > 2009 will have a valid value here.
                                                     };
@@ -254,6 +287,8 @@ namespace AccessExport
                             player.AddYearData(yearData);
                         }
                     }
+
+                    var playoffWeeksInOrder = weekTempIdToWeek.Values.Where(x => x.IsPlayoff).OrderBy(x => x.SeasonIndex).ToList();
 
                     // Matches
                     cmd.CommandText = "SELECT * FROM MatchTable";
@@ -282,13 +317,29 @@ namespace AccessExport
 
                             // TODO/NOTE: Treating null as "false".  Change if it should be treated as true.
                             bool matchComplete = matchReader[0].GetType() == DBNull.Value.GetType() || string.Equals(matchReader.GetString(0), "N", StringComparison.OrdinalIgnoreCase) ? false : true;
-                                                        
+
                             if (!matchComplete && team1Id == 0 && team2Id == 0)
                             {
                                 continue;
                             }
 
-                            var teamMatchup = new TeamMatchup { Week = weekTempIdToWeek[weekId], Id = teamMatchupIndex++, MatchComplete = matchComplete, Team1 = teamIdToTeam[team1Id], Team2 = teamIdToTeam[team2Id], MatchId = matchId };
+                            var weekForMatchup = weekTempIdToWeek[weekId];
+                            var matchOrderInWeek = weekIdToTeamMatchupIndex[weekId];
+
+                            var teamMatchup = new TeamMatchup
+                            {
+                                MatchOrderInWeek = matchOrderInWeek,
+                                Week = weekForMatchup,
+                                Id = teamMatchupIndex++,
+                                MatchComplete = matchComplete,
+                                Team1 = teamIdToTeam[team1Id],
+                                Team2 = teamIdToTeam[team2Id],
+                                MatchId = matchId,
+                                PlayoffType = weekForMatchup.IsPlayoff ? GetPlayoffType(playoffWeeksInOrder.IndexOf(weekForMatchup), matchOrderInWeek) : null
+                            };
+
+                            weekIdToTeamMatchupIndex[weekId] = matchOrderInWeek + 1;
+
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                         }
                     }
@@ -489,6 +540,34 @@ namespace AccessExport
             return dm;
         }
 
+        private string GetPlayoffType(int weekPlayoffIndex, int matchOrderInWeek)
+        {
+            if (weekPlayoffIndex == 0)
+            {
+                if (matchOrderInWeek <= 1)
+                {
+                    return "championship";
+                }
+                else if (matchOrderInWeek <= 3)
+                {
+                    return "consolation";
+                }
+                
+                return "lexisnexis";
+            }
+
+            switch (matchOrderInWeek) {
+                case 0:
+                    return "championship";
+                case 1:
+                    return "thirdplace";
+                case 2:
+                    return "consolation";
+                default:
+                    return "lexisnexis";
+            }
+        }
+
         private static void ProcessHandicaps(DataModel dataModel)
         {
             var lastYear = dataModel.Years.Select(y => y.Value).Max();
@@ -592,7 +671,7 @@ namespace AccessExport
                 handicapResult = HandicapsForResults(subResults, week0Score, isRookie);
 
                 // bleh this could be cleaned up.
-                if (i == 0) 
+                if (i == 0)
                 {
                     resultsForPlayerForYear[i].PriorHandicap = week0Score - 36;
                 }
@@ -601,7 +680,7 @@ namespace AccessExport
                 {
                     firstHandicapResult = handicapResult;
                 }
-                else 
+                else
                 {
                     resultsForPlayerForYear[i + 1].PriorHandicap = handicapResult.Handicap;
                 }
@@ -776,7 +855,7 @@ namespace AccessExport
 
                 PlayerBoard(dataModel, "Best Net Score", "player_net_best_score", allPlayersForYear, year, true, (p, dm) => p.LowNetForYear(year), NetDifference);
 
-                PlayerBoard(dataModel, "Handicap", "player_handicap", allPlayersForYear, year, true, (p, dm) => p.FinishingHandicapInYear(year));
+                PlayerBoard(dataModel, "Handicap", "player_handicap", allPlayersForYear, year, true, (p, dm) => p.FinishingHandicapInYear(year), NetDifference);
 
                 PlayerBoard(dataModel, "Average Points", "player_avg_points", allPlayersForYear, year, false, (p, dm) => p.AveragePointsInYear(year));
 

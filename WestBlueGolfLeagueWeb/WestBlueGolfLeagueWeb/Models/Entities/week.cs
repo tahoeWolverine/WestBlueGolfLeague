@@ -27,7 +27,13 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int seasonIndex { get; set; }
 
+        public bool isPlayoff { get; set; }
+
+        public int pairingId { get; set; }
+
         public virtual course course { get; set; }
+
+        public virtual pairing pairing { get; set; }
 
         public virtual ICollection<teammatchup> teammatchups { get; set; }
 

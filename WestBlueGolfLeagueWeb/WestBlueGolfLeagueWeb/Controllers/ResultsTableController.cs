@@ -37,7 +37,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                             .Include(y => y.player)
                             .Include("player.results")
                             .Include("player.results.year")
-                            .Include("player.results.matchup.teammatchup.week")
+                            .Include("player.results.match.teammatchup.week")
                             .Where(y => y.year.value == DateTime.Now.Year && y.teamId == id)
                             .ToList();
 
@@ -62,7 +62,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                                                             YearData = y,
                                                             ResultsForYear = y.player.results
                                                                             .Where(r => r.year.value == DateTime.Now.Year)
-                                                                            .OrderBy(r => r.matchup.teammatchup.week.seasonIndex)
+                                                                            .OrderBy(r => r.match.teammatchup.week.seasonIndex)
                                                         })
             });
         }

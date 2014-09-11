@@ -14,7 +14,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             leaderboarddatas = new HashSet<leaderboarddata>();
             playeryeardatas = new HashSet<playeryeardata>();
             results = new HashSet<result>();
-            matchups = new HashSet<match>();
+            matches = new HashSet<match>();
         }
 
         public int id { get; set; }
@@ -37,6 +37,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public virtual ICollection<result> results { get; set; }
 
-        public virtual ICollection<match> matchups { get; set; }
+        public virtual ICollection<match> matches { get; set; }
     }
 }

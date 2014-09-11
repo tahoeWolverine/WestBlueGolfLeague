@@ -52,7 +52,7 @@
 
                     @foreach (var w in this.Model.WeeksForYear)
                     {
-                        var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.matchup.teammatchup.weekId == w.id).FirstOrDefault();
+                        var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                         if (resultForWeekForPlayer == null)
                         {
                             <td></td>

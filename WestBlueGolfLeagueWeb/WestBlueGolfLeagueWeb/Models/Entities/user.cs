@@ -28,5 +28,9 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         [StringLength(120)]
         public string email { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        public string role { get; set; }
     }
 }

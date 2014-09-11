@@ -45,10 +45,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var results =
                 this.Db
                     .results
-                    .Include(x => x.matchup)
-                    .Include(x => x.matchup.teammatchup.week)
-                    .Include(x => x.matchup.results)
-                    .Include(x => x.matchup.teammatchup.teams)
+                    .Include(x => x.match)
+                    .Include(x => x.match.teammatchup.week)
+                    .Include(x => x.match.results)
+                    .Include(x => x.match.teammatchup.teams)
                     .Include(x => x.player)
                     .Where(
                         x =>

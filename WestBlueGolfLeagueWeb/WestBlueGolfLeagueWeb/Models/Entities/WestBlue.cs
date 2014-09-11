@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual DbSet<datamigration> datamigrations { get; set; }
         public virtual DbSet<leaderboard> leaderboards { get; set; }
         public virtual DbSet<leaderboarddata> leaderboarddatas { get; set; }
-        public virtual DbSet<match> matchups { get; set; }
+        public virtual DbSet<match> matches { get; set; }
         public virtual DbSet<pairing> pairings { get; set; }
         public virtual DbSet<player> players { get; set; }
         public virtual DbSet<playeryeardata> playeryeardatas { get; set; }
@@ -78,19 +78,28 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .Property(e => e.detail)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<leaderboarddata>()
+                .Property(e => e.formattedValue)
+                .IsUnicode(false);
+
             modelBuilder.Entity<match>()
                 .HasMany(e => e.results)
-                .WithRequired(e => e.matchup)
+                .WithRequired(e => e.match)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<match>()
                 .HasMany(e => e.players)
-                .WithMany(e => e.matchups)
-                .Map(m => m.ToTable("matchtoplayer", "westbluegolf").MapLeftKey("matchId").MapRightKey("playerId"));
+                .WithMany(e => e.matches)
+                .Map(m => m.ToTable("matchtoplayer").MapLeftKey("matchId").MapRightKey("playerId"));
 
             modelBuilder.Entity<pairing>()
                 .Property(e => e.pairingText)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<pairing>()
+                .HasMany(e => e.weeks)
+                .WithRequired(e => e.pairing)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<player>()
                 .Property(e => e.name)
@@ -134,7 +143,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .IsUnicode(false);
 
             modelBuilder.Entity<teammatchup>()
-                .HasMany(e => e.matchups)
+                .Property(e => e.matchupType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<teammatchup>()
+                .HasMany(e => e.matches)
                 .WithRequired(e => e.teammatchup)
                 .WillCascadeOnDelete(false);
 
@@ -152,6 +165,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
             modelBuilder.Entity<user>()
                 .Property(e => e.email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
+                .Property(e => e.role)
                 .IsUnicode(false);
 
             modelBuilder.Entity<week>()

@@ -28,6 +28,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         [StringLength(100)]
         public string detail { get; set; }
 
+        [Required]
+        [StringLength(45)]
+        public string formattedValue { get; set; }
+
         public virtual leaderboard leaderboard { get; set; }
 
         public virtual year year { get; set; }
@@ -35,8 +39,5 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual player player { get; set; }
 
         public virtual team team { get; set; }
-
-        [StringLength(45)]
-        public string formattedValue { get; set; }
     }
 }
