@@ -109,16 +109,28 @@ input[type="checkbox"].input-validation-error {
 	margin-left: 0px;
 }
 
-.player-details-player-list {
-    padding-top: 50px;
-    margin-left: -280px;
-    width: 280px;
-    background: white;
-    top: 0;
+.details-layout.toggled .player-details-player-list-parent {
+	width: 0px;
+}
+
+.player-details-player-list-parent {
+	overflow: hidden;
+}
+
+.player-details-player-list-parent {
+	width: 280px;
+	top: 0;
     bottom: 0;
     position: fixed;
-    overflow-y: scroll;
-    z-index: 5;
+	overflow-y: scroll;
+	z-index: 5;
+    margin-left: -280px;
+	padding: 50px 15px 0px 15px;
+}
+
+.player-details-player-list {
+    width: 250px;
+    background: white;
 }
 
 .player-list-item {
