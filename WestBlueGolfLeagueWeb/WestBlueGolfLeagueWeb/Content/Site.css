@@ -94,23 +94,35 @@ input[type="checkbox"].input-validation-error {
 .player-details-profile {
     z-index: 10;
 	position: relative;
+    margin-left: 280px;
 	background-color: white;
+    transition: margin-left .3s ease;
+}
+
+.details-layout.toggled .player-details-profile {
+    margin-left: 0px;
 }
 
 .details-layout {
-    padding-left: 280px;
+    /*padding-left: 280px;*/
 }
 
 .details-layout.toggled {
 	padding-left: 0;
 }
 
+.player-details-player-list-parent, .player-details-player-list {
+    transition: all .3s ease;
+    /*cubic-bezier(.11,-0.98,.97,-0.47)*/
+}
+
 .details-layout.toggled .player-details-player-list {
-	margin-left: 0px;
+	
 }
 
 .details-layout.toggled .player-details-player-list-parent {
 	width: 0px;
+    margin-left: 0px;
 }
 
 .player-details-player-list-parent {
@@ -122,15 +134,19 @@ input[type="checkbox"].input-validation-error {
 	top: 0;
     bottom: 0;
     position: fixed;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	z-index: 5;
-    margin-left: -280px;
-	padding: 50px 15px 0px 15px;
+    /*margin-left: -280px;*/
+	padding: 50px 0px 0px 15px;
 }
 
 .player-details-player-list {
-    width: 250px;
+    width: 265px;
     background: white;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    overflow-y: scroll;
 }
 
 .player-list-item {
