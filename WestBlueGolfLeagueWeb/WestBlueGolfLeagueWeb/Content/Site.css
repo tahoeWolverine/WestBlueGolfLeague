@@ -175,6 +175,11 @@ input[type="checkbox"].input-validation-error {
     max-width: 400px;
 }
 
+/* Turn off IE's "clear field" button. */
+.player-search::-ms-clear {
+    display: none;
+}
+
 
 .player-list-input > div {
     margin-top: 14px;
