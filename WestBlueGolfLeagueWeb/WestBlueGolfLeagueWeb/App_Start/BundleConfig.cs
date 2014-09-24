@@ -9,6 +9,15 @@ namespace WestBlueGolfLeagueWeb
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                        "~/Scripts/lib/jquery/jquery-{version}.js",
+                        "~/Scripts/lib/bootstrap/bootstrap.js",
+                        "~/Scripts/respond.js",
+                        "~/Scripts/lib/angular/angular-{version}.js",
+                        "~/Scripts/lib/angular/angular-*",
+                        "~/Scripts/lib/angular-ui-router-{version}.js",
+                        "~/Scripts/lib/moment/moment.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js"));
 

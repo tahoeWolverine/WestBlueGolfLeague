@@ -44,5 +44,20 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         {
             return r.points < 12;
         }
+
+        public static result OpponentResult(this result r)
+        {
+            return r.match.results.First(x => x.id != r.id);
+        }
+
+        public static int ScoreDifference(this result r)
+        {
+            return r.score - r.match.teammatchup.week.course.par;
+        }
+
+        public static int NetScoreDifference(this result r)
+        {
+            return r.ScoreDifference() - r.priorHandicap;
+        }
     }
 }

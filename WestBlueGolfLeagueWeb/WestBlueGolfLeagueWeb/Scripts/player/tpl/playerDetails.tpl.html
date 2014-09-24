@@ -20,6 +20,9 @@
         </div>
     </div>
 </div>
-<div ng-repeat="item in playerDetails.profileData.resultsForYear">
-    <div>{{item.opponentName}}</div>
+<div ng-repeat="item in playerDetails.profileData.resultsForYear | orderBy:'weekIndex':true" class="row">
+    <div class="col-md-6">{{item.weekDate | date:'M/d'}} vs {{item.opponentName}}</div>
+    <div class="col-md-2">{{ item.wasWin ? 'W' : 'L' }}</div>
+    <div class="col-md-2">{{ item.score }}-{{item.opponentScore}}</div>
+    <div class="col-md-4"></div>
 </div>

@@ -10,11 +10,20 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
     {
         public PlayerProfileResult(player p, result r)
         {
-            this.PriorHandicapForOpponent = r.match.results.First(x => x.playerId != p.id).priorHandicap;
-            this.PriorHandicapForPlayer = r.match.results.First(x => x.playerId == p.id).priorHandicap;
+            var opponentResult = r.OpponentResult();
+
+            this.PriorHandicapForOpponent = opponentResult.priorHandicap;
+            this.PriorHandicapForPlayer = r.priorHandicap;
             this.WeekIndex = r.match.teammatchup.week.seasonIndex;
-            this.OpponentName = r.match.results.First(x => x.playerId != p.id).player.name;
+            this.OpponentName = opponentResult.player.name;
             this.WeekDate = r.match.teammatchup.week.date;
+            this.Points = r.points;
+            this.OpponentPoints = opponentResult.points;
+            this.WasWin = r.WasWin();
+            this.ScoreDifference = r.ScoreDifference();
+            this.OpponentScoreDifference = opponentResult.ScoreDifference();
+            this.Score = r.score;
+            this.OpponentScore = opponentResult.score;
         }
 
         public string OpponentName { get; set; }
@@ -22,7 +31,20 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public int PriorHandicapForPlayer { get; set; }
         public int PriorHandicapForOpponent { get; set; }
 
-
         public DateTime WeekDate { get; set; }
+
+        public int OpponentScoreDifference { get; set; }
+
+        public int ScoreDifference { get; set; }
+
+        public bool WasWin { get; set; }
+
+        public int OpponentPoints { get; set; }
+
+        public int Points { get; set; }
+
+        public int OpponentScore { get; set; }
+
+        public int Score { get; set; }
     }
 }
