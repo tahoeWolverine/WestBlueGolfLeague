@@ -5,11 +5,10 @@
 		</div>
 	</div>
     <!-- TODO: Player with profile ID of 37 gets a 500 when calling the profile endpoint. -->
-    <div class="container-fluid player-details-profile">
+    <div class="player-details-profile">
         <div class="row">
             <div class="col-md-12">
-				<button ng-click="toggled='toggled'">Close</button>
-				<button ng-click="toggled=''">Open</button>
+                <a ng-click="toggled=toggled ? '' : 'toggled'"><i class="fa fa-angle-double-left toggle-link"></i></a>
                 <div ui-view="playerDetails"></div>
             </div>
         </div>

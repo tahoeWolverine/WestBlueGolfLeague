@@ -20,9 +20,11 @@
         </div>
     </div>
 </div>
-<div ng-repeat="item in playerDetails.profileData.resultsForYear | orderBy:'weekIndex':true" class="row">
-    <div class="col-md-6">{{item.weekDate | date:'M/d'}} vs {{item.opponentName}}</div>
-    <div class="col-md-2">{{ item.wasWin ? 'W' : 'L' }}</div>
-    <div class="col-md-2">{{ item.score }}-{{item.opponentScore}}</div>
-    <div class="col-md-4"></div>
+
+<h3>Results</h3>
+<div ng-repeat="item in playerDetails.profileData.resultsForYear | orderBy:'weekIndex':true" class="row player-result">
+    <div class="col-md-3 result-date">{{item.weekDate | date:'MMM d'}}</div>
+    <div class="col-md-3">{{item.opponentName}}</div>
+    <div class="col-md-2 result-win-loss">{{ item.wasWin ? 'Win' : 'Loss' }}</div>
+    <div class="col-md-2">{{ item.score }} - {{item.opponentScore}}</div>
 </div>
