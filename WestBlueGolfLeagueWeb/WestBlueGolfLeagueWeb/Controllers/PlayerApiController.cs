@@ -26,7 +26,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 return NotFound();
             }
 
-            int year = DateTimeOffset.UtcNow.Year;
+            int year = 2014; // DateTimeOffset.UtcNow.Year;
 
             // get leaderboards for player.
             var boardData = this.Db

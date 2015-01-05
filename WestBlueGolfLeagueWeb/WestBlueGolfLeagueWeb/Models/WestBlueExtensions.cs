@@ -8,13 +8,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 {
     public static class WestBlueExtensions
     {
-        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year = 0, bool includeInvalidPlayers = false)
+        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidPlayers = false)
         {
-            if (year == 0)
-            {
-                year = DateTimeOffset.Now.Year;
-            }
-
             return westBlue.playeryeardatas
                         .Include(p => p.player)
                         .Include(p => p.team)

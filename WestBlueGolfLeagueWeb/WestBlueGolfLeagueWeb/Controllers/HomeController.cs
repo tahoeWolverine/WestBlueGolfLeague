@@ -12,7 +12,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
     {
         public ActionResult Index()
         {
-            int selectedYear = DateTimeOffset.Now.Year;
+            int selectedYear = 2014;
             
             var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
 
