@@ -1,5 +1,5 @@
 ﻿angular
-    .module("app", ["ngRoute"])
+    .module("app", [])
     .directive('focusMe', function () {
         return {
             link: function (scope, element, attrs) {

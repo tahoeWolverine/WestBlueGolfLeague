@@ -28,6 +28,8 @@
                     <li>@Html.ActionLink("Rules & Information", "RulesAndInformation", "Information")</li>
                     <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable")</li>
                 </ul>
+                @{Html.RenderAction("ToggleLogin", "Account");}
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
