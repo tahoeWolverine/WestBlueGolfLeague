@@ -43,6 +43,7 @@ namespace WestBlueGolfLeagueWeb
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/main/*.js")
                 .Include("~/Scripts/player/playerList.js", "~/Scripts/player/*.js")
+                .Include("~/Scripts/admin/manageUsers.js", "~/Scripts/admin/*.js")
                 .Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
 
             bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));

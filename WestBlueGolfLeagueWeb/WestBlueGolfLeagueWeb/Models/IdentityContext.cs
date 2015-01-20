@@ -23,8 +23,6 @@ namespace WestBlueGolfLeagueWeb.Models
         }
     }
 
-
-
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class IdentityContext : IdentityDbContext<ApplicationUser>
     {
@@ -78,8 +76,6 @@ namespace WestBlueGolfLeagueWeb.Models
                 .IsRequired();
             #endregion
         }
-
-
 
         public static IdentityContext Create()
         {

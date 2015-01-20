@@ -190,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="App_Start\AngularJsHtmlBundle.cs" />
     <Compile Include="App_Start\AngularJsHtmlCombine.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
@@ -209,13 +210,15 @@
     <Compile Include="Controllers\ResultsTableController.cs" />
     <Compile Include="Controllers\WestBlueDbApiController.cs" />
     <Compile Include="Controllers\WestBlueDbMvcController.cs" />
-    <Compile Include="Controllers\YearAdminController.cs" />
+    <Compile Include="Controllers\Admin\YearAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AngularHelpers.cs" />
     <Compile Include="Helpers\JsonHelpers.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Admin\ManageController.cs" />
+    <Compile Include="Models\Admin\AdminRole.cs" />
+    <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\Entities\course.cs" />
     <Compile Include="Models\Entities\datamigration.cs" />
@@ -279,6 +282,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\admin\manageUsers.js" />
+    <Content Include="Scripts\admin\tpl\manageUsersIndex.tpl.html" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
     <Content Include="Scripts\lib\angular\angular-1.2.20.js" />
@@ -383,10 +388,11 @@
     <Content Include="Views\Shared\_LoggedOutPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\YearAdmin\Index.cshtml" />
+    <Content Include="Views\Admin\ManageUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PlayerApi\" />
+    <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

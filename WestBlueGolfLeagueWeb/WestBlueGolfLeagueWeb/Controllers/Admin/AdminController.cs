@@ -14,5 +14,10 @@ namespace WestBlueGolfLeagueWeb.Admin
         {
             return View();
         }
+
+        public ActionResult ManageUsers()
+        {
+            return View();
+        }
     }
 }
