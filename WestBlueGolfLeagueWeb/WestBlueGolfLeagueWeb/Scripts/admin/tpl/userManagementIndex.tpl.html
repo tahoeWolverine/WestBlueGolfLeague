@@ -1,0 +1,30 @@
+﻿<div class="user-list">
+    <!-- TODO: can't delete yourself, maybe can't demote admins?? Can't change your own role. -->
+
+    <div>
+        <button type="button" class="btn btn-primary">Add User</button>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tr ng-repeat="x in index.users" class="user-row">
+            <td class="user-name">
+                {{x.userName}}
+            </td>
+            <td>
+                <select class="form-control" ng-disabled="x.isSelf" ng-model="x.roleName" ng-options="r.name as r.name for r in index.roles" ng-change="index.updateRole(x)"></select>
+            </td>
+            <td>
+                <button ng-disabled="x.isSelf" type="button" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </table>
+   
+    
+</div>

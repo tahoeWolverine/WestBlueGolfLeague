@@ -288,6 +288,24 @@ player-list-item-name {
     font-weight: bold;
 }
 
+/* User management stuff */
+.user-row div {
+    display: inline-block;
+}
+
+.user-row select {
+    display: inline-block;
+}
+
+table tr.user-row > td {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.user-row .user-name {
+    font-weight: bold;
+}
+
 @media (max-width: 992px) {
     .header-link-small {
         display: inline;
