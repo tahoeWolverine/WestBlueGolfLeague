@@ -8,9 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
 using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
+using System.Web.Http;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
