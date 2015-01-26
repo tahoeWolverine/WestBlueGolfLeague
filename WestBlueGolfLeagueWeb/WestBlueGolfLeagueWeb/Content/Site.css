@@ -300,6 +300,7 @@ player-list-item-name {
 table tr.user-row > td {
     padding-top: 14px;
     padding-bottom: 14px;
+    vertical-align: middle;
 }
 
 .user-row .user-name {

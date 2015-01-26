@@ -1,5 +1,5 @@
 ﻿angular
-    .module('userManagement', ['app', 'ui.router', 'ngResource'])
+    .module('userManagement', ['app', 'ui.router', 'ngResource', 'ui.bootstrap'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
         function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
@@ -18,7 +18,7 @@
 
             $locationProvider.html5Mode(true);
         }])
-    .controller('Index', ['user', function (user) {
+    .controller('Index', ['user', '$modal', function (user, $modal) {
 
         var self = this;
 
@@ -30,4 +30,16 @@
         this.updateRole = function (userToUpdate) {
             user.updateUser(userToUpdate);
         };
+
+        this.addUser = function () {
+            var addUserModal = $modal.open({
+                templateUrl: '/Scripts/admin/tpl/addUser.tpl.html',
+                controller: 'AddUser as addUser'
+            });
+        };
+    }])
+    .controller('AddUser', ['$modalInstance', function ($modalInstance) {
+
+
+
     }]);

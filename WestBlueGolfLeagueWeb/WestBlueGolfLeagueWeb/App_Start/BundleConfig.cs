@@ -16,6 +16,7 @@ namespace WestBlueGolfLeagueWeb
                         "~/Scripts/lib/angular/angular-{version}.js",
                         "~/Scripts/lib/angular/angular-*",
                         "~/Scripts/lib/angular-ui-router-{version}.js",
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js",
                         "~/Scripts/lib/moment/moment.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -37,7 +38,8 @@ namespace WestBlueGolfLeagueWeb
                     .Include(
                         "~/Scripts/lib/angular/angular-{version}.js", 
                         "~/Scripts/lib/angular/angular-*",
-                        "~/Scripts/lib/angular-ui-router-{version}.js"
+                        "~/Scripts/lib/angular-ui-router-{version}.js",
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/app")
