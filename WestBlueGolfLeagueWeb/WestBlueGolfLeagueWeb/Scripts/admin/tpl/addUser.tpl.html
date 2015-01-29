@@ -2,32 +2,35 @@
     <h4>Add a User</h4>
 </div>
 <div class="modal-body">
-    <form name="addUser">
+    <form name="addUser" novalidate>
         <div class="form-group">
             <label for="username">User name</label>
-            <input id="username" type="text" class="form-control" placeholder="Enter user name" />
+            <input name="username" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.username" id="username" type="text" class="form-control" placeholder="Enter user name" />
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input id="email" type="email" class="form-control" placeholder="Enter email address" />
+            <input name="emailsss" ng-maxlength="20" ng-minlength="5" ng-model="user.email" id="email" type="email" class="form-control" placeholder="Enter email address" />
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input id="password" type="password" class="form-control" placeholder="Enter password" />
+            <input name="password" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.password" id="password" type="password" class="form-control" placeholder="Enter password" />
         </div>
         <div class="form-group">
             <label for="confirmPassword">Password</label>
-            <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+            <input name="confirmPassword" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
         </div>
         <div class="form-group">
             <label for="role">User Role</label>
-            <select id="role" class="form-control">
+            <select ng-required="true" ng-model="user.role" id="role" class="form-control">
                 <option value="captain" selected>Captain</option>
             </select>
         </div>
+        {{addUser.$valid}}<br />
+        {{addUser.$error.required}}<br />
+        {{addUser.username.$valid}}
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary">Add User</button>
-    <button type="button" class="btn btn-warning">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="addUserCtrl.addUser()">Add User</button>
+    <button type="button" class="btn btn-warning" ng-click="addUserCtrl.cancel()">Cancel</button>
 </div>
