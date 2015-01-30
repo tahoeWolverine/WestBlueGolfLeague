@@ -34,18 +34,26 @@
         this.addUser = function () {
             var addUserModal = $modal.open({
                 templateUrl: '/Scripts/admin/tpl/addUser.tpl.html',
-                controller: 'AddUser as addUserCtrl'
+                controller: 'AddUser as addUserCtrl',
+                resolve: {
+                    roles: function () {
+                        return self.roles;
+                    }
+                }
             });
         };
     }])
-    .controller('AddUser', ['$modalInstance', function ($modalInstance) {
+    .controller('AddUser', ['$modalInstance', 'user', 'roles', function ($modalInstance, user, roles) {
 
-        this.addUser = function () {
+        this.roles = roles;
+        this.user = {};
+        this.user.roleName = roles[0].name;
 
+        this.addUser = function (userToAdd) {
+            user.addUser(userToAdd);
         };
 
         this.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
     }]);

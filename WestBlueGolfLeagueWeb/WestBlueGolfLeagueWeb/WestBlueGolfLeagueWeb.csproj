@@ -222,6 +222,7 @@
     <Compile Include="Controllers\Admin\ManageController.cs" />
     <Compile Include="Models\Admin\AdminRole.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
+    <Compile Include="Models\Requests\Admin\AddUpdateUserRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
     <Compile Include="Models\Responses\Admin\RoleResponse.cs" />
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />

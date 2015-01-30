@@ -11,38 +11,28 @@ using System.Web;
 using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using System.Web.Http;
+using WestBlueGolfLeagueWeb.Models;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
     [Authorize(Roles = AdminRole.Admin.Name)]
     public class UsersController : WestBlueDbApiController
     {
-        private ApplicationUserManager userManager;
-        private ApplicationRoleManager roleManager;
-
         public ApplicationRoleManager RoleManager
         {
             get
             {
-                return roleManager ?? this.Request.GetOwinContext().Get<ApplicationRoleManager>();
-                //
+                return this.Request.GetOwinContext().Get<ApplicationRoleManager>();
             }
-            private set
-            {
-                roleManager = value;
-            }
+            
         }
 
         public ApplicationUserManager UserManager
         {
             get
             {
-                return userManager ?? this.Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return this.Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); 
                 //HttpContext.Current.GetOwinContext() 
-            }
-            private set
-            {
-                userManager = value;
             }
         }
 
@@ -65,7 +55,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         }
 
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateUser(string id, UserResponse user)
+        public async Task<IHttpActionResult> UpdateUser(string id, AddUpdateUserRequest user)
         {
             if (string.Equals(id, this.User.Identity.GetUserId(), StringComparison.OrdinalIgnoreCase))
             {
@@ -79,12 +69,36 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 return NotFound();
             }
 
-            var allRolesForUser = await this.UserManager.GetRolesAsync(userToUpdate.Id);
-            await this.UserManager.RemoveFromRolesAsync(userToUpdate.Id, allRolesForUser.ToArray());
+            if (!string.IsNullOrEmpty(user.RoleName))
+            {
+                var allRolesForUser = await this.UserManager.GetRolesAsync(userToUpdate.Id);
+                await this.UserManager.RemoveFromRolesAsync(userToUpdate.Id, allRolesForUser.ToArray());
 
-            this.UserManager.AddToRole(userToUpdate.Id, user.RoleName);
+                this.UserManager.AddToRole(userToUpdate.Id, user.RoleName);
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> AddUser(AddUpdateUserRequest user)
+        {
+            if (ModelState.IsValid)
+            {
+                var userToCreate = new ApplicationUser { UserName = user.UserName, Email = user.Email };
+                var result = await UserManager.CreateAsync(userToCreate, user.Password);
+
+                if (result.Succeeded)
+                {
+                    await this.UserManager.AddToRoleAsync(userToCreate.Id, user.RoleName);
+                    return Ok();
+                }
+
+                //result.Errors
+                //AddErrors(result);
+            }
+
+            return StatusCode(HttpStatusCode.InternalServerError);
         }
 
         public async Task<IHttpActionResult> DeleteUser(string id)

@@ -4,26 +4,24 @@
 <div class="modal-body">
     <form name="addUser" novalidate>
         <div class="form-group">
-            <label for="username">User name</label>
-            <input name="username" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.username" id="username" type="text" class="form-control" placeholder="Enter user name" />
+            <label for="username">User Name *</label>
+            <input autofocus tabindex="0" name="username" ng-required="true" ng-maxlength="60" ng-minlength="3" ng-model="addUserCtrl.user.username" id="username" type="text" class="form-control" placeholder="Enter user name" />
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input name="emailsss" ng-maxlength="20" ng-minlength="5" ng-model="user.email" id="email" type="email" class="form-control" placeholder="Enter email address" />
+            <input name="emailsss" ng-maxlength="60" ng-minlength="5" ng-model="addUserCtrl.user.email" id="email" type="email" class="form-control" placeholder="Enter email address" />
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input name="password" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.password" id="password" type="password" class="form-control" placeholder="Enter password" />
+            <label for="password">Password *</label>
+            <input name="password" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.password" id="password" type="password" class="form-control" placeholder="Enter password" />
         </div>
         <div class="form-group">
-            <label for="confirmPassword">Password</label>
-            <input name="confirmPassword" ng-required="true" ng-maxlength="20" ng-minlength="5" ng-model="user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+            <label for="confirmPassword">Confirm Password *</label>
+            <input name="confirmPassword" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
         </div>
         <div class="form-group">
-            <label for="role">User Role</label>
-            <select ng-required="true" ng-model="user.role" id="role" class="form-control">
-                <option value="captain" selected>Captain</option>
-            </select>
+            <label for="role">User Role *</label>
+            <select ng-required="true" id="role" class="form-control" ng-model="addUserCtrl.user.roleName" ng-options="r.name as r.name for r in addUserCtrl.roles"></select>
         </div>
         {{addUser.$valid}}<br />
         {{addUser.$error.required}}<br />
@@ -31,6 +29,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-click="addUserCtrl.addUser()">Add User</button>
+    <button type="button" class="btn btn-primary" ng-click="addUserCtrl.addUser(addUserCtrl.user)">Add User</button>
     <button type="button" class="btn btn-warning" ng-click="addUserCtrl.cancel()">Cancel</button>
 </div>

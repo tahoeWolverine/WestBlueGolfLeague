@@ -15,6 +15,13 @@
                     url: '/api/users/' + user.id,
                     data: user
                 });
+            },
+            addUser: function (user) {
+                return $http({
+                    method: 'POST',
+                    url: '/api/users',
+                    data: user
+                });
             }
         };
     }]);

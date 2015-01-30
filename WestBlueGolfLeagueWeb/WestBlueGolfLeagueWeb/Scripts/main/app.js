@@ -1,21 +1,20 @@
 ﻿angular
     .module("app", [])
-    .directive('focusMe', function () {
+    .directive('focusMe', ['$timeout', function ($timeout) {
+        // This directive might not needed (see 'autofocus' attribute). Though might still be
+        // needed for older browsers.
         return {
             link: function (scope, element, attrs) {
-
                 var ele = element[0];
 
                 scope.focusMe = function () {
-                    if (ele.focus) {
-                        ele.focus();
-                    }
+                    ele.focus();
                 };
 
                 scope.focusMe();
             }
         };
-    })
+    }])
     .directive('scrollToTop', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
