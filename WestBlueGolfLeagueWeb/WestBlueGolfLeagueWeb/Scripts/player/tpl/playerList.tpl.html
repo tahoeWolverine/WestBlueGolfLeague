@@ -2,8 +2,8 @@
 <div class="player-list">
     <div class="player-list-input row">
         <div class="col-md-12">
-            <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="&#xF002; Enter player name" ng-model="pList.nameSearchText">
-            <span class="clear-icon" ng-show="pList.nameSearchText.length > 0" ng-click="pList.nameSearchText = ''; pList.focusMe()"><i class="fa fa-times"></i></span>
+            <input type="text" focus-me class="form-control player-search" tabindex="1" placeholder="&#xF002; Enter player name" ng-model="pList.nameSearchText" ng-init="pList.nameSearchText = ''">
+            <span class="clear-icon" ng-show="pList.nameSearchText.length > 0" ng-click="pList.nameSearchText = ''; pList.doFocus()"><i class="fa fa-times"></i></span>
         </div>
     </div>
     <div class="row player-list-players" scroll-to-top>
