@@ -45,23 +45,6 @@
             });
         };
     }])
-    .directive('confirm', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, elm, attrs, ctrl) {
-                ctrl.$validators.confirmPassword = function (modelValue, viewValue) {
-                    if (ctrl.$isEmpty(modelValue)) {
-                        return true;
-                    }
-
-                    //console.log(scope);
-                    //debugger;
-
-                    return true;
-                };
-            }
-        };
-    })
     .directive('username', ['$q', 'user', function ($q, user) {
         return {
             require: 'ngModel',
@@ -76,7 +59,6 @@
             }
         };
     }])
-
     .controller('AddUser', ['$modalInstance', 'user', 'roles', function ($modalInstance, user, roles) {
 
         this.roles = roles;

@@ -1,3 +1,4 @@
+﻿<<<<<<< HEAD
 ﻿<form name="addUserCtrl.addUserForm" novalidate ng-submit="addUserCtrl.addUser(addUserCtrl.user)">
     <div class="modal-header">
         <h4>Add a User</h4>
@@ -48,13 +49,14 @@
         </div>
         <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.confirmPassword.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched), 'has-success':  addUserCtrl.addUserForm.confirmPassword.$valid}">
             <label for="confirmPassword">Confirm Password *</label>
-            <input confirm name="confirmPassword" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+            <input equal="{{addUserCtrl.addUserForm.password.$viewValue}}" name="confirmPassword" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
             <span ng-show="!addUserCtrl.addUserForm.confirmPassword.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
             <span ng-show="addUserCtrl.addUserForm.confirmPassword.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
             <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched">
                 <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.required">Must confirm password!</div>
                 <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.minlength">Password must be at least 5 letters.</div>
                 <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.maxlength">Password must not be greater than 40 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.equal">Confirmed password not the same as password.</div>
             </div>
         </div>
         <div class="form-group">
