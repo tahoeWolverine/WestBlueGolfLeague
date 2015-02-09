@@ -40,6 +40,8 @@
                         return self.roles;
                     }
                 }
+            }).result.then(function (newUser) {
+                self.users.push(newUser);
             });
         };
     }])
@@ -60,6 +62,21 @@
             }
         };
     })
+    .directive('username', ['$q', 'user', function ($q, user) {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                ctrl.$asyncValidators.username = function (modelValue, viewValue) {
+                    if (ctrl.$isEmpty(modelValue)) {
+                        return $q.when();
+                    }
+
+                    return user.userNameAvailable(modelValue);
+                }
+            }
+        };
+    }])
+
     .controller('AddUser', ['$modalInstance', 'user', 'roles', function ($modalInstance, user, roles) {
 
         this.roles = roles;
@@ -67,7 +84,11 @@
         this.user.roleName = roles[0].name;
 
         this.addUser = function (userToAdd) {
-            user.addUser(userToAdd);
+            user.addUser(userToAdd).then(function (data) {
+                if (data.status == 200) {
+                    $modalInstance.close(data.data);
+                }
+            });
         };
 
         this.cancel = function () {

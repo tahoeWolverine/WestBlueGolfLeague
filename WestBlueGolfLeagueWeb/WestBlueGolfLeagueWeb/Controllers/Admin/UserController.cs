@@ -12,11 +12,12 @@ using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using System.Web.Http;
 using WestBlueGolfLeagueWeb.Models;
+using System.Text;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
     [Authorize(Roles = AdminRole.Admin.Name)]
-    public class UsersController : WestBlueDbApiController
+    public class UserController : WestBlueDbApiController
     {
         public ApplicationRoleManager RoleManager
         {
@@ -39,8 +40,6 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpGet]
         public async Task<IHttpActionResult> AllUsers()
         {
-            var users = await this.IdentityDb.Users.ToListAsync();
-
             var usersWithRole = await this.IdentityDb.Set<IdentityUserRole>()
                 .Join(this.IdentityDb.Users, ur => ur.UserId, user => user.Id, (ur, user) => new { userRole = ur, user })
                 .Join(this.IdentityDb.Roles, result => result.userRole.RoleId, role => role.Id, (result, role) => new { result, role })
@@ -91,7 +90,12 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 if (result.Succeeded)
                 {
                     await this.UserManager.AddToRoleAsync(userToCreate.Id, user.RoleName);
-                    return Ok();
+                    var role = await this.RoleManager.FindByNameAsync(user.RoleName);
+                    return Ok(new UserResponse(userToCreate, role, string.Equals(userToCreate.Id, this.User.Identity.GetUserId(), StringComparison.OrdinalIgnoreCase)));
+                }
+                else
+                {
+                    return BadRequest();
                 }
 
                 //result.Errors
@@ -113,6 +117,21 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> UserNameAvailable(string username)
+        {
+            var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(username));
+
+            var userByUsername = await this.IdentityDb.Users.SingleOrDefaultAsync(x => x.UserName == decodedUserName);
+
+            if (userByUsername == null)
+            {
+                return Ok();
+            }
+
+            return StatusCode(HttpStatusCode.Conflict);
         }
     }
 }

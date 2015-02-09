@@ -1,15 +1,25 @@
-﻿<form name="addUserCtrl.addUserForm" novalidate ng-submit="addUserCtrl.foo = 4">
+﻿<form name="addUserCtrl.addUserForm" novalidate ng-submit="addUserCtrl.addUser(addUserCtrl.user)">
     <div class="modal-header">
         <h4>Add a User</h4>
     </div>
     <div class="modal-body">
         <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.username.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched), 'has-success':  addUserCtrl.addUserForm.username.$valid}">
             <label for="username">User Name *</label>
-            <input autofocus tabindex="0" name="username" ng-required="true" ng-maxlength="60" ng-minlength="3" ng-model="addUserCtrl.user.username" id="username" type="text" class="form-control" placeholder="Enter user name" />
-            <span ng-show="!addUserCtrl.addUserForm.username.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
+            <input username
+                   autofocus
+                   tabindex="0"
+                   name="username"
+                   ng-required="true"
+                   ng-maxlength="60" ng-minlength="3"
+                   ng-model="addUserCtrl.user.userName" ng-model-options="{ debounce: 250 }"
+                   id="username" type="text" class="form-control" placeholder="Enter user name" />
+
+            <span ng-show="!addUserCtrl.addUserForm.username.$valid && !addUserCtrl.addUserForm.$pending.username && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
             <span ng-show="addUserCtrl.addUserForm.username.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.$pending.username" class="glyphicon fa fa-spinner fa-spin form-control-feedback" aria-hidden="true"></span>
             <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched">
                 <div ng-show="addUserCtrl.addUserForm.username.$error.required">Must enter a username!</div>
+                <div ng-show="addUserCtrl.addUserForm.username.$error.username">Username is already in use; choose another!</div>
                 <div ng-show="addUserCtrl.addUserForm.username.$error.minlength">Username must be at least 3 letters.</div>
                 <div ng-show="addUserCtrl.addUserForm.username.$error.maxlength">Username must not be greater than 60 letters.</div>
             </div>
