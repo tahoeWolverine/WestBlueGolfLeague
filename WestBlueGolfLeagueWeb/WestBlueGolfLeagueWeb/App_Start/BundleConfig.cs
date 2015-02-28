@@ -45,6 +45,7 @@ namespace WestBlueGolfLeagueWeb
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/main/*.js")
                 .Include("~/Scripts/player/playerList.js", "~/Scripts/player/*.js")
+                .Include("~/Scripts/player/teamList.js", "~/Scripts/team/*.js")
                 .Include("~/Scripts/admin/userManagement.js", "~/Scripts/admin/*.js")
                 .Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
 

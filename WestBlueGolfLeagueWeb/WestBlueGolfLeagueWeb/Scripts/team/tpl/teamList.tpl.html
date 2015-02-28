@@ -1,0 +1,24 @@
+﻿
+<div class="team-list">
+    <div class="team-list-input row">
+        <div class="col-md-12">
+            <input type="text" focus-me class="form-control team-search" tabindex="1" placeholder="&#xF002; Enter team name" ng-model="tList.nameSearchText" ng-init="tList.nameSearchText = ''">
+            <span class="clear-icon" ng-show="tList.nameSearchText.length > 0" ng-click="tList.nameSearchText = ''; tList.doFocus()"><i class="fa fa-times"></i></span>
+        </div>
+    </div>
+    <div class="row team-list-teams" scroll-to-top>
+        <div ng-repeat="team in filteredTeamData = ( tList.teamData | orderBy:'name' | filter: {'name': tList.nameSearchText} )" class="col-sm-4 team-list-item">
+            <a ui-sref="teamDetails.teamProfile({ id: team.id })" tabindex="{{$index + 1}}">
+                <div class="team-list-item-wrapper">
+                    <div class="team-list-item-image"><i class="fa fa-user"></i></div>
+                    <div class="team-list-item-name">
+                        <div class="team-list-item-teamname">{{team.name}}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div ng-show="filteredTeamData.length == 0" class="col-sm-12 team-list-no-teams">
+            <h4>No teams found for &#39;{{tList.nameSearchText}}&#39;</h4>
+        </div>
+    </div>
+</div>
