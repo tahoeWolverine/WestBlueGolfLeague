@@ -13,6 +13,7 @@ namespace WestBlueGolfLeagueWeb
                         "~/Scripts/lib/jquery/jquery-{version}.js",
                         "~/Scripts/lib/bootstrap/bootstrap.js",
                         "~/Scripts/respond.js",
+                        "~/Scripts/lib/lodash.min.js",
                         "~/Scripts/lib/angular/angular-{version}.js",
                         "~/Scripts/lib/angular/angular-*",
                         "~/Scripts/lib/angular-ui-router-{version}.js",

@@ -27,6 +27,15 @@
             self.roles = result.data.allRoles;
         });
 
+        this.deleteUser = function (userToDelete) {
+            debugger;
+            user.deleteUser(userToDelete).then(function () {
+                _.remove(self.users, function (item) {
+                    return item.id == userToDelete.id;
+                });
+            });
+        };
+
         this.updateRole = function (userToUpdate) {
             user.updateUser(userToUpdate);
         };

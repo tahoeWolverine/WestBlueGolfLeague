@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tr ng-repeat="x in index.users | orderBy:'userName'" class="user-row">
-            <td class="user-name">
+            <td class="user-name col-xs-2">
                 {{x.userName}}
             </td>
-            <td>
+            <td class="user-role">
                 <select class="form-control" ng-disabled="x.isSelf" ng-model="x.roleName" ng-options="r.name as r.name for r in index.roles" ng-change="index.updateRole(x)"></select>
             </td>
-            <td>
-                <button ng-disabled="x.isSelf" type="button" class="btn btn-danger">Delete</button>
+            <td class="user-delete">
+                <button ng-click="index.deleteUser(x)" ng-disabled="x.isSelf" type="button" class="btn btn-danger">Delete</button>
             </td>
         </tr>
     </table>

@@ -289,6 +289,26 @@ player-list-item-name {
 }
 
 /* User management stuff */
+.user-list th:nth-child(1), .user-name {
+    width: 45%;
+}
+
+.user-list th:nth-child(2), .user-role {
+    width: 35%;
+}
+
+.user-list th:nth-child(3), .user-delete {
+    width: 20%;
+}
+
+.user-list th, .user-list td {
+    word-wrap: break-word;
+}
+
+.user-list table {
+    table-layout: fixed;
+}
+
 .user-row div {
     display: inline-block;
 }

@@ -1,6 +1,6 @@
 ﻿angular
     .module('userManagement')
-    .factory('user', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+    .factory('user', ['$http', '$q', function ($http, $q) {
 
         return {
             getAllUsersWithRoles: function () {
@@ -14,6 +14,12 @@
                     method: 'PUT',
                     url: '/api/user/' + user.id,
                     data: user
+                });
+            },
+            deleteUser: function(userToDelete) {
+                return $http({
+                    method: 'DELETE',
+                    url: '/api/user/' + userToDelete.id,
                 });
             },
             addUser: function (user) {
