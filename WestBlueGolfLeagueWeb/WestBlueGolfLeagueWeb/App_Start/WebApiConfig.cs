@@ -28,6 +28,8 @@ namespace WestBlueGolfLeagueWeb
 
             config.Routes.MapHttpRoute(name: "GetTeamProfile", routeTemplate: "api/v1/teamProfile/{id}", defaults: new { controller = "TeamApi", action = "GetProfileData" });
 
+            config.Routes.MapHttpRoute(name: "GetUserNameAvailability", routeTemplate: "api/user/name/{username}", defaults: new { controller = "User", action = "UserNameAvailable" });
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
