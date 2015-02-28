@@ -211,6 +211,8 @@
     <Compile Include="Controllers\PlayerApiController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ResultsTableController.cs" />
+    <Compile Include="Controllers\TeamApiController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\WestBlueDbApiController.cs" />
     <Compile Include="Controllers\WestBlueDbMvcController.cs" />
     <Compile Include="Controllers\Admin\YearAdminController.cs" />
@@ -226,6 +228,8 @@
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
     <Compile Include="Models\Responses\Admin\RoleResponse.cs" />
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />
+    <Compile Include="Models\Responses\TeamProfileData.cs" />
+    <Compile Include="Models\Responses\TeamProfileResult.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\Entities\course.cs" />
     <Compile Include="Models\Entities\datamigration.cs" />
@@ -272,6 +276,8 @@
     <Compile Include="Models\ViewModels\PlayerListViewModel.cs" />
     <Compile Include="Models\ViewModels\PlayerResultsViewModel.cs" />
     <Compile Include="Models\ViewModels\ResultsTableViewModel.cs" />
+    <Compile Include="Models\ViewModels\TeamListViewModel.cs" />
+    <Compile Include="Models\ViewModels\TeamResultsViewModel.cs" />
     <Compile Include="Models\WestBlueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -318,6 +324,13 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Scripts\lib\lodash.min.js" />
     <Content Include="Scripts\lib\ui-bootstrap-tpls-0.12.0.js" />
+    <Content Include="Scripts\team\team.js" />
+    <Content Include="Scripts\team\teamList.js" />
+    <Content Include="Scripts\team\tpl\teamDetails.tpl.html" />
+    <Content Include="Scripts\team\tpl\teamDetailsLayout.tpl.html" />
+    <Content Include="Scripts\team\tpl\teamList.tpl.html" />
+    <Content Include="Scripts\team\tpl\teamListWrapper.tpl.html" />
+    <Content Include="Scripts\team\tpl\teamResults.tpl.html" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -400,6 +413,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\YearAdmin\Index.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
+    <Content Include="Views\Team\Details.cshtml" />
+    <Content Include="Views\Team\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -425,7 +440,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49946</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

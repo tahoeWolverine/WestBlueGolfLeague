@@ -85,4 +85,5 @@
         this.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+
     }]);

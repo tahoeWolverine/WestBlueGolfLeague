@@ -20,6 +20,14 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .Select(x => Tuple.Create(x.player, x.team));
         }
 
+        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year)
+        {
+            return westBlue.teams
+                        .AsNoTracking()
+                        .Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year))
+                        .ToList();
+        }
+
         public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
         {
             return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);

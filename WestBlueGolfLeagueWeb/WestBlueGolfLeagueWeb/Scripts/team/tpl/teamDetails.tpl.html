@@ -1,0 +1,30 @@
+﻿
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{teamDetails.profileData.teamName}}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">Profile pic here</div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 text-center">win loss here</div>
+            <div class="col-xs-4 col-sm-4 text-center"><div>Avg. Handicap</div>{{teamDetails.profileData.avgHandicap}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><div>Total Wins</div>{{teamDetails.profileData.totalWins}}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 text-center"><div>Win Loss Ratio</div>{{teamDetails.profileData.winLossRatio}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><div>Season Improvement</div>{{teamDetails.profileData.improved}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><div>Total Points</div>{{teamDetails.profileData.totalPoints}}</div>
+        </div>
+    </div>
+</div>
+
+<h3>Results</h3>
+<div ng-repeat="item in teamDetails.profileData.resultsForYear | orderBy:'weekIndex':true" class="row player-result">
+    <div class="col-md-3 result-date">{{item.weekDate | date:'MMM d'}}</div>
+    <div class="col-md-3">{{item.opponentName}}</div>
+    <div class="col-md-2 result-win-loss">{{ item.wasWin ? 'Win' : 'Loss' }}</div>
+    <div class="col-md-2">{{ item.score }} - {{item.opponentScore}}</div>
+</div>

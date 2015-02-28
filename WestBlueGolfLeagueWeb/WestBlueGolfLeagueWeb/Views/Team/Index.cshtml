@@ -1,0 +1,20 @@
+﻿@model WestBlueGolfLeagueWeb.Models.ViewModels.TeamListViewModel
+
+@{
+    ViewBag.Title = "Teams";
+}
+
+@section head {
+    <base href="/Team/" />
+}
+
+<script>
+    var teams = @Html.Raw(JsonHelpers.ToJson(this.Model.TeamsForYear));
+</script>
+
+
+<div ng-app="team" class="ng-cloak team">
+    <div ui-view></div>
+</div>
+
+
