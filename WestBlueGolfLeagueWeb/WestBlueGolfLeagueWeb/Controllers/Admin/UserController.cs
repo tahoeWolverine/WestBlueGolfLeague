@@ -105,18 +105,24 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             return StatusCode(HttpStatusCode.InternalServerError);
         }
 
+        [HttpDelete]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
-            var userToDelete = await this.IdentityDb.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var userToDelete = await this.UserManager.FindByIdAsync(id);
 
-            if (userToDelete != null)
+            if (userToDelete == null)
             {
-                this.IdentityDb.Users.Remove(userToDelete);
-                await this.IdentityDb.SaveChangesAsync();
-                return StatusCode(HttpStatusCode.NoContent);
+                return NotFound();
             }
 
-            return NotFound();
+            var result = await this.UserManager.DeleteAsync(userToDelete);
+
+            if (!result.Succeeded) 
+            {
+                return InternalServerError();
+            }
+            
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpGet]

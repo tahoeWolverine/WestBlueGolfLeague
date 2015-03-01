@@ -26,7 +26,7 @@
                     <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" })</li>
                     <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" })</li>
                     <li>@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" })</li>
-                    <li>@Html.ActionLink("Rules & Information", "RulesAndInformation", "Information")</li>
+
                     <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable")</li>
                 </ul>
                 @{Html.RenderAction("ToggleLogin", "Account");}
@@ -37,7 +37,12 @@
     <div class="container body-content">
         @RenderBody()
         <footer>
-            <p>&copy; @DateTime.Now.Year - West Blue Golf League</p>
+            <span>
+                &copy; @DateTime.Now.Year - West Blue Golf League
+            </span>
+            <span>
+                @Html.ActionLink("Rules & Information", "RulesAndInformation", "Information")
+            </span>
         </footer>
     </div>
 

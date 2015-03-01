@@ -6,6 +6,15 @@
 
 footer {
     padding-top: 20px;
+    text-align: center;
+}
+
+footer span {
+    display: inline-block;
+}
+
+footer span:nth-child(1n + 2) {
+    padding-left: 12px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -461,6 +470,26 @@ team-list-item-name {
 }
 
 /* User management stuff */
+.user-list table {
+    table-layout: fixed;
+}
+
+.user-list th:nth-child(1), .user-name {
+    width: 45%;
+}
+
+.user-list th:nth-child(2), .user-role {
+    width: 35%;
+}
+
+.user-list th:nth-child(3), .user-delete {
+    width: 20%;
+}
+
+.user-list th, .user-list td {
+    word-wrap: break-word;
+}
+
 .user-row div {
     display: inline-block;
 }
@@ -469,7 +498,7 @@ team-list-item-name {
     display: inline-block;
 }
 
-table tr.user-row > td {
+.user-list tr.user-row > td {
     padding-top: 14px;
     padding-bottom: 14px;
     vertical-align: middle;
