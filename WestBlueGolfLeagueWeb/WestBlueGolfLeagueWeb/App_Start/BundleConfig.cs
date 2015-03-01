@@ -12,13 +12,11 @@ namespace WestBlueGolfLeagueWeb
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js",
                         "~/Scripts/lib/bootstrap/bootstrap.js",
-                        "~/Scripts/respond.js",
                         "~/Scripts/lib/lodash.min.js",
                         "~/Scripts/lib/angular/angular-{version}.js",
                         "~/Scripts/lib/angular/angular-*",
                         "~/Scripts/lib/angular-ui-router-{version}.js",
-                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js",
-                        "~/Scripts/lib/moment/moment.js"));
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js"));

@@ -202,6 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Admin\NoteController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -222,7 +223,16 @@
     <Compile Include="Helpers\AngularHelpers.cs" />
     <Compile Include="Helpers\JsonHelpers.cs" />
     <Compile Include="Controllers\Admin\ManageController.cs" />
+    <Compile Include="Migrations\201503010251104_addNotes.cs" />
+    <Compile Include="Migrations\201503010251104_addNotes.Designer.cs">
+      <DependentUpon>201503010251104_addNotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503010604346_updateColumn.cs" />
+    <Compile Include="Migrations\201503010604346_updateColumn.Designer.cs">
+      <DependentUpon>201503010604346_updateColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Admin\AdminRole.cs" />
+    <Compile Include="Models\Entities\note.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Requests\Admin\AddUpdateUserRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
@@ -278,6 +288,7 @@
     <Compile Include="Models\ViewModels\ResultsTableViewModel.cs" />
     <Compile Include="Models\ViewModels\TeamListViewModel.cs" />
     <Compile Include="Models\ViewModels\TeamResultsViewModel.cs" />
+    <Compile Include="Models\WestBlueConfiguration.cs" />
     <Compile Include="Models\WestBlueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -295,8 +306,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\admin\admin.js" />
     <Content Include="Scripts\admin\services.js" />
     <Content Include="Scripts\admin\tpl\addUser.tpl.html" />
+    <Content Include="Scripts\admin\tpl\adminIndex.tpl.html" />
     <Content Include="Scripts\admin\userManagement.js" />
     <Content Include="Scripts\admin\tpl\userManagementIndex.tpl.html" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
@@ -378,10 +391,6 @@
     <Content Include="Scripts\player\tpl\playerList.tpl.html" />
     <Content Include="Scripts\player\tpl\playerListWrapper.tpl.html" />
     <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -406,12 +415,10 @@
     <Content Include="Views\LeaderBoard\Index.cshtml" />
     <Content Include="Views\ResultsTable\Index.cshtml" />
     <Content Include="Views\ResultsTable\Details.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LoggedInPartial.cshtml" />
     <Content Include="Views\Shared\_LoggedOutPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\YearAdmin\Index.cshtml" />
-    <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
   </ItemGroup>
@@ -424,6 +431,14 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503010251104_addNotes.resx">
+      <DependentUpon>201503010251104_addNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503010604346_updateColumn.resx">
+      <DependentUpon>201503010604346_updateColumn.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

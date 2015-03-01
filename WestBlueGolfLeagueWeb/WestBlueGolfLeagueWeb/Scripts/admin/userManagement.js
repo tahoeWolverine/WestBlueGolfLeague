@@ -1,24 +1,6 @@
 ﻿angular
     .module('userManagement', ['app', 'ui.router', 'ngResource', 'ui.bootstrap'])
-    .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
-        function ($locationProvider, $urlRouterProvider, $stateProvider) {
-
-            $stateProvider
-            .state('index', {
-                url: '/?error',
-                templateUrl: '/Scripts/admin/tpl/userManagementIndex.tpl.html',
-                controller: 'Index as index',
-                //resolve: {
-                //    leaderBoards: ['resolveLeaderBoardService', function (lbs) {
-                //        return lbs.getBoards();
-                //    }],
-                //    resolveLeaderBoardService: 'leaderBoardService'
-                //}
-            });
-
-            $locationProvider.html5Mode(true);
-        }])
-    .controller('Index', ['user', '$modal', function (user, $modal) {
+    .controller('ManageUserIndex', ['user', '$modal', function (user, $modal) {
 
         var self = this;
 
@@ -28,7 +10,6 @@
         });
 
         this.deleteUser = function (userToDelete) {
-            debugger;
             user.deleteUser(userToDelete).then(function () {
                 _.remove(self.users, function (item) {
                     return item.id == userToDelete.id;

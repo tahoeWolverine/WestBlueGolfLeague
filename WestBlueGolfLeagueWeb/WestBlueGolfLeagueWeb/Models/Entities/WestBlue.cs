@@ -33,6 +33,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<week> weeks { get; set; }
         public virtual DbSet<year> years { get; set; }
+        public virtual DbSet<note> notes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -59,6 +60,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
             modelBuilder.Entity<datamigration>()
                 .Property(e => e.notes)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<note>()
+                .Property(e => e.text)
                 .IsUnicode(false);
 
             modelBuilder.Entity<leaderboard>()

@@ -19,24 +19,6 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
     [Authorize(Roles = AdminRole.Admin.Name)]
     public class UserController : WestBlueDbApiController
     {
-        public ApplicationRoleManager RoleManager
-        {
-            get
-            {
-                return this.Request.GetOwinContext().Get<ApplicationRoleManager>();
-            }
-            
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return this.Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); 
-                //HttpContext.Current.GetOwinContext() 
-            }
-        }
-
         [HttpGet]
         public async Task<IHttpActionResult> AllUsers()
         {

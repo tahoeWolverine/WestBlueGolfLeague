@@ -1,0 +1,22 @@
+﻿<div>
+    <div class="list-group">
+        <a class="list-group-item" href="/Manage/" target="_self">Account settings</a>
+        <a class="list-group-item" ui-sref="manageUsers()">Manage League Users</a>
+    </div>
+    <!-- TODO: only allow/show this if user is admin -->
+    <div ng-controller="SetLeagueNote as setLeagueNote">
+        <button type="button" class="btn btn-info" ng-click="setLeagueNote.toggleLeagueNoteDisplay(true)" ng-hide="setLeagueNote.isHidden">
+            {{'Set League Note'}}
+        </button>
+        <div ng-show="setLeagueNote.isHidden">
+            <form class="form-inline league-note">
+                <div class="form-group">
+                    <input type="text" ng-model="setLeagueNote.note" focus-me class="form-control" placeholder="Enter league note" />
+                    <button class="btn btn-primary" type="submit" ng-click="setLeagueNote.setNote(setLeagueNote.note)">Save</button>
+                    <button class="btn btn-warning" type="button" ng-click="setLeagueNote.toggleLeagueNoteDisplay()">Cancel</button>
+                </div>
+            </form>
+            {{setLeagueNote.message}}
+        </div>
+    </div>
+</div>

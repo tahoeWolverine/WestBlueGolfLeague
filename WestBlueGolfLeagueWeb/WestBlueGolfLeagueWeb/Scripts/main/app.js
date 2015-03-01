@@ -8,7 +8,9 @@
 				var ele = element[0];
 
 				scope.focusMe = function () {
-					ele.focus();
+				    $timeout(function () {
+				        ele.focus();
+				    }, 0, false);
 				};
 
 				scope.focusMe();

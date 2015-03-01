@@ -1,13 +1,15 @@
 ﻿
-Hello world
+@{
+    ViewBag.Title = "Admin - West Blue Golf League";
+}
 
-<div>
-    <ul>
-        <li>
-            @Html.ActionLink("Account settings", "Index", "Manage")
-        </li>
-        <li>
-            @Html.ActionLink("Manage League Users", "ManageUsers")
-        </li>
-    </ul>
+@section head {
+    <base href="/Admin/" />
+}
+
+<h2>Admin</h2>
+
+<div ng-app="admin">
+    <div ui-view></div>
 </div>
+
