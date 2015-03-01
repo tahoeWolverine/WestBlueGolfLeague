@@ -48,6 +48,31 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>-->
     </div>
     <div class="col-md-8">
-        <h4>Schedule here</h4>
+        <h3>@this.Model.SelectedYear Schedule</h3>
+        @if (this.Model.ScheduleYear == null || this.Model.ScheduleYear.weeks.Count() == 0)
+        {
+            <p>There is no data for @this.Model.SelectedYear!</p>
+        }
+        else { 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Course</th>
+                        <th>Pairings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var week in this.Model.ScheduleYear.weeks.OrderBy(w => w.date))
+                    {
+                        <tr>
+                            <td>@week.date.ToShortDateString()</td>
+                            <td>@week.course.name</td>
+                            <td>@week.pairing.pairingText</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
 </div>
