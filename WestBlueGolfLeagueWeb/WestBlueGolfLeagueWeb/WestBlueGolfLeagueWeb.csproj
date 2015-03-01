@@ -402,7 +402,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Information\RulesAndInformation.cshtml" />
-    <Content Include="Views\Player\Details.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\LeaderBoard\Index.cshtml" />
     <Content Include="Views\ResultsTable\Index.cshtml" />
