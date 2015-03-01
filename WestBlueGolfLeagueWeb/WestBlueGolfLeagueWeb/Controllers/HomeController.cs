@@ -15,8 +15,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
             int selectedYear = 2014;
             
             var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
+            var year = this.Db.years.Where(x => x.value == selectedYear).ToList().First();
 
-            return View(new HomeViewModel { TeamRankingDataForYear = rankingValuesForYear, SelectedYear = selectedYear });
+            return View(new HomeViewModel { TeamRankingDataForYear = rankingValuesForYear, ScheduleYear = year, SelectedYear = selectedYear });
         }
 
         public ActionResult About()
