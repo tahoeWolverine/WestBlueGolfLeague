@@ -1,6 +1,20 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+footer {
+    padding-top: 20px;
+    text-align: center;
+}
+
+footer span {
+    display: inline-block;
+}
+
+footer span:nth-child(1n + 2) {
+    padding-left: 12px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -94,31 +108,79 @@ input[type="checkbox"].input-validation-error {
 .player-details-profile {
     z-index: 10;
 	position: relative;
+    margin-left: 280px;
 	background-color: white;
+    padding-bottom: 80px;
+    transition: margin-left .3s ease;
+}
+
+.details-layout.toggled .player-details-profile {
+    margin-left: 0px;
+}
+
+.player + footer {
+    position: fixed;
+    width: inherit;
+    bottom: 0;
+    z-index: 12;
+    height: 80px;
+    background: white;
 }
 
 .details-layout {
-    padding-left: 280px;
+    /*padding-left: 280px;*/
 }
 
 .details-layout.toggled {
 	padding-left: 0;
 }
 
+.player-details-player-list-parent, .player-details-player-list {
+    transition: all .3s ease;
+    /*cubic-bezier(.11,-0.98,.97,-0.47)*/
+}
+
 .details-layout.toggled .player-details-player-list {
-	margin-left: 0px;
+	
+}
+
+.details-layout.toggled .player-details-player-list-parent {
+	width: 0px;
+    margin-left: 0px;
+}
+
+.player-details-player-list-parent {
+	overflow: hidden;
+}
+
+.toggle-link {
+    position: absolute;
+    cursor: pointer;
+    left: -10px;
+    padding: 5px;
+    top: 80px;
+    font-size: 1.4em;
+    z-index: 10;
+}
+
+.player-details-player-list-parent {
+	width: 280px;
+	top: 0;
+    bottom: 80px;
+    position: fixed;
+	overflow-y: hidden;
+	z-index: 5;
+    /*margin-left: -280px;*/
+	padding: 50px 0px 0px 15px;
 }
 
 .player-details-player-list {
-    padding-top: 50px;
-    margin-left: -280px;
-    width: 280px;
+    width: 282px;
     background: white;
-    top: 0;
+    position: absolute;
+    top: 50px;
     bottom: 0;
-    position: fixed;
     overflow-y: scroll;
-    z-index: 5;
 }
 
 .player-list-item {
@@ -136,6 +198,11 @@ input[type="checkbox"].input-validation-error {
     height: 60px;
     background: rgba(255,255,255,.5);
     max-width: 400px;
+}
+
+/* Turn off IE's "clear field" button. */
+.player-search::-ms-clear {
+    display: none;
 }
 
 
@@ -215,6 +282,230 @@ player-list-item-name {
 
 .header-link-small {
     display: none;
+}
+
+.player-result {
+    margin: 14px;
+    padding: 16px;
+    border: 1px solid #E5E5E5;
+    background: #F2F2F2;
+    font-size: 1.3em;
+    /*box-shadow: 0 0 8px #777;*/
+}
+
+/* Team CSS */
+.team-details-team-list .col-sm-4 {
+    width: 100%;
+}
+
+.team-details-profile {
+    z-index: 10;
+	position: relative;
+    margin-left: 280px;
+	background-color: white;
+    padding-bottom: 80px;
+    transition: margin-left .3s ease;
+}
+
+.details-layout.toggled .team-details-profile {
+    margin-left: 0px;
+}
+
+.team + footer {
+    position: fixed;
+    width: inherit;
+    bottom: 0;
+    z-index: 12;
+    height: 80px;
+    background: white;
+}
+
+.team-details-team-list-parent, .team-details-team-list {
+    transition: all .3s ease;
+    /*cubic-bezier(.11,-0.98,.97,-0.47)*/
+}
+
+.details-layout.toggled .team-details-team-list {
+	
+}
+
+.details-layout.toggled .team-details-team-list-parent {
+	width: 0px;
+    margin-left: 0px;
+}
+
+.team-details-team-list-parent {
+	overflow: hidden;
+}
+
+.team-details-team-list-parent {
+	width: 280px;
+	top: 0;
+    bottom: 80px;
+    position: fixed;
+	overflow-y: hidden;
+	z-index: 5;
+    /*margin-left: -280px;*/
+	padding: 50px 0px 0px 15px;
+}
+
+.team-details-team-list {
+    width: 282px;
+    background: white;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    overflow-y: scroll;
+}
+
+.team-list-item {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+}
+
+.team-list-input input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, FontAwesome;
+}
+
+.team-list-input {
+    z-index: 5;
+    /*position: fixed;*/
+    height: 60px;
+    background: rgba(255,255,255,.5);
+    max-width: 400px;
+}
+
+/* Turn off IE's "clear field" button. */
+.team-search::-ms-clear {
+    display: none;
+}
+
+.team-list-input > div {
+    margin-top: 14px;
+    position: relative;
+}
+
+.team-list-item-teamname {
+    font-size: 1.2em;
+}
+
+.team-list-item-name, .team-list-item-image {
+    height: 3.2em;
+}
+
+.team-list-item-image {
+    line-height: 3.2em;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    width: 25%;
+    margin-left: -15px;
+}
+
+team-list-item-name {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+}
+
+.team-list-item-image .fa-user {
+    font-size: 2em;
+    line-height: 1.6em; /* this is 3.2 / 2 */
+}
+
+/*.team-list-item .fa-user {*/
+.team-list-item-wrapper:hover .fa-user {
+    font-size: 2.4em;
+    line-height: 1.3333333em; /* this is 3.2 / 2.4. */
+}
+
+.team-list-item-teamname {
+    color: #999;
+}
+
+.team-list-item > div:hover {
+  
+}
+
+.team-list-item a {
+    color: black;
+    display: block;
+}
+
+.team-list a:hover, .team-list a:active, .team-list a:focus {
+    text-decoration: none;
+}
+
+.clear-icon {
+    position: absolute;
+    text-align: center;
+    line-height: 34px;
+    width: 34px;
+    cursor: pointer;
+    right: 24px;
+    top: 0;
+    font-size: 1.2em;
+    z-index: 9;
+}
+
+.clear-icon:hover {
+    color: red;
+}
+
+.header-link-small {
+    display: none;
+}
+
+.player-result {
+    margin: 14px;
+    padding: 16px;
+    border: 1px solid #E5E5E5;
+    background: #F2F2F2;
+    font-size: 1.3em;
+    /*box-shadow: 0 0 8px #777;*/
+}
+
+.result-date {
+    font-weight: bold;
+}
+
+/* User management stuff */
+.user-list table {
+    table-layout: fixed;
+}
+
+.user-list th:nth-child(1), .user-name {
+    width: 45%;
+}
+
+.user-list th:nth-child(2), .user-role {
+    width: 35%;
+}
+
+.user-list th:nth-child(3), .user-delete {
+    width: 20%;
+}
+
+.user-list th, .user-list td {
+    word-wrap: break-word;
+}
+
+.user-row div {
+    display: inline-block;
+}
+
+.user-row select {
+    display: inline-block;
+}
+
+.user-list tr.user-row > td {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    vertical-align: middle;
+}
+
+.user-row .user-name {
+    font-weight: bold;
 }
 
 @media (max-width: 992px) {

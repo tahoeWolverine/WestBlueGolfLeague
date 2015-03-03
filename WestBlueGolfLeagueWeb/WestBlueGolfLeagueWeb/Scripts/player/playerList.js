@@ -49,6 +49,12 @@ angular.module('playerList', ['app', 'ui.router']);
     var ListController = function ($scope, playerListService, $filter) {
         var self = this;
 
+        self.nameSearchText = '';
+
+        self.doFocus = function () {
+            $scope.focusMe();
+        };
+
         playerListService.getPlayersForYear().then(function (result) {
             self.playerData = result;
         });

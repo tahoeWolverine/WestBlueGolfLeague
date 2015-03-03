@@ -37,9 +37,11 @@ namespace WestBlueGolfLeagueWeb.Controllers
         [ResponseType(typeof(FullLeaderBoardForYearResponse))]
         public async Task<IHttpActionResult> GetLeaderBoard(string key)
         {
+            int year = 2014;
+
             // validate that we have a valid key.
             var leaderBoardAsyncList = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
-            var leaderBoardDatas = this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == DateTime.Now.Year).ToListAsync();
+            var leaderBoardDatas = this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == year).ToListAsync();
 
             var leaderBoardList = await leaderBoardAsyncList;
 

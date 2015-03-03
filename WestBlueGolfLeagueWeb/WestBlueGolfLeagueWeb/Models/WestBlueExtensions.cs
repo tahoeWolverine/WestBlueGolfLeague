@@ -8,13 +8,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 {
     public static class WestBlueExtensions
     {
-        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year = 0, bool includeInvalidPlayers = false)
+        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidPlayers = false)
         {
-            if (year == 0)
-            {
-                year = DateTimeOffset.Now.Year;
-            }
-
             return westBlue.playeryeardatas
                         .Include(p => p.player)
                         .Include(p => p.team)
@@ -23,6 +18,14 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .ToList()
                         .Where(x => includeInvalidPlayers ? true : x.player.validPlayer)
                         .Select(x => Tuple.Create(x.player, x.team));
+        }
+
+        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year)
+        {
+            return westBlue.teams
+                        .AsNoTracking()
+                        .Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year))
+                        .ToList();
         }
 
         public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
@@ -43,6 +46,21 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public static bool WasLoss(this result r)
         {
             return r.points < 12;
+        }
+
+        public static result OpponentResult(this result r)
+        {
+            return r.match.results.First(x => x.id != r.id);
+        }
+
+        public static int ScoreDifference(this result r)
+        {
+            return r.score - r.match.teammatchup.week.course.par;
+        }
+
+        public static int NetScoreDifference(this result r)
+        {
+            return r.ScoreDifference() - r.priorHandicap;
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿<div class="details-layout" ng-class="toggled">
+    <div class="team-details-team-list-parent">
+        <div class="container team-details-team-list">
+            <div team-list></div>
+        </div>
+    </div>
+    <!-- TODO: Player with profile ID of 37 gets a 500 when calling the profile endpoint. -->
+    <div class="team-details-profile">
+        <div class="row">
+            <div class="col-md-12">
+                <a ng-click="toggled=toggled ? '' : 'toggled'"><i class="fa fa-angle-double-left toggle-link"></i></a>
+                <div ui-view="teamDetails"></div>
+            </div>
+        </div>
+    </div>
+</div>

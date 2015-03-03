@@ -9,9 +9,14 @@ namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class WestBlueDbMvcController : Controller
     {
-        private WestBlue db = new WestBlue();
+		private WestBlue db = null;
 
-        public WestBlue Db { get { return this.db; } }
+		protected WestBlueDbMvcController(bool needWriteAccess = false)
+		{
+			this.db = new WestBlue(needWriteAccess);
+		}
+
+		public WestBlue Db { get { return this.db; } }
 
         protected override void Dispose(bool disposing)
         {

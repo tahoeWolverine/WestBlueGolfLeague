@@ -16,8 +16,14 @@ namespace WestBlueGolfLeagueWeb
             routes.MapRoute(name: "PlayerPage", 
                 url: "Player/{*catchall}", defaults: new { controller = "Player", action = "Index" });
 
+            routes.MapRoute(name: "TeamPage",
+                url: "Team/{*catchall}", defaults: new { controller = "Team", action = "Index" });
+
             routes.MapRoute(name: "LeaderBoards",
                 url: "LeaderBoards/{*catchall}", defaults: new { controller = "LeaderBoard", action = "Index" });
+
+            routes.MapRoute(name: "Admin",
+                url: "Admin/{*catchall}", defaults: new { controller = "Admin", action = "Index" });
 
             routes.MapRoute(
                 name: "Default",

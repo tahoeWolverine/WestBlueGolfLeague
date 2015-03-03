@@ -1,0 +1,78 @@
+﻿<form name="addUserCtrl.addUserForm" novalidate ng-submit="addUserCtrl.addUser(addUserCtrl.user)">
+    <div class="modal-header">
+        <h4>Add a User</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.username.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched), 'has-success':  addUserCtrl.addUserForm.username.$valid}">
+            <label for="username">User Name *</label>
+            <input username
+                   autofocus
+                   tabindex="0"
+                   name="username"
+                   ng-required="true"
+                   ng-maxlength="60" ng-minlength="3"
+                   ng-model="addUserCtrl.user.userName" ng-model-options="{ debounce: 250 }"
+                   id="username" type="text" class="form-control" placeholder="Enter user name" />
+
+            <span ng-show="!addUserCtrl.addUserForm.username.$valid && !addUserCtrl.addUserForm.$pending.username && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.username.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.$pending.username" class="glyphicon fa fa-spinner fa-spin form-control-feedback" aria-hidden="true"></span>
+            <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.username.$touched">
+                <div ng-show="addUserCtrl.addUserForm.username.$error.required">Must enter a username!</div>
+                <div ng-show="addUserCtrl.addUserForm.username.$error.username">Username is already in use; choose another!</div>
+                <div ng-show="addUserCtrl.addUserForm.username.$error.minlength">Username must be at least 3 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.username.$error.maxlength">Username must not be greater than 60 letters.</div>
+            </div>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.email.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.email.$touched), 'has-success':  addUserCtrl.addUserForm.email.$valid}">
+            <label for="email">Email address</label>
+            <input name="email" ng-maxlength="60" ng-minlength="5" ng-model="addUserCtrl.user.email" id="email" type="email" class="form-control" placeholder="Enter email address" />
+            <span ng-show="!addUserCtrl.addUserForm.email.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.email.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.email.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
+            <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.email.$touched">
+                <div ng-show="addUserCtrl.addUserForm.email.$error.email">Must enter a valid email address!</div>
+                <div ng-show="addUserCtrl.addUserForm.email.$error.minlength">Email address must be at least 5 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.email.$error.maxlength">Email address must not be more than 60 letters.</div>
+            </div>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.password.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.password.$touched), 'has-success':  addUserCtrl.addUserForm.password.$valid}">
+            <label for="password">Password *</label>
+            <input name="password" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.password" id="password" type="password" class="form-control" placeholder="Enter password" />
+            <span ng-show="!addUserCtrl.addUserForm.password.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.password.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.password.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
+            <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.password.$touched">
+                <div ng-show="addUserCtrl.addUserForm.password.$error.required">Must enter a password!</div>
+                <div ng-show="addUserCtrl.addUserForm.password.$error.minlength">Password must be at least 5 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.password.$error.maxlength">Password must not be greater than 40 letters.</div>
+            </div>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-error': !addUserCtrl.addUserForm.confirmPassword.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched), 'has-success':  addUserCtrl.addUserForm.confirmPassword.$valid}">
+            <label for="confirmPassword">Confirm Password *</label>
+            <input equal="{{addUserCtrl.addUserForm.password.$viewValue}}" name="confirmPassword" ng-required="true" ng-maxlength="40" ng-minlength="5" ng-model="addUserCtrl.user.confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+            <span ng-show="!addUserCtrl.addUserForm.confirmPassword.$valid && (addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched)" class="glyphicon fa fa-warning form-control-feedback" aria-hidden="true"></span>
+            <span ng-show="addUserCtrl.addUserForm.confirmPassword.$valid" class="glyphicon fa fa-check form-control-feedback" aria-hidden="true"></span>
+            <div ng-show="addUserCtrl.addUserForm.$submitted || addUserCtrl.addUserForm.confirmPassword.$touched">
+                <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.required">Must confirm password!</div>
+                <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.minlength">Password must be at least 5 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.maxlength">Password must not be greater than 40 letters.</div>
+                <div ng-show="addUserCtrl.addUserForm.confirmPassword.$error.equal">Confirmed password not the same as password.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role">User Role *</label>
+            <select ng-required="true" id="role" class="form-control" ng-model="addUserCtrl.user.roleName" ng-options="r.name as r.name for r in addUserCtrl.roles"></select>
+        </div>
+        <!--{{addUserCtrl.addUserForm.$valid}}<br />
+        {{addUserCtrl.addUserForm.$error.required}}<br />
+        {{addUserCtrl.addUserForm.username.$valid}}<br />
+        {{addUserCtrl.addUserForm.email.$valid}}<br />
+        {{addUserCtrl.addUserForm.email.$error | json}}<br />
+        {{addUserCtrl.addUserForm.email.$touched}}<br />
+        {{addUserCtrl.addUserForm.$submitted}} wat
+        {{addUserCtrl.foo}}-->
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Add User" />
+        <input type="button" class="btn btn-warning" ng-click="addUserCtrl.cancel()" value="Cancel" />
+    </div>
+</form>

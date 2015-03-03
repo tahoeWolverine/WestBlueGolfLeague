@@ -9,6 +9,8 @@ namespace WestBlueGolfLeagueWeb.Models.ViewModels
     public class HomeViewModel
     {
         public IEnumerable<leaderboarddata> TeamRankingDataForYear { get; set; }
+        public year ScheduleYear { get; set; }
         public int SelectedYear { get; set; }
+        public note Information { get; set; }
     }
 }

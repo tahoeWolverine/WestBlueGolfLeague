@@ -19,7 +19,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
         public ActionResult Details(int? id)
         {
-            var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == DateTime.Now.Year)).ToList();
+            int year = 2014;
+
+            var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year)).ToList();
 
             if (allTeamsForYear.Count() == 0)
             {
@@ -38,10 +40,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
                             .Include("player.results")
                             .Include("player.results.year")
                             .Include("player.results.match.teammatchup.week")
-                            .Where(y => y.year.value == DateTime.Now.Year && y.teamId == id)
+                            .Where(y => y.year.value == year && y.teamId == id)
                             .ToList();
 
-            var weeksForYear = this.Db.weeks.Include(w => w.course).Where(w => w.year.value == DateTime.Now.Year).OrderBy(x => x.seasonIndex).ToList();
+            var weeksForYear = this.Db.weeks.Include(w => w.course).Where(w => w.year.value == year).OrderBy(x => x.seasonIndex).ToList();
 
             if (team == null)
             {
@@ -61,7 +63,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                                                             Player = y.player,
                                                             YearData = y,
                                                             ResultsForYear = y.player.results
-                                                                            .Where(r => r.year.value == DateTime.Now.Year)
+                                                                            .Where(r => r.year.value == year)
                                                                             .OrderBy(r => r.match.teammatchup.week.seasonIndex)
                                                         })
             });

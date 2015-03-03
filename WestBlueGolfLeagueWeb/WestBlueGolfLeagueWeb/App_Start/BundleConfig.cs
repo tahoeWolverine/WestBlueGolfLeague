@@ -9,6 +9,15 @@ namespace WestBlueGolfLeagueWeb
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                        "~/Scripts/lib/jquery/jquery-{version}.js",
+                        "~/Scripts/lib/bootstrap/bootstrap.js",
+                        "~/Scripts/lib/lodash.min.js",
+                        "~/Scripts/lib/angular/angular-{version}.js",
+                        "~/Scripts/lib/angular/angular-*",
+                        "~/Scripts/lib/angular-ui-router-{version}.js",
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js"));
 
@@ -28,12 +37,15 @@ namespace WestBlueGolfLeagueWeb
                     .Include(
                         "~/Scripts/lib/angular/angular-{version}.js", 
                         "~/Scripts/lib/angular/angular-*",
-                        "~/Scripts/lib/angular-ui-router-{version}.js"
+                        "~/Scripts/lib/angular-ui-router-{version}.js",
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/main/*.js")
                 .Include("~/Scripts/player/playerList.js", "~/Scripts/player/*.js")
+                .Include("~/Scripts/player/teamList.js", "~/Scripts/team/*.js")
+                .Include("~/Scripts/admin/userManagement.js", "~/Scripts/admin/*.js")
                 .Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
 
             bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));
