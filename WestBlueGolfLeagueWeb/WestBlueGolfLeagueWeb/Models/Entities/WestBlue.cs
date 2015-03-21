@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     public partial class WestBlue : DbContext
     {
         public WestBlue()
-            : base("name=WestBlueReadOnly")
+            : base("name=WestBlue")
         {
         }
 
@@ -30,6 +30,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual DbSet<starttime> starttimes { get; set; }
         public virtual DbSet<team> teams { get; set; }
         public virtual DbSet<teammatchup> teammatchups { get; set; }
+        public virtual DbSet<teamyeardata> teamyeardatas { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<week> weeks { get; set; }
         public virtual DbSet<year> years { get; set; }
@@ -139,6 +140,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<team>()
+                .HasMany(e => e.teamyeardata)
+                .WithRequired(e => e.team)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<team>()
                 .HasMany(e => e.teammatchups)
                 .WithMany(e => e.teams)
                 .Map(m => m.ToTable("teammatchuptoteam").MapLeftKey("teamId").MapRightKey("teamMatchupId"));
@@ -198,6 +204,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
             modelBuilder.Entity<year>()
                 .HasMany(e => e.results)
+                .WithRequired(e => e.year)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<year>()
+                .HasMany(e => e.teamyeardata)
                 .WithRequired(e => e.year)
                 .WillCascadeOnDelete(false);
 

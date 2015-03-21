@@ -45,7 +45,8 @@ namespace AccessExport
                 playerIndex = 1,
                 matchupIndex = 1,
                 resultIndex = 1,
-                dataMigrationIndex = 1;
+                dataMigrationIndex = 1,
+                teamYearDataIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
             Dictionary<string, Course> courseNameToCourse = new Dictionary<string, Course>();
@@ -55,6 +56,7 @@ namespace AccessExport
             ICollection<MatchUp> allMatchUps = new List<MatchUp>();
             ICollection<Result> allResults = new List<Result>();
             ICollection<YearData> yearDatas = new List<YearData>();
+            ICollection<TeamYearData> teamYearDatas = new List<TeamYearData>();
             ICollection<Week> allWeeks = new List<Week>();
             ICollection<DataMigration> dataMigrationDatas = new List<DataMigration>();
 
@@ -219,6 +221,9 @@ namespace AccessExport
                                 teamNameToTeam.Add(teamName, team);
                             }
 
+                            TeamYearData tyd = new TeamYearData { Id = teamYearDataIndex++, TeamId = team.Id, Year = yearValueToYear[year] };
+                            teamYearDatas.Add(tyd);
+
                             teamIdToTeam.Add(teamId, team);
                         }
                     }
@@ -226,6 +231,9 @@ namespace AccessExport
                     if (!teamIdToTeam.ContainsKey(0) && !teamIdToTeam.ContainsKey(99))
                     {
                         teamIdToTeam[0] = teamIdToTeam[99] = teamOfLostPlayers;
+
+                        TeamYearData tyd = new TeamYearData { Id = teamYearDataIndex++, TeamId = teamOfLostPlayers.Id, Year = yearValueToYear[year] };
+                        teamYearDatas.Add(tyd);
                     }
 
                     // Players
@@ -530,7 +538,8 @@ namespace AccessExport
                 Courses = courseNameToCourse.Values,
                 LeaderBoardDatas = new List<LeaderBoardData>(),
                 LeaderBoards = new List<LeaderBoard>(),
-                DataMigrations = dataMigrationDatas
+                DataMigrations = dataMigrationDatas,
+                TeamYearData = teamYearDatas
             };
 
             ProcessHandicaps(dm);

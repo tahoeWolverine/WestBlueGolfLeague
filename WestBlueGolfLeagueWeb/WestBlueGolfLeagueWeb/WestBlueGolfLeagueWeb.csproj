@@ -231,8 +231,13 @@
     <Compile Include="Migrations\201503010604346_updateColumn.Designer.cs">
       <DependentUpon>201503010604346_updateColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503210414141_teamyeardata.cs" />
+    <Compile Include="Migrations\201503210414141_teamyeardata.Designer.cs">
+      <DependentUpon>201503210414141_teamyeardata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Admin\AdminRole.cs" />
     <Compile Include="Models\Entities\note.cs" />
+    <Compile Include="Models\Entities\teamyeardata.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Requests\Admin\AddUpdateUserRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
@@ -439,6 +444,12 @@
     <EmbeddedResource Include="Migrations\201503010604346_updateColumn.resx">
       <DependentUpon>201503010604346_updateColumn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503210414141_teamyeardata.resx">
+      <DependentUpon>201503210414141_teamyeardata.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

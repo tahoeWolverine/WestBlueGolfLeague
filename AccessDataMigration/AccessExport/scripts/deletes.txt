@@ -1,5 +1,6 @@
 ﻿SET SQL_SAFE_UPDATES=0;
 
+DELETE FROM teamyeardata;
 DELETE FROM teamMatchupToTeam;
 DELETE FROM matchToPlayer;
 DELETE FROM dataMigration;

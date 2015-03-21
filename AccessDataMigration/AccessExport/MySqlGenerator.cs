@@ -74,7 +74,6 @@ namespace AccessExport
             }
         }
 
-
         public void Generate(DataModel dataModel, SqlListener sqlListener = null)
         {
             // begin our transaction
@@ -134,6 +133,15 @@ namespace AccessExport
                 sb.AppendLine().AppendLine().AppendLine("/* Weeks */");
                 var weeks = dataModel.Weeks.Select(p => this.GetWeekInsert(p));
                 sb.Append(string.Join("\n", weeks));
+                sqlListener(sb.ToString());
+            }
+
+            // Team year datas
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine().AppendLine().AppendLine("/* Team year datas */");
+                var teamYearData = dataModel.TeamYearData.Select(p => this.GetTeamYearDataInsert(p));
+                sb.Append(string.Join("\n", teamYearData));
                 sqlListener(sb.ToString());
             }
 
@@ -200,6 +208,14 @@ namespace AccessExport
                 sqlListener(sb.ToString());
             }
 
+        }
+
+        private string GetTeamYearDataInsert(TeamYearData p)
+        {
+            return new FluentMySqlInsert("teamyeardata")
+                .WithColumns("id", "yearId", "teamId")
+                .WithValues(p.Id, p.Year.Id, p.TeamId)
+                .ToString();
         }
 
         private void ChunkInsertsAndNotify(string header, IEnumerable<string> inserts, SqlListener sqlListener)
