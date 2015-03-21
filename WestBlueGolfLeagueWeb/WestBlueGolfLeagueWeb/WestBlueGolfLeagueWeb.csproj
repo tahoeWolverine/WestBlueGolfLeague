@@ -342,6 +342,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Scripts\lib\lodash.min.js" />
     <Content Include="Scripts\lib\ui-bootstrap-tpls-0.12.0.js" />
+    <Content Include="Scripts\main\tpl\index.tpl.html" />
     <Content Include="Scripts\team\team.js" />
     <Content Include="Scripts\team\teamList.js" />
     <Content Include="Scripts\team\tpl\teamDetails.tpl.html" />
@@ -412,8 +413,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Information\RulesAndInformation.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
@@ -426,6 +425,7 @@
     <Content Include="Views\YearAdmin\Index.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\Home\AngularView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

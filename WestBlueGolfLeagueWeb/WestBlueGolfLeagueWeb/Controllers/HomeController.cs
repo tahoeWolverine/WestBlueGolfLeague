@@ -36,5 +36,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             return View();
         }
+
+        public ActionResult AngularMain()
+        {
+            return View("AngularView");
+        }
     }
 }

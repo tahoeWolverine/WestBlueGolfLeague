@@ -55,3 +55,21 @@
 	.controller("test", function () {
 		this.foobar = "test";
 	});
+
+
+angular
+    .module('main', ['app', 'ui.router', 'ngAnimate'])
+    .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
+        function ($locationProvider, $urlRouterProvider, $stateProvider) {
+
+            $stateProvider
+                .state("root", {
+                    url: '/testtest',
+                    templateUrl: '/Scripts/main/tpl/index.tpl.html',
+                    controller: function () { },
+                });
+
+            $locationProvider.html5Mode(true);
+            // 'leaderBoards', 'player', 'team'
+
+        }]);
