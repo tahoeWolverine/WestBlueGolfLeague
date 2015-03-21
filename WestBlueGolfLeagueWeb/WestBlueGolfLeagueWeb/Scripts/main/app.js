@@ -58,7 +58,7 @@
 
 
 angular
-    .module('main', ['app', 'ui.router', 'ngAnimate'])
+    .module('main', ['app', 'ui.router', 'ngAnimate', 'leaderBoards'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
         function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
