@@ -19,7 +19,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
         public ActionResult Details(int? id)
         {
-            int year = 2014;
+            int year = this.ControllerHelper.GetSelectedYear();
 
             var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year)).ToList();
 

@@ -16,7 +16,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         // GET: /Player/
         public ActionResult Index()
         {
-            int year = 2014;
+            int year = this.ControllerHelper.GetSelectedYear();
 
             var playersForYear = this.Db.GetPlayersWithTeamsForYear(year);
 

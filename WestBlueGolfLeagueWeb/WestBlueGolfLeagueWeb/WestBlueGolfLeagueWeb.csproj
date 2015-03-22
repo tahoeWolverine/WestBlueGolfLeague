@@ -204,6 +204,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\NoteController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />

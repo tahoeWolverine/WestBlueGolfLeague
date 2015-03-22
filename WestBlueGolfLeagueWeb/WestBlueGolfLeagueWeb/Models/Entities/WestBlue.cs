@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     public partial class WestBlue : DbContext
     {
         public WestBlue()
-            : base("name=WestBlue")
+            : base("name=WestBlueReadOnly")
         {
         }
 
