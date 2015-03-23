@@ -193,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Admin\AdminInfoController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="App_Start\AngularJsHtmlBundle.cs" />
     <Compile Include="App_Start\AngularJsHtmlCombine.cs" />
@@ -316,8 +317,12 @@
     <Content Include="Scripts\admin\services.js" />
     <Content Include="Scripts\admin\tpl\addUser.tpl.html" />
     <Content Include="Scripts\admin\tpl\adminIndex.tpl.html" />
+    <Content Include="Scripts\admin\tpl\adminWrapper.tpl.html" />
+    <Content Include="Scripts\admin\tpl\yearWizard\yearInit.tpl.html" />
+    <Content Include="Scripts\admin\tpl\yearWizard\yearWizard.tpl.html" />
     <Content Include="Scripts\admin\userManagement.js" />
     <Content Include="Scripts\admin\tpl\userManagementIndex.tpl.html" />
+    <Content Include="Scripts\admin\yearWizard.js" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoardWrapper.tpl.html" />

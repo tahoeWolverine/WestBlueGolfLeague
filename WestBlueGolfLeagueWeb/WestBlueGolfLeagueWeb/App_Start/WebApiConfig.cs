@@ -30,6 +30,12 @@ namespace WestBlueGolfLeagueWeb
 
             config.Routes.MapHttpRoute(name: "GetUserNameAvailability", routeTemplate: "api/user/name/{username}", defaults: new { controller = "User", action = "UserNameAvailable" });
 
+            config.Routes.MapHttpRoute(name: "AdminInfo", routeTemplate: "api/adminInfo", defaults: new { controller = "AdminInfo", action = "AdminInfo" });
+
+            config.Routes.MapHttpRoute(name: "YearWizardInfo", routeTemplate: "api/adminInfo/yearWizardInfo", defaults: new { controller = "AdminInfo", action = "YearWizardInfo" });
+
+            config.Routes.MapHttpRoute(name: "SaveYear", routeTemplate: "api/adminInfo/saveYear", defaults: new { controller = "AdminInfo", action = "SaveYear" });
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

@@ -1,27 +1,47 @@
 ﻿angular
-    .module('admin', ['userManagement', 'ui.router', 'app'])
+    .module('admin', ['userManagement', 'ui.router', 'app', 'ui.bootstrap.datepicker'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
         $stateProvider
             .state('admin', {
+                abstract: true,
                 url: '/',
+                templateUrl: '/Scripts/admin/tpl/adminWrapper.tpl.html',
+                resolve: {
+                    fetchedAdminInfo: ['adminInfo', function (adminInfo) {
+                        return adminInfo.getAdminInfo();
+                    }]
+                }
+            });
+
+        $stateProvider
+            .state('admin.index', {
+                url: '',
                 templateUrl: '/Scripts/admin/tpl/adminIndex.tpl.html',
                 controller: 'AdminIndex as adminIndex'
             });
 
         $stateProvider
-            .state('manageUsers', {
-                url: '/manage',
+            .state('admin.manageUsers', {
+                url: 'manage',
                 templateUrl: '/Scripts/admin/tpl/userManagementIndex.tpl.html',
                 controller: 'ManageUserIndex as index'
+            });
+
+        $stateProvider
+            .state('admin.yearWizard', {
+                abstract: true,
+                url: 'yearWizard',
+                templateUrl: '/Scripts/admin/tpl/yearWizard/yearWizard.tpl.html',
+                controller: 'YearWizard as yearWizard'
             });
 
         $urlRouterProvider.otherwise('/');
 
         $locationProvider.html5Mode(true);
     }])
-    .controller('AdminIndex', [function() {
-       
+    .controller('AdminIndex', ['fetchedAdminInfo', function (fetchedAdminInfo) {
+        this.fetchedAdminInfo = fetchedAdminInfo.data;
     }])
     .controller('SetLeagueNote', ['$scope', 'leagueNote', function ($scope, leagueNote) {
 

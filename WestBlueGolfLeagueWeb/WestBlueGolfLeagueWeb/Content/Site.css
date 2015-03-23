@@ -508,6 +508,43 @@ team-list-item-name {
     font-weight: bold;
 }
 
+/* Year wizard stuff */
+
+.year-wizard .input-group, .year-wizard input {
+    max-width: 500px;
+}
+
+.year-wizard .team-select {
+    cursor: pointer;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+
+.team-select i {
+    visibility: hidden;
+}
+
+.team-is-selected i {
+    visibility: visible;
+}
+
+.team-is-selected {
+    background-color: #88DF88;
+}
+
+.team-selection-container {
+    max-width: 500px;
+}
+
+.year-wizard .team-selected {
+    display: inline-block;
+    width: 25px;
+}
+
+.team-checkmark {
+    color: green;
+}
+
 @media (max-width: 992px) {
     .header-link-small {
         display: inline;

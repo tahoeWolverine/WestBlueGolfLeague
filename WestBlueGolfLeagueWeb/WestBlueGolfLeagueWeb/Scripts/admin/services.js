@@ -51,3 +51,28 @@ angular
            }
        };
    }]);
+
+angular.module('admin')
+   .factory('adminInfo', ['$http', function ($http) {
+       return {
+           getAdminInfo: function () {
+               return $http({
+                   method: 'GET',
+                   url: '/api/adminInfo'
+               });
+           },
+           getYearWizardData: function () {
+               return $http({
+                   method: 'GET',
+                   url: '/api/adminInfo/yearWizardInfo'
+               });
+           },
+           saveYear: function (data) {
+               return $http({
+                   method: 'POST',
+                   url: '/api/adminInfo/saveYear',
+                   data: data
+               });
+           }
+       }
+   }]);
