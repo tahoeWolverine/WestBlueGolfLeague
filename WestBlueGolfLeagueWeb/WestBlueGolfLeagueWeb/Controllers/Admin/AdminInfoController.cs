@@ -8,6 +8,7 @@ using WestBlueGolfLeagueWeb.Models.Admin;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Requests.Admin;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
@@ -49,8 +50,11 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SaveYear(object yearData)
+        public async Task<IHttpActionResult> SaveYear(CreateYearRequest request)
         {
+            // validate everything, including the date.
+
+
             // create year
             var year = this.Db.years.Add(new year { value = 2015, isComplete = false });
 

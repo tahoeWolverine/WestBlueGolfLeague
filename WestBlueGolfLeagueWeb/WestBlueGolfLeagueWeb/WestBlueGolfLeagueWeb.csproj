@@ -242,6 +242,7 @@
     <Compile Include="Models\Entities\teamyeardata.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Requests\Admin\AddUpdateUserRequest.cs" />
+    <Compile Include="Models\Requests\Admin\CreateYearRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
     <Compile Include="Models\Responses\Admin\RoleResponse.cs" />
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />
