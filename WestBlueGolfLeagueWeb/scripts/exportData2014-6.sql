@@ -519,7 +519,7 @@ DROP TABLE IF EXISTS `teamyeardata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teamyeardata` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `teamId` int(11) DEFAULT NULL,
   `yearId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -527,7 +527,7 @@ CREATE TABLE `teamyeardata` (
   KEY `fk_teamyeardata_year1_idx` (`yearId`),
   CONSTRAINT `fk_teamyeardata_team1` FOREIGN KEY (`teamId`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_teamyeardata_year1` FOREIGN KEY (`yearId`) REFERENCES `year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

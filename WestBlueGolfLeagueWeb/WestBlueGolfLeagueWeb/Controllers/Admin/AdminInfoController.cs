@@ -57,7 +57,6 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
             // create year
             var year = this.Db.years.Add(new year { value = 2015, isComplete = false });
-
             
 
             // get teams
@@ -71,8 +70,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 {
                     t.teamyeardata.Add(this.Db.teamyeardatas.Add(new teamyeardata { team = t, year = year }));
                 }
-
-                // TODO: need to set up auto increment on teamyeardata fields!!!
+                
                 await this.Db.SaveChangesAsync();
             }
             catch (Exception e)
