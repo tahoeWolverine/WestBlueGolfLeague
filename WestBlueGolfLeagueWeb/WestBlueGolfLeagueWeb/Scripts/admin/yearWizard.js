@@ -43,12 +43,19 @@
             team.isSelected = !team.isSelected;
         };
 
-        this.processRules = function () {
-            return !(_.any(this.yearInfo.teams, 'isSelected') && !this.disabled);
+        this.validState = function () {
+            return (_.any(this.yearInfo.teams, 'isSelected') && !this.disabled && this.numberOfWeeks > 0 && this.startDate);
         };
 
         this.saveYear = function () {
-            adminInfo.saveYear({});
+
+            var submitData = {
+                teamIds: _.pluck(_.select(this.yearInfo.teams, 'isSelected'), 'id'),
+                numberOfWeeks: this.numberOfWeeks,
+                weekDate: moment(this.startDate).format()
+            };
+
+            adminInfo.saveYear(submitData);
 
             this.disabled = true;
         };

@@ -58,11 +58,27 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             // create year
             var year = this.Db.years.Add(new year { value = 2015, isComplete = false });
 
-            await this.Db.SaveChangesAsync();
+            
 
             // get teams
 
             // create associated year datas on teams
+            try
+            {
+                var selectedTeams = await this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
+
+                foreach (team t in selectedTeams)
+                {
+                    t.teamyeardata.Add(this.Db.teamyeardatas.Add(new teamyeardata { team = t, year = year }));
+                }
+
+                // TODO: need to set up auto increment on teamyeardata fields!!!
+                await this.Db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
 
             // update players??
 
