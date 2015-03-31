@@ -1,4 +1,4 @@
-namespace WestBlueGolfLeagueWeb.Models
+namespace WestBlueGolfLeagueWeb.Models.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WestBlueGolfLeagueWeb.Tests.Services
+namespace WestBlueGolfLeagueWeb.Tests.Models.Schedule
 {
     [TestClass]
-    public class ScheduleCreatorTests
+    public class GolfYearTests
     {
         
     }

@@ -9,6 +9,7 @@ using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Requests.Admin;
+using WestBlueGolfLeagueWeb.Models.Schedule;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
@@ -52,35 +53,32 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpPost]
         public async Task<IHttpActionResult> SaveYear(CreateYearRequest request)
         {
-            // validate everything, including the date.
-
-
-            // create year
-            var year = this.Db.years.Add(new year { value = 2015, isComplete = false });
-            
-
-            // get teams
-
-            // create associated year datas on teams
+            // TODO: validate everything, including the date.
+                        
             try
             {
-                var selectedTeams = await this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
+                // get teams
+                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
 
-                foreach (team t in selectedTeams)
-                {
-                    t.teamyeardata.Add(this.Db.teamyeardatas.Add(new teamyeardata { team = t, year = year }));
-                }
-                
-                await this.Db.SaveChangesAsync();
+                // get possible pairings
+                var pairings = this.Db.pairings.ToListAsync();
+
+                // TODO: use real courses
+                var courses = this.Db.courses.ToListAsync();
+
+                await Task.WhenAll(selectedTeams, pairings, courses);
+
+                // update players??
+
+                // create schedule (weeks, team match ups, etc).
+                GolfYear golfYear = new GolfYear(selectedTeams.Result, request.WeekDate, request.NumberOfWeeks, pairings.Result, courses.Result);
+
+                await golfYear.PersistScheduleAsync(this.Db);
             }
             catch (Exception e)
             {
                 return this.InternalServerError(e);
             }
-
-            // update players??
-
-            // create schedule (weeks, team match ups, etc).
 
             return Ok();
         }

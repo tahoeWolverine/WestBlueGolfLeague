@@ -15,8 +15,8 @@
                 }
             });
     }])
-    .controller('YearInit', ['fetchedAdminInfo', 'resolvedYearWizardInfo', 'adminInfo',
-        function (fetchedAdminInfo, resolvedYearWizardInfo, adminInfo) {
+    .controller('YearInit', ['fetchedAdminInfo', 'resolvedYearWizardInfo', 'adminInfo', '$state',
+        function (fetchedAdminInfo, resolvedYearWizardInfo, adminInfo, $state) {
 
         this.adminInfo = fetchedAdminInfo.data;
         this.yearInfo = resolvedYearWizardInfo.data;
@@ -24,13 +24,8 @@
         this.isOpen = false;
         this.disabled = false;
 
-        this.getMinDate = function () {
-            return moment().month('April').date(1).format('YYYY-MM-DD');
-        };
-
-        this.getMaxDate = function () {
-            return moment().month('October').date(31).format('YYYY-MM-DD');
-        };
+        this.minDate = moment().month('April').date(1).format('YYYY-MM-DD');
+        this.maxDate = moment().month('October').date(31).format('YYYY-MM-DD');
 
         this.open = function ($event) {
             $event.preventDefault();
@@ -55,9 +50,16 @@
                 weekDate: moment(this.startDate).format()
             };
 
-            adminInfo.saveYear(submitData);
+            adminInfo.saveYear(submitData)
+                .then(function () {
+                    $state.go('admin.schedule');
+                })
+                .catch(function () {
+                    alert('error saving year');
+                });
 
-            this.disabled = true;
+            // removing for now
+            //this.disabled = true;
         };
     }])
     .controller('YearWizard', ['fetchedAdminInfo', 'yearWizardSteps', function (fetchedAdminInfo, yearWizardSteps) {
@@ -65,6 +67,9 @@
         this.fetchedAdminInfo = fetchedAdminInfo.data;
 
     }])
+
+
+    // Don't think these will be used at all :(
     .factory('yearWizardStorage', function () {
 
         var data = {

@@ -36,13 +36,24 @@
                 controller: 'YearWizard as yearWizard'
             });
 
+        $stateProvider
+            .state('admin.schedule', {
+                url: 'schedule',
+                templateUrl: '/Scripts/admin/tpl/scheduleEditor.tpl.html',
+                controller: 'ScheduleEditor as schedule'
+            });
+
         $urlRouterProvider.otherwise('/');
 
         $locationProvider.html5Mode(true);
     }])
+
+
     .controller('AdminIndex', ['fetchedAdminInfo', function (fetchedAdminInfo) {
         this.fetchedAdminInfo = fetchedAdminInfo.data;
     }])
+
+
     .controller('SetLeagueNote', ['$scope', 'leagueNote', function ($scope, leagueNote) {
 
         var self = this;
@@ -63,4 +74,9 @@
                 self.message = "There was an error setting the league note!";
             });
         };
+    }])
+
+    // Future home of schedule editor
+    .controller('ScheduleEditor', [function () {
+
     }]);
