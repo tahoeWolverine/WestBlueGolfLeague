@@ -41,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpGet]
         public async Task<IHttpActionResult> YearWizardInfo()
         {
-            int currYear = this.ControllerHelper.GetSelectedYear();
+            int currYear = await this.ControllerHelper.GetSelectedYearAsync(this.Db);
 
             var teams = await this.Db.teamyeardatas.Include(x => x.team).Include(x => x.year).Where(x => x.year.value >= currYear - 2).ToListAsync();
 

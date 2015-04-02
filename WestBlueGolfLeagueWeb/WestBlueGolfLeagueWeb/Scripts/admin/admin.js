@@ -1,5 +1,5 @@
 ﻿angular
-    .module('admin', ['userManagement', 'ui.router', 'app', 'ui.bootstrap.datepicker'])
+    .module('admin', ['userManagement', 'ui.router', 'app', 'ui.bootstrap.datepicker', 'schedule'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
         $stateProvider

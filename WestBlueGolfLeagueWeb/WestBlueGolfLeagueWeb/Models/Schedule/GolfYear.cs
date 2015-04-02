@@ -69,8 +69,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
             // an even number of teams.  Is uses the first team as the "anchor" of the algorithm.
             for (int i = 0, j = 0; j < numberOfWeeks; 
                 i = (i - 1 < 0 ? restOfTeams.Count - 1 : i - 1), 
-                j++, 
-                dateToStart.AddDays(7), 
+                j++,
+                dateToStart = dateToStart.AddDays(7), 
                 pairingIndex++)
             {
                 // Note that weeks are 1 based

@@ -5,6 +5,7 @@
         <a class="list-group-item" href="/Manage/" target="_self">Account settings</a>
         <a class="list-group-item" ui-sref="admin.manageUsers()">Manage League Users</a>
         <a class="list-group-item" ui-sref="admin.yearWizard.yearInit()" ng-if="adminIndex.fetchedAdminInfo.newYearAvailable">Manage/Create new year</a>
+        <a class="list-group-item" ui-sref="admin.schedule()">Schedule</a>
     </div>
     <!-- TODO: only allow/show this if user is admin -->
     <div ng-controller="SetLeagueNote as setLeagueNote">

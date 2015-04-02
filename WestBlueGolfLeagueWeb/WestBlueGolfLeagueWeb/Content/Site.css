@@ -545,6 +545,49 @@ team-list-item-name {
     color: green;
 }
 
+/* Matchups */
+.matchup-date-detail {
+  padding-top: 10px;
+}
+
+.matchup {
+  margin: auto;
+  width: 92%;
+  position: relative;
+  margin-bottom: 20px;
+  padding: 18px 0;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0px 2px 3px 0 #AAAAAA;
+}
+
+.matchup-container {
+  margin-top: 10px;
+}
+
+.matchup > div {
+  float: left;
+}
+
+.matchup .matchup-left, .matchup .matchup-right {
+  width: 40%;
+  font-weight: bold;
+}
+
+.matchup .matchup-vs {
+  width: 20%;
+  text-align: center;
+}
+
+.matchup .matchup-left {
+  text-align: right;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 @media (max-width: 992px) {
     .header-link-small {
         display: inline;

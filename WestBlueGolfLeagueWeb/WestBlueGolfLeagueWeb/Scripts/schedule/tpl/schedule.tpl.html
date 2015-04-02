@@ -1,0 +1,21 @@
+﻿
+
+<div class="row">
+    <div ng-repeat="week in scheduleController.sched.weeks" class="matchup-date-detail col-md-4">
+
+        <h3>{{::week.date | date : 'mediumDate' }}</h3>
+
+        <div>
+            <span>{{::week.pairing}}</span>
+            <span>{{::week.course.name}}</span>
+        </div>
+
+        <div class="matchup-container">
+            <div ng-repeat="teamMatchup in week.teamMatchups" class="matchup clearfix">
+                <div class="matchup-left">{{::teamMatchup.team1.name}}</div>
+                <div class="matchup-vs">vs</div>
+                <div class="matchup-right">{{::teamMatchup.team2.name}}</div>
+            </div>
+        </div>
+    </div>
+</div>

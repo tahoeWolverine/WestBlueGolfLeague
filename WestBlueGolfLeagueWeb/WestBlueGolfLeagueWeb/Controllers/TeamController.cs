@@ -7,6 +7,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.ViewModels;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -14,9 +15,9 @@ namespace WestBlueGolfLeagueWeb.Controllers
     {
         //
         // GET: /Team/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            int year = this.ControllerHelper.GetSelectedYear();
+            int year = await this.ControllerHelper.GetSelectedYearAsync(this.Db);
 
             var teamsForYear = this.Db.GetTeamsForYear(year);
 

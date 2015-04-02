@@ -17,9 +17,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
         /// Currently hard coded until it is actually implemented.
         /// </summary>
         /// <returns></returns>
-        public int GetSelectedYear()
+        public async Task<int> GetSelectedYearAsync(WestBlue db)
         {
-            return 2014;
+            // TODO: take cookies in to account here!!!!!!!!!
+            return await this.GetCurrentYear(db);
         }
 
         /// <summary>
