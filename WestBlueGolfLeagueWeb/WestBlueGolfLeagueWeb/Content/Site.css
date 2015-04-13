@@ -552,6 +552,10 @@ team-list-item-name {
   padding-top: 10px;
 }
 
+.matchup-date-detail:nth-of-type(3n+4) {
+	clear: both;
+}
+
 .matchup {
   margin: auto;
   width: 96%;

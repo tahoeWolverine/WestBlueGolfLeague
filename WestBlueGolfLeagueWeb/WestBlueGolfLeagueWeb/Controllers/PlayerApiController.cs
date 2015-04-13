@@ -61,19 +61,29 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
 
-            // TODO: handle players that don't have leaderboard data yet.
-
             return Ok(
                 new PlayerProfileData 
                 { 
-                    PlayerName = player.name, 
-                    AveragePoints = keyToBoardData["player_avg_points"].formattedValue, 
-                    Handicap = keyToBoardData["player_handicap"].formattedValue, 
-                    Improved = keyToBoardData["player_season_improvement"].formattedValue, 
-                    LowNet = keyToBoardData["player_net_best_score"].formattedValue, 
-                    LowScore = keyToBoardData["player_best_score"].formattedValue,
+                    PlayerName = player.name,
+					AveragePoints = TryGetFormattedValue(keyToBoardData, "player_avg_points"), 
+                    Handicap = TryGetFormattedValue(keyToBoardData, "player_handicap"), 
+                    Improved = TryGetFormattedValue(keyToBoardData, "player_season_improvement"), 
+                    LowNet = TryGetFormattedValue(keyToBoardData, "player_net_best_score"), 
+                    LowScore = TryGetFormattedValue(keyToBoardData, "player_best_score"),
                     ResultsForYear = resultsForYear.Select(x => new PlayerProfileResult(player, x))
                 });
         }
+
+		private string TryGetFormattedValue(Dictionary<string, leaderboarddata> dictionary, string leaderboardName)
+		{
+			leaderboarddata leaderboarddata = null;
+
+			if (dictionary.TryGetValue(leaderboardName, out leaderboarddata))
+			{
+				return leaderboarddata.formattedValue;
+			}
+
+			return string.Empty;
+		}
     }
 }

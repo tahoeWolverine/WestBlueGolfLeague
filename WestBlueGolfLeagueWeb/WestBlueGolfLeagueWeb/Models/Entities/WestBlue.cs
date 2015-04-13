@@ -9,7 +9,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     {
         static WestBlue()
         {
-            Database.SetInitializer<WestBlue>(null);
+            //Database.SetInitializer<WestBlue>(null);
         }
 
         public WestBlue()
@@ -149,10 +149,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .WithRequired(e => e.team)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<team>()
-                .HasMany(e => e.teammatchups)
-                .WithMany(e => e.teams)
-                .Map(m => m.ToTable("teammatchuptoteam").MapLeftKey("teamId").MapRightKey("teamMatchupId"));
+	        modelBuilder.Entity<team>()
+		        .HasMany(e => e.teammatchups)
+		        .WithMany(e => e.teams)
+		        .Map(m => m.ToTable("teammatchuptoteam").MapLeftKey("teamId").MapRightKey("teamMatchupId"));
 
             modelBuilder.Entity<teammatchup>()
                 .Property(e => e.playoffType)

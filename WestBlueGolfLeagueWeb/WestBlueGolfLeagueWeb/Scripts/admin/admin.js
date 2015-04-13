@@ -49,9 +49,23 @@
     }])
 
 
-    .controller('AdminIndex', ['fetchedAdminInfo', function (fetchedAdminInfo) {
-        this.fetchedAdminInfo = fetchedAdminInfo.data;
-    }])
+    .controller('AdminIndex', ['fetchedAdminInfo', 'adminInfo', function (fetchedAdminInfo, adminInfo) {
+		var self = this;
+
+		self.fetchedAdminInfo = fetchedAdminInfo.data;
+
+		this.deleteCurrentYear = function() {
+			adminInfo
+				.deleteYear()
+				.then(function () {
+					alert('year deleted!');
+					return adminInfo.getAdminInfo();
+				})
+				.then(function(data) {
+					self.fetchedAdminInfo = data.data;
+				});
+		};
+	}])
 
 
     .controller('SetLeagueNote', ['$scope', 'leagueNote', function ($scope, leagueNote) {

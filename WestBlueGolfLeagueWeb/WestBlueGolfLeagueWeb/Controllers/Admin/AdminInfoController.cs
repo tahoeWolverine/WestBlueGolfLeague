@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using WestBlueGolfLeagueWeb.Models.Admin;
 using System.Data.Entity;
+using System.Net;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Requests.Admin;
@@ -93,5 +94,31 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
             return Ok();
         }
+
+		[HttpPost]
+	    public async Task<IHttpActionResult> DeleteYear()
+	    {
+		    int yearToDelete = await this.ControllerHelper.GetCurrentYear(this.Db);
+
+			var teamMatchupsToRemove =
+				await this.Db.teammatchups.Include(x => x.teams).Where(x => x.week.year.value == yearToDelete).ToListAsync();
+
+			foreach (var tm in teamMatchupsToRemove)
+			{
+				foreach (var team in tm.teams)
+				{
+					team.teammatchups.Remove(tm);
+				}
+			}
+
+			this.Db.teamyeardatas.RemoveRange(await this.Db.teamyeardatas.Where(x => x.year.value == yearToDelete).ToListAsync());
+			this.Db.teammatchups.RemoveRange(teamMatchupsToRemove);
+			this.Db.weeks.RemoveRange(await this.Db.weeks.Where(x => x.year.value == yearToDelete).ToListAsync());
+			this.Db.years.RemoveRange(await this.Db.years.Where(x => x.value == yearToDelete).ToListAsync());
+
+			await this.Db.SaveChangesAsync();
+
+		    return StatusCode(HttpStatusCode.NoContent);
+	    }
     }
 }

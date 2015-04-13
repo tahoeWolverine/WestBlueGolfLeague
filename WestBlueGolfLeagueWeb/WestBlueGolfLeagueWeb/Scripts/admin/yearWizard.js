@@ -59,9 +59,8 @@
                     .catch(function () {
                         alert('error saving year');
                     });
-
-                // removing for now
-                //this.disabled = true;
+                
+                this.disabled = true;
             };
     }])
     .controller('YearWizard', ['fetchedAdminInfo', 'yearWizardSteps', function (fetchedAdminInfo, yearWizardSteps) {

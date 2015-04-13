@@ -23,19 +23,5 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             return View(new TeamListViewModel { TeamsForYear = teamsForYear.Select(x => new { Name = x.teamName, Valid = x.validTeam, Id = x.id }) });
         }
-
-        //
-        // GET: /Team/Details/5
-        public ActionResult Details(int id)
-        {
-            var team = this.Db.teams.Where(x => x.id == id).FirstOrDefault();
-
-            if (team == null)
-            {
-                // do 404 here
-            }
-
-            return View(team);
-        }
     }
 }

@@ -73,6 +73,12 @@ angular.module('admin')
                    url: '/api/adminInfo/saveYear',
                    data: data
                });
-           }
+           },
+			deleteYear: function() {
+				return $http({
+					method: 'POST',
+					url: '/api/adminInfo/deleteYear'
+				});
+			}	
        }
    }]);

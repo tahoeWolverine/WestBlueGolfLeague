@@ -66,14 +66,26 @@ namespace WestBlueGolfLeagueWeb.Controllers
             return Ok(
                 new TeamProfileData ()
                 { 
-                    TeamName = team.teamName, 
-                    TotalPoints = keyToBoardData["team_ranking"].formattedValue,
-                    AvgHandicap = keyToBoardData["team_avg_handicap"].formattedValue, 
-                    Improved = keyToBoardData["team_season_improvement"].formattedValue, 
-                    TotalWins = keyToBoardData["team_total_match_wins"].formattedValue, 
-                    WinLossRatio = keyToBoardData["team_win_loss_ratio"].formattedValue,
+                    TeamName = team.teamName,
+					TotalPoints = TryGetFormattedValue(keyToBoardData, "team_ranking"),
+                    AvgHandicap = TryGetFormattedValue(keyToBoardData, "team_avg_handicap"), 
+                    Improved = TryGetFormattedValue(keyToBoardData, "team_season_improvement"), 
+                    TotalWins = TryGetFormattedValue(keyToBoardData, "team_total_match_wins"), 
+                    WinLossRatio = TryGetFormattedValue(keyToBoardData, "team_win_loss_ratio"),
                     ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x))
                 });
         }
+
+	    private string TryGetFormattedValue(Dictionary<string, leaderboarddata> dictionary, string leaderboardName)
+	    {
+		    leaderboarddata leaderboarddata = null;
+
+		    if (dictionary.TryGetValue(leaderboardName, out leaderboarddata))
+		    {
+			    return leaderboarddata.formattedValue;
+		    }
+
+		    return string.Empty;
+	    }
     }
 }

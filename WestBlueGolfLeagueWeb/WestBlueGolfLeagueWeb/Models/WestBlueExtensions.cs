@@ -24,7 +24,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         {
             return westBlue.teams
                         .AsNoTracking()
-                        .Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year))
+                        .Where(x => x.validTeam == true && x.teamyeardata.Any(y => y.year.value == year))
                         .ToList();
         }
 
