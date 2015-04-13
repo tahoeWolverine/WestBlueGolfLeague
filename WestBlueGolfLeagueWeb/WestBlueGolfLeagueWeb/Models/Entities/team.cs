@@ -18,6 +18,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             teamyeardata = new HashSet<teamyeardata>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]

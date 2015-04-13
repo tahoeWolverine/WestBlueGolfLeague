@@ -45,7 +45,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
             var teams = await this.Db.teamyeardatas.Include(x => x.team).Include(x => x.year).Where(x => x.year.value >= currYear - 2).ToListAsync();
 
-            var sortedUniqueTeams = teams.OrderByDescending(x => x.year.value).GroupBy(x => x.team.id).Select(x => x.First()).Select(x => x.team).Where(x => x.validTeam);
+            var sortedUniqueTeams = teams.Where(x => x.team.validTeam).OrderByDescending(x => x.year.value).GroupBy(x => x.team.id).Select(x => x.First()).Select(x => x.team);
 
             return Ok(new { teams = sortedUniqueTeams.Select(x => TeamResponse.From(x)) });
         }
@@ -53,25 +53,36 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpPost]
         public async Task<IHttpActionResult> SaveYear(CreateYearRequest request)
         {
-            // TODO: validate everything, including the date.
+            var createdTeams = new List<team>();
+
+            // create new teams
+            if (request.TeamsToCreate != null && request.TeamsToCreate.Count > 0) 
+            {
+                this.Db.teams.AddRange(request.TeamsToCreate.Select(x => new team { validTeam = true, teamName = x }));
+            }
+
+            await this.Db.SaveChangesAsync();
                         
             try
             {
                 // get teams
-                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
+                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id) || (request.TeamsToCreate.Contains(x.teamName) && x.teamyeardata.Count == 0)).ToListAsync();
 
                 // get possible pairings
                 var pairings = this.Db.pairings.ToListAsync();
 
-                // TODO: use real courses
-                var courses = this.Db.courses.ToListAsync();
+                // Get courses to rotate.
+                List<string> courseNames = new List<string> { "Silver Front", "Silver Back", "Gold Front", "Gold Back" };
+                var courses = this.Db.courses.Where(x => courseNames.Contains(x.name)).OrderBy(x => x.id).ToListAsync();
 
                 await Task.WhenAll(selectedTeams, pairings, courses);
 
                 // update players??
 
+                var combinedTeams = selectedTeams.Result;
+
                 // create schedule (weeks, team match ups, etc).
-                GolfYear golfYear = new GolfYear(selectedTeams.Result, request.WeekDate, request.NumberOfWeeks, pairings.Result, courses.Result);
+                GolfYear golfYear = new GolfYear(combinedTeams, request.SelectedDates, pairings.Result, courses.Result);
 
                 await golfYear.PersistScheduleAsync(this.Db);
             }

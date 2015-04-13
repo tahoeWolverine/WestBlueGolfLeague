@@ -1,17 +1,17 @@
 ﻿
 
-<div class="row">
+<div class="row schedule">
     <div ng-repeat="week in scheduleController.sched.weeks" class="matchup-date-detail col-md-4">
 
-        <h3>{{::week.date | date : 'mediumDate' }}</h3>
+        <h4>Week {{::week.seasonIndex}} - {{::week.date | date : 'MMM d' }}</h4>
 
         <div>
-            <span>{{::week.pairing}}</span>
-            <span>{{::week.course.name}}</span>
+            <span class="schedule-pairing">{{::week.pairing}}</span>
+            <span class="schedule-course">{{::week.course.name}}</span>
         </div>
 
         <div class="matchup-container">
-            <div ng-repeat="teamMatchup in week.teamMatchups" class="matchup clearfix">
+            <div ng-repeat="teamMatchup in week.teamMatchups | orderBy:'matchOrder'" class="matchup clearfix">
                 <div class="matchup-left">{{::teamMatchup.team1.name}}</div>
                 <div class="matchup-vs">vs</div>
                 <div class="matchup-right">{{::teamMatchup.team2.name}}</div>

@@ -7,6 +7,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
     public partial class WestBlue : DbContext
     {
+        static WestBlue()
+        {
+            Database.SetInitializer<WestBlue>(null);
+        }
+
         public WestBlue()
             : base("name=WestBlue")
         {
@@ -15,7 +20,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public WestBlue(bool needWriteAccess)
             : base(needWriteAccess ? "name=WestBlue" : "name=WestBlueReadOnly")
         {
-
+            
         }
 
         public virtual DbSet<course> courses { get; set; }

@@ -10,12 +10,10 @@ namespace WestBlueGolfLeagueWeb.Models.Requests.Admin
     {
         public List<int> TeamIds { get; set; }
 
-        public DateTimeOffset WeekDate { get; set; }
-
-        [Required]
-        [Range(5, 100, ErrorMessage = "Must be between 5 and 100")]
-        public int NumberOfWeeks { get; set; }
+        public List<DateTimeOffset> SelectedDates { get; set; }
 
         public List<int> PlayersInLeagueForYear { get; set; }
+
+        public List<string> TeamsToCreate { get; set; }
     }
 }

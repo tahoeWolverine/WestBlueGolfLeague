@@ -4,25 +4,13 @@
     a match will ever be played.  &lsquo;Number of weeks&rsquo; are the number of weeks that will be in the season.</p>
     <div>
         <div class="form-group">
-            <label for="leagueStartDate">League Start Date</label>
-            <div class="input-group">
-                <input type="text"
-                       id="leagueStartDate"
-                       class="form-control"
-                       datepicker-popup ng-model="yearInit.startDate"
-                       min-date="yearInit.midDate"
-                       max-date="yearInit.maxDate"
-                       ng-required="true"
-                       is-open="yearInit.isOpen"
-                       close-text="Close" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="yearInit.open($event)"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="numOfWeeks">Number of Weeks</label>
-            <input class="form-control" type="number" id="numOfWeeks" ng-model="yearInit.numberOfWeeks" ng-required="true" />
+            <label for="leagueStartDate">Select match dates</label>
+            <datepicker type="text"
+                        id="leagueStartDate"
+                        ng-model="yearInit.startDate"
+                        min-date="yearInit.midDate"
+                        max-date="yearInit.maxDate"
+                        multi-select="yearInit.selectedDates"></datepicker>
         </div>
         <!--<div class="form-group">
             <label for="leagueEndDate">League End Date</label>
@@ -49,6 +37,10 @@
         <div ng-repeat="team in yearInit.yearInfo.teams" class="team-select" ng-click="yearInit.selectTeam(team)" ng-class="{'team-is-selected': team.isSelected}">
             <i class="fa fa-check team-checkmark"></i> {{team.name}}
         </div>
+    </div>
+    <div class="form-group form-inline">
+        <input type="text" ng-model="yearInit.teamToCreate" class="form-control" />
+        <button ng-click="yearInit.createTeam();" class="btn btn-primary">Create New Team</button>
     </div>
 
     <h2>3. Select Players</h2>

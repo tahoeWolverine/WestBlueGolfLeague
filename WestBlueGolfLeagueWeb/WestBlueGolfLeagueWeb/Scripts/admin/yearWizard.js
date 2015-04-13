@@ -18,49 +18,51 @@
     .controller('YearInit', ['fetchedAdminInfo', 'resolvedYearWizardInfo', 'adminInfo', '$state',
         function (fetchedAdminInfo, resolvedYearWizardInfo, adminInfo, $state) {
 
-        this.adminInfo = fetchedAdminInfo.data;
-        this.yearInfo = resolvedYearWizardInfo.data;
+            var self = this;
+            this.adminInfo = fetchedAdminInfo.data;
+            this.yearInfo = resolvedYearWizardInfo.data;
 
-        this.isOpen = false;
-        this.disabled = false;
+            this.disabled = false;
+            this.startDate = null;
+            this.selectedDates = [];
 
-        this.minDate = moment().month('April').date(1).format('YYYY-MM-DD');
-        this.maxDate = moment().month('October').date(31).format('YYYY-MM-DD');
+            this.minDate = moment().month('April').date(1).format('YYYY-MM-DD');
+            this.maxDate = moment().month('October').date(31).format('YYYY-MM-DD');
 
-        this.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            this.isOpen = !this.isOpen;
-        };
-
-        this.selectTeam = function (team) {
-            team.isSelected = !team.isSelected;
-        };
-
-        this.validState = function () {
-            return (_.any(this.yearInfo.teams, 'isSelected') && !this.disabled && this.numberOfWeeks > 0 && this.startDate);
-        };
-
-        this.saveYear = function () {
-
-            var submitData = {
-                teamIds: _.pluck(_.select(this.yearInfo.teams, 'isSelected'), 'id'),
-                numberOfWeeks: this.numberOfWeeks,
-                weekDate: moment(this.startDate).format()
+            this.selectTeam = function (team) {
+                team.isSelected = !team.isSelected;
             };
 
-            adminInfo.saveYear(submitData)
-                .then(function () {
-                    $state.go('admin.schedule');
-                })
-                .catch(function () {
-                    alert('error saving year');
-                });
+            this.validState = function () {
+                return (_.filter(this.yearInfo.teams, 'isSelected').length % 2 == 0 && !this.disabled && (this.selectedDates && this.selectedDates.length));
+            };
 
-            // removing for now
-            //this.disabled = true;
-        };
+            this.createTeam = function () {
+                if (!self.teamToCreate) { return; }
+
+                self.yearInfo.teams.push({ name: self.teamToCreate, isSelected: true });
+                self.teamToCreate = '';
+            };
+
+            this.saveYear = function () {
+
+                var submitData = {
+                    teamIds: _.pluck(_.select(this.yearInfo.teams, 'isSelected'), 'id'),
+                    selectedDates: _.map(this.selectedDates, function (date) { return moment(date).format() }),
+                    teamsToCreate: _.pluck(_.filter(this.yearInfo.teams, function(team) { return !team.id && team.isSelected }), 'name'), // grab non-persisted teams
+                };
+
+                adminInfo.saveYear(submitData)
+                    .then(function () {
+                        $state.go('admin.schedule');
+                    })
+                    .catch(function () {
+                        alert('error saving year');
+                    });
+
+                // removing for now
+                //this.disabled = true;
+            };
     }])
     .controller('YearWizard', ['fetchedAdminInfo', 'yearWizardSteps', function (fetchedAdminInfo, yearWizardSteps) {
 

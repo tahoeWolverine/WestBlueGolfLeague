@@ -11,17 +11,17 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
     {
         private List<pairing> pairings;
         private int numberOfWeeks;
-        private DateTimeOffset dateToStart;
+        private List<DateTimeOffset> selectedDates;
         private List<team> teams;
-        private IEnumerable<course> courses;
+        private List<course> courses;
 
-        public GolfYear(List<team> teams, DateTimeOffset dateToStart, int numberOfWeeks, List<pairing> pairings, IEnumerable<course> courses)
+        public GolfYear(List<team> teams, List<DateTimeOffset> selectedDates, List<pairing> pairings, IEnumerable<course> courses)
         {
             this.teams = teams;
-            this.dateToStart = dateToStart;
-            this.numberOfWeeks = numberOfWeeks;
+            this.selectedDates = selectedDates.OrderBy(x => x).ToList();
+            this.numberOfWeeks = selectedDates.Count;
             this.pairings = pairings;
-            this.courses = courses;
+            this.courses = courses.ToList();
 
             this.CreateTeamYearData();
 
@@ -53,8 +53,6 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         // Creates a schedule given the inputs
         // Still TODO:
         // - associating courses with weeks
-        // - evenly distrubuting start times (match order/start time)
-        // - 
         private void CreateSchedule()
         {
             team anchorTeam = teams.First();
@@ -67,18 +65,16 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 
             // This does a round robin algorithm in place on the teams.  It assumes
             // an even number of teams.  Is uses the first team as the "anchor" of the algorithm.
-            for (int i = 0, j = 0; j < numberOfWeeks; 
+            for (int i = 0, j = 0; j < this.numberOfWeeks; 
                 i = (i - 1 < 0 ? restOfTeams.Count - 1 : i - 1), 
                 j++,
-                dateToStart = dateToStart.AddDays(7), 
                 pairingIndex++)
             {
                 // Note that weeks are 1 based
-                // TODO: courses
-                week currentWeek = new week { seasonIndex = j + 1, date = dateToStart.DateTime, pairing = pairings[pairingIndex % pairings.Count], course = courses.First() };
+                week currentWeek = new week { seasonIndex = j + 1, date = this.selectedDates[j].DateTime, pairing = pairings[pairingIndex % pairings.Count], course = courses[j % courses.Count] };
                 createdWeeks.AddLast(currentWeek);
 
-                // create the anchor matchup // TODO: fix the match order param.
+                // create anchor matchup.
                 createdMatchups.AddLast(this.CreateTeamMatchup(anchorTeam, restOfTeams[i], currentWeek, 0));
 
                 for (int k = 0; k < restOfTeams.Count / 2; k++)
@@ -92,12 +88,24 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
                     // TODO: fix the match order param.
                     createdMatchups.AddLast(this.CreateTeamMatchup(restOfTeams[team1Index], restOfTeams[team2Index], currentWeek, k + 1));
                 }
+
+                // when we hit this we have finished 
+                if (j == teams.Count - 2)
+                {
+                    var oldAnchor = anchorTeam;
+
+                    int newAnchorIndex = restOfTeams.Count / 2;
+                    anchorTeam = restOfTeams[newAnchorIndex];
+
+                    restOfTeams = new List<team>(this.teams);
+                    restOfTeams.RemoveAt(restOfTeams.IndexOf(anchorTeam));
+                }
             }
 
             this.CreatedMatchups = createdMatchups.ToList();
             this.CreatedWeeks = createdWeeks.ToList();
 
-            // TODO: assign tee times somehow
+            this.AssignTeeTimes();
         }
 
         private teammatchup CreateTeamMatchup(team team1, team team2, week week, int matchOrder)
@@ -107,6 +115,66 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
             tm.teams.Add(team2);
 
             return tm;
+        }
+
+        /// <summary>
+        /// This assumes we've already build the "schedule".
+        /// </summary>
+        private void AssignTeeTimes()
+        {
+            int numOfTeeTimes = this.teams.Count / 2;
+
+            int[] teeTimes = new int[4];
+
+            for (int i = 0; i < teeTimes.Length; i++)
+            {
+                teeTimes[i] = i;
+            }
+
+            int numOfWeeks = this.CreatedWeeks.Count;
+
+            int anchorIndex = 1; // deemed to be the most "fair".
+
+            var groupedMatches = this.CreatedMatchups.GroupBy(x => x.week.seasonIndex).OrderBy(x => x.Key);
+            
+            foreach (var grouping in groupedMatches)
+            {
+                var sortedMatchUps = grouping.OrderBy(x => x.matchOrder).ToList();
+
+                for (int j = 0; j < sortedMatchUps.Count; j++)
+                {
+                    sortedMatchUps[j].matchOrder = teeTimes[j];
+                }
+
+                this.RotateTeeTimes(teeTimes, anchorIndex);
+            }
+        }
+
+        /// <summary>
+        /// Performs the tee time rotation, which tries to evenly distribute the season's tee times across
+        /// the season.
+        /// </summary>
+        /// <param name="teeTimes"></param>
+        /// <param name="anchorIndex"></param>
+        private void RotateTeeTimes(int[] teeTimes, int anchorIndex)
+        {
+            Dictionary<int, int> indexMapping = new Dictionary<int, int>();
+
+            for (int i = 0; i < teeTimes.Length; i++)
+            {
+                int newIndex = 0;
+
+                if (i == anchorIndex) { newIndex = anchorIndex; }
+                else if ((i + 1) % teeTimes.Length == anchorIndex) { newIndex = (anchorIndex + 1) % teeTimes.Length; }
+                else { newIndex = (i + 1) % teeTimes.Length; }
+
+                indexMapping[teeTimes[i]] = newIndex;
+            }
+
+            foreach (var kvp in indexMapping)
+            {
+                teeTimes[kvp.Value] = kvp.Key;
+            }
         }
 
         public async Task PersistScheduleAsync(WestBlue db)

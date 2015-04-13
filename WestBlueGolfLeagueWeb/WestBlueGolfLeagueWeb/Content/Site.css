@@ -534,6 +534,8 @@ team-list-item-name {
 
 .team-selection-container {
     max-width: 500px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .year-wizard .team-selected {
@@ -552,10 +554,11 @@ team-list-item-name {
 
 .matchup {
   margin: auto;
-  width: 92%;
+  width: 96%;
   position: relative;
-  margin-bottom: 20px;
-  padding: 18px 0;
+  margin-bottom: 14px;
+  padding: 14px 0;
+  font-size: 13px;
   border: 1px solid #DDDDDD;
   box-shadow: 0px 2px 3px 0 #AAAAAA;
 }
@@ -569,12 +572,12 @@ team-list-item-name {
 }
 
 .matchup .matchup-left, .matchup .matchup-right {
-  width: 40%;
+  width: 43%;
   font-weight: bold;
 }
 
 .matchup .matchup-vs {
-  width: 20%;
+  width: 14%;
   text-align: center;
 }
 
@@ -587,6 +590,17 @@ team-list-item-name {
   display: block;
   clear: both;
 }
+
+.schedule-pairing {
+    padding-right: 10px;
+    border-right: 1px solid black;
+}
+
+.schedule-course {
+    padding-left: 10px;
+}
+
+
 
 @media (max-width: 992px) {
     .header-link-small {
