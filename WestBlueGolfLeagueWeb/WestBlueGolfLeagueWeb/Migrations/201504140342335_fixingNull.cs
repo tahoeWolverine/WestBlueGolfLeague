@@ -3,16 +3,16 @@ namespace WestBlueGolfLeagueWeb.Models
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class EquitableScore : DbMigration
+    public partial class fixingNull : DbMigration
     {
         public override void Up()
         {
-            AddColumn("result", "scoreVariant", c => c.Int(nullable: false));
+            AlterColumn("result", "scoreVariant", c => c.Int());
         }
         
         public override void Down()
         {
-            DropColumn("result", "scoreVariant");
+            AlterColumn("result", "scoreVariant", c => c.Int(nullable: false));
         }
     }
 }

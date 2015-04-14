@@ -15,7 +15,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int score { get; set; }
 
-		public int scoreVariant { get; set; }
+		public int? scoreVariant { get; set; }
 
         public int points { get; set; }
 
