@@ -547,9 +547,23 @@ team-list-item-name {
     color: green;
 }
 
+textarea.roster-input {
+    width: 50%;
+    min-height: 20em;
+    margin-bottom: 14px;
+    max-width: 50%;
+}
+
 /* Matchups */
-.matchup-date-detail {
-  padding-top: 10px;
+.matchup-date-detail, .schedule-date-detail {
+  margin-bottom: 24px;
+  padding: 0 10px 10px 10px;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0px 2px 3px 0 #AAAAAA;
+}
+
+.schedule-date-clearfix:nth-of-type(2n+3) {
+	clear: both;
 }
 
 .matchup-date-detail:nth-of-type(3n+4) {
@@ -558,13 +572,14 @@ team-list-item-name {
 
 .matchup {
   margin: auto;
-  width: 96%;
-  position: relative;
+  font-size: 13px;
+  padding: 4px 0;
+
+  /*position: relative;
   margin-bottom: 14px;
   padding: 14px 0;
-  font-size: 13px;
   border: 1px solid #DDDDDD;
-  box-shadow: 0px 2px 3px 0 #AAAAAA;
+  box-shadow: 0px 2px 3px 0 #AAAAAA;*/
 }
 
 .matchup-container {
@@ -576,12 +591,16 @@ team-list-item-name {
 }
 
 .matchup .matchup-left, .matchup .matchup-right {
-  width: 43%;
+  width: 36%;
   font-weight: bold;
 }
 
+.tee-time {
+    width: 20%;
+}
+
 .matchup .matchup-vs {
-  width: 14%;
+  width: 8%;
   text-align: center;
 }
 
@@ -596,12 +615,12 @@ team-list-item-name {
 }
 
 .schedule-pairing {
-    padding-right: 10px;
-    border-right: 1px solid black;
+    padding-left: 10px;
 }
 
 .schedule-course {
-    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid black;
 }
 
 

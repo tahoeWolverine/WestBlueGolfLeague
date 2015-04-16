@@ -25,6 +25,9 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 
             this.CreateTeamYearData();
 
+            // super hack to allow league subs to be carried over, but not part of the schedule.
+            this.teams = this.teams.Where(x => !string.Equals(x.teamName, "league subs", StringComparison.OrdinalIgnoreCase)).ToList();
+
             this.CreateSchedule();
         }
 
@@ -51,8 +54,6 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         }
 
         // Creates a schedule given the inputs
-        // Still TODO:
-        // - associating courses with weeks
         private void CreateSchedule()
         {
             team anchorTeam = teams.First();
@@ -85,7 +86,6 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
                     int team2Index = i - 1 - k;
                     if (team2Index < 0) team2Index = restOfTeams.Count + team2Index;
 
-                    // TODO: fix the match order param.
                     createdMatchups.AddLast(this.CreateTeamMatchup(restOfTeams[team1Index], restOfTeams[team2Index], currentWeek, k + 1));
                 }
 

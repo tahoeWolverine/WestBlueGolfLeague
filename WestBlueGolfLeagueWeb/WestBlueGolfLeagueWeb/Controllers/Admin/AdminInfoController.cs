@@ -46,7 +46,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
             var teams = await this.Db.teamyeardatas.Include(x => x.team).Include(x => x.year).Where(x => x.year.value >= currYear - 2).ToListAsync();
 
-            var sortedUniqueTeams = teams.Where(x => x.team.validTeam).OrderByDescending(x => x.year.value).GroupBy(x => x.team.id).Select(x => x.First()).Select(x => x.team);
+            var sortedUniqueTeams = teams.Where(x => x.team.validTeam).OrderByDescending(x => x.year.value).GroupBy(x => x.team.id).Select(x => x.First()).Select(x => x.team);         
 
             return Ok(new { teams = sortedUniqueTeams.Select(x => TeamResponse.From(x)) });
         }
@@ -78,9 +78,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
                 await Task.WhenAll(selectedTeams, pairings, courses);
 
-                // update players??
-
-                var combinedTeams = selectedTeams.Result;
+                var combinedTeams = selectedTeams.Result.OrderBy(x => x.teamName).ToList();
 
                 // create schedule (weeks, team match ups, etc).
                 GolfYear golfYear = new GolfYear(combinedTeams, request.SelectedDates, pairings.Result, courses.Result);
@@ -110,6 +108,11 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 					team.teammatchups.Remove(tm);
 				}
 			}
+
+            // fetch all teams
+            var teamsToDelete = await this.Db.teams.Where(x => x.teamyeardata.Any(y => y.year.value == yearToDelete) && x.teamyeardata.Count() == 1 && x.validTeam).ToListAsync();
+            // Delete teams that will be "orphaned" by this delete.
+            this.Db.teams.RemoveRange(teamsToDelete);
 
 			this.Db.teamyeardatas.RemoveRange(await this.Db.teamyeardatas.Where(x => x.year.value == yearToDelete).ToListAsync());
 			this.Db.teammatchups.RemoveRange(teamMatchupsToRemove);

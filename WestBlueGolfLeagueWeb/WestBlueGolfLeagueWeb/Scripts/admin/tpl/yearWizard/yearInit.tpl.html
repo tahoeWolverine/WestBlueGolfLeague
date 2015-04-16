@@ -1,7 +1,7 @@
 ﻿<div class="year-wizard">
     <h2>1. Select League Dates</h2>
-    <p>First, we need to select a date range for the league.  The start date should be the <i>earliest</i> that
-    a match will ever be played.  &lsquo;Number of weeks&rsquo; are the number of weeks that will be in the season.</p>
+    <p>First, we need to select the match dates for the league.  Don't include any playoff match dates, as those can be added
+    at a later date.</p>
     <div>
         <div class="form-group">
             <label for="leagueStartDate">Select match dates</label>
@@ -38,12 +38,27 @@
             <i class="fa fa-check team-checkmark"></i> {{team.name}}
         </div>
     </div>
-    <div class="form-group form-inline">
+    <form novalidate class="form-group form-inline">
         <input type="text" ng-model="yearInit.teamToCreate" class="form-control" />
-        <button ng-click="yearInit.createTeam();" class="btn btn-primary">Create New Team</button>
-    </div>
+        <button ng-click="yearInit.createTeam();" class="btn btn-primary" type="submit">Create New Team</button>
+    </form>
 
-    <h2>3. Select Players</h2>
+    <h2>3. Input Roster</h2>
+    <p>Input the league roster in a newline seperated format, with the team name first.  E.g.:<br />
+    Mulligans<br />
+    John Smith<br />
+    Bill Gates<br />
+    John Adams<br /><br />
+    Eagles<br />
+    Player Name<br />
+    Another Player<br />
+    </p>
+    <p><strong>Note that any players not already in the league will have to be manually added later.</strong></p>
+    
+    <textarea class="roster-input form-control" ng-model="yearInit.yearRoster">
+
+    </textarea>
+
 
     <button ng-click="yearInit.saveYear()" class="btn btn-success" ng-disabled="!yearInit.validState()">Save Year</button>
 

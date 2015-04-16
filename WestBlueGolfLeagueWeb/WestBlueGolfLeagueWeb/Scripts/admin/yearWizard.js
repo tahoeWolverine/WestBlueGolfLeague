@@ -34,7 +34,7 @@
             };
 
             this.validState = function () {
-                return (_.filter(this.yearInfo.teams, 'isSelected').length % 2 == 0 && !this.disabled && (this.selectedDates && this.selectedDates.length));
+                return (/*_.filter(this.yearInfo.teams, 'isSelected').length % 2 == 0 &&*/ !this.disabled && (this.selectedDates && this.selectedDates.length));
             };
 
             this.createTeam = function () {
