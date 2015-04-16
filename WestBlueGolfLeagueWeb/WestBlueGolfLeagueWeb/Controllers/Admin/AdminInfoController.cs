@@ -78,10 +78,8 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
                 await Task.WhenAll(selectedTeams, pairings, courses);
 
-                var combinedTeams = selectedTeams.Result.OrderBy(x => x.teamName).ToList();
-
                 // create schedule (weeks, team match ups, etc).
-                GolfYear golfYear = new GolfYear(combinedTeams, request.SelectedDates, pairings.Result, courses.Result);
+                GolfYear golfYear = new GolfYear(selectedTeams.Result, request.SelectedDates, pairings.Result, courses.Result);
 
                 await golfYear.PersistScheduleAsync(this.Db);
             }
