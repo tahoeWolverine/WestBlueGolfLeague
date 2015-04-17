@@ -6,7 +6,8 @@
             self = this;
 
         sched.$promise.then(function (data) {
-            self.sched = sched;
+        	self.sched = sched;
+	        self.aggData = sched.getAggregateData();
         });
     }])
 
@@ -28,12 +29,40 @@
                 method: 'GET',
                 url: '/api/schedule'
             }).then(function (response) {
-                _.extend(self, response.data);
+            	_.extend(self, response.data);
                 return response.data;
             });
 
             this.save = function () {
                 // TODO
             };
+
+	        this.getAggregateData = function() {
+		        if (!self.weeks) {
+			        return null;
+		        }
+
+		        var lookup = {};
+
+		        self.weeks.forEach(function (item) {
+			        item.teamMatchups.forEach(function(teamMatchup) {
+						if (!lookup[teamMatchup.team1.name]) {
+							lookup[teamMatchup.team1.name] = {};
+						}
+
+						if (!lookup[teamMatchup.team2.name]) {
+							lookup[teamMatchup.team2.name] = {};
+						}
+
+				        var temp = lookup[teamMatchup.team1.name][teamMatchup.matchOrder];
+				        lookup[teamMatchup.team1.name][teamMatchup.matchOrder] = !temp ? 1 : temp + 1;
+
+				        temp = lookup[teamMatchup.team2.name][teamMatchup.matchOrder];
+				        lookup[teamMatchup.team2.name][teamMatchup.matchOrder] = !temp ? 1 : temp + 1;
+			        });
+		        });
+
+		        return lookup;
+	        };
         };
     }]);

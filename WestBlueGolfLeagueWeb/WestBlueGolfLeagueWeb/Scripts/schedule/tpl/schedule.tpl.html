@@ -1,5 +1,14 @@
 ﻿
 
+<div>
+	<div>Tee time distributions (for debugging)</div>
+	<ul>
+		<li ng-repeat="(key, value) in scheduleController.aggData">
+			{{::key}} -
+			<span ng-repeat="(teeTime, count) in value"><strong>{{::teeTime}}</strong>: {{::count}}, </span>
+		</li>
+	</ul>
+</div>
 <div class="row schedule">
 	<div ng-repeat="week in scheduleController.sched.weeks" class="col-md-4 matchup-date-clearfix">
 		<div class="matchup-date-detail">

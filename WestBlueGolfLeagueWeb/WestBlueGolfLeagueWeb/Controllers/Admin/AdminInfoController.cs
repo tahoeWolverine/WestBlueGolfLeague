@@ -85,6 +85,13 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             }
             catch (Exception e)
             {
+				// Make sure to delete teams we created earlier.
+	            this.Db.teams.RemoveRange(
+		            this.Db.teams.Where(x => (request.TeamsToCreate.Contains(x.teamName) && x.teamyeardata.Count == 0))
+			            .ToList());
+
+	            this.Db.SaveChanges();
+
                 return this.InternalServerError(e);
             }
 
