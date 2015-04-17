@@ -566,7 +566,7 @@ textarea.roster-input {
 	clear: both;
 }
 
-.matchup-date-detail:nth-of-type(3n+4) {
+.matchup-date-clearfix:nth-of-type(3n+4) {
 	clear: both;
 }
 

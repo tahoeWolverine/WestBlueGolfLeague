@@ -314,8 +314,8 @@ namespace AccessExport
         {
             return
                 new FluentMySqlInsert("teamMatchup")
-                .WithColumns("id", "playoffType", "weekId", "matchComplete", "matchId")
-                .WithValues(tm.Id, tm.PlayoffType, tm.Week.Id, tm.MatchComplete, tm.MatchId)
+                .WithColumns("id", "playoffType", "weekId", "matchComplete", "matchId", "matchOrder")
+                .WithValues(tm.Id, tm.PlayoffType, tm.Week.Id, tm.MatchComplete, tm.MatchId, tm.MatchOrderInWeek)
                 .ToString();
         }
 

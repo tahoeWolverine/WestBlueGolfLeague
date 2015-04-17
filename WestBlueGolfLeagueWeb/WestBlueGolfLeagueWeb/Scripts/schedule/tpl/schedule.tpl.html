@@ -1,7 +1,7 @@
 ﻿
 
 <div class="row schedule">
-	<div ng-repeat="week in scheduleController.sched.weeks" class="col-md-4">
+	<div ng-repeat="week in scheduleController.sched.weeks" class="col-md-4 matchup-date-clearfix">
 		<div class="matchup-date-detail">
 			<h4>Week {{::week.seasonIndex}} - {{::week.date | date : 'MMM d' }}</h4>
 

@@ -302,6 +302,8 @@ namespace AccessExport
                     cmd.CommandText = "SELECT * FROM MatchTable";
                     using (var matchReader = cmd.ExecuteReader())
                     {
+						LinkedList<Tuple<int, TeamMatchup>> allTeamMatchupsForYear = new LinkedList<Tuple<int, TeamMatchup>>();
+
                         while (matchReader.Read())
                         {
                             int weekId = matchReader[2] == System.DBNull.Value ? -1 : (matchReader.GetInt32(2));
@@ -336,7 +338,7 @@ namespace AccessExport
 
                             var teamMatchup = new TeamMatchup
                             {
-                                MatchOrderInWeek = matchOrderInWeek,
+								//MatchOrderInWeek = matchOrderInWeek,
                                 Week = weekForMatchup,
                                 Id = teamMatchupIndex++,
                                 MatchComplete = matchComplete,
@@ -346,10 +348,24 @@ namespace AccessExport
                                 PlayoffType = weekForMatchup.IsPlayoff ? GetPlayoffType(playoffWeeksInOrder.IndexOf(weekForMatchup), matchOrderInWeek) : null
                             };
 
+	                        allTeamMatchupsForYear.AddLast(new Tuple<int, TeamMatchup>(weekId, teamMatchup));
+
                             weekIdToTeamMatchupIndex[weekId] = matchOrderInWeek + 1;
 
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                         }
+
+	                    var lookups = allTeamMatchupsForYear.ToLookup(x => x.Item1, x => x.Item2);
+
+	                    foreach (var l in lookups)
+	                    {
+		                    var orderedMatches = l.OrderBy(x => x.MatchId).ToList();
+
+		                    for (int i = 0; i < orderedMatches.Count; i++)
+		                    {
+			                    orderedMatches[i].MatchOrderInWeek = i;
+		                    }
+	                    }
                     }
 
                     // Results
