@@ -172,6 +172,7 @@ WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb/Properties/PublishProfiles
 *.mdf
 *.ldf
 WestBlueGolfLeagueWeb/packages
+WestBlueGolfLeagueWeb/TestResults
 WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/bin
 WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.Tests/obj
 *.suo

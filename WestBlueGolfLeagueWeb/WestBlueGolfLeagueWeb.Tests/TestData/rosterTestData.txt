@@ -1,0 +1,10 @@
+﻿test team
+john smith
+player 1
+this is another player
+
+another test team
+wat
+player! 2
+
+

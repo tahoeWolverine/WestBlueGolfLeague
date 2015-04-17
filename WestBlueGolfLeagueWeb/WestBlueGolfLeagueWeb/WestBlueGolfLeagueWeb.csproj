@@ -265,6 +265,9 @@
     <Compile Include="Models\Responses\TeamProfileData.cs" />
     <Compile Include="Models\Responses\TeamProfileResult.cs" />
     <Compile Include="Models\Responses\WeekWebResponse.cs" />
+    <Compile Include="Models\Schedule\RosterInitializer.cs" />
+    <Compile Include="Models\Schedule\RosterReader.cs" />
+    <Compile Include="Models\Schedule\TeamRoster.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\Entities\course.cs" />
     <Compile Include="Models\Entities\datamigration.cs" />
