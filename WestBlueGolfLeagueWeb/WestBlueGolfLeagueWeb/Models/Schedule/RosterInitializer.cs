@@ -18,7 +18,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 			this.rosters = rostersToInitialize;
 		}
 
-		public void IntializeRosters(year yearToInitialize)
+		public IEnumerable<string> IntializeRosters(year yearToInitialize)
 		{
 			LinkedList<string> playersNotFoundInDb = new LinkedList<string>();
 
@@ -58,6 +58,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 					this.playeryeardatasToCreate.AddLast(newPlayerYearData);
 				}
 			}
+
+			return playersNotFoundInDb;
 		}
 
 		public async void PersistRostersAsync(WestBlue db)

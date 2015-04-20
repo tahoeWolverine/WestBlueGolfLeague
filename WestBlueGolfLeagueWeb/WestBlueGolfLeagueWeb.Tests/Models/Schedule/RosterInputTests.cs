@@ -11,7 +11,7 @@ using WestBlueGolfLeagueWeb.Models.Schedule;
 namespace WestBlueGolfLeagueWeb.Tests.Models.Schedule
 {
 	[TestClass]
-	public class RosterInputTest
+	public class RosterInputTests
 	{
 		[TestMethod]
 		[DeploymentItem(@"TestData\rosterTestData.txt", "TestData")]

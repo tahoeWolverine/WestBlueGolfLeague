@@ -16,6 +16,12 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 			this.players = new List<string>(10);
 		}
 
+		public TeamRoster(team team, IEnumerable<string> players)
+		{
+			this.Team = team;
+			this.players = players.ToList();
+		}
+
 		public void AddPlayer(string player)
 		{
 			this.players.Add(player);
