@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Mvc;
+using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
 
@@ -14,6 +13,12 @@ namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class PlayerApiController : WestBlueDbApiController
     {
+		[Authorize(Roles = AdminRole.Admin.Name)]
+	    public async Task<IHttpActionResult> AddPlayer()
+	    {
+		    return Ok();
+	    }
+
         [ResponseType(typeof(PlayerProfileData))]
         public async Task<IHttpActionResult> GetProfileData(int id)
         {

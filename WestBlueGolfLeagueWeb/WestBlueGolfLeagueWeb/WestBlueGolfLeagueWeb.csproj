@@ -215,6 +215,7 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ResultsTableController.cs" />
     <Compile Include="Controllers\Schedule\ScheduleController.cs" />
+    <Compile Include="Controllers\Filters\SelectedYearFilterAttribute.cs" />
     <Compile Include="Controllers\TeamApiController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\WestBlueDbApiController.cs" />

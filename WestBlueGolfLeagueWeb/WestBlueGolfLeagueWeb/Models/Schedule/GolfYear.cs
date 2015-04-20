@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.Schedule
@@ -89,18 +87,6 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 
                     createdMatchups.AddLast(this.CreateTeamMatchup(restOfTeams[team1Index], restOfTeams[team2Index], currentWeek, k + 1));
                 }
-
-                // when we hit this we have finished 
-				//if (j == teams.Count - 2)
-				//{
-				//	var oldAnchor = anchorTeam;
-
-				//	int newAnchorIndex = restOfTeams.Count / 2;
-				//	anchorTeam = restOfTeams[newAnchorIndex];
-
-				//	restOfTeams = new List<team>(this.teams);
-				//	restOfTeams.RemoveAt(restOfTeams.IndexOf(anchorTeam));
-				//}
             }
 
             this.CreatedMatchups = createdMatchups.ToList();
@@ -123,16 +109,12 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         /// </summary>
         private void AssignTeeTimes()
         {
-            int numOfTeeTimes = this.teams.Count / 2;
-
             int[] teeTimes = new int[4];
 
             for (int i = 0; i < teeTimes.Length; i++)
             {
                 teeTimes[i] = i;
             }
-
-            int numOfWeeks = this.CreatedWeeks.Count;
 
             int anchorIndex = 1; // deemed to be the most "fair".
 
@@ -152,7 +134,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         }
 
 		/// <summary>
-		/// This assumes we've already build the "schedule".
+		/// This assumes we've already built the "schedule".
 		/// </summary>
 		private void AssignTeeTimes2()
 		{
@@ -164,8 +146,6 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 			{
 				teeTimes[i] = i;
 			}
-
-			int numOfWeeks = this.CreatedWeeks.Count;
 
 			int anchorIndex = 1; // deemed to be the most "fair".
 

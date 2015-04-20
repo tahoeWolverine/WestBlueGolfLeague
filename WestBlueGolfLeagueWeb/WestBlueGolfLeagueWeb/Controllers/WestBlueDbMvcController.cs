@@ -21,7 +21,21 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
         protected ControllerHelper ControllerHelper { get; private set; }
 
-        protected override void Dispose(bool disposing)
+		public int SelectedYear { get; set; }
+
+	    protected override void OnActionExecuting(ActionExecutingContext filterContext)
+	    {
+			var cookieVal = filterContext.HttpContext.Request.Cookies["westBlueYear"];
+
+		    if (cookieVal == null)
+		    {
+			    
+		    }
+
+			//var controller = (WestBlueDbMvcController)filterContext.Controller.SelectedYear = cookieVal;    
+	    }
+
+	    protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
