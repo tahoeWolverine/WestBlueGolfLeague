@@ -49,6 +49,7 @@
                 var submitData = {
                     teamIds: _.pluck(_.select(this.yearInfo.teams, 'isSelected'), 'id'),
                     selectedDates: _.map(this.selectedDates, function (date) { return moment(date).format() }),
+                    roster: this.yearRoster,
                     teamsToCreate: _.pluck(_.filter(this.yearInfo.teams, function(team) { return !team.id && team.isSelected }), 'name'), // grab non-persisted teams
                 };
 

@@ -11,6 +11,8 @@ using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Requests.Admin;
 using WestBlueGolfLeagueWeb.Models.Schedule;
+using System.IO;
+using System.Text;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
@@ -54,20 +56,18 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpPost]
         public async Task<IHttpActionResult> SaveYear(CreateYearRequest request)
         {
-            var createdTeams = new List<team>();
+            IEnumerable<team> createdTeams = null;
 
-            // create new teams
-            if (request.TeamsToCreate != null && request.TeamsToCreate.Count > 0) 
+            // create new teams (if needed)
+            if (request.TeamsToCreate != null && request.TeamsToCreate.Count > 0)
             {
-                this.Db.teams.AddRange(request.TeamsToCreate.Select(x => new team { validTeam = true, teamName = x }));
+                createdTeams = request.TeamsToCreate.Select(x => new team { validTeam = true, teamName = x });
             }
-
-            await this.Db.SaveChangesAsync();
                         
             try
             {
                 // get teams
-                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id) || (request.TeamsToCreate.Contains(x.teamName) && x.teamyeardata.Count == 0)).ToListAsync();
+                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
 
                 // get possible pairings
                 var pairings = this.Db.pairings.ToListAsync();
@@ -78,24 +78,41 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
                 await Task.WhenAll(selectedTeams, pairings, courses);
 
-                // create schedule (weeks, team match ups, etc).
-                GolfYear golfYear = new GolfYear(selectedTeams.Result, request.SelectedDates, pairings.Result, courses.Result);
+                var allTeams = selectedTeams.Result.Concat(createdTeams);
 
-                await golfYear.PersistScheduleAsync(this.Db);
+                // create schedule (weeks, team match ups, etc).
+                GolfYear golfYear = new GolfYear(allTeams, request.SelectedDates, pairings.Result, courses.Result);
+
+                golfYear.PersistSchedule(this.Db);
+
+                var newPlayers = await this.SaveRoster(request.Roster, allTeams, golfYear.CreatedYear);
+
+                // only save once
+                await this.Db.SaveChangesAsync();
             }
             catch (Exception e)
             {
-				// Make sure to delete teams we created earlier.
-	            this.Db.teams.RemoveRange(
-		            this.Db.teams.Where(x => (request.TeamsToCreate.Contains(x.teamName) && x.teamyeardata.Count == 0))
-			            .ToList());
-
-	            this.Db.SaveChanges();
-
                 return this.InternalServerError(e);
             }
 
             return Ok();
+        }
+
+        // TODO: maybe move this in to golf year stuff?  This is nastyyyy
+        private async Task<IEnumerable<string>> SaveRoster(string roster, IEnumerable<team> teams, year yearToSave)
+        {
+            using (RosterReader rosterReader = new RosterReader(new MemoryStream(Encoding.UTF8.GetBytes(roster))))
+            {
+                var rosters = rosterReader.GetRoster(teams);
+
+                // This fetches all players from the previous two years, as they may be in the league again this year.
+                RosterInitializer rosterInitializer = 
+                    new RosterInitializer(rosters, await this.Db.players.Where(x => x.playeryeardatas.Any(y => y.year.value > yearToSave.value - 3)).ToListAsync(), yearToSave);
+
+                rosterInitializer.PersistRosters(this.Db);
+
+                return rosterInitializer.NewPlayers;
+            }
         }
 
 		[HttpPost]
@@ -114,12 +131,13 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 				}
 			}
 
-            // fetch all teams
+            // fetch all teams toat will be "orphaned" by the delete (any teams that are new to the year being deleted).
             var teamsToDelete = await this.Db.teams.Where(x => x.teamyeardata.Any(y => y.year.value == yearToDelete) && x.teamyeardata.Count() == 1 && x.validTeam).ToListAsync();
+
+            this.Db.teamyeardatas.RemoveRange(await this.Db.teamyeardatas.Where(x => x.year.value == yearToDelete).ToListAsync());
+
             // Delete teams that will be "orphaned" by this delete.
             this.Db.teams.RemoveRange(teamsToDelete);
-
-			this.Db.teamyeardatas.RemoveRange(await this.Db.teamyeardatas.Where(x => x.year.value == yearToDelete).ToListAsync());
 			this.Db.teammatchups.RemoveRange(teamMatchupsToRemove);
 			this.Db.weeks.RemoveRange(await this.Db.weeks.Where(x => x.year.value == yearToDelete).ToListAsync());
 			this.Db.years.RemoveRange(await this.Db.years.Where(x => x.value == yearToDelete).ToListAsync());

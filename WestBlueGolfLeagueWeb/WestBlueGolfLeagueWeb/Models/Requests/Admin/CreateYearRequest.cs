@@ -15,5 +15,7 @@ namespace WestBlueGolfLeagueWeb.Models.Requests.Admin
         public List<int> PlayersInLeagueForYear { get; set; }
 
         public List<string> TeamsToCreate { get; set; }
+
+        public string Roster { get; set; }
     }
 }

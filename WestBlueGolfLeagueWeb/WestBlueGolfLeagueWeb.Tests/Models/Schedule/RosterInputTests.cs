@@ -21,10 +21,10 @@ namespace WestBlueGolfLeagueWeb.Tests.Models.Schedule
 
 			using (var reader = new RosterReader(new FileStream(rosterTestDataFile, FileMode.Open)))
 			{
-				var results = reader.GetRoster(new List<team> { new team { teamName = "test team" }, new team { teamName = "another test team" } });
+                var results = reader.GetRoster(new List<team> { new team { teamName = "Pinseekers" }, new team { teamName = "Eagles" }, new team { teamName = "Missing Links" } });
 
-				Assert.AreEqual(2, results.Count());
-				Assert.AreEqual("test team", results.First().Team.teamName);
+				Assert.AreEqual(3, results.Count());
+                Assert.AreEqual("Missing Links", results.First().Team.teamName);
 				Assert.AreEqual(3, results.First().GetPlayers().Count());
 			}
 		}

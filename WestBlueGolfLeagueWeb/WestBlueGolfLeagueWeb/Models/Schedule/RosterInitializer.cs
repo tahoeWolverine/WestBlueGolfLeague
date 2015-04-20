@@ -10,15 +10,19 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 	{
 		private Dictionary<string, player> playersLookup;
 		private IEnumerable<TeamRoster> rosters;
-		private LinkedList<playeryeardata> playeryeardatasToCreate = new LinkedList<playeryeardata>(); 
+        private LinkedList<playeryeardata> playeryeardatasToCreate = new LinkedList<playeryeardata>();
+        private year yearToInitialize; 
 
-		public RosterInitializer(IEnumerable<TeamRoster> rostersToInitialize, IEnumerable<player> allLeaguePlayers)
+		public RosterInitializer(IEnumerable<TeamRoster> rostersToInitialize, IEnumerable<player> allLeaguePlayers, year yearToInitialize)
 		{
 			this.playersLookup = allLeaguePlayers.ToDictionary(x => x.name.ToLowerInvariant());
 			this.rosters = rostersToInitialize;
+            this.yearToInitialize = yearToInitialize;
+
+            this.NewPlayers = this.IntializeRosters();
 		}
 
-		public IEnumerable<string> IntializeRosters(year yearToInitialize)
+		private IEnumerable<string> IntializeRosters()
 		{
 			LinkedList<string> playersNotFoundInDb = new LinkedList<string>();
 
@@ -31,6 +35,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 					if (!this.playersLookup.TryGetValue(playerName.ToLowerInvariant(), out currentPlayer))
 					{
 						playersNotFoundInDb.AddLast(playerName);
+                        continue;
 					}
 
 					// find the latest year data, this will be the one we copy from.  If they don't have one, then 
@@ -40,21 +45,22 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 					if (recentPyd == null)
 					{
 						playersNotFoundInDb.AddLast(playerName);
+                        continue;
 					}
 
 					var newPlayerYearData =
 						new playeryeardata
 						{
-							// TODO: double check week0score with Mike.
 							isRookie = false,
-							year = yearToInitialize,
+							year = this.yearToInitialize,
 							startingHandicap = recentPyd.finishingHandicap,
-							week0Score = recentPyd.week0Score,
+							week0Score = recentPyd.finishingHandicap + 36,
 							team = roster.Team,
 							player = currentPlayer
 						};
 
 					roster.Team.playeryeardatas.Add(newPlayerYearData);
+                    currentPlayer.playeryeardatas.Add(newPlayerYearData);
 					this.playeryeardatasToCreate.AddLast(newPlayerYearData);
 				}
 			}
@@ -62,11 +68,16 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 			return playersNotFoundInDb;
 		}
 
-		public async void PersistRostersAsync(WestBlue db)
+        /// <summary>
+        /// Does not have save to the database.
+        /// </summary>
+        /// <param name="db"></param>
+		public void PersistRosters(WestBlue db)
 		{
 			db.playeryeardatas.AddRange(this.playeryeardatasToCreate);
-
-			await db.SaveChangesAsync();
 		}
-	}
+
+        public IEnumerable<string> NewPlayers { get; private set; }
+        public IEnumerable<playeryeardata> NewPlayerYearDatas { get { return this.playeryeardatasToCreate; } }
+    }
 }

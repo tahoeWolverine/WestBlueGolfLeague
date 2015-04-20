@@ -15,9 +15,9 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         private List<team> teams;
         private List<course> courses;
 
-        public GolfYear(List<team> teams, List<DateTimeOffset> selectedDates, List<pairing> pairings, IEnumerable<course> courses)
+        public GolfYear(IEnumerable<team> teams, List<DateTimeOffset> selectedDates, List<pairing> pairings, IEnumerable<course> courses)
         {
-            this.teams = teams;
+            this.teams = teams.ToList();
             this.selectedDates = selectedDates.OrderBy(x => x).ToList();
             this.numberOfWeeks = selectedDates.Count;
             this.pairings = pairings;
@@ -223,15 +223,13 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
             }
         }
 
-        public async Task PersistScheduleAsync(WestBlue db)
+        public void PersistSchedule(WestBlue db)
         {
             db.years.Add(this.CreatedYear);
             db.teamyeardatas.AddRange(this.CreatedTeamYearDatas);
 
             db.teammatchups.AddRange(this.CreatedMatchups);
             db.weeks.AddRange(this.CreatedWeeks);
-
-            await db.SaveChangesAsync();
         }
     }
 }
