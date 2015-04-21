@@ -25,7 +25,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         }
 
         protected ControllerHelper ControllerHelper { get; private set; }
-
+                
         public ApplicationRoleManager RoleManager
         {
             get

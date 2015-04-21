@@ -20,7 +20,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
         public async Task<ActionResult> Details(int? id)
         {
-            int year = await this.ControllerHelper.GetSelectedYearAsync(this.Db);
+            int year = this.SelectedYear;
 
             var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.teamyeardata.Any(y => y.year.value == year)).ToList();
 

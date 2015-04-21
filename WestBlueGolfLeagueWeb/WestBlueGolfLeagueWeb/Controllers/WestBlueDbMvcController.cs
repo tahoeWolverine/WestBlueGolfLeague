@@ -10,29 +10,47 @@ namespace WestBlueGolfLeagueWeb.Controllers
     public class WestBlueDbMvcController : Controller
     {
 		private WestBlue db = null;
+        private int minYear = -1;
 
 		protected WestBlueDbMvcController(bool needWriteAccess = false)
 		{
 			this.db = new WestBlue(needWriteAccess);
-            this.ControllerHelper = new ControllerHelper();
 		}
 
 		public WestBlue Db { get { return this.db; } }
 
-        protected ControllerHelper ControllerHelper { get; private set; }
+		public int SelectedYear { get; private set; }
 
-		public int SelectedYear { get; set; }
+        public int CurrentYear { get; private set; }
 
 	    protected override void OnActionExecuting(ActionExecutingContext filterContext)
 	    {
+            var allYears = this.db.years.ToList();
+
+            // populate required fields, initializing selected year to the current year.
+            this.CurrentYear = this.SelectedYear = allYears.Max(x => x.value);
+            this.minYear = allYears.Min(x => x.value);
+
 			var cookieVal = filterContext.HttpContext.Request.Cookies["westBlueYear"];
 
-		    if (cookieVal == null)
+		    if (cookieVal == null || string.IsNullOrEmpty(cookieVal.Value))
 		    {
-			    
+                return;
 		    }
 
-			//var controller = (WestBlueDbMvcController)filterContext.Controller.SelectedYear = cookieVal;    
+            int selectedYear = -1;
+
+            // If the value is set but it is invalid, clear it out.
+            if (!Int32.TryParse(cookieVal.Value, out selectedYear) || selectedYear < minYear || selectedYear > this.CurrentYear)
+            {
+                var westBlueYearCookie = new HttpCookie("westBlueYear");
+                westBlueYearCookie.Expires = DateTime.UtcNow.AddDays(-2);
+                filterContext.HttpContext.Response.Cookies.Add(westBlueYearCookie);
+                return;
+            }
+
+            // Selected year is valid!
+            this.SelectedYear = selectedYear;
 	    }
 
 	    protected override void Dispose(bool disposing)
