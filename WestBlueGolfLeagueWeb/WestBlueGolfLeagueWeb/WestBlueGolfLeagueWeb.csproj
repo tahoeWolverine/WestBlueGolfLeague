@@ -348,6 +348,7 @@
     <Content Include="Scripts\admin\userManagement.js" />
     <Content Include="Scripts\admin\tpl\userManagementIndex.tpl.html" />
     <Content Include="Scripts\admin\yearWizard.js" />
+    <Content Include="Scripts\layout\yearSelector.js" />
     <Content Include="Scripts\leaderBoards\controllers.js" />
     <Content Include="Scripts\leaderBoards\services.js" />
     <Content Include="Scripts\leaderBoards\tpl\leaderBoardWrapper.tpl.html" />
@@ -421,7 +422,6 @@
     <Content Include="Scripts\lib\angular-ui-router-0.2.10.js" />
     <Content Include="Scripts\lib\moment\moment.js" />
     <Content Include="Scripts\main\app.js" />
-    <Content Include="Scripts\main\test.tpl.html" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\player\playerList.js" />

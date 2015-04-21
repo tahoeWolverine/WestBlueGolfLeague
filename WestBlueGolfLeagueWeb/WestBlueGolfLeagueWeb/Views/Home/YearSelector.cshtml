@@ -1,6 +1,6 @@
 ﻿@model YearSelectorViewModel
 
-<label for="yearSelector">Select year:</label>
+<label for="yearSelector">Currently viewing data for</label>
 @Html.DropDownList(
     "yearSelector",
     this.Model.Years.Select(x => new SelectListItem { Selected = x.value == this.Model.SelectedYear, Text = Convert.ToString(x.value), Value = Convert.ToString(x.value) }), new { id = "yearSelector" })

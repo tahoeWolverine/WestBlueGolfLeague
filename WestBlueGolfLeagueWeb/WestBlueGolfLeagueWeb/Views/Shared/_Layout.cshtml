@@ -36,17 +36,15 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <footer>
-            <span>
-                &copy; @DateTime.Now.Year - West Blue Golf League
-            </span>
-            <span>
+	    <footer>
+		    <span>
                 @Html.ActionLink("Rules & Information", "RulesAndInformation", "Information", null, new { target = "_self" })
             </span>
-            <span>
+		    <span>
                 @{Html.RenderAction("YearSelector", "Home");}
             </span>
-        </footer>
+			<div>&copy; @DateTime.Now.Year - West Blue Golf League</div>
+	    </footer>
     </div>
 
     @Scripts.Render("~/bundles/lib")
