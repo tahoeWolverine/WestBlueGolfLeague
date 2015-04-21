@@ -43,6 +43,9 @@
             <span>
                 @Html.ActionLink("Rules & Information", "RulesAndInformation", "Information", null, new { target = "_self" })
             </span>
+            <span>
+                @{Html.RenderAction("YearSelector", "Home");}
+            </span>
         </footer>
     </div>
 

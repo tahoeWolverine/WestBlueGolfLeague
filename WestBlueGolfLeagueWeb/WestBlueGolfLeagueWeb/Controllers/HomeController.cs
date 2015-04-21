@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : WestBlueDbMvcController
     {
         public async Task<ViewResult> Index()
@@ -21,6 +22,14 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
 
             return View(new HomeViewModel { Information = latestNote, TeamRankingDataForYear = rankingValuesForYear, ScheduleYear = year, SelectedYear = selectedYear });
+        }
+
+        [ChildActionOnly]
+        public async Task<ActionResult> YearSelector()
+        {
+            var years = await this.Db.years.OrderByDescending(x => x.value).ToListAsync();
+
+            return PartialView(new YearSelectorViewModel { SelectedYear = this.SelectedYear, Years = years });
         }
 
         public ActionResult AngularMain()
