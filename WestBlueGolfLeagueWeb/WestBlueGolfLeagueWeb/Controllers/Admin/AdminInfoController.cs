@@ -44,7 +44,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         [HttpGet]
         public async Task<IHttpActionResult> YearWizardInfo()
         {
-            int currYear = await this.ControllerHelper.GetSelectedYearAsync(this.Db);
+            int currYear = this.CurrentYear;
 
             var teams = await this.Db.teamyeardatas.Include(x => x.team).Include(x => x.year).Where(x => x.year.value >= currYear - 2).ToListAsync();
 
@@ -118,7 +118,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 		[HttpPost]
 	    public async Task<IHttpActionResult> DeleteYear()
 	    {
-		    int yearToDelete = await this.ControllerHelper.GetCurrentYear(this.Db);
+            int yearToDelete = this.CurrentYear;
 
 			var teamMatchupsToRemove =
 				await this.Db.teammatchups.Include(x => x.teams).Where(x => x.week.year.value == yearToDelete).ToListAsync();

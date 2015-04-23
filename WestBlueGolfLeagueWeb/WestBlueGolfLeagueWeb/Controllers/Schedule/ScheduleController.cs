@@ -13,7 +13,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Schedule
         [HttpGet]
         public async Task<IHttpActionResult> Index()
         {
-            var currentYear = await new ControllerHelper().GetSelectedYearAsync(this.Db);
+            var currentYear = this.CurrentYear;
 
             // populated weeks
             var weeks = await this.Db.weeks
