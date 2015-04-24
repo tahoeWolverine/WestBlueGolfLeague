@@ -13,12 +13,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class PlayerApiController : WestBlueDbApiController
     {
-		[Authorize(Roles = AdminRole.Admin.Name)]
-	    public async Task<IHttpActionResult> AddPlayer()
-	    {
-		    return Ok();
-	    }
-
         [ResponseType(typeof(PlayerProfileData))]
         public async Task<IHttpActionResult> GetProfileData(int id)
         {

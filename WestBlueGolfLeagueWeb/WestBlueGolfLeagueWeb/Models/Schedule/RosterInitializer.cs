@@ -52,6 +52,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 							isRookie = false,
 							year = this.yearToInitialize,
 							startingHandicap = recentPyd.finishingHandicap,
+                            finishingHandicap = recentPyd.finishingHandicap, // we may use finishing handicap during leaderboard calcs.
 							week0Score = recentPyd.finishingHandicap + 36,
 							team = roster.Team,
 							player = currentPlayer

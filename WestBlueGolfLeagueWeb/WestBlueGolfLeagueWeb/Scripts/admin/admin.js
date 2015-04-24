@@ -49,13 +49,13 @@
     }])
 
 
-    .controller('AdminIndex', ['fetchedAdminInfo', 'adminInfo', function (fetchedAdminInfo, adminInfo) {
+    .controller('AdminIndex', ['fetchedAdminInfo', 'adminInfo', 'yearManagement', function (fetchedAdminInfo, adminInfo, yearManagement) {
 		var self = this;
 
 		self.fetchedAdminInfo = fetchedAdminInfo.data;
 
 		this.deleteCurrentYear = function() {
-			adminInfo
+		    yearManagement
 				.deleteYear()
 				.then(function () {
 					alert('year deleted!');

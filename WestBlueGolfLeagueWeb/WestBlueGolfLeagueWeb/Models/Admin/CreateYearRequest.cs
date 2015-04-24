@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WestBlueGolfLeagueWeb.Models.Requests.Admin
+namespace WestBlueGolfLeagueWeb.Models.Admin
 {
     public class CreateYearRequest
     {

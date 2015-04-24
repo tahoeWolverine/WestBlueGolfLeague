@@ -9,14 +9,14 @@
                 templateUrl: '/Scripts/admin/tpl/yearWizard/yearInit.tpl.html',
                 controller: 'YearInit as yearInit',
                 resolve: {
-                    resolvedYearWizardInfo: ['adminInfo', function(adminInfo) {
-                        return adminInfo.getYearWizardData();
+                    resolvedYearWizardInfo: ['yearManagement', function (yearManagement) {
+                        return yearManagement.getYearWizardData();
                     }]
                 }
             });
     }])
-    .controller('YearInit', ['fetchedAdminInfo', 'resolvedYearWizardInfo', 'adminInfo', '$state',
-        function (fetchedAdminInfo, resolvedYearWizardInfo, adminInfo, $state) {
+    .controller('YearInit', ['fetchedAdminInfo', 'resolvedYearWizardInfo', 'yearManagement', '$state',
+        function (fetchedAdminInfo, resolvedYearWizardInfo, yearManagement, $state) {
 
             var self = this;
             this.adminInfo = fetchedAdminInfo.data;
@@ -53,7 +53,7 @@
                     teamsToCreate: _.pluck(_.filter(this.yearInfo.teams, function(team) { return !team.id && team.isSelected }), 'name'), // grab non-persisted teams
                 };
 
-                adminInfo.saveYear(submitData)
+                yearManagement.saveYear(submitData)
                     .then(function () {
                         $state.go('admin.schedule');
                     })

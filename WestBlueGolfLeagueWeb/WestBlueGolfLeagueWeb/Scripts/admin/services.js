@@ -53,6 +53,31 @@ angular
    }]);
 
 angular.module('admin')
+
+    .factory('yearManagement', ['$http', function ($http) {
+        return {
+            getYearWizardData: function () {
+                return $http({
+                    method: 'GET',
+                    url: '/api/yearManagement/yearWizardInfo'
+                });
+            },
+            saveYear: function (data) {
+                return $http({
+                    method: 'POST',
+                    url: '/api/yearManagement/saveYear',
+                    data: data
+                });
+            },
+            deleteYear: function () {
+                return $http({
+                    method: 'POST',
+                    url: '/api/yearManagement/deleteYear'
+                });
+            }
+        };
+    }])
+
    .factory('adminInfo', ['$http', function ($http) {
        return {
            getAdminInfo: function () {
@@ -60,25 +85,7 @@ angular.module('admin')
                    method: 'GET',
                    url: '/api/adminInfo'
                });
-           },
-           getYearWizardData: function () {
-               return $http({
-                   method: 'GET',
-                   url: '/api/adminInfo/yearWizardInfo'
-               });
-           },
-           saveYear: function (data) {
-               return $http({
-                   method: 'POST',
-                   url: '/api/adminInfo/saveYear',
-                   data: data
-               });
-           },
-			deleteYear: function() {
-				return $http({
-					method: 'POST',
-					url: '/api/adminInfo/deleteYear'
-				});
-			}	
+           }
        }
-   }]);
+   }])
+;

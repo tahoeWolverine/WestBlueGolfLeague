@@ -205,6 +205,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\NoteController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\Admin\YearManagementController.cs" />
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
@@ -219,7 +220,6 @@
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\WestBlueDbApiController.cs" />
     <Compile Include="Controllers\WestBlueDbMvcController.cs" />
-    <Compile Include="Controllers\Admin\YearAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,8 +255,9 @@
     <Compile Include="Models\Entities\note.cs" />
     <Compile Include="Models\Entities\teamyeardata.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
-    <Compile Include="Models\Requests\Admin\AddUpdateUserRequest.cs" />
-    <Compile Include="Models\Requests\Admin\CreateYearRequest.cs" />
+    <Compile Include="Models\Admin\AddPlayerRequest.cs" />
+    <Compile Include="Models\Admin\AddUpdateUserRequest.cs" />
+    <Compile Include="Models\Admin\CreateYearRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
     <Compile Include="Models\Responses\Admin\RoleResponse.cs" />
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />
@@ -455,7 +456,6 @@
     <Content Include="Views\Shared\_LoggedInPartial.cshtml" />
     <Content Include="Views\Shared\_LoggedOutPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\YearAdmin\Index.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
     <Content Include="Views\Home\AngularView.cshtml" />
     <Content Include="Views\Home\YearSelector.cshtml" />
