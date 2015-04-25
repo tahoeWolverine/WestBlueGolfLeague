@@ -351,7 +351,7 @@ namespace AccessExport
             return
                 new FluentMySqlInsert("player")
                 .WithColumns("id", "name", "currentHandicap", "favorite", "validPlayer")
-                .WithValues(player.Id, player.Name, player.CurrentHandicap, false, player.ValidPlayer)
+                .WithValues(player.Id, player.Name.Trim(), player.CurrentHandicap, false, player.ValidPlayer)
                 .ToString();
         }
 

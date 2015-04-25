@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -23,47 +24,6 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
         }
 
-        public async Task<IHttpActionResult> AddPlayer(AddPlayerRequest addPlayerRequest)
-        {
-            int currentYear = this.CurrentYear;
-
-            var yearTask = this.Db.years.Where(x => x.value == currentYear).FirstOrDefaultAsync();
-            var teamTask = this.Db.teams.Where(x => x.id == addPlayerRequest.TeamId).FirstOrDefaultAsync();
-
-            var playerTask = this.Db.players.Where(x => string.Equals(x.name, addPlayerRequest.PlayerName, StringComparison.OrdinalIgnoreCase)).FirstOrDefaultAsync();
-
-            await Task.WhenAll(yearTask, teamTask, playerTask);
-
-            if (playerTask.Result != null)
-            {
-                return InternalServerError(new ArgumentException("Can't add a player with the same name."));
-            }
-
-            if (teamTask == null)
-            {
-                return InternalServerError(new ArgumentException("Team with specified id does not exist."));
-            }
-
-            var newPlayer = new player { validPlayer = true, name = addPlayerRequest.PlayerName, currentHandicap = addPlayerRequest.Handicap };
-
-            var newPyd = new playeryeardata
-                                {
-                                    isRookie = true,
-                                    year = yearTask.Result,
-                                    team = teamTask.Result,
-                                    player = newPlayer,
-                                    week0Score = addPlayerRequest.Handicap + 36,
-                                    startingHandicap = addPlayerRequest.Handicap,
-                                    finishingHandicap = addPlayerRequest.Handicap
-                                };
-
-            this.Db.playeryeardatas.Add(newPyd);
-
-            await this.Db.SaveChangesAsync();
-
-            return Ok();
-        }
-
         [HttpGet]
         public async Task<IHttpActionResult> YearWizardInfo()
         {
@@ -77,7 +37,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SaveYear(CreateYearRequest request)
+        public async Task<HttpResponseMessage> SaveYear(CreateYearRequest request)
         {
             IEnumerable<team> createdTeams = new LinkedList<team>();
 
@@ -86,6 +46,8 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             {
                 createdTeams = request.TeamsToCreate.Select(x => new team { validTeam = true, teamName = x });
             }
+
+            IEnumerable<string> newPlayers = null;
 
             try
             {
@@ -108,17 +70,17 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
                 golfYear.PersistSchedule(this.Db);
 
-                var newPlayers = await this.SaveRoster(request.Roster, allTeams, golfYear.CreatedYear);
+                newPlayers = await this.SaveRoster(request.Roster, allTeams, golfYear.CreatedYear);
 
                 // only save once
                 await this.Db.SaveChangesAsync();
             }
             catch (Exception e)
             {
-                return this.InternalServerError(e);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { message = e.Message });
             }
 
-            return Ok();
+            return Request.CreateResponse(HttpStatusCode.OK, new { newPlayers = newPlayers });
         }
 
         // TODO: maybe move this in to golf year stuff?  This is nastyyyy
@@ -167,6 +129,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             // Delete teams that will be "orphaned" by this delete.
             this.Db.teams.RemoveRange(teamsToDelete);
             this.Db.teammatchups.RemoveRange(teamMatchupsToRemove);
+            this.Db.playeryeardatas.RemoveRange(await this.Db.playeryeardatas.Where(x => x.year.value == yearToDelete).ToListAsync());
             this.Db.weeks.RemoveRange(await this.Db.weeks.Where(x => x.year.value == yearToDelete).ToListAsync());
             this.Db.years.RemoveRange(await this.Db.years.Where(x => x.value == yearToDelete).ToListAsync());
 

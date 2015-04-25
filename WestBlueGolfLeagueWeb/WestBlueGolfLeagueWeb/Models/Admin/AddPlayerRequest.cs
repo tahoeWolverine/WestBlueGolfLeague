@@ -16,6 +16,7 @@ namespace WestBlueGolfLeagueWeb.Models.Admin
 
 		[Required(ErrorMessage = "Handicap is required.")]
 		[Display(Name = "Player Handicap")]
+        [Range(-5, 20, ErrorMessage = "Handicap must be between -5 and 20 (inclusive)")]
         public int Handicap { get; set; }
 		
 		[Required(ErrorMessage = "Must select a team!")]

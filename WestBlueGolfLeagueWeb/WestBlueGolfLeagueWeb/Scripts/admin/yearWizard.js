@@ -54,11 +54,13 @@
                 };
 
                 yearManagement.saveYear(submitData)
-                    .then(function () {
+                    .then(function (response) {
+                        alert('The following players were not already in the league and will need to be added manually: \n\n' + response.data.newPlayers.join('\n'));
                         $state.go('admin.schedule');
                     })
-                    .catch(function () {
-                        alert('error saving year');
+                    .catch(function (response) {
+                        alert('error saving year:\n\n' + response.data.message);
+                        self.disabled = false;
                     });
                 
                 this.disabled = true;
