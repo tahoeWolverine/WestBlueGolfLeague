@@ -250,6 +250,14 @@
     <Compile Include="Migrations\201504140342335_fixingNull.Designer.cs">
       <DependentUpon>201504140342335_fixingNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504251603435_matchOrderOnMatch.cs" />
+    <Compile Include="Migrations\201504251603435_matchOrderOnMatch.Designer.cs">
+      <DependentUpon>201504251603435_matchOrderOnMatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504251629355_nullResultValues.cs" />
+    <Compile Include="Migrations\201504251629355_nullResultValues.Designer.cs">
+      <DependentUpon>201504251629355_nullResultValues.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Admin\AdminRole.cs" />
     <Compile Include="Models\Admin\Schedule.cs" />
     <Compile Include="Models\Entities\note.cs" />
@@ -488,6 +496,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504140342335_fixingNull.resx">
       <DependentUpon>201504140342335_fixingNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504251603435_matchOrderOnMatch.resx">
+      <DependentUpon>201504251603435_matchOrderOnMatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504251629355_nullResultValues.resx">
+      <DependentUpon>201504251629355_nullResultValues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

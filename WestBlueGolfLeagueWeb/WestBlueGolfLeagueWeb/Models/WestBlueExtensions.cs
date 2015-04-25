@@ -33,7 +33,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);
         }
 
-        public static int PointsFor(this teammatchup tm, team team)
+        public static int? PointsFor(this teammatchup tm, team team)
         {
             return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
         }
@@ -53,12 +53,12 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return r.match.results.First(x => x.id != r.id);
         }
 
-        public static int ScoreDifference(this result r)
+        public static int? ScoreDifference(this result r)
         {
             return r.score - r.match.teammatchup.week.course.par;
         }
 
-        public static int NetScoreDifference(this result r)
+        public static int? NetScoreDifference(this result r)
         {
             return r.ScoreDifference() - r.priorHandicap;
         }

@@ -23,19 +23,19 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         /// <summary>
         /// Player ID
         /// </summary>
-        public int PId { get; set; }
+        public int? PId { get; set; }
 
         /// <summary>
         /// Prior handicap
         /// </summary>
-        public int PH { get; set; }
+        public int? PH { get; set; }
 
         /// <summary>
         /// Score
         /// </summary>
-        public int S { get; set; }
+        public int? S { get; set; }
 
-        public int P { get; set; }
+        public int? P { get; set; }
 
         public int TId { get; set; }
 

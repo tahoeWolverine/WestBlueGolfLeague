@@ -19,6 +19,8 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int teamMatchupId { get; set; }
 
+        public int? matchOrder { get; set; }
+
         public virtual teammatchup teammatchup { get; set; }
 
         public virtual ICollection<result> results { get; set; }
