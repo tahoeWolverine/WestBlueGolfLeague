@@ -346,11 +346,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\admin\admin.js" />
+    <Content Include="Scripts\admin\scoreEntry.js" />
     <Content Include="Scripts\admin\services.js" />
     <Content Include="Scripts\admin\tpl\addUser.tpl.html" />
     <Content Include="Scripts\admin\tpl\adminIndex.tpl.html" />
     <Content Include="Scripts\admin\tpl\adminWrapper.tpl.html" />
     <Content Include="Scripts\admin\tpl\scheduleEditor.tpl.html" />
+    <Content Include="Scripts\admin\tpl\scoreEntry\scoreEntryContainer.tpl.html" />
+    <Content Include="Scripts\admin\tpl\scoreEntry\week.tpl.html" />
     <Content Include="Scripts\admin\tpl\yearWizard\yearInit.tpl.html" />
     <Content Include="Scripts\admin\tpl\yearWizard\yearWizard.tpl.html" />
     <Content Include="Scripts\admin\userManagement.js" />
