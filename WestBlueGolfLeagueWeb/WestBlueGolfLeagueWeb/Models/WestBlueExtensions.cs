@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Models.Entities
 {
@@ -26,6 +27,19 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .AsNoTracking()
                         .Where(x => x.validTeam == true && x.teamyeardata.Any(y => y.year.value == year))
                         .ToList();
+        }
+
+        public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)
+        {
+            var weeks = await westBlue.weeks
+                .Include(x => x.teammatchups)
+                .Include("teammatchups.teams")
+                .Include(x => x.pairing)
+                .Include(x => x.course)
+                .Where(x => x.year.value == year)
+                .OrderBy(x => x.date).AsNoTracking().ToListAsync();
+
+            return weeks;
         }
 
         public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
@@ -62,5 +76,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         {
             return r.ScoreDifference() - r.priorHandicap;
         }
+
+
     }
 }

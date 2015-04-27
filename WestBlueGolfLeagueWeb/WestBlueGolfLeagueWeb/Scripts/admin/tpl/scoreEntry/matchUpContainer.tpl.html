@@ -1,0 +1,12 @@
+﻿
+
+
+<div>
+    <ul>
+        <li ng-repeat="matchup in matchupCtrl.matchups">
+            <a href="" ui-sref="admin.scoreEntry.matchup.edit({weekId: matchupCtrl.weekId, matchupId: matchup.id})">{{::matchup.team1.name}} vs {{::matchup.team2.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div ui-view></div>

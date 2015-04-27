@@ -1,2 +1,11 @@
-﻿<p>week!</p>
-<p>{{::weekEntry.weekId}}</p>
+﻿
+<div>
+    <ul>
+        <li ng-repeat="matchup in currentWeek.matchups">
+            <a href="" ui-sref="admin.scoreEntry.matchup.edit({weekId: currentWeek.weekId, matchupId: matchup.id})">{{::matchup.team1.name}} vs {{::matchup.team2.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<p>{{::currentWeek.weekId}}</p>
+

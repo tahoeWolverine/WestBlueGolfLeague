@@ -1,3 +1,14 @@
-﻿<div>Score entry!</div>
+﻿<h2>Score entry!</h2>
+
+<div id="week-list">
+    <ul>
+        <li ng-repeat="week in scoreEntry.weeks">
+            <a href="" ui-sref="admin.scoreEntry.week({weekId: week.id})" ui-sref-active="active">
+                <span>{{::week.date}}</span>
+                {{::week.seasonIndex}}
+            </a>
+        </li>
+    </ul>
+</div>
 
 <div ui-view></div>

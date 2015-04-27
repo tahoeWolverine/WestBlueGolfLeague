@@ -8,18 +8,20 @@
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/scoreEntryContainer.tpl.html',
                 controller: 'ScoreEntry as scoreEntry',
                 resolve: {
-                    weekEntry: ['$q', '$state', function ($q, $state) {
-                        return $q.when(42);
+                    scoreEntrySvc: 'scoreEntry',
+                    scheduleData: ['scoreEntrySvc', function (scoreEntry) {
+                        return scoreEntry.getWeeks().then(function (data) {
+                            return data.data;
+                        });
                     }]
                 }
             })
             .state('admin.scoreEntry.currentWeek', {
                 url: '',
-                controller: ['$stateParams', '$state', 'weekEntry', '$location', '$timeout', function ($stateParams, $state, weekEntry, $location, $timeout) {
+                controller: ['$stateParams', '$state', 'scheduleData', '$location', '$timeout', function ($stateParams, $state, scheduleData, $location, $timeout) {
                     // super hack
                     $timeout(function () {
-                        //debugger;
-                        $location.path('/scoreEntry/' + weekEntry).replace();
+                        $location.path('/scoreEntry/' + scheduleData.weeks[0].id).replace();
                     }, 0, true);
                     //$state.go('admin.scoreEntry.week', { weekId: weekEntry }, { location: 'replace' });
                 }]
@@ -27,18 +29,68 @@
             .state('admin.scoreEntry.week', {
                 url: '/:weekId',
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/week.tpl.html',
-                controller: 'WeekEntry as weekEntry'
-            });
+                controller: 'CurrentWeek as currentWeek'
+            })
+            .state('admin.scoreEntry.matchup', {
+                abstract: true,
+                url: '/:weekId',
+                controller: 'Matchup as matchupCtrl',
+                templateUrl: '/Scripts/admin/tpl/scoreEntry/matchupContainer.tpl.html',
+               
+            })
+            .state('admin.scoreEntry.matchup.edit', {
+                url: '/:matchupId',
+                templateUrl: '/Scripts/admin/tpl/scoreEntry/matchupEdit.tpl.html',
+                controller: 'MatchupEdit as matchupEdit',
+                resolve: {
+                    matchupData: ['scoreEntrySvc', '$stateParams', function (scoreEntry, $stateParams) {
+                        return scoreEntry.getMatchup($stateParams.weekId, $stateParams.matchupId).then(function (data) {
+                            return data.data;
+                        });
+                    }]
+                }
+            })
     }])
     .run(['$rootScope', '$state', function ($rootScope, $state) {
         $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
             console.log(toState.name);
-            //debugger;
         });
     }])
-    .controller('WeekEntry', ['$stateParams', function($stateParams) {
-        this.weekId = $stateParams.weekId;
+    .factory('scoreEntry', ['$http', function ($http) {
+        return {
+            getWeeks: function () {
+                return $http({
+                    method: 'GET',
+                    url: '/api/scoreEntry'
+                });
+            },
+            getMatchup: function (weekId, matchupId) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId
+                });
+            }
+        }
     }])
-    .controller('ScoreEntry', [function () {
+    .controller('MatchupEdit', ['$stateParams', 'matchupData', function ($stateParams, matchupData) {
 
+    }])
+    .controller('Matchup', ['$stateParams', 'scheduleData', function ($stateParams, scheduleData) {
+        var selectedWeek = _.find(scheduleData.weeks, function (x) {
+            return x.id == $stateParams.weekId;
+        });
+
+        this.weekId = $stateParams.weekId;
+        this.matchups = selectedWeek.teamMatchups;
+    }])
+    .controller('CurrentWeek', ['$stateParams', 'scheduleData', function ($stateParams, scheduleData) {
+        var selectedWeek = _.find(scheduleData.weeks, function (x) {
+            return x.id == $stateParams.weekId;
+        });
+
+        this.weekId = $stateParams.weekId;
+        this.matchups = selectedWeek.teamMatchups;
+    }])
+    .controller('ScoreEntry', ['scheduleData', function (scheduleData) {
+        this.weeks = scheduleData.weeks;
     }]);

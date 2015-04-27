@@ -204,6 +204,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\NoteController.cs" />
+    <Compile Include="Controllers\Admin\pairingsController.cs" />
+    <Compile Include="Controllers\Admin\ScoreEntryController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\Admin\YearManagementController.cs" />
     <Compile Include="Controllers\DataByYearController.cs" />
@@ -352,6 +354,8 @@
     <Content Include="Scripts\admin\tpl\adminIndex.tpl.html" />
     <Content Include="Scripts\admin\tpl\adminWrapper.tpl.html" />
     <Content Include="Scripts\admin\tpl\scheduleEditor.tpl.html" />
+    <Content Include="Scripts\admin\tpl\scoreEntry\matchupContainer.tpl.html" />
+    <Content Include="Scripts\admin\tpl\scoreEntry\matchupEdit.tpl.html" />
     <Content Include="Scripts\admin\tpl\scoreEntry\scoreEntryContainer.tpl.html" />
     <Content Include="Scripts\admin\tpl\scoreEntry\week.tpl.html" />
     <Content Include="Scripts\admin\tpl\yearWizard\yearInit.tpl.html" />
