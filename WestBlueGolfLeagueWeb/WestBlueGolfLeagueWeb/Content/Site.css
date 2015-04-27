@@ -621,7 +621,10 @@ textarea.roster-input {
     border-right: 1px solid black;
 }
 
-
+.qr-code {
+    width: 200px;
+    height: 200px;
+}
 
 @media (max-width: 992px) {
     .header-link-small {
