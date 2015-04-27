@@ -215,12 +215,16 @@ input[type="checkbox"].input-validation-error {
     font-size: 1.2em;
 }
 
+.player-list-item-handicap {
+    font-size: 1.2em;
+}
+
 .player-list-item-name, .player-list-item-image {
-    height: 3.2em;
+    height: 4.8em; /*1.6 * 3 lines*/
 }
 
 .player-list-item-image {
-    line-height: 3.2em;
+    line-height: 4.8em;
     text-align: center;
     vertical-align: middle;
     float: left;
@@ -233,8 +237,6 @@ player-list-item-name {
     width: 75%;
     padding-left: 15px;
 }
-
-
 
 .player-list-item-image .fa-user {
     font-size: 2em;
@@ -417,10 +419,6 @@ team-list-item-name {
 .team-list-item-wrapper:hover .fa-user {
     font-size: 2.4em;
     line-height: 1.3333333em; /* this is 3.2 / 2.4. */
-}
-
-.team-list-item-teamname {
-    color: #999;
 }
 
 .team-list-item > div:hover {
