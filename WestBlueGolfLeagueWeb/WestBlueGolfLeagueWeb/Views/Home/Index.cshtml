@@ -49,26 +49,6 @@
                     </div>
                 </div>
             }
-
-            @*@<table class="table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Course</th>
-                        <th>Pairings</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var week in this.Model.ScheduleYear.weeks.OrderBy(w => w.date))
-                    {
-                        <tr>
-                            <td>@week.date.ToShortDateString()</td>
-                            <td>@week.course.name</td>
-                            <td>@week.pairing.pairingText</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>*@
         }
     </div>
 
@@ -100,5 +80,18 @@
             </table>
         }
     </div>
-    
+    <div class="col-md-3">
+        <h4>iPhone App</h4>
+        <p>Download the league's iPhone app from TR App Store, Thomson Reuters internal mobile apps site.</p>
+        <div><img class="qr-code" src="~/Content/images/golfAppQRCode.jpg" /></div>
+    </div>
+    @if (this.Model.SelectedYear == 2015)
+    {
+        <div class="col-md-6">
+            <h4>2015 Year End Tournament</h4>
+            <p>
+                2015 Year End Tournament - Saturday, September TBDth - River Oaks Golf Course, Cottage Grove, MN - 10 AM start
+            </p>
+        </div>
+    }
 </div>
