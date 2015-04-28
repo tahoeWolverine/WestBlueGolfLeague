@@ -31,14 +31,14 @@
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/week.tpl.html',
                 controller: 'CurrentWeek as currentWeek'
             })
-            .state('admin.scoreEntry.matchup', {
+            // Probably don't need this state anymore
+            .state('admin.scoreEntry.week.matchup', {
                 abstract: true,
-                url: '/:weekId',
                 controller: 'Matchup as matchupCtrl',
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/matchupContainer.tpl.html',
                
             })
-            .state('admin.scoreEntry.matchup.edit', {
+            .state('admin.scoreEntry.week.matchup.edit', {
                 url: '/:matchupId',
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/matchupEdit.tpl.html',
                 controller: 'MatchupEdit as matchupEdit',
@@ -88,7 +88,7 @@
             return x.id == $stateParams.weekId;
         });
 
-        this.weekId = $stateParams.weekId;
+        this.selectedWeek = selectedWeek;
         this.matchups = selectedWeek.teamMatchups;
     }])
     .controller('ScoreEntry', ['scheduleData', function (scheduleData) {

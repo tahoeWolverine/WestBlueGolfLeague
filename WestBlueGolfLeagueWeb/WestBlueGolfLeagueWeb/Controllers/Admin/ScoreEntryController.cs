@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             var weeks = await this.Db.GetWeeksWithMatchUpsForYearAsync(this.CurrentYear);
 
             // TODO: get correct current week.
-            return Ok(new ScheduleResponse { Weeks = weeks.Select(x => new WeekWebResponse(x)) });
+            return Ok(new ScheduleResponse { Weeks = weeks.Where(x => x.teammatchups.Count > 0).Select(x => new WeekWebResponse(x)) });
         }
 
         /// <summary>

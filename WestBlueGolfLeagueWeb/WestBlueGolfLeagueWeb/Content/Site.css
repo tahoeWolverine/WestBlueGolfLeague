@@ -552,6 +552,43 @@ textarea.roster-input {
     max-width: 50%;
 }
 
+/* score entry */
+.score-entry-nav-primary {
+    font-size: 14px;
+}
+
+.score-entry-nav-secondary {
+    position: absolute;
+    right: 15px;
+    font-size: 12px;
+    color: #999;
+}
+
+.score-entry-week-contents h3 {
+    margin-top: 0;
+}
+
+.score-entry-week {
+    display: block;
+    float: left;
+    color: black;
+    width: 20%;
+    font-size: 13px;
+    padding: 10px;
+}
+
+.score-entry-matchup-left, .score-entry-matchup-right {
+    width: 40%;
+}
+
+.score-entry-matchup-first, .score-entry-matchup-second {
+    text-align: center;
+}
+
+.score-entry-vs {
+    text-align: center;
+}
+
 /* Matchups */
 .matchup-date-detail, .schedule-date-detail {
   margin-bottom: 24px;

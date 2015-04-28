@@ -1,11 +1,15 @@
 ﻿
-<div>
-    <ul>
-        <li ng-repeat="matchup in currentWeek.matchups">
-            <a href="" ui-sref="admin.scoreEntry.matchup.edit({weekId: currentWeek.weekId, matchupId: matchup.id})">{{::matchup.team1.name}} vs {{::matchup.team2.name}}</a>
-        </li>
-    </ul>
+<h3>Week {{::currentWeek.selectedWeek.seasonIndex}} &mdash; {{::currentWeek.selectedWeek.date | date : 'MMMM d, yyyy'}}</h3>
+<div class="clearfix">
+    <a class="score-entry-week clearfix" href="javascript:;" ng-repeat="matchup in currentWeek.matchups" ui-sref="admin.scoreEntry.week.matchup.edit({weekId: currentWeek.selectedWeek.id, matchupId: matchup.id})">
+        <div class="score-entry-matchup-first">
+            {{::matchup.team1.name}}
+        </div>
+        <div class="score-entry-vs">vs</div>
+        <div class="score-entry-matchup-second">
+            {{::matchup.team2.name}}
+        </div>
+    </a>
 </div>
 
-<p>{{::currentWeek.weekId}}</p>
-
+<div ui-view></div>
