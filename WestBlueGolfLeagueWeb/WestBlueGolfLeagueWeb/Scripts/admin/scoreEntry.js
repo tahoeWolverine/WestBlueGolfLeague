@@ -73,7 +73,8 @@
         }
     }])
     .controller('MatchupEdit', ['$stateParams', 'matchupData', function ($stateParams, matchupData) {
-
+        this.team1 = matchupData.teamMatchup.team1;
+        this.team2 = matchupData.teamMatchup.team2;
     }])
     .controller('Matchup', ['$stateParams', 'scheduleData', function ($stateParams, scheduleData) {
         var selectedWeek = _.find(scheduleData.weeks, function (x) {

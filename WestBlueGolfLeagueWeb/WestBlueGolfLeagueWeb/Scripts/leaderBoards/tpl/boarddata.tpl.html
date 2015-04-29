@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<div ng-hide="isLoading" scroll-to-top>
+<div ng-hide="isLoading || !leaderBoardData.leaderBoardData.length" scroll-to-top>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -22,4 +22,11 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+<div ng-show="!isLoading && !leaderBoardData.leaderBoardData.length" class="informational-full-parent">
+    <div class="informational-full">
+        <p>No data for the current year <i class="fa fa-frown-o"></i></p>
+        <p>Check back soon!</p>
+    </div>
 </div>

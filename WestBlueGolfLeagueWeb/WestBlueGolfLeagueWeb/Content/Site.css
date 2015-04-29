@@ -68,13 +68,13 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1em;
 }
 
-.loading-indicator-parent {
+.loading-indicator-parent, .informational-full-parent {
     width: 100%;
     display: table;
 }
 
-.loading-indicator {
-    font-size: 4em;
+.loading-indicator, .informational-full {
+    font-size: 2em;
     text-align: center;
     display: table-cell;
     vertical-align: middle;
@@ -568,14 +568,32 @@ textarea.roster-input {
     margin-top: 0;
 }
 
+
+/* TODO: maybe change the display of these? */
 .score-entry-week {
-    display: block;
     float: left;
-    color: black;
     width: 20%;
     font-size: 13px;
     padding: 10px;
+    border-radius: 50%;
+    display: table;
 }
+
+.score-entry-week > a {
+    display: table-cell;
+    vertical-align: middle;
+    width: 90px;
+    height: 90px;
+}
+/* END TODO */
+
+.score-entry-match-container {
+    margin-bottom: 24px;
+    padding: 10px;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0px 2px 3px 0 #AAAAAA;
+}
+
 
 .score-entry-matchup-left, .score-entry-matchup-right {
     width: 40%;
@@ -589,12 +607,52 @@ textarea.roster-input {
     text-align: center;
 }
 
+.score-entry-matchup-nav {
+    margin-bottom: 24px;
+}
+
+.match-player-edit {
+    margin-top: 16px;
+}
+
+.match-player-edit > *, .match-numbers-container > input {
+    float: left;
+}
+
+.match-player-edit > * {
+
+}
+
+.match-player-edit > select.form-control {
+    width: 30%;
+}
+
+.match-player-edit .match-team-name {
+    width: 20%;
+}
+
+.match-numbers-container {
+    width: 48%
+}
+
+.match-player-edit > * + * {
+    margin-left: 1%;
+}
+
+.match-numbers-container > * + * {
+    margin-left: 2.08%;
+}
+
+.match-player-edit input.form-control {
+    width: 31.94%;
+}
+
 /* Matchups */
 .matchup-date-detail, .schedule-date-detail {
-  margin-bottom: 24px;
-  padding: 0 10px 10px 10px;
-  border: 1px solid #DDDDDD;
-  box-shadow: 0px 2px 3px 0 #AAAAAA;
+    margin-bottom: 24px;
+    padding: 0 10px 10px 10px;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0px 2px 3px 0 #AAAAAA;
 }
 
 .schedule-date-clearfix:nth-of-type(2n+3) {
@@ -678,6 +736,28 @@ textarea.roster-input {
 }
 
 @media (max-width: 767px) {
+
+    .match-player-edit > select.form-control {
+        width: 64%;
+    }
+
+    .match-player-edit .match-team-name {
+        width: 35%;
+    }
+
+    .match-player-edit .match-numbers-container {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
+    }
+
+    .match-numbers-container > * + * {
+        margin-left: 1%;
+    }
+
+    .match-player-edit input.form-control {
+        width: 32.6%;
+    }
 
     .player-list-input .col-xs-12 {
         width: inherit;
