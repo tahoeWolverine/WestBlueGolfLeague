@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
@@ -17,12 +18,20 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         /// Get the overall schedule data
         /// </summary>
         /// <returns></returns>
-        public async Task<IHttpActionResult> GetWeeks()
+        public async Task<IHttpActionResult> GetScoreEntryData()
         {
-            var weeks = await this.Db.GetWeeksWithMatchUpsForYearAsync(this.CurrentYear);
+            var weeks = (await this.Db.GetWeeksWithMatchUpsForYearAsync(this.CurrentYear)).ToList();
 
-            // TODO: get correct current week.
-            return Ok(new ScheduleResponse { Weeks = weeks.Where(x => x.teammatchups.Count > 0).Select(x => new WeekWebResponse(x)) });
+	        var now = DateTimeOffset.UtcNow;
+
+	        var currentWeek = weeks.FirstOrDefault(x => now < new DateTimeOffset(x.date)) ?? weeks.LastOrDefault();
+
+	        Dictionary<int, IEnumerable<player>> lookup =
+		        this.Db.GetPlayersWithTeamsForYear(this.CurrentYear)
+			        .ToLookup(x => x.Item2.id, x => x.Item1)
+			        .ToDictionary(x => x.Key, x => (IEnumerable<player>)x);
+			
+	        return Ok(new ScoreEntryDataResponse(currentWeek, weeks, lookup, this.Db.GetTeamsForYear(this.CurrentYear)));
         }
 
         /// <summary>

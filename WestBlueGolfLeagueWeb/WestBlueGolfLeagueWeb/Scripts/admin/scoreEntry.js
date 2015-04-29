@@ -9,7 +9,7 @@
                 controller: 'ScoreEntry as scoreEntry',
                 resolve: {
                     scoreEntrySvc: 'scoreEntry',
-                    scheduleData: ['scoreEntrySvc', function (scoreEntry) {
+                    scoreEntryData: ['scoreEntrySvc', function (scoreEntry) {
                         return scoreEntry.getWeeks().then(function (data) {
                             return data.data;
                         });
@@ -18,10 +18,10 @@
             })
             .state('admin.scoreEntry.currentWeek', {
                 url: '',
-                controller: ['$stateParams', '$state', 'scheduleData', '$location', '$timeout', function ($stateParams, $state, scheduleData, $location, $timeout) {
+                controller: ['$stateParams', '$state', 'scoreEntryData', '$location', '$timeout', function ($stateParams, $state, scoreEntryData, $location, $timeout) {
                     // super hack
                     $timeout(function () {
-                        $location.path('/scoreEntry/' + scheduleData.weeks[0].id).replace();
+                        $location.path('/scoreEntry/' + scoreEntryData.currentWeek.id).replace();
                     }, 0, true);
                     //$state.go('admin.scoreEntry.week', { weekId: weekEntry }, { location: 'replace' });
                 }]
@@ -72,26 +72,32 @@
             }
         }
     }])
-    .controller('MatchupEdit', ['$stateParams', 'matchupData', function ($stateParams, matchupData) {
+    .controller('MatchupEdit', ['$stateParams', 'matchupData', 'scoreEntryData', function ($stateParams, matchupData, scoreEntryData) {
         this.team1 = matchupData.teamMatchup.team1;
         this.team2 = matchupData.teamMatchup.team2;
-    }])
-    .controller('Matchup', ['$stateParams', 'scheduleData', function ($stateParams, scheduleData) {
-        var selectedWeek = _.find(scheduleData.weeks, function (x) {
+		
+    	// TODO: merge in actual matches with "dummy" matches and results.
+		// TODO: return actual match data from endpoint.
+
+        this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id];
+        this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id];
+	}])
+    .controller('Matchup', ['$stateParams', 'scoreEntryData', function ($stateParams, scoreEntryData) {
+    	var selectedWeek = _.find(scoreEntryData.schedule.weeks, function (x) {
             return x.id == $stateParams.weekId;
         });
 
         this.weekId = $stateParams.weekId;
         this.matchups = selectedWeek.teamMatchups;
     }])
-    .controller('CurrentWeek', ['$stateParams', 'scheduleData', function ($stateParams, scheduleData) {
-        var selectedWeek = _.find(scheduleData.weeks, function (x) {
+    .controller('CurrentWeek', ['$stateParams', 'scoreEntryData', function ($stateParams, scoreEntryData) {
+    	var selectedWeek = _.find(scoreEntryData.schedule.weeks, function (x) {
             return x.id == $stateParams.weekId;
         });
 
         this.selectedWeek = selectedWeek;
         this.matchups = selectedWeek.teamMatchups;
     }])
-    .controller('ScoreEntry', ['scheduleData', function (scheduleData) {
-        this.weeks = scheduleData.weeks;
+    .controller('ScoreEntry', ['scoreEntryData', function (scoreEntryData) {
+        this.weeks = scoreEntryData.schedule.weeks;
     }]);

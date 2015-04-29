@@ -17,7 +17,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .AsNoTracking()
                         .Where(x => x.year.value == year)
                         .ToList()
-                        .Where(x => includeInvalidPlayers ? true : x.player.validPlayer)
+                        .Where(x => includeInvalidPlayers || x.player.validPlayer)
                         .Select(x => Tuple.Create(x.player, x.team));
         }
 

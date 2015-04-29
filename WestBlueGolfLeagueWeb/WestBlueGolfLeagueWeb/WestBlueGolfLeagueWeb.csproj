@@ -270,7 +270,9 @@
     <Compile Include="Models\Admin\CreateYearRequest.cs" />
     <Compile Include="Models\Responses\Admin\GetUsersResponse.cs" />
     <Compile Include="Models\Responses\Admin\RoleResponse.cs" />
+    <Compile Include="Models\Responses\Admin\ScoreEntryDataResponse.cs" />
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />
+    <Compile Include="Models\Responses\PlayerWebResponse.cs" />
     <Compile Include="Models\Responses\ScheduleResponse.cs" />
     <Compile Include="Models\Responses\TeamMatchupWebResponse.cs" />
     <Compile Include="Models\Responses\TeamProfileData.cs" />

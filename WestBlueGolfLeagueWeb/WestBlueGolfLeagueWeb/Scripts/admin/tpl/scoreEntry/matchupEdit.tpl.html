@@ -2,10 +2,8 @@
 <div ng-repeat="i in [1, 2, 3, 4]" class="score-entry-match-container form-inline" >
     Match #{{::i}}
     <div class="match-player-edit clearfix">
-        <div class="match-team-name">{{::matchupEdit.team1.name}}</div>
-        <select class="form-control">
-            <option value="1">Player 1</option>
-        </select>
+	    <div class="match-team-name">{{::matchupEdit.team1.name}}</div>
+		<select class="form-control" ng-model="player1" ng-options="player.name for player in matchupEdit.team1PlayerList"></select>
         <div class="match-numbers-container">
             <input type="number" class="form-control" placeholder="Score" />
             <input type="number" class="form-control" placeholder="Points" />
@@ -14,9 +12,7 @@
     </div>
     <div class="match-player-edit clearfix">
         <div class="match-team-name">{{::matchupEdit.team2.name}}</div>
-        <select class="form-control">
-            <option value="2">Player 2</option>
-        </select>
+		<select class="form-control" ng-model="player2" ng-options="player.name for player in matchupEdit.team2PlayerList"></select>
         <div class="match-numbers-container">
             <input type="number" class="form-control" placeholder="Score" />
             <input type="number" class="form-control" placeholder="Points" />
