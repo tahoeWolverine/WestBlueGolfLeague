@@ -10,6 +10,11 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
     {
 		private static readonly string[] TeeTimes = new string[] { "3:44 (3:52)", "4:00 (4:08)", "4:16 (4:24)", "4:32 (4:40)", "4:48 (4:56)", "n/a" };
 
+        public TeamMatchupWebResponse()
+        {
+
+        }
+
         public TeamMatchupWebResponse(teammatchup tm)
         {
             int numOfTeams = tm.teams.Count;

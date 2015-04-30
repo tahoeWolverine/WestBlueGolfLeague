@@ -43,10 +43,9 @@
                 templateUrl: '/Scripts/admin/tpl/scoreEntry/matchupEdit.tpl.html',
                 controller: 'MatchupEdit as matchupEdit',
                 resolve: {
-                    matchupData: ['scoreEntrySvc', '$stateParams', function (scoreEntry, $stateParams) {
-                        return scoreEntry.getMatchup($stateParams.weekId, $stateParams.matchupId).then(function (data) {
-                            return data.data;
-                        });
+                    TeamMatchup: 'TeamMatchup',
+                    resolvedTeamMatchup: ['TeamMatchup', '$stateParams', function (TeamMatchup, $stateParams) {
+                        return new TeamMatchup($stateParams.weekId, $stateParams.matchupId).$promise;
                     }]
                 }
             })
@@ -72,12 +71,46 @@
             }
         }
     }])
-    .controller('MatchupEdit', ['$stateParams', 'matchupData', 'scoreEntryData', function ($stateParams, matchupData, scoreEntryData) {
-        this.team1 = matchupData.teamMatchup.team1;
-        this.team2 = matchupData.teamMatchup.team2;
+
+    .factory('TeamMatchup', ['$http', function($http) {
+
+        return function teamMatchup(weekId, matchupId) {
+
+            var self = this;
+
+            // Makes sure there are always 4 matches
+            function extendMatches() {
+                if (!self.teamMatchup.matches) { self.teamMatchup.matches = []; }
+
+                for (var i = self.teamMatchup.matches.length; i < 4; i++) {
+                    self.teamMatchup.matches.push({});
+                }
+            };
+
+            this.$promise = $http({
+                method: 'GET',
+                url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId
+            }).then(function (response) {
+                _.extend(self, response.data);
+                
+                extendMatches();
+
+                return self;
+            });
+
+            this.save = function () {
+
+            };
+        };
+    }])
+
+    .controller('MatchupEdit', ['$stateParams', 'resolvedTeamMatchup', 'scoreEntryData', function ($stateParams, resolvedTeamMatchup, scoreEntryData) {
+        this.team1 = resolvedTeamMatchup.teamMatchup.team1;
+        this.team2 = resolvedTeamMatchup.teamMatchup.team2;
 		
-    	// TODO: merge in actual matches with "dummy" matches and results.
-		// TODO: return actual match data from endpoint.
+        // TODO: return actual match data from endpoint.
+
+        this.matches = resolvedTeamMatchup.teamMatchup.matches;
 
         this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id];
         this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id];

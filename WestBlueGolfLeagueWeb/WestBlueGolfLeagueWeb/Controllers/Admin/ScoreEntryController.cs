@@ -52,9 +52,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 return NotFound();
             }
 
-            // TODO: include matches in this response.
-
-            return Ok(new { teamMatchup = new TeamMatchupWebResponse(matchup) });
+            return Ok(new { teamMatchup = new TeamMatchupWithMatches(matchup) });
         }
     }
 }
