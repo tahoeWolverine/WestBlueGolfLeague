@@ -10,7 +10,12 @@
                 resolve: {
                     scoreEntrySvc: 'scoreEntry',
                     scoreEntryData: ['scoreEntrySvc', function (scoreEntry) {
-                        return scoreEntry.getWeeks().then(function (data) {
+                    	return scoreEntry.getWeeks().then(function (data) {
+
+                    		// post process the players to get the structure we need
+                    		// (super super super hacky, fix the model coming back from the DB)
+		                    scoreEntry.postProcessData(data.data);
+
                             return data.data;
                         });
                     }]
@@ -63,12 +68,26 @@
                     url: '/api/scoreEntry'
                 });
             },
-            getMatchup: function (weekId, matchupId) {
-                return $http({
-                    method: 'GET',
-                    url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId
-                });
-            }
+        	// This is really just so we make our ngOptions stuff easier later :\
+        	postProcessData: function(data) {
+
+        		var teamsLookup = {};
+
+		        _.each(data.teams, function(item) {
+			        teamsLookup[item.id] = item;
+		        });
+
+		        _.each(data.teamIdToPlayer, function(playerArray, teamId) {
+					for (var i = 0; i < playerArray.length; i++) {
+						playerArray[i].teamName = teamId == 1 ? 'Sub/No Show' : teamsLookup[teamId].name;
+					}
+		        });
+        	},
+			getOtherTeamPlayers: function(teamIdNotToFetch, lookup) {
+				return _.flatten(_.filter(lookup, function(item, key) {
+					return key != teamIdNotToFetch && key != 1;
+				}));
+			}
         }
     }])
 
@@ -104,16 +123,21 @@
         };
     }])
 
-    .controller('MatchupEdit', ['$stateParams', 'resolvedTeamMatchup', 'scoreEntryData', function ($stateParams, resolvedTeamMatchup, scoreEntryData) {
+    .controller('MatchupEdit', ['$stateParams', 'resolvedTeamMatchup', 'scoreEntryData', 'scoreEntry',
+		function ($stateParams, resolvedTeamMatchup, scoreEntryData, scoreEntry) {
+
         this.team1 = resolvedTeamMatchup.teamMatchup.team1;
         this.team2 = resolvedTeamMatchup.teamMatchup.team2;
 		
-        // TODO: return actual match data from endpoint.
-
         this.matches = resolvedTeamMatchup.teamMatchup.matches;
 
-        this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id];
-        this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id];
+		var dummyTeam = scoreEntryData.teamIdToPlayer[1]; // dummy team is #1 in the db, and should always be?
+
+		this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
+								.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
+
+		this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
+								.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
 	}])
     .controller('Matchup', ['$stateParams', 'scoreEntryData', function ($stateParams, scoreEntryData) {
     	var selectedWeek = _.find(scoreEntryData.schedule.weeks, function (x) {

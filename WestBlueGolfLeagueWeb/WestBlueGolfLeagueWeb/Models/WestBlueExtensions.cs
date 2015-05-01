@@ -21,11 +21,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .Select(x => Tuple.Create(x.player, x.team));
         }
 
-        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year)
+        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidTeams = false)
         {
             return westBlue.teams
                         .AsNoTracking()
-                        .Where(x => x.validTeam == true && x.teamyeardata.Any(y => y.year.value == year))
+                        .Where(x => (includeInvalidTeams || x.validTeam) && x.teamyeardata.Any(y => y.year.value == year))
                         .ToList();
         }
 

@@ -27,11 +27,12 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 	        var currentWeek = weeks.FirstOrDefault(x => now < new DateTimeOffset(x.date)) ?? weeks.LastOrDefault();
 
 	        Dictionary<int, IEnumerable<player>> lookup =
-		        this.Db.GetPlayersWithTeamsForYear(this.CurrentYear)
+		        this.Db.GetPlayersWithTeamsForYear(this.CurrentYear, true)
 			        .ToLookup(x => x.Item2.id, x => x.Item1)
 			        .ToDictionary(x => x.Key, x => (IEnumerable<player>)x);
 			
-	        return Ok(new ScoreEntryDataResponse(currentWeek, weeks, lookup, this.Db.GetTeamsForYear(this.CurrentYear)));
+			// TODO: need to carry over dummy team to new year.
+	        return Ok(new ScoreEntryDataResponse(currentWeek, weeks, lookup, this.Db.GetTeamsForYear(this.CurrentYear, true)));
         }
 
         /// <summary>

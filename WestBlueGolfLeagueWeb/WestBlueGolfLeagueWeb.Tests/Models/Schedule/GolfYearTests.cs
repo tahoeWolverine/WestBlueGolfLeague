@@ -11,5 +11,6 @@ namespace WestBlueGolfLeagueWeb.Tests.Models.Schedule
     public class GolfYearTests
     {
         
+
     }
 }
