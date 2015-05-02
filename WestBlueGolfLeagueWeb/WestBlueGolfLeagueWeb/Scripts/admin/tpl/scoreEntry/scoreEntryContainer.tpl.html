@@ -4,8 +4,7 @@
     <div class="col-md-2">
         <div class="list-group">
             <a href="javascript:;" ng-repeat="week in scoreEntry.weeks" ui-sref="admin.scoreEntry.week({weekId: week.id})" ui-sref-active="active" class="list-group-item clearfix">
-                <span class="score-entry-nav-primary">Week {{::week.seasonIndex}}</span>
-                <span class="score-entry-nav-secondary">({{::week.date | date : 'MMM d'}})</span>
+                <span class="score-entry-nav-primary">{{::week.date | date : 'MMMM d'}}</span>
             </a>
         </div>
     </div>

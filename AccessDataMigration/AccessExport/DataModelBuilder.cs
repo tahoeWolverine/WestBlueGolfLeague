@@ -608,20 +608,21 @@ namespace AccessExport
                     var yd = yearDataForPlayer[i];
                     bool isNewestYear = i == yearDataForPlayer.Count - 1;
 
+                    CalculateHandicaps(dataModel, p, yd, isNewestYear);
+
+                    /*
                     if (yd.Year.Value >= 2011)
                     {
-                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else if (yd.Year.Value >= 2009)
                     {
-                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else
                     {
                         CalculateHandicapsUnder2009(dataModel, p, yd, isNewestYear);
-                    }
+                    }*/
                 }
             }
         }
@@ -636,6 +637,9 @@ namespace AccessExport
 
         }
 
+        /// <summary>
+        /// Not used currently. Old calculation.
+        /// </summary>
         private static void CalculateIncorrectHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.Week0Score;
@@ -679,6 +683,10 @@ namespace AccessExport
             yearData.FinishingHandicap = priorHandicapWithScores(scores, scoreIndex);
         }
 
+
+        /// <summary>
+        /// "new" handicap calculation (2011+)
+        /// </summary>
         private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.Week0Score;

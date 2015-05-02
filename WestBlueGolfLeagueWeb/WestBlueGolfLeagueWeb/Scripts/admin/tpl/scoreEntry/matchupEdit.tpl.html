@@ -1,4 +1,12 @@
 ﻿
+<div ng-if="matchupEdit.errors" class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <i class="fa fa-warning"></i> Please fix the following issues with your score entry to continue:
+    <ul>
+        <li ng-repeat="error in matchupEdit.errors">{{::error}}</li>
+    </ul>
+</div>
+
 <div ng-repeat="match in matchupEdit.matches track by $index" class="score-entry-match-container form-inline">
     Match #{{::$index + 1}}
     <div class="match-player-edit clearfix">
@@ -20,5 +28,10 @@
         </div>
     </div>
 </div>
+
+<div>
+    <button ng-click="matchupEdit.saveMatchup()" class="btn btn-success" ng-disabled="matchupEdit.disabled">Save Matchup</button>
+</div>
+
 
 

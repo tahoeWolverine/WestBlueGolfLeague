@@ -19,6 +19,11 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.Result2 = result2 == null ? null : new ResultWebResponse(result2);
         }
 
+        public MatchWebResponse()
+        {
+
+        }
+
         public ResultWebResponse Result2 { get; set; }
 
         public ResultWebResponse Result1 { get; set; }

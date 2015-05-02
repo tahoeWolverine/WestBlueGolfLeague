@@ -18,6 +18,11 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             };
         }
 
+        public TeamResponse()
+        {
+
+        }
+
         public bool Valid { get; set; }
 
         public string Name { get; set; }

@@ -19,6 +19,11 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.TeamId = result1.teamId;
         }
 
+        public ResultWebResponse()
+        {
+
+        }
+
         public int TeamId { get; set; }
 
         public int Id { get; set; }

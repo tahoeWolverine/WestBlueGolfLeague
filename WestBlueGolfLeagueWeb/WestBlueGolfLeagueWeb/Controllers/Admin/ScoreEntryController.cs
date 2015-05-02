@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using System.Web.Http;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
+using WestBlueGolfLeagueWeb.Models.Admin;
+using WestBlueGolfLeagueWeb.Models.ScoreEntry;
+using System.Net;
+using System.Web.Http;
 
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
+    [Authorize(Roles = AdminRole.Admin.Name + "," + AdminRole.TeamCaptain.Name)]
     public class ScoreEntryController : WestBlueDbApiController
     {
         /// <summary>
@@ -54,6 +59,31 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             }
 
             return Ok(new { teamMatchup = new TeamMatchupWithMatches(matchup) });
+        }
+
+        [HttpPut]
+        public async Task<HttpResponseMessage> PutMatchup(int weekId, int matchupId, TeamMatchupWithMatches teamMatchup)
+        {
+            if (teamMatchup.Id != matchupId)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            var databaseTeamMatchup = await this.Db.teammatchups.Include(y => y.week).Include("week.year").FirstOrDefaultAsync(x => x.id == teamMatchup.Id);
+
+            if (databaseTeamMatchup == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = new string[] { "Couldn't find requested teammatchup." } });
+            }
+
+            ScoreEntry scoreEntry = new ScoreEntry(teamMatchup, databaseTeamMatchup.week);
+
+            if (!scoreEntry.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = scoreEntry.Errors });
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-<h3>Week {{::currentWeek.selectedWeek.seasonIndex}} &mdash; {{::currentWeek.selectedWeek.date | date : 'MMMM d, yyyy'}}</h3>
+<h3>{{::currentWeek.selectedWeek.date | date : 'MMMM d, yyyy'}} &mdash; Week {{::currentWeek.selectedWeek.seasonIndex}}</h3>
 <!--<div class="clearfix score-entry-week-container">
     <div class="score-entry-week" ng-repeat="matchup in currentWeek.matchups">
         <a href="javascript:;" ui-sref="admin.scoreEntry.week.matchup.edit({weekId: currentWeek.selectedWeek.id, matchupId: matchup.id})">

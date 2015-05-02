@@ -24,7 +24,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Schedule
                 .Where(x => x.year.value == currentYear)
                 .OrderBy(x => x.date).AsNoTracking().ToListAsync();
 
-            return Ok(new ScheduleResponse { Weeks = weeks.Select(x => new WeekWebResponse(x)) });
+            return Ok(new ScheduleResponse { Weeks = weeks.Select(x => new ScheduleWeek(x)) });
         }
     }
 }

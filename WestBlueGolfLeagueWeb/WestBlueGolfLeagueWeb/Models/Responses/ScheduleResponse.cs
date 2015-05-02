@@ -7,6 +7,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 {
     public class ScheduleResponse
     {
-        public IEnumerable<WeekWebResponse> Weeks { get; set; }
+        public IEnumerable<ScheduleWeek> Weeks { get; set; }
     }
 }

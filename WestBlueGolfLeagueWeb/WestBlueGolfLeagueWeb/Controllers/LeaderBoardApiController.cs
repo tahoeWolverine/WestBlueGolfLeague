@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {

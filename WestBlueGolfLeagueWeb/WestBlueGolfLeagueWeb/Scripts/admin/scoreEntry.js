@@ -91,7 +91,7 @@
         }
     }])
 
-    .factory('TeamMatchup', ['$http', function($http) {
+    .factory('TeamMatchup', ['$http', '$q', function($http, $q) {
 
         return function teamMatchup(weekId, matchupId) {
 
@@ -118,7 +118,14 @@
             });
 
             this.save = function () {
-
+                return $http({
+                    method: 'PUT',
+                    url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId,
+                    data: self.teamMatchup
+                }).catch(function (data) {
+                    debugger;
+                    return $q.reject(data.data);
+                });
             };
         };
     }])
@@ -126,18 +133,32 @@
     .controller('MatchupEdit', ['$stateParams', 'resolvedTeamMatchup', 'scoreEntryData', 'scoreEntry',
 		function ($stateParams, resolvedTeamMatchup, scoreEntryData, scoreEntry) {
 
-        this.team1 = resolvedTeamMatchup.teamMatchup.team1;
-        this.team2 = resolvedTeamMatchup.teamMatchup.team2;
+		    var self = this;
+
+            this.team1 = resolvedTeamMatchup.teamMatchup.team1;
+            this.team2 = resolvedTeamMatchup.teamMatchup.team2;
 		
-        this.matches = resolvedTeamMatchup.teamMatchup.matches;
+            this.matches = resolvedTeamMatchup.teamMatchup.matches;
 
-		var dummyTeam = scoreEntryData.teamIdToPlayer[1]; // dummy team is #1 in the db, and should always be?
+		    var dummyTeam = scoreEntryData.teamIdToPlayer[1]; // dummy team is #1 in the db, and should always be?
 
-		this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
-								.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
+		    this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
+								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
 
-		this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
-								.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
+		    this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
+								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
+
+		    this.saveMatchup = function () {
+		        self.disabled = true;
+
+		        resolvedTeamMatchup.save().then(function () {
+		            self.disabled = false;
+		            alert('success!');
+		        }).catch(function (data) {
+		            self.disabled = false;
+		            self.errors = data.errors;
+		        });
+		    };
 	}])
     .controller('Matchup', ['$stateParams', 'scoreEntryData', function ($stateParams, scoreEntryData) {
     	var selectedWeek = _.find(scoreEntryData.schedule.weeks, function (x) {

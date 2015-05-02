@@ -6,17 +6,17 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses
 {
-    public class WeekWebResponse : WeekResponse
+    public class ScheduleWeek : WeekResponse
     {
-        public WeekWebResponse(week w) : base(w)
+        public ScheduleWeek(week w) : base(w)
         {
             this.TeamMatchups = w.teammatchups
-                .Select(x => new TeamMatchupWebResponse(x)).OrderBy(x => x.MatchOrder).ToList();
+                .Select(x => new ScheduleTeamMatchup(x)).OrderBy(x => x.MatchOrder).ToList();
             this.Course = CourseResponse.From(w.course);
             this.Pairing = w.pairing.pairingText;
         }
 
-        public List<TeamMatchupWebResponse> TeamMatchups { get; set; }
+        public List<ScheduleTeamMatchup> TeamMatchups { get; set; }
         public CourseResponse Course { get; set; }
         public string Pairing { get; set; }
     }

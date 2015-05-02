@@ -6,7 +6,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Admin
 {
-    public class TeamMatchupWithMatches : TeamMatchupWebResponse
+    public class TeamMatchupWithMatches : ScheduleTeamMatchup
     {
         public TeamMatchupWithMatches(teammatchup teamMatchup)
             : base(teamMatchup)
@@ -14,7 +14,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Admin
             this.Matches = 
                 teamMatchup.matches == null ? 
                     null : 
-                    teamMatchup.matches.Select(x => new MatchWebResponse(x, this.Team1.Id, this.Team2.Id));
+                    teamMatchup.matches.OrderBy(x => x.matchOrder).Select(x => new MatchWebResponse(x, this.Team1.Id, this.Team2.Id));
         }
 
         public TeamMatchupWithMatches()
