@@ -610,6 +610,18 @@ namespace AccessExport
 
                     CalculateHandicaps(dataModel, p, yd, isNewestYear);
 
+
+                    //2008 had 4 values, used week0score from results table, no backfill
+
+
+                    //2009 on up used week0score from player table, 4 scores, no backfill
+
+                    //<2008 had 3 results, no backfill
+
+                    //> 2011 had 4 results, backfill, and rookie rules
+
+
+
                     /*
                     if (yd.Year.Value >= 2011)
                     {
