@@ -61,6 +61,16 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 				lastLineNewLine = false;
 			}
 
+            // Hack to carry over dummy team without having to do it in the UI.
+            if (teamsToLookFor.Any(x => x.id == 1))
+            {
+                var dummyTeamRoster = new TeamRoster(teamsToLookFor.First(x => x.id == 1));
+                dummyTeamRoster.AddPlayer("No Show");
+                dummyTeamRoster.AddPlayer("Non-League Sub");
+
+                results.Add(dummyTeamRoster);
+            }
+
 			return results;
 		}  
 

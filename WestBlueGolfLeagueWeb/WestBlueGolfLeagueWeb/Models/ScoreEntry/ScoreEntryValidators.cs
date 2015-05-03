@@ -91,6 +91,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 return true;
             }
 
+            if (!ResultContainScores(match.Result1) && !ResultContainScores(match.Result2))
+            {
+                return true;
+            }
+
             if ((ResultContainScores(match.Result1) && !ResultContainScores(match.Result2)) ||
                 !ResultContainScores(match.Result1) && ResultContainScores(match.Result2))
             {

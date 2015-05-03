@@ -45,6 +45,9 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             if (request.TeamsToCreate != null && request.TeamsToCreate.Count > 0)
             {
                 createdTeams = request.TeamsToCreate.Select(x => new team { validTeam = true, teamName = x });
+                this.Db.teams.AddRange(createdTeams);
+                await this.Db.SaveChangesAsync();
+                createdTeams = await this.Db.teams.Where(x => request.TeamsToCreate.Contains(x.teamName)).ToListAsync();
             }
 
             IEnumerable<string> newPlayers = null;
@@ -52,7 +55,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             try
             {
                 // get teams
-                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id)).ToListAsync();
+                var selectedTeams = this.Db.teams.Where(x => request.TeamIds.Contains(x.id) || x.id == 1).ToListAsync();
 
                 // get possible pairings
                 var pairings = this.Db.pairings.ToListAsync();

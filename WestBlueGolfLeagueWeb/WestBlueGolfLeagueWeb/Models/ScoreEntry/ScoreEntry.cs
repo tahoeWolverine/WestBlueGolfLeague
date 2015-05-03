@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 
@@ -59,8 +60,17 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.IsValid = this.Errors.Count == 0;
         }
 
-        public void SaveScores()
+        public async void SaveScores(WestBlue db)
         {
+            var teamMatchup = await db.teammatchups.Include(x => x.matches).FirstOrDefaultAsync(x => x.id == this.teamMatchupWithMatches.Id);
+
+            if (teamMatchup == null) { throw new ArgumentException("Requested team matchup does not exist."); }
+
+            // delete any matches currently attached to the teammatchup.
+            db.matches.RemoveRange(teamMatchup.matches);
+
+            // TODO: if all fields/scores are entered save the teammatchup as complete (match complete == true).
+
 
         }
 

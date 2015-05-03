@@ -58,8 +58,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 							player = currentPlayer
 						};
 
-					roster.Team.playeryeardatas.Add(newPlayerYearData);
-                    currentPlayer.playeryeardatas.Add(newPlayerYearData);
+					//roster.Team.playeryeardatas.Add(newPlayerYearData);
+                    //currentPlayer.playeryeardatas.Add(newPlayerYearData);
 					this.playeryeardatasToCreate.AddLast(newPlayerYearData);
 				}
 			}

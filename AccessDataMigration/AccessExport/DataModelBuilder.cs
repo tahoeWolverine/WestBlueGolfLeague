@@ -578,7 +578,7 @@ namespace AccessExport
                     return "consolation";
                 }
                 
-                return "lexisnexis";
+                return "lastplace";
             }
 
             switch (matchOrderInWeek) {
@@ -589,7 +589,7 @@ namespace AccessExport
                 case 2:
                     return "consolation";
                 default:
-                    return "lexisnexis";
+                    return "lastplace";
             }
         }
 

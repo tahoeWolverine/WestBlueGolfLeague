@@ -23,8 +23,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 
             this.CreateTeamYearData();
 
-            // super hack to allow league subs to be carried over, but not part of the schedule.
-            this.teams = this.teams.Where(x => !string.Equals(x.teamName, "league subs", StringComparison.OrdinalIgnoreCase))
+            // super hack to allow league subs and dummy no show team to be carried over, but not part of the schedule.
+            this.teams = this.teams.Where(x => !string.Equals(x.teamName, "league subs", StringComparison.OrdinalIgnoreCase) && x.id != 1)
 				.OrderBy(x => x.teamName).ToList();
 
             this.CreateSchedule();
@@ -47,7 +47,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
             {
                 var tyd = new teamyeardata { team = t, year = this.CreatedYear };
 
-                t.teamyeardata.Add(tyd);
+                //t.teamyeardata.Add(tyd);
                 this.CreatedTeamYearDatas.Add(tyd);
             }
         }

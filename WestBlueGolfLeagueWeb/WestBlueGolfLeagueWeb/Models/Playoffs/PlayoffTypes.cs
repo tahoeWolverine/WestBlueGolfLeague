@@ -11,7 +11,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
 
         public const string Consolation = "consolation";
 
-        public const string LexisNexis = "lexisnexis";
+        public const string LastPlace = "lastplace";
 
         public const string ThirdPlace = "thirdplace";
     }

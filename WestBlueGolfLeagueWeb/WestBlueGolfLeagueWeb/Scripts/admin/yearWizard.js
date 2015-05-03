@@ -55,7 +55,13 @@
 
                 yearManagement.saveYear(submitData)
                     .then(function (response) {
-                        alert('The following players were not already in the league and will need to be added manually: \n\n' + response.data.newPlayers.join('\n'));
+                        if (response.data.newPlayers) {
+                            alert('The following players were not already in the league and will need to be added manually: \n\n' + response.data.newPlayers.join('\n'));
+                        }
+                        else {
+                            alert('Successfully created the golf year!');
+                        }
+
                         $state.go('admin.schedule');
                     })
                     .catch(function (response) {

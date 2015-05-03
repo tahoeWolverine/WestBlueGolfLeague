@@ -150,10 +150,12 @@
 
 		    this.saveMatchup = function () {
 		        self.disabled = true;
+		        self.errors = null;
+		        self.successMessage = null;
 
 		        resolvedTeamMatchup.save().then(function () {
 		            self.disabled = false;
-		            alert('success!');
+		            self.successMessage = "successfully saved scores!";
 		        }).catch(function (data) {
 		            self.disabled = false;
 		            self.errors = data.errors;
