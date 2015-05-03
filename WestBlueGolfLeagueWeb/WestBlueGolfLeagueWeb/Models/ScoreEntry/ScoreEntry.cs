@@ -5,6 +5,8 @@ using System.Web;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
+using WestBlueGolfLeagueWeb.Models.Responses;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
@@ -60,18 +62,95 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.IsValid = this.Errors.Count == 0;
         }
 
+        private bool ShouldCreateResult(ResultWebResponse clientResult)
+        {
+            return clientResult != null && clientResult.PlayerId.HasValue && clientResult.PlayerId != 0;
+        }
+
+        private result CreateNewResult(match parentMatch, int teamId, ResultWebResponse clientResult, year year)
+        {
+            return new result 
+            { 
+                match = parentMatch, 
+                score = clientResult.Score, 
+                points = clientResult.Points, 
+                scoreVariant = clientResult.EquitableScore, 
+                teamId = teamId, 
+                year = year, 
+                playerId = clientResult.PlayerId.Value 
+            };
+        }
+
+        private async Task<IDictionary<int, player>> GetPlayersLookup(WestBlue db)
+        {
+            var allPlayerIds = new LinkedList<int>();
+
+            foreach (var m in this.teamMatchupWithMatches.Matches)
+            {
+                if (m.Result1 != null && m.Result1.PlayerId.HasValue) 
+                {
+                    allPlayerIds.AddLast(m.Result1.PlayerId.Value);
+                }
+
+                if (m.Result2 != null && m.Result2.PlayerId.HasValue)
+                {
+                    allPlayerIds.AddLast(m.Result2.PlayerId.Value);
+                }
+            }
+
+            var allRequiredPlayers = await db.players.Where(x => allPlayerIds.Contains(x.id)).ToListAsync();
+
+            return allRequiredPlayers.ToDictionary(x => x.id, x => x);
+        }
+
         public async void SaveScores(WestBlue db)
         {
-            var teamMatchup = await db.teammatchups.Include(x => x.matches).FirstOrDefaultAsync(x => x.id == this.teamMatchupWithMatches.Id);
+            // if for some reason there are no matches, we don't gotta do nothin.
+            if (this.teamMatchupWithMatches.Matches == null || this.teamMatchupWithMatches.Matches.Count() == 0) 
+            {
+                return;
+            }
+
+            var teamMatchup = await db.teammatchups.Include(x => x.matches).Include("matches.results").FirstOrDefaultAsync(x => x.id == this.teamMatchupWithMatches.Id);
 
             if (teamMatchup == null) { throw new ArgumentException("Requested team matchup does not exist."); }
 
             // delete any matches currently attached to the teammatchup.
+            // Do we also need to delete results specifically or will that happen automatically?
+            var resultsToDelete = new List<result>();
+
+            foreach (var m in teamMatchup.matches) 
+            {
+                resultsToDelete.AddRange(m.results);
+            }
+
+            db.results.RemoveRange(resultsToDelete);
             db.matches.RemoveRange(teamMatchup.matches);
 
+            var matchList = this.teamMatchupWithMatches.Matches.ToList();
+
+            for (int i = 0; i < matchList.Count; i++)
+            {
+                var clientMatch = matchList[i];
+
+                if (clientMatch == null) { continue; }
+
+                var newMatch = new match { matchOrder = i, teamMatchupId = teamMatchup.id,  };
+
+                if (ShouldCreateResult(clientMatch.Result1)) 
+                {
+                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team1.Id, clientMatch.Result1, this.week.year));
+                }
+
+                if (ShouldCreateResult(clientMatch.Result2)) 
+                {
+                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team2.Id, clientMatch.Result2, this.week.year));
+                }
+
+                teamMatchup.matches.Add(newMatch);
+            }
+
             // TODO: if all fields/scores are entered save the teammatchup as complete (match complete == true).
-
-
         }
 
         public List<string> Errors { get; private set; }

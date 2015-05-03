@@ -36,6 +36,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 
         public int? PriorHandicap { get; set; }
 
-        public int PlayerId { get; set; }
+        public int? PlayerId { get; set; }
     }
 }
