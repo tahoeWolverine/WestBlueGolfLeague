@@ -92,6 +92,15 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches: " + e.Message } });
             }
 
+            try
+            {
+                // Crunch leaderboards/handicaps
+            }
+            catch (Exception e)
+            {
+
+            }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
