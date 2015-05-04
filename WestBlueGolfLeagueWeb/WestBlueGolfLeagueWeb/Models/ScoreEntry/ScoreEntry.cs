@@ -70,7 +70,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             return clientResult != null && clientResult.PlayerId.HasValue && clientResult.PlayerId != 0;
         }
 
-        private result CreateNewResult(match parentMatch, int teamId, ResultWebResponse clientResult, year year)
+        private result CreateNewResult(match parentMatch, int teamId, ResultWebResponse clientResult, year year, int priorHandicap)
         {
             return new result 
             { 
@@ -78,6 +78,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 score = clientResult.Score, 
                 points = clientResult.Points, 
                 scoreVariant = clientResult.EquitableScore, 
+                priorHandicap = priorHandicap,
                 teamId = teamId, 
                 year = year, 
                 playerId = clientResult.PlayerId.Value 
@@ -153,16 +154,20 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
                 if (ShouldCreateResult(clientMatch.Result1)) 
                 {
-                    // TODO: need to set previous handicaps to current handicap.
-                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team1.Id, clientMatch.Result1, this.week.year));
-                    newMatch.players.Add(playersLookup[clientMatch.Result1.PlayerId.Value]);
+                    var player = playersLookup[clientMatch.Result1.PlayerId.Value];
+
+                    // TODO: Fix prior handicap calculation. Setting it to 0 here.  It is updated in leaderboard caclculation currently.
+                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team1.Id, clientMatch.Result1, this.week.year, player.currentHandicap));
+                    newMatch.players.Add(player);
                 }
 
                 if (ShouldCreateResult(clientMatch.Result2)) 
                 {
-                    // TODO: need to set previous handicaps to current handicap.
-                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team2.Id, clientMatch.Result2, this.week.year));
-                    newMatch.players.Add(playersLookup[clientMatch.Result2.PlayerId.Value]);
+                    var player = playersLookup[clientMatch.Result2.PlayerId.Value];
+
+                    // TODO: Fix prior handicap calculation. Setting it to 0 here.  It is updated in leaderboard caclculation currently.
+                    newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team2.Id, clientMatch.Result2, this.week.year, player.currentHandicap));
+                    newMatch.players.Add(player);
                 }
 
                 teamMatchup.matches.Add(newMatch);
@@ -173,7 +178,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 teamMatchup.matchComplete = true;
             }
 
-            //await db.SaveChangesAsync();
+            await db.SaveChangesAsync();
 
             return teamMatchup;
         }

@@ -58,6 +58,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 							player = currentPlayer
 						};
 
+                    currentPlayer.currentHandicap = recentPyd.finishingHandicap; // just to make sure these values are consistent.
+
 					//roster.Team.playeryeardatas.Add(newPlayerYearData);
                     //currentPlayer.playeryeardatas.Add(newPlayerYearData);
 					this.playeryeardatasToCreate.AddLast(newPlayerYearData);

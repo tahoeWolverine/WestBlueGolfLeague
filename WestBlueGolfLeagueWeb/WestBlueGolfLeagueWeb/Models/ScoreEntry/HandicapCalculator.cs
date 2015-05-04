@@ -8,6 +8,43 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
     public class HandicapCalculator
     {
+        public HandicapCalculationResult CalculateAndCascadeHandicaps(IEnumerable<result> results, int week0Score, bool isRookie)
+        {
+            if (results == null || results.Count() == 0)
+            {
+                throw new ArgumentException("Can't call this method with no results.");
+            }
+
+            // Get all results for a player for the year.
+            var resultsForPlayerForYear = results.ToList();
+
+            HandicapCalculationResult handicapResult = null, firstHandicapResult = null;
+
+            for (int i = resultsForPlayerForYear.Count - 1; i >= 0; i--)
+            {
+                var subResults = resultsForPlayerForYear.Take(i + 1);
+
+                handicapResult = HandicapsForResults(subResults, week0Score, isRookie);
+
+                // bleh this could be cleaned up.
+                if (i == 0)
+                {
+                    resultsForPlayerForYear[i].priorHandicap = week0Score - 36;
+                }
+
+                if (i == resultsForPlayerForYear.Count - 1)
+                {
+                    firstHandicapResult = handicapResult;
+                }
+                else
+                {
+                    resultsForPlayerForYear[i + 1].priorHandicap = handicapResult.Handicap;
+                }
+            }
+
+            return firstHandicapResult;           
+        }
+
         public HandicapCalculationResult HandicapsForResults(IEnumerable<result> results, int week0Score, bool isRookie)
         {
             LinkedList<ScoreResult> copiedScores = new LinkedList<ScoreResult>(results.Select(x => new ScoreResult(x)));

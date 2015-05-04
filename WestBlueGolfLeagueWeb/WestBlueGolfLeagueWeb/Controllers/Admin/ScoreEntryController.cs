@@ -19,6 +19,8 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
     [Authorize(Roles = AdminRole.Admin.Name + "," + AdminRole.TeamCaptain.Name)]
     public class ScoreEntryController : WestBlueDbApiController
     {
+        public ScoreEntryController() : base(true) {  }
+
         /// <summary>
         /// Get the overall schedule data
         /// </summary>
@@ -83,22 +85,28 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = scoreEntry.Errors });
             }
 
+            teammatchup persistedTeamMatchup = null;
+
             try
             {
-                await scoreEntry.SaveScoresAsync(this.Db);
+                persistedTeamMatchup = await scoreEntry.SaveScoresAsync(this.Db);
             }
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches: " + e.Message } });
             }
 
+
+
             try
             {
                 // Crunch leaderboards/handicaps
+                var lbc = new LeaderBoardCalculator(this.Db, persistedTeamMatchup.id);
+                await lbc.ComputeAndSaveLeaderBoardsAsync();
             }
             catch (Exception e)
             {
-
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving handicaps and leaderboards: " + e.Message } });
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);

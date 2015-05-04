@@ -29,7 +29,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         //public async Task<leaderboarddata> GetTeamRankingBoardData()
 
-        public async Task ComputeAndSaveLeaderBoards()
+        public async Task ComputeAndSaveLeaderBoardsAsync()
         {
             // get all the valid results for the team matchup
             // get all the players for the team matchup
@@ -43,9 +43,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                             .Include("matches.results.year")
                             .Include("matches.results.match.teammatchup")
                             .Include("matches.results.player")
-                            .Include("matches.players")
-                            .Include("matches.players.playeryeardatas")
+                            // Don't know what's up with these two things.
+                            //.Include("matches.players")
+                            //.Include("matches.players.playeryeardatas")
                             .Include(x => x.week)
+                            .Include("week.course")
                             .Include(x => x.teams)
                             .Where(x => x.id == this.teamMatchupId).ToListAsync()).First();
 
@@ -57,7 +59,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             var teamBoardDataLookup = (await this.database.leaderboarddatas.Include(x => x.leaderboard)
                 .Where(x => x.year.value == teamMatchup.week.year.value && teamBoardsToCompute.Contains(x.leaderboard.key) && teamIds.Contains(x.teamId.Value)).ToListAsync()).ToLookup(x => x.teamId.Value);
 
-            var boardLookup = (await this.database.leaderboards.Include(x => teamBoardsToCompute.Contains(x.name) || playerBoardsToCompute.Contains(x.name)).ToListAsync()).ToDictionary(x => x.name, x => x);
+            var boardLookup = (await this.database.leaderboards.Where(x => teamBoardsToCompute.Contains(x.key) || playerBoardsToCompute.Contains(x.key)).ToListAsync()).ToDictionary(x => x.key, x => x);
 
             var resultsForYear = await this.database.results.Where(x => teamIds.Contains(x.teamId) && x.year.value == teamMatchup.week.year.value).ToListAsync();
 
@@ -78,6 +80,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         /// </summary>
         private void UpdatePlayerHandicaps(teammatchup tm, ILookup<int, result> resultsLookup)
         {
+            var hc = new HandicapCalculator();
+
             foreach (var match in tm.matches)
             {
                 foreach (var player in match.players)
@@ -85,9 +89,15 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                     if (!player.validPlayer) { continue; }
 
                     var pyd = player.playeryeardatas.FirstOrDefault(x => x.year.value == tm.week.year.value);
-                    var results = resultsLookup[player.id].OrderBy(x => x.match.teammatchup.week.date);
+                    var results = resultsLookup[player.id].Where(x => x.IsComplete()).OrderBy(x => x.match.teammatchup.week.date);
 
-                    var handicap = 
+                    // This is done to ensure that prior handicap is correct.
+                    var mostRecentHandicap = hc.CalculateAndCascadeHandicaps(results, pyd.week0Score, pyd.isRookie);
+
+                    player.currentHandicap = mostRecentHandicap.Handicap;
+                    pyd.finishingHandicap = mostRecentHandicap.Handicap;
+
+                    // TODO: update handicap leaderboard :\
                 }
             }
         }
@@ -102,7 +112,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             // team ranking board data
             foreach (var team in teamMatchup.teams)
             {
-                var lbd = lookup[team.id].FirstOrDefault(x => x.leaderboard.name == "team_ranking");
+                var lbd = lookup[team.id].FirstOrDefault(x => x.leaderboard.key == "team_ranking");
 
                 double value = team.PointsForYear(resultsForYear[team.id]);
                 string formattedValue = Convert.ToString(value);

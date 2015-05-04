@@ -15,8 +15,10 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public ScoreResult(result result)
         {
+            bool useEScore = result.year.value > 2014;
+
             this.Week = result.match.teammatchup.week.seasonIndex;
-            this.ScoreOverPar = Math.Min(result.score.Value - result.match.teammatchup.week.course.par, 20);
+            this.ScoreOverPar = Math.Min(useEScore ? result.scoreVariant.Value : result.score.Value - result.match.teammatchup.week.course.par, 20);
         }
 
         public int Week
