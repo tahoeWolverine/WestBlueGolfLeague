@@ -7,7 +7,7 @@ using WestBlueGolfLeagueWeb.Models.Admin;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
 {
-    [Authorize(Roles = AdminRole.Admin.Name)]
+    [Authorize(Roles = AdminRole.Admin.Name + "," + AdminRole.TeamCaptain.Name)]
     public class AdminInfoController : WestBlueDbApiController
     {
         public AdminInfoController()

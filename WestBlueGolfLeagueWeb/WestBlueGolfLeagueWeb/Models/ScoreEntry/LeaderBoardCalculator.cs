@@ -84,12 +84,20 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             foreach (var match in tm.matches)
             {
+                // Only compute handicaps for valid matches.
+                if (!match.IsComplete())
+                {
+                    continue;
+                }
+
                 foreach (var player in match.players)
                 {
                     if (!player.validPlayer) { continue; }
 
                     var pyd = player.playeryeardatas.FirstOrDefault(x => x.year.value == tm.week.year.value);
                     var results = resultsLookup[player.id].Where(x => x.IsComplete()).OrderBy(x => x.match.teammatchup.week.date);
+
+                    if (results.Count() == 0) { continue; }
 
                     // This is done to ensure that prior handicap is correct.
                     var mostRecentHandicap = hc.CalculateAndCascadeHandicaps(results, pyd.week0Score, pyd.isRookie);

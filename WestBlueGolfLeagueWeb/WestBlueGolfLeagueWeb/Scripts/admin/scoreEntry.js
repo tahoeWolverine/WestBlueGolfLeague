@@ -147,8 +147,11 @@
 		    this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
 								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
 
-		    this.toggleInputState = function () {
-		        debugger;
+		    this.toggleInputState = function (playerId, match, prop) {
+		        if (playerId < 3) {
+		            match[prop].points = 0;
+		            match[prop].score = match[prop].equitableScore = 99;
+		        }
 		    };
 
 		    this.saveMatchup = function () {
@@ -161,7 +164,7 @@
 		            self.successMessage = "successfully saved scores!";
 		        }).catch(function (data) {
 		            self.disabled = false;
-		            self.errors = data.errors;
+		            self.errors = data ? data.errors : ["Unspecified error occurred when saving scores"];
 		        });
 		    };
 	}])

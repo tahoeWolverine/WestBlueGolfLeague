@@ -16,7 +16,7 @@
     Match #{{::$index + 1}}
     <div class="match-player-edit clearfix">
         <div class="match-team-name">{{::matchupEdit.team1.name}}</div>
-        <select ng-change="matchupEdit.toggleInputState()" class="form-control" ng-model="match.result1.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team1PlayerList"></select>
+        <select ng-change="matchupEdit.toggleInputState(match.result1.playerId, match, 'result1')" class="form-control" ng-model="match.result1.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team1PlayerList"></select>
         <div class="match-numbers-container">
             <input type="number" ng-disabled="match.result1.playerId < 3" class="form-control" placeholder="Score" ng-model="match.result1.score" />
             <input type="number" ng-disabled="match.result1.playerId < 3" class="form-control" placeholder="Points" ng-model="match.result1.points" />
@@ -25,7 +25,7 @@
     </div>
     <div class="match-player-edit clearfix">
         <div class="match-team-name">{{::matchupEdit.team2.name}}</div>
-		<select ng-change="matchupEdit.toggleInputState()" class="form-control" ng-model="match.result2.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team2PlayerList"></select>
+        <select ng-change="matchupEdit.toggleInputState(match.result2.playerId, match, 'result2')" class="form-control" ng-model="match.result2.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team2PlayerList"></select>
         <div class="match-numbers-container">
             <input type="number" ng-disabled="match.result2.playerId < 3" class="form-control" placeholder="Score" ng-model="match.result2.score" />
             <input type="number" ng-disabled="match.result2.playerId < 3" class="form-control" placeholder="Points" ng-model="match.result2.points" />

@@ -77,9 +77,12 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return r.ScoreDifference() - r.priorHandicap;
         }
 
+        /// <summary>
+        /// Score and escore can never be 0.
+        /// </summary>
         public static bool IsComplete(this result r)
         {
-            return r.points.HasValue && r.score.HasValue && (!r.scoreVariant.HasValue || r.scoreVariant > 0);
+            return r.points.HasValue && r.score.HasValue && r.score.Value > 0 && (!r.scoreVariant.HasValue || r.scoreVariant > 0);
         }
 
         public static bool IsComplete(this match r)
