@@ -26,6 +26,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public WestBlueDbApiController(bool needsWriteAccess = false)
         {
             this.db = new WestBlue(needsWriteAccess);
+	        //this.db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
                 
         public ApplicationRoleManager RoleManager
