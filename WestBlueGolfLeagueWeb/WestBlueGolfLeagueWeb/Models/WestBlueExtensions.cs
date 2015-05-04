@@ -77,6 +77,14 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return r.ScoreDifference() - r.priorHandicap;
         }
 
+        public static bool IsComplete(this result r)
+        {
+            return r.points.HasValue && r.score.HasValue && (!r.scoreVariant.HasValue || r.scoreVariant > 0);
+        }
 
+        public static bool IsComplete(this match r)
+        {
+            return r.results != null && r.results.All(x => x != null && x.IsComplete());
+        }
     }
 }

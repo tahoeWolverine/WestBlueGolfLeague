@@ -33,8 +33,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             foreach (var match in scoreEntryInfo.TeamMatchupWithMatches.Matches)
             {
-                int team1PlayerId = match.Result1 == null ? -1 : match.Result1.PlayerId;
-                int team2PlayerId = match.Result2 == null ? -1 : match.Result2.PlayerId;
+                int team1PlayerId = match.Result1 == null || !match.Result1.PlayerId.HasValue ? -1 : match.Result1.PlayerId.Value;
+                int team2PlayerId = match.Result2 == null || !match.Result2.PlayerId.HasValue ? -1 : match.Result2.PlayerId.Value;
 
                 // players 1 and 2 are special no show players.
                 bool error = !TryAddToSet(playerIdsForTeam1, team1PlayerId) || !TryAddToSet(playerIdsForTeam2, team2PlayerId);

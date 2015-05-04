@@ -83,6 +83,15 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = scoreEntry.Errors });
             }
 
+            try
+            {
+                await scoreEntry.SaveScoresAsync(this.Db);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches: " + e.Message } });
+            }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

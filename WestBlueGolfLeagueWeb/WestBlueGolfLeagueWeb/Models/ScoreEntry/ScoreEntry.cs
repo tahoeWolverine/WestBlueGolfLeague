@@ -38,6 +38,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 return;
             }
 
+            // TODO: need two new validators still
+            // 1. need a validator that makes sure a player hasn't already played this week in another matchup
+            // 2. need to validate that a requested player is even in the requested year.
             IEnumerable<ScoreEntryValidators.ScoreValidator> scoreValidators = 
                 new List<ScoreEntryValidators.ScoreValidator> 
                 { 
@@ -103,12 +106,30 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             return allRequiredPlayers.ToDictionary(x => x.id, x => x);
         }
 
-        public async void SaveScores(WestBlue db)
+        private bool IsEmptyClientMatch(MatchWebResponse clientMatch)
+        {
+            return clientMatch == null || (clientMatch.Result1 == null && clientMatch.Result2 == null);
+        }
+
+        private void DeletePreviousData(WestBlue db, teammatchup teamMatchup)
+        {
+            var resultsToDelete = new List<result>();
+
+            foreach (var m in teamMatchup.matches)
+            {
+                resultsToDelete.AddRange(m.results);
+            }
+
+            db.results.RemoveRange(resultsToDelete);
+            db.matches.RemoveRange(teamMatchup.matches);
+        }
+
+        public async Task<teammatchup> SaveScoresAsync(WestBlue db)
         {
             // if for some reason there are no matches, we don't gotta do nothin.
             if (this.teamMatchupWithMatches.Matches == null || this.teamMatchupWithMatches.Matches.Count() == 0) 
             {
-                return;
+                return null;
             }
 
             var teamMatchup = await db.teammatchups.Include(x => x.matches).Include("matches.results").FirstOrDefaultAsync(x => x.id == this.teamMatchupWithMatches.Id);
@@ -116,16 +137,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             if (teamMatchup == null) { throw new ArgumentException("Requested team matchup does not exist."); }
 
             // delete any matches currently attached to the teammatchup.
-            // Do we also need to delete results specifically or will that happen automatically?
-            var resultsToDelete = new List<result>();
+            this.DeletePreviousData(db, teamMatchup);
 
-            foreach (var m in teamMatchup.matches) 
-            {
-                resultsToDelete.AddRange(m.results);
-            }
-
-            db.results.RemoveRange(resultsToDelete);
-            db.matches.RemoveRange(teamMatchup.matches);
+            var playersLookup = await GetPlayersLookup(db);
 
             var matchList = this.teamMatchupWithMatches.Matches.ToList();
 
@@ -133,24 +147,35 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             {
                 var clientMatch = matchList[i];
 
-                if (clientMatch == null) { continue; }
+                if (IsEmptyClientMatch(clientMatch)) { continue; }
 
-                var newMatch = new match { matchOrder = i, teamMatchupId = teamMatchup.id,  };
+                var newMatch = new match { matchOrder = i, teamMatchupId = teamMatchup.id };
 
                 if (ShouldCreateResult(clientMatch.Result1)) 
                 {
+                    // TODO: need to set previous handicaps to current handicap.
                     newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team1.Id, clientMatch.Result1, this.week.year));
+                    newMatch.players.Add(playersLookup[clientMatch.Result1.PlayerId.Value]);
                 }
 
                 if (ShouldCreateResult(clientMatch.Result2)) 
                 {
+                    // TODO: need to set previous handicaps to current handicap.
                     newMatch.results.Add(this.CreateNewResult(newMatch, this.teamMatchupWithMatches.Team2.Id, clientMatch.Result2, this.week.year));
+                    newMatch.players.Add(playersLookup[clientMatch.Result2.PlayerId.Value]);
                 }
 
                 teamMatchup.matches.Add(newMatch);
             }
 
-            // TODO: if all fields/scores are entered save the teammatchup as complete (match complete == true).
+            if (teamMatchup.matches.All(x => x.IsComplete()))
+            {
+                teamMatchup.matchComplete = true;
+            }
+
+            //await db.SaveChangesAsync();
+
+            return teamMatchup;
         }
 
         public List<string> Errors { get; private set; }

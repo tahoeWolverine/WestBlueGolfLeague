@@ -123,7 +123,6 @@
                     url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId,
                     data: self.teamMatchup
                 }).catch(function (data) {
-                    debugger;
                     return $q.reject(data.data);
                 });
             };
@@ -147,6 +146,10 @@
 
 		    this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
 								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
+
+		    this.toggleInputState = function () {
+		        debugger;
+		    };
 
 		    this.saveMatchup = function () {
 		        self.disabled = true;
