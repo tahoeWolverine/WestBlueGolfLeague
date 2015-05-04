@@ -86,5 +86,17 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         {
             return r.results != null && r.results.All(x => x != null && x.IsComplete());
         }
+
+        public static int PointsForYear(this team t, IEnumerable<result> resultsForYear)
+        {
+            int sum = 0;
+            foreach (var result in resultsForYear)
+            {
+                if (!result.IsComplete()) { continue; }
+                sum += result.points.Value;
+            }
+
+            return sum;
+        }
     }
 }
