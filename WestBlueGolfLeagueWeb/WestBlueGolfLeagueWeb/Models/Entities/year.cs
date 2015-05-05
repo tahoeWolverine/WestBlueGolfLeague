@@ -16,6 +16,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             playeryeardatas = new HashSet<playeryeardata>();
             results = new HashSet<result>();
             weeks = new HashSet<week>();
+            teamyeardata = new HashSet<teamyeardata>();
         }
 
         public int id { get; set; }
@@ -33,5 +34,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual ICollection<result> results { get; set; }
 
         public virtual ICollection<week> weeks { get; set; }
+
+        public virtual ICollection<teamyeardata> teamyeardata { get; set; }
     }
 }

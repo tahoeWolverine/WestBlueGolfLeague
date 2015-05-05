@@ -1,0 +1,51 @@
+﻿@model WestBlueGolfLeagueWeb.Models.Admin.AddPlayerRequest
+
+@{
+	ViewBag.Title = "Admin - Add Player";
+}
+
+<div class="row" ng-app="app">
+	<div class="col-md-8 col-md-offset-2">
+		<h2>Add a Player for @ViewBag.CurrentYear</h2>
+		<section>
+
+			@if (!string.IsNullOrEmpty(ViewBag.message))
+			{
+				<div class="alert alert-success">@ViewBag.Message <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+			}
+
+			@using (Html.BeginForm("AddPlayer", "Admin", FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+			{
+				@Html.AntiForgeryToken()
+				<div class="form-group">
+					@Html.LabelFor(x => x.PlayerName, new { @class = "control-label col-md-3" })
+					<div class="col-md-9">
+						@Html.TextBoxFor(x => x.PlayerName, new Dictionary<string, object> { { "class", "form-control" }, { "placeholder", "Enter a player name" }, { "focus-me", "" } })
+						@Html.ValidationMessageFor(x => x.PlayerName, "", new { @class = "text-danger" })
+					</div>
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(x => x.Handicap, new { @class = "control-label col-md-3" })
+					<div class="col-md-9">
+						@Html.TextBoxFor(x => x.Handicap, new { @class = "form-control", @placeholder = "Enter the player's handicap", @type = "number" })
+						@Html.ValidationMessageFor(x => x.Handicap, "", new { @class = "text-danger" })
+					</div>
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(x => x.TeamId, new { @class = "control-label col-md-3" })
+					<div class="col-md-9">
+						@Html.DropDownListFor(x => x.TeamId, Model.Teams.Select(x => new SelectListItem { Text = x.teamName, Value = Convert.ToString(x.id) }), new { @class = "form-control", @placeholder = "Enter the player's handicap", @type = "number" })
+						@Html.ValidationMessageFor(x => x.TeamId, "", new { @class = "text-danger" })
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-3 col-md-9">
+						<input type="submit" value="Add Player" class="btn btn-primary" />
+					</div>
+				</div>
+			}
+		</section>
+	</div>
+</div>

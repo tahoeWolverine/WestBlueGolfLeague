@@ -7,6 +7,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.ViewModels;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -16,11 +17,19 @@ namespace WestBlueGolfLeagueWeb.Controllers
         // GET: /Player/
         public ActionResult Index()
         {
-            int year = 2014;
+            int year = this.SelectedYear;
 
             var playersForYear = this.Db.GetPlayersWithTeamsForYear(year);
 
-            return View(new PlayerListViewModel { PlayersForYear = playersForYear.Select(x => new { Name = x.Item1.name, CH = x.Item1.currentHandicap, TeamName = x.Item2.teamName, Id = x.Item1.id }) });
+	        return
+		        View(new PlayerListViewModel
+		        {
+			        PlayersForYear =
+				        playersForYear.Select(
+					        x =>
+						        new { Name = x.Item1.name, CH = x.Item1.currentHandicap, TeamName = x.Item2.teamName, Id = x.Item1.id })
+		        });
+
         }
     }
 }

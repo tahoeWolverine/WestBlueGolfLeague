@@ -6,23 +6,59 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Commissioner's Notes</h3>
-        @if (this.Model.Information == null)
-        {
-            <p>There are no updates from the commissioner!</p>
-        }
-        else
-        {
-            <p>@this.Model.Information.text</p>
-        }
+        <div class="bs-callout bs-callout-primary">
+            <h4>Commissioner's Note</h4>
+            @if (this.Model.Information == null)
+            {
+                <text>There are no updates from the commissioner!</text>
+            }
+            else
+            {
+                <text>@this.Model.Information.text</text>
+            }
+        </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <h3>Team Standings for @this.Model.SelectedYear</h3>
-        @if (this.Model.TeamRankingDataForYear.Count() == 0)
+    <div class="col-md-9">
+        <h3>@this.Model.SelectedYear Schedule</h3>
+        @if (this.Model.ScheduleYear == null || this.Model.ScheduleYear.weeks.Count() == 0)
         {
             <p>There is no data for @this.Model.SelectedYear!</p>
+        }
+        else
+        {
+            var teeTimes = new string[] { "3:44 (3:52)", "4:00 (4:08)", "4:16 (4:24)", "4:32 (4:40)", "4:48 (4:56)", "n/a" };
+
+            foreach (var week in this.Model.ScheduleYear.weeks.OrderBy(w => w.date))
+            {
+                var matchups = week.teammatchups.OrderBy(x => x.matchOrder).ToList();
+                <div class="col-md-6 schedule-date-clearfix">
+                    <div class="schedule-date-detail">
+                        <h4>@week.date.ToString("MMMM d")</h4>
+                        <span class="schedule-course" title="Course">@week.course.name</span><span title="Pairing for week" class="schedule-pairing">@week.pairing.pairingText</span>
+                        <div class="matchup-container">
+                            @for (int i = 0; i < matchups.Count; i++)
+                            {
+                                <div class="matchup clearfix">
+                                    <div class="tee-time">@teeTimes[i]</div>
+                                    <div class="matchup-left">@matchups[i].teams.First().teamName</div>
+                                    <div class="matchup-vs">vs</div>
+                                    <div class="matchup-right">@(matchups[i].teams.Count > 1 ? matchups[i].teams.Skip(1).First().teamName : "no match")</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="col-md-3">
+        <h4>Team Standings for @this.Model.SelectedYear</h4>
+        @if (this.Model.TeamRankingDataForYear.Count() == 0)
+        {
+            <p>There is no team standing data for @this.Model.SelectedYear!</p>
         }
         else { 
             <table class="table">
@@ -46,32 +82,18 @@
             </table>
         }
     </div>
-    <div class="col-md-8">
-        <h3>@this.Model.SelectedYear Schedule</h3>
-        @if (this.Model.ScheduleYear == null || this.Model.ScheduleYear.weeks.Count() == 0)
-        {
-            <p>There is no data for @this.Model.SelectedYear!</p>
-        }
-        else { 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Course</th>
-                        <th>Pairings</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var week in this.Model.ScheduleYear.weeks.OrderBy(w => w.date))
-                    {
-                        <tr>
-                            <td>@week.date.ToShortDateString()</td>
-                            <td>@week.course.name</td>
-                            <td>@week.pairing.pairingText</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+    <div class="col-md-3">
+        <h4>iPhone App</h4>
+        <p>Download the league's iPhone app from TR App Store, Thomson Reuters internal mobile apps site.</p>
+        <div><img class="qr-code" src="~/Content/images/golfAppQRCode.jpg" /></div>
     </div>
+    @if (this.Model.SelectedYear == 2015)
+    {
+        <div class="col-md-6">
+            <h4>2015 Year End Tournament</h4>
+            <p>
+                2015 Year End Tournament - Saturday, September TBDth - River Oaks Golf Course, Cottage Grove, MN - 10 AM start
+            </p>
+        </div>
+    }
 </div>

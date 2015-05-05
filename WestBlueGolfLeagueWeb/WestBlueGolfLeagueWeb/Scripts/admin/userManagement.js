@@ -22,7 +22,7 @@
         };
 
         this.addUser = function () {
-            var addUserModal = $modal.open({
+            $modal.open({
                 templateUrl: '/Scripts/admin/tpl/addUser.tpl.html',
                 controller: 'AddUser as addUserCtrl',
                 resolve: {
@@ -66,5 +66,4 @@
         this.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
     }]);

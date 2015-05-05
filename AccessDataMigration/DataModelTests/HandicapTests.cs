@@ -24,10 +24,12 @@ namespace DataModelTests
             int peteHandicap = this.FinishingHandicapFor("Pete Mohs", 2013);
             int jaysonHandicap = this.FinishingHandicapFor("Jayson Walberg", 2013);
             int brianHandicap = this.FinishingHandicapFor("Brian Schwartz", 2013);
+            int mikeHandicap = this.FinishingHandicapFor("Mike Gleiter", 2013);
 
             peteHandicap.Should().Equal(11);
             jaysonHandicap.Should().Equal(7);
             brianHandicap.Should().Equal(12);
+            mikeHandicap.Should().Equal(6);
         }
 
         [TestMethod]

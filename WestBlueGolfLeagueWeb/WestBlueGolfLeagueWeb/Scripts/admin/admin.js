@@ -1,28 +1,73 @@
 ﻿angular
-    .module('admin', ['userManagement', 'ui.router', 'app'])
+    .module('admin', ['userManagement', 'ui.router', 'app', 'ui.bootstrap.datepicker', 'schedule', 'gm.datepickerMultiSelect'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider', function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
         $stateProvider
             .state('admin', {
+                abstract: true,
                 url: '/',
+                templateUrl: '/Scripts/admin/tpl/adminWrapper.tpl.html',
+                resolve: {
+                    fetchedAdminInfo: ['adminInfo', function (adminInfo) {
+                        return adminInfo.getAdminInfo();
+                    }]
+                }
+            });
+
+        $stateProvider
+            .state('admin.index', {
+                url: '',
                 templateUrl: '/Scripts/admin/tpl/adminIndex.tpl.html',
                 controller: 'AdminIndex as adminIndex'
             });
 
         $stateProvider
-            .state('manageUsers', {
-                url: '/manage',
+            .state('admin.manageUsers', {
+                url: 'manage',
                 templateUrl: '/Scripts/admin/tpl/userManagementIndex.tpl.html',
                 controller: 'ManageUserIndex as index'
+            });
+
+        $stateProvider
+            .state('admin.yearWizard', {
+                abstract: true,
+                url: 'yearWizard',
+                templateUrl: '/Scripts/admin/tpl/yearWizard/yearWizard.tpl.html',
+                controller: 'YearWizard as yearWizard'
+            });
+
+        $stateProvider
+            .state('admin.schedule', {
+                url: 'schedule',
+                templateUrl: '/Scripts/admin/tpl/scheduleEditor.tpl.html',
+                controller: 'ScheduleEditor as schedule'
             });
 
         $urlRouterProvider.otherwise('/');
 
         $locationProvider.html5Mode(true);
     }])
-    .controller('AdminIndex', [function() {
-       
-    }])
+
+
+    .controller('AdminIndex', ['fetchedAdminInfo', 'adminInfo', 'yearManagement', function (fetchedAdminInfo, adminInfo, yearManagement) {
+		var self = this;
+
+		self.fetchedAdminInfo = fetchedAdminInfo.data;
+
+		this.deleteCurrentYear = function() {
+		    yearManagement
+				.deleteYear()
+				.then(function () {
+					alert('year deleted!');
+					return adminInfo.getAdminInfo();
+				})
+				.then(function(data) {
+					self.fetchedAdminInfo = data.data;
+				});
+		};
+	}])
+
+
     .controller('SetLeagueNote', ['$scope', 'leagueNote', function ($scope, leagueNote) {
 
         var self = this;
@@ -43,4 +88,9 @@
                 self.message = "There was an error setting the league note!";
             });
         };
+    }])
+
+    // Future home of schedule editor
+    .controller('ScheduleEditor', [function () {
+
     }]);

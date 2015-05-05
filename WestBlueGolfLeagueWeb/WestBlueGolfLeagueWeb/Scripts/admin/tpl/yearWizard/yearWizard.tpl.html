@@ -1,0 +1,15 @@
+﻿<h2>Manage new year</h2>
+
+<div ng-if="!yearWizard.fetchedAdminInfo.newYearAvailable">
+    You can't currently create a new year, please <a href="/Admin" target="_self">go back to Admin.</a>
+</div>
+
+
+
+<div ng-if="yearWizard.fetchedAdminInfo.newYearAvailable">
+    <p>Setting up the league for year <strong>{{yearWizard.fetchedAdminInfo.yearToCreate}}</strong>. Follow the steps below to initialize a new season!</p>
+    
+    <div ui-view>
+
+    </div>
+</div>

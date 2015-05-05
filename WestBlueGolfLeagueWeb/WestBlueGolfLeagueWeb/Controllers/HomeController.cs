@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : WestBlueDbMvcController
     {
         public async Task<ViewResult> Index()
         {
-            int selectedYear = 2014;
+            int selectedYear = this.SelectedYear;
             
             var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
             var year = this.Db.years.Where(x => x.value == selectedYear).ToList().First();
@@ -23,18 +24,17 @@ namespace WestBlueGolfLeagueWeb.Controllers
             return View(new HomeViewModel { Information = latestNote, TeamRankingDataForYear = rankingValuesForYear, ScheduleYear = year, SelectedYear = selectedYear });
         }
 
-        public ActionResult About()
+        [ChildActionOnly]
+        public async Task<ActionResult> YearSelector()
         {
-            ViewBag.Message = "Your application description page.";
+            var years = await this.Db.years.OrderByDescending(x => x.value).ToListAsync();
 
-            return View();
+            return PartialView(new YearSelectorViewModel { SelectedYear = this.SelectedYear, Years = years });
         }
 
-        public ActionResult Contact()
+        public ActionResult AngularMain()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View("AngularView");
         }
     }
 }

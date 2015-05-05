@@ -153,7 +153,7 @@ namespace AccessExport
                 return;
             }
 
-            var connectionString = ConfigurationManager.ConnectionStrings["westBlueConnection"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["WestBlue"].ConnectionString;
 
             TimedTask("-- setting prerequisite conditions for mysql --", () =>
             {

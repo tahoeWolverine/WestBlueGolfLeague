@@ -8,19 +8,16 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 {
     public class WeekResponse
     {
-        public static WeekResponse From(week w)
+        public WeekResponse (week w)
         {
-            return new WeekResponse
-            {
-                Date = w.date,
-                CourseId = w.courseId,
-                YearId = w.yearId,
-                SeasonIndex = w.seasonIndex,
-                BadData = w.isBadData,
-                PairingId = w.pairingId,
-                IsPlayoff = w.isPlayoff,
-                Id = w.id,
-            };
+            Date = w.date;
+            CourseId = w.courseId;
+            YearId = w.yearId;
+            SeasonIndex = w.seasonIndex;
+            BadData = w.isBadData;
+            PairingId = w.pairingId;
+            IsPlayoff = w.isPlayoff;
+            Id = w.id;
         }
 
         public DateTime Date { get; set; }

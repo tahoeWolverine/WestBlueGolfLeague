@@ -1,0 +1,65 @@
+﻿<div class="year-wizard">
+    <h2>1. Select League Dates</h2>
+    <p>First, we need to select the match dates for the league.  Don't include any playoff match dates, as those can be added
+    at a later date.</p>
+    <div>
+        <div class="form-group">
+            <label for="leagueStartDate">Select match dates</label>
+            <datepicker type="text"
+                        id="leagueStartDate"
+                        ng-model="yearInit.startDate"
+                        min-date="yearInit.midDate"
+                        max-date="yearInit.maxDate"
+                        multi-select="yearInit.selectedDates"></datepicker>
+        </div>
+        <!--<div class="form-group">
+            <label for="leagueEndDate">League End Date</label>
+            <div class="input-group">
+                <input type="text"
+                       id="leagueEndDate"
+                       class="form-control"
+                       datepicker-popup ng-model="yearInit.endDate"
+                       min-date="yearInit.getMinDate()"
+                       max-date="yearInit.getMaxDate()"
+                       ng-required="true"
+                       is-open="yearInit.isEndDateOpen"
+                       close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="yearInit.openEndDate($event)"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>-->
+    </div>
+
+    <h2>2. Select Teams</h2>
+    <p>Select the teams that should be scheduled for this season (you will be able to assign players to teams later).</p>
+    <div class="team-selection-container">
+        <div ng-repeat="team in yearInit.yearInfo.teams" class="team-select" ng-click="yearInit.selectTeam(team)" ng-class="{'team-is-selected': team.isSelected}">
+            <i class="fa fa-check team-checkmark"></i> {{team.name}}
+        </div>
+    </div>
+    <form novalidate class="form-group form-inline">
+        <input type="text" ng-model="yearInit.teamToCreate" class="form-control" />
+        <button ng-click="yearInit.createTeam();" class="btn btn-primary" type="submit">Create New Team</button>
+    </form>
+
+    <h2>3. Input Roster</h2>
+    <p>Input the league roster in a newline seperated format, with the team name first.  E.g.:<br />
+    Mulligans<br />
+    John Smith<br />
+    Bill Gates<br />
+    John Adams<br /><br />
+    Eagles<br />
+    Player Name<br />
+    Another Player<br />
+    </p>
+    <p><strong>Note that any players not already in the league will have to be manually added later.</strong></p>
+    
+    <textarea class="roster-input form-control" ng-model="yearInit.yearRoster">
+
+    </textarea>
+
+
+    <button ng-click="yearInit.saveYear()" class="btn btn-success" ng-disabled="!yearInit.validState()">Save Year</button>
+
+</div>

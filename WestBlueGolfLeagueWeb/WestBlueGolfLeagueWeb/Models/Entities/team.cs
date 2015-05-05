@@ -15,8 +15,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             playeryeardatas = new HashSet<playeryeardata>();
             results = new HashSet<result>();
             teammatchups = new HashSet<teammatchup>();
+            teamyeardata = new HashSet<teamyeardata>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]
@@ -34,5 +37,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual ICollection<result> results { get; set; }
 
         public virtual ICollection<teammatchup> teammatchups { get; set; }
+
+        public virtual ICollection<teamyeardata> teamyeardata { get; set; }
     }
 }

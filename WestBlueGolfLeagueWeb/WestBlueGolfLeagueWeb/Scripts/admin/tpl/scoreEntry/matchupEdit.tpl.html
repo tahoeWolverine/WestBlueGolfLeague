@@ -1,0 +1,42 @@
+﻿
+<div ng-if="matchupEdit.errors" class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <i class="fa fa-warning"></i> Please fix the following issues with your score entry to continue:
+    <ul>
+        <li ng-repeat="error in matchupEdit.errors">{{error}}</li>
+    </ul>
+</div>
+
+<div ng-if="matchupEdit.successMessage" class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <i class="fa fa-check"></i> {{matchupEdit.successMessage}}
+</div>
+
+<div ng-repeat="match in matchupEdit.matches track by $index" class="score-entry-match-container form-inline">
+    Match #{{::$index + 1}}
+    <div class="match-player-edit clearfix">
+        <div class="match-team-name">{{::matchupEdit.team1.name}}</div>
+        <select ng-change="matchupEdit.toggleInputState(match.result1.playerId, match, 'result1')" class="form-control" ng-model="match.result1.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team1PlayerList"></select>
+        <div class="match-numbers-container">
+            <input type="number" ng-disabled="match.result1.playerId < 3" class="form-control" placeholder="Score" ng-model="match.result1.score" />
+            <input type="number" ng-disabled="match.result1.playerId < 3" class="form-control" placeholder="Points" ng-model="match.result1.points" />
+            <input type="number" ng-disabled="match.result1.playerId < 3" class="form-control" placeholder="Equitable Score" ng-model="match.result1.equitableScore" />
+        </div>
+    </div>
+    <div class="match-player-edit clearfix">
+        <div class="match-team-name">{{::matchupEdit.team2.name}}</div>
+        <select ng-change="matchupEdit.toggleInputState(match.result2.playerId, match, 'result2')" class="form-control" ng-model="match.result2.playerId" ng-options="player.id as player.name group by player.teamName for player in matchupEdit.team2PlayerList"></select>
+        <div class="match-numbers-container">
+            <input type="number" ng-disabled="match.result2.playerId < 3" class="form-control" placeholder="Score" ng-model="match.result2.score" />
+            <input type="number" ng-disabled="match.result2.playerId < 3" class="form-control" placeholder="Points" ng-model="match.result2.points" />
+            <input type="number" ng-disabled="match.result2.playerId < 3" class="form-control" placeholder="Equitable Score" ng-model="match.result2.equitableScore" />
+        </div>
+    </div>
+</div>
+
+<div>
+    <button ng-click="matchupEdit.saveMatchup()" class="btn btn-success" ng-disabled="matchupEdit.disabled">Save Matchup</button>
+</div>
+
+
+

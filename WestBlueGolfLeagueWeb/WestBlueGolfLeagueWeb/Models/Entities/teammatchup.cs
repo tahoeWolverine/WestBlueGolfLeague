@@ -28,6 +28,9 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public int? matchId { get; set; }
 
+        // should really be called matchupOrder :\
+        public int? matchOrder { get; set; }
+
         [StringLength(45)]
         public string matchupType { get; set; }
 

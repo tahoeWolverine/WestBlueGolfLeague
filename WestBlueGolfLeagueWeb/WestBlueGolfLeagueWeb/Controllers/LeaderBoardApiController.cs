@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -37,7 +38,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         [ResponseType(typeof(FullLeaderBoardForYearResponse))]
         public async Task<IHttpActionResult> GetLeaderBoard(string key)
         {
-            int year = 2014;
+            int year = this.SelectedYear;
 
             // validate that we have a valid key.
             var leaderBoardAsyncList = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();

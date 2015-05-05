@@ -19,8 +19,64 @@ footer span:nth-child(1n + 2) {
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 16px 15px 0 15px;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -68,13 +124,13 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 1em;
 }
 
-.loading-indicator-parent {
+.loading-indicator-parent, .informational-full-parent {
     width: 100%;
     display: table;
 }
 
-.loading-indicator {
-    font-size: 4em;
+.loading-indicator, .informational-full {
+    font-size: 2em;
     text-align: center;
     display: table-cell;
     vertical-align: middle;
@@ -215,12 +271,16 @@ input[type="checkbox"].input-validation-error {
     font-size: 1.2em;
 }
 
+.player-list-item-handicap {
+    font-size: 1.2em;
+}
+
 .player-list-item-name, .player-list-item-image {
-    height: 3.2em;
+    height: 4.8em; /*1.6 * 3 lines*/
 }
 
 .player-list-item-image {
-    line-height: 3.2em;
+    line-height: 4.8em;
     text-align: center;
     vertical-align: middle;
     float: left;
@@ -233,8 +293,6 @@ player-list-item-name {
     width: 75%;
     padding-left: 15px;
 }
-
-
 
 .player-list-item-image .fa-user {
     font-size: 2em;
@@ -419,10 +477,6 @@ team-list-item-name {
     line-height: 1.3333333em; /* this is 3.2 / 2.4. */
 }
 
-.team-list-item-teamname {
-    color: #999;
-}
-
 .team-list-item > div:hover {
   
 }
@@ -508,6 +562,222 @@ team-list-item-name {
     font-weight: bold;
 }
 
+/* Year wizard stuff */
+
+.year-wizard .input-group, .year-wizard input {
+    max-width: 500px;
+}
+
+.year-wizard .team-select {
+    cursor: pointer;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+
+.team-select i {
+    visibility: hidden;
+}
+
+.team-is-selected i {
+    visibility: visible;
+}
+
+.team-is-selected {
+    background-color: #88DF88;
+}
+
+.team-selection-container {
+    max-width: 500px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.year-wizard .team-selected {
+    display: inline-block;
+    width: 25px;
+}
+
+.team-checkmark {
+    color: green;
+}
+
+textarea.roster-input {
+    width: 50%;
+    min-height: 20em;
+    margin-bottom: 14px;
+    max-width: 50%;
+}
+
+/* score entry */
+.score-entry-nav-primary {
+    font-size: 14px;
+}
+
+.score-entry-nav-secondary {
+    position: absolute;
+    right: 15px;
+    font-size: 12px;
+    color: #999;
+}
+
+.score-entry-week-contents h3 {
+    margin-top: 0;
+}
+
+
+/* TODO: maybe change the display of these? */
+.score-entry-week {
+    float: left;
+    width: 20%;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 50%;
+    display: table;
+}
+
+.score-entry-week > a {
+    display: table-cell;
+    vertical-align: middle;
+    width: 90px;
+    height: 90px;
+}
+/* END TODO */
+
+.score-entry-match-container {
+    margin-bottom: 24px;
+    padding: 10px;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0px 2px 3px 0 #AAAAAA;
+}
+
+
+.score-entry-matchup-left, .score-entry-matchup-right {
+    width: 40%;
+}
+
+.score-entry-matchup-first, .score-entry-matchup-second {
+    text-align: center;
+}
+
+.score-entry-vs {
+    text-align: center;
+}
+
+.score-entry-matchup-nav {
+    margin-bottom: 24px;
+}
+
+.match-player-edit {
+    margin-top: 16px;
+}
+
+.match-player-edit > *, .match-numbers-container > input {
+    float: left;
+}
+
+.match-player-edit > * {
+
+}
+
+.match-player-edit > select.form-control {
+    width: 32%;
+}
+
+.match-player-edit .match-team-name {
+    width: 18%;
+	line-height: 34px;
+}
+
+.match-numbers-container {
+    width: 48%
+}
+
+.match-player-edit > * + * {
+    margin-left: 1%;
+}
+
+.match-numbers-container > * + * {
+    margin-left: 2.08%;
+}
+
+.match-player-edit input.form-control {
+    width: 31.94%;
+}
+
+/* Matchups */
+.matchup-date-detail, .schedule-date-detail {
+    margin-bottom: 24px;
+    padding: 0 10px 10px 10px;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0px 2px 3px 0 #AAAAAA;
+}
+
+.schedule-date-clearfix:nth-of-type(2n+3) {
+	clear: both;
+}
+
+.matchup-date-clearfix:nth-of-type(3n+4) {
+	clear: both;
+}
+
+.matchup {
+  margin: auto;
+  font-size: 13px;
+  padding: 4px 0;
+
+  /*position: relative;
+  margin-bottom: 14px;
+  padding: 14px 0;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0px 2px 3px 0 #AAAAAA;*/
+}
+
+.matchup-container {
+  margin-top: 10px;
+}
+
+.matchup > div {
+  float: left;
+}
+
+.matchup .matchup-left, .matchup .matchup-right {
+  width: 36%;
+  font-weight: bold;
+}
+
+.tee-time {
+    width: 20%;
+}
+
+.matchup .matchup-vs {
+  width: 8%;
+  text-align: center;
+}
+
+.matchup .matchup-left {
+  text-align: right;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.schedule-pairing {
+    padding-left: 10px;
+}
+
+.schedule-course {
+    padding-right: 10px;
+    border-right: 1px solid black;
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+}
+
 @media (max-width: 992px) {
     .header-link-small {
         display: inline;
@@ -523,6 +793,28 @@ team-list-item-name {
 }
 
 @media (max-width: 767px) {
+
+    .match-player-edit > select.form-control {
+        width: 64%;
+    }
+
+    .match-player-edit .match-team-name {
+        width: 35%;
+    }
+
+    .match-player-edit .match-numbers-container {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
+    }
+
+    .match-numbers-container > * + * {
+        margin-left: 1%;
+    }
+
+    .match-player-edit input.form-control {
+        width: 32.6%;
+    }
 
     .player-list-input .col-xs-12 {
         width: inherit;

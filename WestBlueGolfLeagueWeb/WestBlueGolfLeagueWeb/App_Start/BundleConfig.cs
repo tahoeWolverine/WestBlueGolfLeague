@@ -11,12 +11,15 @@ namespace WestBlueGolfLeagueWeb
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js",
+						"~/Scripts/lib/jquery/jquery.validate*",
                         "~/Scripts/lib/bootstrap/bootstrap.js",
                         "~/Scripts/lib/lodash.min.js",
+                        "~/Scripts/lib/moment/moment.js",
                         "~/Scripts/lib/angular/angular-{version}.js",
                         "~/Scripts/lib/angular/angular-*",
                         "~/Scripts/lib/angular-ui-router-{version}.js",
-                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"));
+                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js",
+                        "~/Scripts/lib/bootstrap/gm.datepickerMultiSelect.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js"));
@@ -45,8 +48,10 @@ namespace WestBlueGolfLeagueWeb
                 .Include("~/Scripts/main/*.js")
                 .Include("~/Scripts/player/playerList.js", "~/Scripts/player/*.js")
                 .Include("~/Scripts/player/teamList.js", "~/Scripts/team/*.js")
+                .Include("~/Scripts/schedule/schedule.js", "~/Scripts/schedule/*.js")
                 .Include("~/Scripts/admin/userManagement.js", "~/Scripts/admin/*.js")
-                .Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js"));
+                .Include("~/Scripts/leaderBoards/leaderBoards.js", "~/Scripts/leaderBoards/*.js")
+				.Include("~/Scripts/layout/*.js"));
 
             bundles.Add(new AngularJsHtmlBundle("~/bundles/app/html").IncludeDirectory("~/Scripts", "*.tpl.html", true));
 

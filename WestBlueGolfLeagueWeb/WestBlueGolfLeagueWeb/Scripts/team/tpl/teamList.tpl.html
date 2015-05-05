@@ -4,6 +4,10 @@
         <div class="col-md-12">
             <input type="text" focus-me class="form-control team-search" tabindex="1" placeholder="&#xF002; Enter team name" ng-model="tList.nameSearchText" ng-init="tList.nameSearchText = ''">
             <span class="clear-icon" ng-show="tList.nameSearchText.length > 0" ng-click="tList.nameSearchText = ''; tList.doFocus()"><i class="fa fa-times"></i></span>
+            <!--<button class="btn btn-default" role="button" ng-lightbox='{"trigger": "manual", "element": "lightbox"}'><i class="fa fa-plus"></i> Add Team</button>
+            <div class="lightbox" id="lightbox">
+                <h1>Add a Team</h1>
+            </div>-->
         </div>
     </div>
     <div class="row team-list-teams" scroll-to-top>

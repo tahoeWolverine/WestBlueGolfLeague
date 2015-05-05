@@ -26,7 +26,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 return NotFound();
             }
 
-            int year = 2014; // DateTimeOffset.UtcNow.Year;
+            int year = this.SelectedYear;
 
             // get leaderboards for team.
             var boardData = this.Db
@@ -55,25 +55,52 @@ namespace WestBlueGolfLeagueWeb.Controllers
                             x.teamId == team.id &&
                             x.year.value == year
                     ).ToListAsync();
+
+            var teamMatchups =
+                this.Db
+                    .teammatchups
+                    .Include(x => x.matches)
+                    .Include(x => x.starttime)
+                    .Include(x => x.week)
+                    .Include(x => x.teams)
+                    .Where(
+                        x =>
+                            x.teams.Any(y => y.id == team.id) &&
+                            x.week.year.value == year
+                    ).ToListAsync();
                    
             IEnumerable<leaderboarddata> leaderBoardDatas = await boardData;
             IEnumerable<result> resultsForYear = await results;
+            IEnumerable<teammatchup> teamMatcupsForYear = await teamMatchups;
 
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
 
-            // TODO: handle players that don't have leaderboard data yet.
+            // TODO: handle teams that don't have leaderboard data yet.
 
             return Ok(
                 new TeamProfileData ()
                 { 
-                    TeamName = team.teamName, 
-                    TotalPoints = keyToBoardData["team_ranking"].formattedValue,
-                    AvgHandicap = keyToBoardData["team_avg_handicap"].formattedValue, 
-                    Improved = keyToBoardData["team_season_improvement"].formattedValue, 
-                    TotalWins = keyToBoardData["team_total_match_wins"].formattedValue, 
-                    WinLossRatio = keyToBoardData["team_win_loss_ratio"].formattedValue,
-                    ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x))
+                    TeamName = team.teamName,
+					TotalPoints = TryGetFormattedValue(keyToBoardData, "team_ranking"),
+                    AvgHandicap = TryGetFormattedValue(keyToBoardData, "team_avg_handicap"), 
+                    Improved = TryGetFormattedValue(keyToBoardData, "team_season_improvement"), 
+                    TotalWins = TryGetFormattedValue(keyToBoardData, "team_total_match_wins"), 
+                    WinLossRatio = TryGetFormattedValue(keyToBoardData, "team_win_loss_ratio"),
+                    ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x)),
+                    TeamMatchupsForYear = teamMatcupsForYear.Select(x => new TeamProfileResult(team, x))
                 });
         }
+
+	    private string TryGetFormattedValue(Dictionary<string, leaderboarddata> dictionary, string leaderboardName)
+	    {
+		    leaderboarddata leaderboarddata = null;
+
+		    if (dictionary.TryGetValue(leaderboardName, out leaderboarddata))
+		    {
+			    return leaderboarddata.formattedValue;
+		    }
+
+		    return string.Empty;
+	    }
     }
 }

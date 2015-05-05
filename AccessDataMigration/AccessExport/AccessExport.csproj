@@ -123,6 +123,7 @@
     <Compile Include="Entities\LeaderBoardData.cs" />
     <Compile Include="Entities\MatchUp.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\TeamYearData.cs" />
     <Compile Include="FluentMySqlInsert.cs" />
     <Compile Include="FtpUtil.cs" />
     <Compile Include="HandicapResult.cs" />

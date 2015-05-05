@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using System.Data.Entity;
+using WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -44,7 +45,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 TeamsForYear = teamsForYear.Select(x => TeamResponse.From(x)).ToList(),
                 TeamMatchups = teamMatchupsForYear.Select(x => TeamMatchupResponse.From(x)).ToList(),
                 Courses = courses.Select(x => CourseResponse.From(x)).ToList(),
-                Weeks = weeksForYear.Select(x => WeekResponse.From(x)).ToList(),
+                Weeks = weeksForYear.Select(x => new WeekResponse(x)).ToList(),
                 Pairings = pairings
             };
 

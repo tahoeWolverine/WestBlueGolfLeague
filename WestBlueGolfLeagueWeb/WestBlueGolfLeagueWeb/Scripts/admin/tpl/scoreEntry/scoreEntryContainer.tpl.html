@@ -1,0 +1,14 @@
+﻿<h2>Score Entry</h2>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group">
+            <a href="javascript:;" ng-repeat="week in scoreEntry.weeks" ui-sref="admin.scoreEntry.week({weekId: week.id})" ui-sref-active="active" class="list-group-item clearfix">
+                <span class="score-entry-nav-primary">{{::week.date | date : 'MMMM d'}}</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-10 score-entry-week-contents">
+        <div ui-view></div>
+    </div>
+</div>

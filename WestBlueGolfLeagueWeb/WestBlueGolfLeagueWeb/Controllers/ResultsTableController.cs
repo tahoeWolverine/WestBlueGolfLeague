@@ -6,22 +6,23 @@ using System.Web.Mvc;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.ViewModels;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class ResultsTableController : WestBlueDbMvcController
     {
         // GET: ResultsTable
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return Details(null);
+            return await Details(null);
         }
 
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
-            int year = 2014;
+            int year = this.SelectedYear;
 
-            var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year)).ToList();
+            var allTeamsForYear = this.Db.teams.AsNoTracking().Where(x => x.validTeam == true && x.teamyeardata.Any(y => y.year.value == year)).ToList();
 
             if (allTeamsForYear.Count() == 0)
             {

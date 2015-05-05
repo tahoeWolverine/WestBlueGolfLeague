@@ -1,7 +1,7 @@
 ﻿// begin controllers.
 (function (module) {
 
-    function Root($scope, leaderBoardStates, $state, errorStates) {
+    function Root($scope, leaderBoardStates, $state, errorStates, $rootScope) {
 
         // Everything below this line in this controller is stupid... resolves are stupid.
 
@@ -110,7 +110,7 @@
     };
 
     module
-        .controller('Root', ['$scope', 'leaderBoardStates', '$state', 'errorStates', Root])
+        .controller('Root', ['$scope', 'leaderBoardStates', '$state', 'errorStates', '$rootScope', Root])
         .controller('Details', ['$state', '$stateParams', '$scope', 'leaderBoardService', 'leaderBoardDetails', DetailsController])
         .controller('DetailsTitle', ['$scope', 'leaderBoardDetails', DetailsTitleController])
         .controller('DetailsLayout', ['$scope', '$stateParams', '$state', 'leaderBoards', 'leaderBoardStates', DetailsLayoutController])

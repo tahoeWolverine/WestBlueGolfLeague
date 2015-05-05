@@ -41,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
             playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[1].id, Team2 = sortedRanks[2].id, Team1Seed = 2, Team2Seed = 3 });
             playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[4].id, Team2 = sortedRanks[7].id, Team1Seed = 5, Team2Seed = 8 });
             playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[5].id, Team2 = sortedRanks[6].id, Team1Seed = 6, Team2Seed = 7 });
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.LexisNexis, Team1 = sortedRanks[8].id, Team2 = sortedRanks[9].id, Team1Seed = 9, Team2Seed = 10 });
+            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.LastPlace, Team1 = sortedRanks[8].id, Team2 = sortedRanks[9].id, Team1Seed = 9, Team2Seed = 10 });
 
             // Week 2
             // need to look at all matchups... if they are all completed we'll not predict the matches

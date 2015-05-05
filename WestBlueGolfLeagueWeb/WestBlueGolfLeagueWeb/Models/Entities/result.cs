@@ -11,11 +11,13 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     {
         public int id { get; set; }
 
-        public int priorHandicap { get; set; }
+        public int? priorHandicap { get; set; }
 
-        public int score { get; set; }
+        public int? score { get; set; }
 
-        public int points { get; set; }
+		public int? scoreVariant { get; set; }
+
+        public int? points { get; set; }
 
         public int teamId { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace WestBlueGolfLeagueWeb.Models.Entities
 {
@@ -16,16 +17,29 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .AsNoTracking()
                         .Where(x => x.year.value == year)
                         .ToList()
-                        .Where(x => includeInvalidPlayers ? true : x.player.validPlayer)
+                        .Where(x => includeInvalidPlayers || x.player.validPlayer)
                         .Select(x => Tuple.Create(x.player, x.team));
         }
 
-        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year)
+        public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidTeams = false)
         {
             return westBlue.teams
                         .AsNoTracking()
-                        .Where(x => x.validTeam == true && x.playeryeardatas.Any(y => y.year.value == year))
+                        .Where(x => (includeInvalidTeams || x.validTeam) && x.teamyeardata.Any(y => y.year.value == year))
                         .ToList();
+        }
+
+        public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)
+        {
+            var weeks = await westBlue.weeks
+                .Include(x => x.teammatchups)
+                .Include("teammatchups.teams")
+                .Include(x => x.pairing)
+                .Include(x => x.course)
+                .Where(x => x.year.value == year)
+                .OrderBy(x => x.date).AsNoTracking().ToListAsync();
+
+            return weeks;
         }
 
         public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
@@ -33,7 +47,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);
         }
 
-        public static int PointsFor(this teammatchup tm, team team)
+        public static int? PointsFor(this teammatchup tm, team team)
         {
             return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
         }
@@ -53,14 +67,39 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
             return r.match.results.First(x => x.id != r.id);
         }
 
-        public static int ScoreDifference(this result r)
+        public static int? ScoreDifference(this result r)
         {
             return r.score - r.match.teammatchup.week.course.par;
         }
 
-        public static int NetScoreDifference(this result r)
+        public static int? NetScoreDifference(this result r)
         {
             return r.ScoreDifference() - r.priorHandicap;
+        }
+
+        /// <summary>
+        /// Score and escore can never be 0.
+        /// </summary>
+        public static bool IsComplete(this result r)
+        {
+            return r.points.HasValue && r.score.HasValue && r.score.Value > 0 && (!r.scoreVariant.HasValue || r.scoreVariant > 0);
+        }
+
+        public static bool IsComplete(this match r)
+        {
+            return r.results != null && r.results.All(x => x != null && x.IsComplete());
+        }
+
+        public static int PointsForYear(this team t, IEnumerable<result> resultsForYear)
+        {
+            int sum = 0;
+            foreach (var result in resultsForYear)
+            {
+                if (!result.IsComplete()) { continue; }
+                sum += result.points.Value;
+            }
+
+            return sum;
         }
     }
 }

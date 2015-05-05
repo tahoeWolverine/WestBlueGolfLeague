@@ -45,7 +45,8 @@ namespace AccessExport
                 playerIndex = 1,
                 matchupIndex = 1,
                 resultIndex = 1,
-                dataMigrationIndex = 1;
+                dataMigrationIndex = 1,
+                teamYearDataIndex = 1;
 
             Dictionary<string, Team> teamNameToTeam = new Dictionary<string, Team>();
             Dictionary<string, Course> courseNameToCourse = new Dictionary<string, Course>();
@@ -55,6 +56,7 @@ namespace AccessExport
             ICollection<MatchUp> allMatchUps = new List<MatchUp>();
             ICollection<Result> allResults = new List<Result>();
             ICollection<YearData> yearDatas = new List<YearData>();
+            ICollection<TeamYearData> teamYearDatas = new List<TeamYearData>();
             ICollection<Week> allWeeks = new List<Week>();
             ICollection<DataMigration> dataMigrationDatas = new List<DataMigration>();
 
@@ -219,6 +221,9 @@ namespace AccessExport
                                 teamNameToTeam.Add(teamName, team);
                             }
 
+                            TeamYearData tyd = new TeamYearData { Id = teamYearDataIndex++, TeamId = team.Id, Year = yearValueToYear[year] };
+                            teamYearDatas.Add(tyd);
+
                             teamIdToTeam.Add(teamId, team);
                         }
                     }
@@ -226,6 +231,9 @@ namespace AccessExport
                     if (!teamIdToTeam.ContainsKey(0) && !teamIdToTeam.ContainsKey(99))
                     {
                         teamIdToTeam[0] = teamIdToTeam[99] = teamOfLostPlayers;
+
+                        TeamYearData tyd = new TeamYearData { Id = teamYearDataIndex++, TeamId = teamOfLostPlayers.Id, Year = yearValueToYear[year] };
+                        teamYearDatas.Add(tyd);
                     }
 
                     // Players
@@ -294,6 +302,8 @@ namespace AccessExport
                     cmd.CommandText = "SELECT * FROM MatchTable";
                     using (var matchReader = cmd.ExecuteReader())
                     {
+						LinkedList<Tuple<int, TeamMatchup>> allTeamMatchupsForYear = new LinkedList<Tuple<int, TeamMatchup>>();
+
                         while (matchReader.Read())
                         {
                             int weekId = matchReader[2] == System.DBNull.Value ? -1 : (matchReader.GetInt32(2));
@@ -328,7 +338,7 @@ namespace AccessExport
 
                             var teamMatchup = new TeamMatchup
                             {
-                                MatchOrderInWeek = matchOrderInWeek,
+								//MatchOrderInWeek = matchOrderInWeek,
                                 Week = weekForMatchup,
                                 Id = teamMatchupIndex++,
                                 MatchComplete = matchComplete,
@@ -338,10 +348,24 @@ namespace AccessExport
                                 PlayoffType = weekForMatchup.IsPlayoff ? GetPlayoffType(playoffWeeksInOrder.IndexOf(weekForMatchup), matchOrderInWeek) : null
                             };
 
+	                        allTeamMatchupsForYear.AddLast(new Tuple<int, TeamMatchup>(weekId, teamMatchup));
+
                             weekIdToTeamMatchupIndex[weekId] = matchOrderInWeek + 1;
 
                             teamMatchupIdMatchup[teamMatchup.Id] = teamMatchup;
                         }
+
+	                    var lookups = allTeamMatchupsForYear.ToLookup(x => x.Item1, x => x.Item2);
+
+	                    foreach (var l in lookups)
+	                    {
+		                    var orderedMatches = l.OrderBy(x => x.MatchId).ToList();
+
+		                    for (int i = 0; i < orderedMatches.Count; i++)
+		                    {
+			                    orderedMatches[i].MatchOrderInWeek = i;
+		                    }
+	                    }
                     }
 
                     // Results
@@ -530,7 +554,8 @@ namespace AccessExport
                 Courses = courseNameToCourse.Values,
                 LeaderBoardDatas = new List<LeaderBoardData>(),
                 LeaderBoards = new List<LeaderBoard>(),
-                DataMigrations = dataMigrationDatas
+                DataMigrations = dataMigrationDatas,
+                TeamYearData = teamYearDatas
             };
 
             ProcessHandicaps(dm);
@@ -553,7 +578,7 @@ namespace AccessExport
                     return "consolation";
                 }
                 
-                return "lexisnexis";
+                return "lastplace";
             }
 
             switch (matchOrderInWeek) {
@@ -564,7 +589,7 @@ namespace AccessExport
                 case 2:
                     return "consolation";
                 default:
-                    return "lexisnexis";
+                    return "lastplace";
             }
         }
 
@@ -583,20 +608,33 @@ namespace AccessExport
                     var yd = yearDataForPlayer[i];
                     bool isNewestYear = i == yearDataForPlayer.Count - 1;
 
+                    CalculateHandicaps(dataModel, p, yd, isNewestYear);
+
+
+                    //2008 had 4 values, used week0score from results table, no backfill
+
+
+                    //2009 on up used week0score from player table, 4 scores, no backfill
+
+                    //<2008 had 3 results, no backfill
+
+                    //> 2011 had 4 results, backfill, and rookie rules
+
+
+
+                    /*
                     if (yd.Year.Value >= 2011)
                     {
-                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else if (yd.Year.Value >= 2009)
                     {
-                        //CalculateIncorrectHandicaps(dataModel, p, yd, isNewestYear);
                         CalculateHandicaps(dataModel, p, yd, isNewestYear);
                     }
                     else
                     {
                         CalculateHandicapsUnder2009(dataModel, p, yd, isNewestYear);
-                    }
+                    }*/
                 }
             }
         }
@@ -611,6 +649,9 @@ namespace AccessExport
 
         }
 
+        /// <summary>
+        /// Not used currently. Old calculation.
+        /// </summary>
         private static void CalculateIncorrectHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.Week0Score;
@@ -654,6 +695,10 @@ namespace AccessExport
             yearData.FinishingHandicap = priorHandicapWithScores(scores, scoreIndex);
         }
 
+
+        /// <summary>
+        /// "new" handicap calculation (2011+)
+        /// </summary>
         private static void CalculateHandicaps(DataModel dataModel, Player player, YearData yearData, bool isNewestYear)
         {
             var week0Score = yearData.Week0Score;

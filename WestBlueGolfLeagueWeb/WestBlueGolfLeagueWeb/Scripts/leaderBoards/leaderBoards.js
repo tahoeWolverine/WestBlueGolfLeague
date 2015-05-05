@@ -6,9 +6,10 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
 (function (module) {
 
     var leaderBoardStates = {
-        LEADER_BOARDS:      'landingPage',
-        DETAILS_LAYOUT:     'detailsLayout',
-        DETAILS:            'detailsLayout.details'
+        LEADER_BOARDS_ROOT: 'leaderboards',
+        LEADER_BOARDS:      'leaderboards.landingPage',
+        DETAILS_LAYOUT:     'leaderboards.detailsLayout',
+        DETAILS:            'leaderboards.detailsLayout.details'
     };
 
     var errorStates = {
@@ -19,6 +20,13 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
 
     function leaderBoardsConfig($locationProvider, $urlRouterProvider, $stateProvider, boardStates) {
         
+        $stateProvider
+            .state('leaderboards', {
+                abstract: true,
+                url: '/LeaderBoards',
+                templateUrl: '/Scripts/leaderBoards/tpl/leaderBoardWrapper.tpl.html',
+            });
+
         $stateProvider
             .state(boardStates.LEADER_BOARDS, {
                 url:    '/?error',

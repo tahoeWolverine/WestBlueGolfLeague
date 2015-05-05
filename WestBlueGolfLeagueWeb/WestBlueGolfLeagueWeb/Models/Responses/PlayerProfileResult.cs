@@ -20,6 +20,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.Points = r.points;
             this.OpponentPoints = opponentResult.points;
             this.WasWin = r.WasWin();
+            this.WasLoss = r.WasLoss();
             this.ScoreDifference = r.ScoreDifference();
             this.OpponentScoreDifference = opponentResult.ScoreDifference();
             this.Score = r.score;
@@ -28,23 +29,24 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
 
         public string OpponentName { get; set; }
         public int WeekIndex { get; set; }
-        public int PriorHandicapForPlayer { get; set; }
-        public int PriorHandicapForOpponent { get; set; }
+        public int? PriorHandicapForPlayer { get; set; }
+        public int? PriorHandicapForOpponent { get; set; }
 
         public DateTime WeekDate { get; set; }
 
-        public int OpponentScoreDifference { get; set; }
+        public int? OpponentScoreDifference { get; set; }
 
-        public int ScoreDifference { get; set; }
+        public int? ScoreDifference { get; set; }
 
         public bool WasWin { get; set; }
+        public bool WasLoss { get; set; }
 
-        public int OpponentPoints { get; set; }
+        public int? OpponentPoints { get; set; }
 
-        public int Points { get; set; }
+        public int? Points { get; set; }
 
-        public int OpponentScore { get; set; }
+        public int? OpponentScore { get; set; }
 
-        public int Score { get; set; }
+        public int? Score { get; set; }
     }
 }
