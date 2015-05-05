@@ -20,6 +20,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
             this.Points = r.points;
             this.OpponentPoints = opponentResult.points;
             this.WasWin = r.WasWin();
+            this.WasLoss = r.WasLoss();
             this.ScoreDifference = r.ScoreDifference();
             this.OpponentScoreDifference = opponentResult.ScoreDifference();
             this.Score = r.score;
@@ -38,6 +39,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses
         public int? ScoreDifference { get; set; }
 
         public bool WasWin { get; set; }
+        public bool WasLoss { get; set; }
 
         public int? OpponentPoints { get; set; }
 

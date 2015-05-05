@@ -69,7 +69,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     Improved = TryGetFormattedValue(keyToBoardData, "player_season_improvement"), 
                     LowNet = TryGetFormattedValue(keyToBoardData, "player_net_best_score"), 
                     LowScore = TryGetFormattedValue(keyToBoardData, "player_best_score"),
-                    ResultsForYear = resultsForYear.Select(x => new PlayerProfileResult(player, x))
+                    ResultsForYear = resultsForYear.Select(x => new PlayerProfileResult(player, x)),
                 });
         }
 

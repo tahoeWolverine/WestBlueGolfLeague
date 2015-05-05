@@ -55,13 +55,27 @@ namespace WestBlueGolfLeagueWeb.Controllers
                             x.teamId == team.id &&
                             x.year.value == year
                     ).ToListAsync();
+
+            var teamMatchups =
+                this.Db
+                    .teammatchups
+                    .Include(x => x.matches)
+                    .Include(x => x.starttime)
+                    .Include(x => x.week)
+                    .Include(x => x.teams)
+                    .Where(
+                        x =>
+                            x.teams.Any(y => y.id == team.id) &&
+                            x.week.year.value == year
+                    ).ToListAsync();
                    
             IEnumerable<leaderboarddata> leaderBoardDatas = await boardData;
             IEnumerable<result> resultsForYear = await results;
+            IEnumerable<teammatchup> teamMatcupsForYear = await teamMatchups;
 
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
 
-            // TODO: handle players that don't have leaderboard data yet.
+            // TODO: handle teams that don't have leaderboard data yet.
 
             return Ok(
                 new TeamProfileData ()
@@ -72,7 +86,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     Improved = TryGetFormattedValue(keyToBoardData, "team_season_improvement"), 
                     TotalWins = TryGetFormattedValue(keyToBoardData, "team_total_match_wins"), 
                     WinLossRatio = TryGetFormattedValue(keyToBoardData, "team_win_loss_ratio"),
-                    ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x))
+                    ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x)),
+                    TeamMatchupsForYear = teamMatcupsForYear.Select(x => new TeamProfileResult(team, x))
                 });
         }
 
