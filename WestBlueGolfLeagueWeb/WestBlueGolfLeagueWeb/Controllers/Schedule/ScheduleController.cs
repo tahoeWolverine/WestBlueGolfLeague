@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Schedule
 {

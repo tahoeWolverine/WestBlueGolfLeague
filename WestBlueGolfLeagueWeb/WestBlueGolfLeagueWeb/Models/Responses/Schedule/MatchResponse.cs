@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WestBlueGolfLeagueWeb.Models.Responses.API;
 
-namespace WestBlueGolfLeagueWeb.Models.Responses
+namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 {
     public class MatchResponse
     {

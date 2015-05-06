@@ -23,7 +23,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 throw new Exception("Can only apply this attribute to WestBlueDbApiController.");
             }
 
-            var allYears = await controller.Db.years.AsNoTracking().ToListAsync();
+            var allYears = await controller.Db.years.ToListAsync();
             int maxYear = allYears.Max(x => x.value);
             int minYear = allYears.Min(x => x.value);
             

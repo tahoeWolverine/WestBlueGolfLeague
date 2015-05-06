@@ -21,9 +21,6 @@ namespace WestBlueGolfLeagueWeb
                         "~/Scripts/lib/ui-bootstrap-tpls-{version}.js",
                         "~/Scripts/lib/bootstrap/gm.datepickerMultiSelect.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/lib/jquery/jquery-{version}.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/lib/jquery/jquery.validate*"));
 
@@ -31,18 +28,6 @@ namespace WestBlueGolfLeagueWeb
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/lib/bootstrap/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/angular")
-                    .Include(
-                        "~/Scripts/lib/angular/angular-{version}.js", 
-                        "~/Scripts/lib/angular/angular-*",
-                        "~/Scripts/lib/angular-ui-router-{version}.js",
-                        "~/Scripts/lib/ui-bootstrap-tpls-{version}.js"
-                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/main/*.js")

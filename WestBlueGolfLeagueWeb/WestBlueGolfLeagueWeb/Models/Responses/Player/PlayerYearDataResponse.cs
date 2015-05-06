@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
 
-namespace WestBlueGolfLeagueWeb.Models.Responses
+namespace WestBlueGolfLeagueWeb.Models.Responses.Player
 {
     public class PlayerYearDataResponse
     {

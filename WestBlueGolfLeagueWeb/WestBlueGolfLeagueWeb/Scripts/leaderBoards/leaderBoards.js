@@ -65,6 +65,9 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
                     'title': {
                         template: '<h2>{{leaderBoardTitle}}</h2>',
                         controller: 'DetailsTitle'
+                    },
+                    'header.main@': {
+                        template: '<a class="navbar-brand" ui-sref="leaderboards.landingPage()" href="/LeaderBoards/"><i class="fa fa-chevron-left"></i> Leader Boards</a>',
                     }
                 },
                 resolve: {

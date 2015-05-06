@@ -25,7 +25,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
 	    protected override void OnActionExecuting(ActionExecutingContext filterContext)
 	    {
-            var allYears = this.db.years.AsNoTracking().ToList();
+            var allYears = this.db.years.ToList();
 
             // populate required fields, initializing selected year to the current year.
             this.CurrentYear = this.SelectedYear = allYears.Max(x => x.value);

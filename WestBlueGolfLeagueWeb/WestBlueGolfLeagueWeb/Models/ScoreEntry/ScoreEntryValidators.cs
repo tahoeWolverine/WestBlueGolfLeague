@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
