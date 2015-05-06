@@ -287,8 +287,8 @@ player-list-item-name {
 }
 
 .player-result {
-    margin: 14px;
-    padding: 16px;
+    margin: 2px;
+    padding: 10px;
     border: 1px solid #E5E5E5;
     background: #F2F2F2;
     font-size: 1.3em;
@@ -454,14 +454,14 @@ team-list-item-name {
     display: none;
 }
 
-.player-result {
+/*.player-result {
     margin: 14px;
     padding: 16px;
     border: 1px solid #E5E5E5;
     background: #F2F2F2;
     font-size: 1.3em;
-    /*box-shadow: 0 0 8px #777;*/
-}
+    box-shadow: 0 0 8px #777;
+}*/
 
 .result-date {
     font-weight: bold;
