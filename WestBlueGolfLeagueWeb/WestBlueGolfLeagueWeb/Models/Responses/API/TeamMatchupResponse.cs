@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 
-namespace WestBlueGolfLeagueWeb.Models.Responses
+namespace WestBlueGolfLeagueWeb.Models.Responses.API
 {
     public class TeamMatchupResponse
     {

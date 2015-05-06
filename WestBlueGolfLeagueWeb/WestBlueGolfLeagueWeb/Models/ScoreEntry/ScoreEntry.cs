@@ -7,6 +7,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using System.Threading.Tasks;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {

@@ -9,6 +9,10 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard;
+using WestBlueGolfLeagueWeb.Models.Responses.API;
+using WestBlueGolfLeagueWeb.Models.Responses.Player;
+using WestBlueGolfLeagueWeb.Models.Responses.Team;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {

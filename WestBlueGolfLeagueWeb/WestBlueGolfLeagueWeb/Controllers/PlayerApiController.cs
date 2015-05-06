@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
+using WestBlueGolfLeagueWeb.Models.Responses.Player;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -31,7 +32,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var boardData = this.Db
                 .leaderboarddatas
                 .Include(x => x.leaderboard)
-                .AsNoTracking()
                 .Where(
                     x => x.playerId == player.id &&
                         (x.leaderboard.key == "player_handicap" ||

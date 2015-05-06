@@ -86,7 +86,7 @@
         
         board = [WBLeaderBoard findWithId:boardId];
         
-        if (!dataDetail || [dataDetail isEqualToString:@""]) {
+        if (!dataDetail || [dataDetail isKindOfClass:[NSNull class]] || [dataDetail isEqualToString:@""]) {
             if ([people isKindOfClass:[WBTeam class]]) {
                 NSString * (^detailValueCalc)(WBTeam *) = nil;
                 detailValueCalc = [self detailBlockForTeamBoard:board.key year:year];

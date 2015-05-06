@@ -48,10 +48,6 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
         public async Task<IHttpActionResult> GetMatchup(int weekId, int matchupId)
         {
             var matchup = await this.Db.teammatchups
-                            .Include(x => x.matches)
-                            .Include("matches.results")
-                            .Include("matches.results.player")
-                            .AsNoTracking()
                             .FirstOrDefaultAsync(x => x.week.id == weekId && x.week.year.value == this.CurrentYear && x.id == matchupId);
 
             if (matchup == null)

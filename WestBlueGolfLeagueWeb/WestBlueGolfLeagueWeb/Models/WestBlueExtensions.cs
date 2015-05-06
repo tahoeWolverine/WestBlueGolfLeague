@@ -37,7 +37,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                 .Include(x => x.pairing)
                 .Include(x => x.course)
                 .Where(x => x.year.value == year)
-                .OrderBy(x => x.date).AsNoTracking().ToListAsync();
+                .OrderBy(x => x.date).ToListAsync();
 
             return weeks;
         }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Responses.Player;
+using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
+using WestBlueGolfLeagueWeb.Models.Responses.Team;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Admin
 {

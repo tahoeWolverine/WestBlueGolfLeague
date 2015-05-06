@@ -41,24 +41,15 @@ namespace WestBlueGolfLeagueWeb.Controllers
             int year = this.SelectedYear;
 
             // validate that we have a valid key.
-            var leaderBoardAsyncList = this.Db.leaderboards.AsNoTracking().Where(x => x.key == key).ToListAsync();
-            var leaderBoardDatas = this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == year).ToListAsync();
+            var leaderBoard = await this.Db.leaderboards.Where(x => x.key == key).FirstOrDefaultAsync();
+            var leaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.player).Include(x => x.team).Where(x => x.leaderboard.key == key && x.year.value == year).ToListAsync();
 
-            var leaderBoardList = await leaderBoardAsyncList;
-
-            if (leaderBoardList.Count() != 1)
+            if (leaderBoard == null)
             {
                 return NotFound();
             }
 
-            var datas = await leaderBoardDatas;
-
-            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = datas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoardList.First()) });
-        }
-
-        private bool leaderboarddataExists(int id)
-        {
-            return this.Db.leaderboarddatas.Count(e => e.id == id) > 0;
+            return Ok(new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard) });
         }
     }
 }
