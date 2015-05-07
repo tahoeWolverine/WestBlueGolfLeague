@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Team
 {
@@ -47,7 +48,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
             var tm = r.match.teammatchup;
             this.WeekIndex = tm.week.seasonIndex;
             this.WeekDate = tm.week.date;
-            this.TeeTime = tm.teeTimeText();
+            this.TeeTime = tm.TeeTimeText();
             this.CourseName = tm.week.course.name;
         }
 
@@ -94,7 +95,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
 
             this.WeekIndex = tm.week.seasonIndex;
             this.WeekDate = tm.week.date;
-            this.TeeTime = tm.teeTimeText();
+            this.TeeTime = tm.TeeTimeText();
             this.CourseName = tm.week.course.name;
             this.WasWin = this.Points > 48;
             this.WasLoss = this.Points < 48;

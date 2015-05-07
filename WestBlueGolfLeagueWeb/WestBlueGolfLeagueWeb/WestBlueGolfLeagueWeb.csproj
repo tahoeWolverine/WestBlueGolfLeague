@@ -264,6 +264,7 @@
     <Compile Include="Models\Admin\Schedule.cs" />
     <Compile Include="Models\Entities\note.cs" />
     <Compile Include="Models\Entities\teamyeardata.cs" />
+    <Compile Include="Models\Extensions\TeamMatchupExtensions.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Admin\AddPlayerRequest.cs" />
     <Compile Include="Models\Admin\AddUpdateUserRequest.cs" />
@@ -341,7 +342,7 @@
     <Compile Include="Models\ViewModels\TeamResultsViewModel.cs" />
     <Compile Include="Models\ViewModels\YearSelectorViewModel.cs" />
     <Compile Include="Models\WestBlueConfiguration.cs" />
-    <Compile Include="Models\WestBlueExtensions.cs" />
+    <Compile Include="Models\Extensions\WestBlueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Schedule\GolfYear.cs" />
     <Compile Include="Startup.cs" />

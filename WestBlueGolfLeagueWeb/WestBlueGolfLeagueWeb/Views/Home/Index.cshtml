@@ -40,10 +40,10 @@
                             {
                                 var tm = matchups[i];
                                 <div class="matchup clearfix">
-                                    <div class="tee-time">@tm.teeTimeText()</div>
-                                    <div class="matchup-left @(@tm.team1Won() ? "winning-team" : "losing-team")">@tm.teams.First().teamName</div>
+                                    <div class="tee-time">@tm.TeeTimeText()</div>
+                                    <div class="matchup-left @(@tm.Team1Won() ? "winning-team" : "losing-team")">@tm.teams.First().teamName</div>
                                     <div class="matchup-vs">vs</div>
-                                    <div class="matchup-right @(@tm.team2Won() ? "winning-team" : "losing-team")">@(tm.teams.Count > 1 ? tm.teams.Skip(1).First().teamName : "no match")</div>
+                                    <div class="matchup-right @(@tm.Team2Won() ? "winning-team" : "losing-team")">@(tm.teams.Count > 1 ? tm.teams.Skip(1).First().teamName : "no match")</div>
                                 </div>
                             }
                         </div>

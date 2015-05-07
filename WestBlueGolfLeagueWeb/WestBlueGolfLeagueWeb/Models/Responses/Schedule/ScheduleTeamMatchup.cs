@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 using WestBlueGolfLeagueWeb.Models.Responses.Team;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 {
     public class ScheduleTeamMatchup
     {
-		//private static readonly string[] TeeTimes = new string[] { "3:44 (3:52)", "4:00 (4:08)", "4:16 (4:24)", "4:32 (4:40)", "4:48 (4:56)", "n/a" };
-
         public ScheduleTeamMatchup()
         {
 
@@ -23,8 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
             this.MatchOrder = tm.matchOrder;
             this.Team1 = numOfTeams > 0 ? TeamResponse.From(tm.teams.First()) : null;
             this.Team2 = numOfTeams > 1 ? TeamResponse.From(tm.teams.Skip(1).First()) : null;
-	        //this.TeeTimeText = tm.matchOrder == null ? "n/a" : TeeTimes[tm.matchOrder.Value];
-            this.TeeTimeText = tm.teeTimeText();
+            this.TeeTimeText = tm.TeeTimeText();
             this.Id = tm.id;
         }
 

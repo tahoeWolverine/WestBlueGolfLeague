@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Player
 {
@@ -46,7 +47,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Player
             var tm = r.match.teammatchup;
             this.WeekIndex = tm.week.seasonIndex;
             this.WeekDate = tm.week.date;
-            this.TeeTime = tm.teeTimeText();
+            this.TeeTime = tm.TeeTimeText();
             this.CourseName = tm.week.course.name;
         }
 

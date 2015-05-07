@@ -10,8 +10,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     [Table("westbluegolf.teammatchup")]
     public partial class teammatchup
     {
-        private static readonly string[] TeeTimes = new string[] { "3:44 (3:52)", "4:00 (4:08)", "4:16 (4:24)", "4:32 (4:40)", "4:48 (4:56)", "n/a" };
-
         public teammatchup()
         {
             matches = new HashSet<match>();
@@ -45,41 +43,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public virtual ICollection<team> teams { get; set; }
 
-        private int? pointsForTeam(int teamIndex)
-        {
-            if (this.teams.Count < teamIndex + 1)
-            {
-                return 0;
-            }
 
-            int? points = 0;
-            var t = this.teams.ElementAt(teamIndex);
-            foreach (match m in this.matches)
-            {
-                foreach (result r in m.results)
-                {
-                    if (r.team.id == t.id)
-                    {
-                        points += r.points;
-                    }
-                }
-            }
-            return points;
-        }
-
-        public string teeTimeText()
-        {
-            return this.matchOrder == null ? "n/a" : TeeTimes[this.matchOrder.Value];
-        }
-
-        public bool team1Won()
-        {
-            return this.pointsForTeam(0) > 48;
-        }
-
-        public bool team2Won()
-        {
-            return this.pointsForTeam(1) > 48;
-        }
     }
 }
