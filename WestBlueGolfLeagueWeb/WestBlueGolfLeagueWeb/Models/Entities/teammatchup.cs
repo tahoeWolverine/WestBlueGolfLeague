@@ -5,6 +5,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("westbluegolf.teammatchup")]
     public partial class teammatchup
@@ -44,9 +45,41 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public virtual ICollection<team> teams { get; set; }
 
+        private int? pointsForTeam(int teamIndex)
+        {
+            if (this.teams.Count < teamIndex + 1)
+            {
+                return 0;
+            }
+
+            int? points = 0;
+            var t = this.teams.ElementAt(teamIndex);
+            foreach (match m in this.matches)
+            {
+                foreach (result r in m.results)
+                {
+                    if (r.team.id == t.id)
+                    {
+                        points += r.points;
+                    }
+                }
+            }
+            return points;
+        }
+
         public string teeTimeText()
         {
             return this.matchOrder == null ? "n/a" : TeeTimes[this.matchOrder.Value];
+        }
+
+        public bool team1Won()
+        {
+            return this.pointsForTeam(0) > 48;
+        }
+
+        public bool team2Won()
+        {
+            return this.pointsForTeam(1) > 48;
         }
     }
 }

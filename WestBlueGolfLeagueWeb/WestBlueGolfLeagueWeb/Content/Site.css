@@ -742,11 +742,19 @@ textarea.roster-input {
 
 .matchup .matchup-left, .matchup .matchup-right {
   width: 36%;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .tee-time {
     width: 20%;
+}
+
+.winning-team {
+    font-weight: bold;
+}
+
+.losing-team {
+    font-weight: lighter;
 }
 
 .matchup .matchup-vs {
