@@ -8,28 +8,52 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
 {
     public class TeamProfileResult
     {
+        // Need to get results for year, and in turn, individual win/loss string
         public TeamProfileResult(team t, result r)
         {
-            var opponentResult = r.OpponentResult();
-
-            this.PriorHandicapForOpponent = opponentResult.priorHandicap;
             this.PriorHandicapForPlayer = r.priorHandicap;
-            this.WeekIndex = r.match.teammatchup.week.seasonIndex;
-            this.OpponentName = opponentResult.player.name;
-            this.WeekDate = r.match.teammatchup.week.date;
             this.Points = r.points;
-            this.OpponentPoints = opponentResult.points;
             this.WasWin = r.WasWin();
             this.WasLoss = r.WasLoss();
             this.ScoreDifference = r.ScoreDifference();
-            this.OpponentScoreDifference = opponentResult.ScoreDifference();
             this.Score = r.score;
-            this.OpponentScore = opponentResult.score;
+
+            var opponentResult = r.OpponentResult();
+            if (opponentResult == null)
+            {
+                foreach (team aTeam in r.match.teammatchup.teams)
+                {
+                    if (t.id != aTeam.id)
+                    {
+                        this.OpponentName = aTeam.teamName;
+                    }
+                }
+
+                // These values shouldn't matter, as UI should check for completion before using
+                this.PriorHandicapForOpponent = 0;
+                this.OpponentPoints = 0;
+                this.OpponentScoreDifference = 0;
+                this.OpponentScore = 0;
+            }
+            else
+            {
+                this.PriorHandicapForOpponent = opponentResult.priorHandicap;
+                this.OpponentName = opponentResult.player.name;
+                this.OpponentPoints = opponentResult.points;
+                this.OpponentScoreDifference = opponentResult.ScoreDifference();
+                this.OpponentScore = opponentResult.score;
+            }
+
+            var tm = r.match.teammatchup;
+            this.WeekIndex = tm.week.seasonIndex;
+            this.WeekDate = tm.week.date;
+            this.TeeTime = tm.teeTimeText();
+            this.CourseName = tm.week.course.name;
         }
 
+        // Needed for most other team display
         public TeamProfileResult(team t, teammatchup tm)
         {
-            this.OpponentName = "";
             this.PriorHandicapForOpponent = 0;
             this.PriorHandicapForPlayer = 0;
             this.OpponentPoints = 0;
@@ -52,10 +76,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
                     }
                     else
                     {
-                        if (this.OpponentName == null || this.OpponentName == "")
-                        {
-                            this.OpponentName = r.team.teamName;
-                        }
                         this.PriorHandicapForOpponent += r.priorHandicap;
                         this.OpponentPoints += r.points;
                         this.OpponentScoreDifference += r.ScoreDifference();
@@ -64,13 +84,25 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
                 }
             }
 
+            foreach (team aTeam in tm.teams)
+            {
+                if (t.id != aTeam.id)
+                {
+                    this.OpponentName = aTeam.teamName;
+                }
+            }
+
             this.WeekIndex = tm.week.seasonIndex;
             this.WeekDate = tm.week.date;
+            this.TeeTime = tm.teeTimeText();
+            this.CourseName = tm.week.course.name;
             this.WasWin = this.Points > 48;
             this.WasLoss = this.Points < 48;
         }
 
         public string OpponentName { get; set; }
+        public string CourseName { get; set; }
+        public string TeeTime { get; set; }
         public int WeekIndex { get; set; }
         public int? PriorHandicapForPlayer { get; set; }
         public int? PriorHandicapForOpponent { get; set; }

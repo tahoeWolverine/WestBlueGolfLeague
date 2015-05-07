@@ -22,9 +22,17 @@
 </div>
 
 <h3>Results</h3>
-<div ng-repeat="item in playerDetails.profileData.resultsForYear | orderBy:'weekIndex':true" class="row player-result">
+<div ng-repeat="item in playerDetails.profileData.completeResultsForYear | orderBy:'weekIndex':true" class="row player-result">
     <div class="col-md-2 result-date">{{item.weekDate | date:'MMM d'}}</div>
     <div class="col-md-3">{{item.opponentName}}</div>
     <div class="col-md-3 result-win-loss">{{ item.wasWin ? 'Win' : item.wasLoss ? 'Loss' : 'Tie'}} ({{item.points}} - {{item.opponentPoints}})</div>
     <div class="col-md-3">{{ item.score }} - {{item.opponentScore}}</div>
+</div>
+
+<h3>Upcoming Matches</h3>
+<div ng-repeat="item in playerDetails.profileData.incompleteResultsForYear | orderBy:'weekIndex':false" class="row player-result">
+    <div class="col-md-2 result-date">{{item.weekDate | date:'MMM d'}}</div>
+    <div class="col-md-3">{{item.opponentName}}</div>
+    <div class="col-md-3">{{item.courseName}}</div>
+    <div class="col-md-3">{{item.teeTime}}</div>
 </div>

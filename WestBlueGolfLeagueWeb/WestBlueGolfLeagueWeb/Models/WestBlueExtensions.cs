@@ -64,6 +64,10 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
 
         public static result OpponentResult(this result r)
         {
+            if (r.match.results.Count < 2)
+            {
+                return null;
+            }
             return r.match.results.First(x => x.id != r.id);
         }
 

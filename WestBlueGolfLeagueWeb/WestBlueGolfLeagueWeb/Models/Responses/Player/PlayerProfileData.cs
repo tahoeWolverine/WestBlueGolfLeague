@@ -14,11 +14,13 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Player
         public string LowNet { get; set; }
         public string Improved { get; set; }
         public IEnumerable<PlayerProfileResult> ResultsForYear { get; set; }
+        public IEnumerable<PlayerProfileResult> CompleteResultsForYear { get; set; }
+        public IEnumerable<PlayerProfileResult> IncompleteResultsForYear { get; set; }
         public int[] RecordForYear
         {
             get
             {
-                var results = this.ResultsForYear;
+                var results = this.CompleteResultsForYear;
 
                 int wins = 0, losses = 0, ties = 0;
 

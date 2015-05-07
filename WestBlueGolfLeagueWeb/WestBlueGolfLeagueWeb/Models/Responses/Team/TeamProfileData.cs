@@ -16,13 +16,16 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
         public string WinLossRatio { get; set; }
         public string TotalWins { get; set; }
         public IEnumerable<TeamProfileResult> ResultsForYear { get; set; }
+        public IEnumerable<TeamProfileResult> CompleteResultsForYear { get; set; }
         public IEnumerable<TeamProfileResult> TeamMatchupsForYear { get; set; }
+        public IEnumerable<TeamProfileResult> CompleteMatchups { get; set; }
+        public IEnumerable<TeamProfileResult> IncompleteMatchups { get; set; }
 
         public int[] IndividualRecordForYear
         {
             get
             {
-                var results = this.ResultsForYear;
+                var results = this.CompleteResultsForYear;
 
                 int wins = 0, losses = 0, ties = 0;
 
@@ -50,7 +53,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Team
         {
             get
             {
-                var allResults = this.TeamMatchupsForYear;
+                var allResults = this.CompleteMatchups;
                 int wins = 0, losses = 0, ties = 0;
 
                 int[] pointsForWeek = Enumerable.Repeat(0, 30).ToArray();

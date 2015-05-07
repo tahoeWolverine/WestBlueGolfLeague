@@ -88,7 +88,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     TotalWins = TryGetFormattedValue(keyToBoardData, "team_total_match_wins"), 
                     WinLossRatio = TryGetFormattedValue(keyToBoardData, "team_win_loss_ratio"),
                     ResultsForYear = resultsForYear.Select(x => new TeamProfileResult(team, x)),
-                    TeamMatchupsForYear = teamMatcupsForYear.Select(x => new TeamProfileResult(team, x))
+                    CompleteResultsForYear = resultsForYear.Where(x => x.match.teammatchup.matchComplete).Select(x => new TeamProfileResult(team, x)),
+                    TeamMatchupsForYear = teamMatcupsForYear.Select(x => new TeamProfileResult(team, x)),
+                    CompleteMatchups = teamMatcupsForYear.Where(x => x.matchComplete).Select(x => new TeamProfileResult(team, x)),
+                    IncompleteMatchups = teamMatcupsForYear.Where(x => x.matchComplete == false).Select(x => new TeamProfileResult(team, x))
                 });
         }
 

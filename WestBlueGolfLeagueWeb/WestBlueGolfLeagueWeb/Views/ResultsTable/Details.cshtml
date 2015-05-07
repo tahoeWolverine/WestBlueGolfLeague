@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-md-10">
-        <h4>@this.Model.Team.teamName</h4>
+        <h4>@this.Model.Team.teamName (Equitable Scores)</h4>
         <table class="table">
             <tr>
                 <th>Name</th>
@@ -59,7 +59,15 @@
                         }
                         else
                         {
-                            <td>@resultForWeekForPlayer.score</td>
+                            // Equitable if we have it; could have said year >= 2015
+                            if (resultForWeekForPlayer.scoreVariant != null && resultForWeekForPlayer.scoreVariant > 0)
+                            {
+                                <td>@resultForWeekForPlayer.scoreVariant</td>
+                            }
+                            else
+                            {
+                                <td>@resultForWeekForPlayer.score</td>
+                            }
                         }
                     }
                     <td>@p.YearData.finishingHandicap</td>
