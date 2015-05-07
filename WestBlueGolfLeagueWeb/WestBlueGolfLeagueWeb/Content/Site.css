@@ -778,6 +778,9 @@ textarea.roster-input {
     height: 200px;
 }
 
+
+
+
 @media (max-width: 992px) {
     .header-link-small {
         display: inline;
@@ -796,6 +799,26 @@ textarea.roster-input {
 
     .match-player-edit > select.form-control {
         width: 64%;
+    }
+    
+    .toggle-link {
+        display: none;
+    }
+
+    .player-details-player-list-parent {
+        width: 0;
+        display: none;
+    }
+
+    .player-details-profile {
+        margin-left: 0;
+    }
+
+    .player + footer {
+        position: inherit;
+        bottom: inherit;
+        z-index: inherit;
+        height: inherit;
     }
 
     .match-player-edit .match-team-name {

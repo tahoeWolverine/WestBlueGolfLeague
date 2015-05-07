@@ -28,6 +28,9 @@
                     playerDetails: {
                         templateUrl: '/Scripts/player/tpl/playerDetails.tpl.html',
                         controller: 'PlayerDetails as playerDetails'
+                    },
+                    'header.main@': {
+                        template: '<a class="navbar-brand" ui-sref="playerList()" href="javascript:void();"><i class="fa fa-chevron-left"></i> Players</a>'
                     }
                 },
                 resolve: {
