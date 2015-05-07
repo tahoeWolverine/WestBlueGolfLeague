@@ -460,7 +460,6 @@
     <Content Include="Scripts\player\tpl\playerHandicaps.tpl.html" />
     <Content Include="Scripts\player\tpl\playerList.tpl.html" />
     <Content Include="Scripts\player\tpl\playerListWrapper.tpl.html" />
-    <Content Include="Scripts\player\tpl\playerResults.tpl.html" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
