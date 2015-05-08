@@ -61,11 +61,11 @@ namespace WestBlueGolfLeagueWeb.Models
                 .HasMaxLength(128)
                 .IsRequired();
 
-            modelBuilder.Entity<IdentityUserRole>().ToTable("userRoles", SchemaName);
+            modelBuilder.Entity<IdentityUserRole>().ToTable("userroles", SchemaName);
 
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("userClaims", SchemaName);
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("userclaims", SchemaName);
 
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("userLogins", SchemaName);
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("userlogins", SchemaName);
 
             // We have to declare the table name here, otherwise IdentityUser 
             // will be created
