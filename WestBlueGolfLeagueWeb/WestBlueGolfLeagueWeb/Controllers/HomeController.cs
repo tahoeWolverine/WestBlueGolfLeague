@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Data.Entity;
-using WestBlueGolfLeagueWeb.Models.ViewModels;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.ViewModels;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -16,7 +14,17 @@ namespace WestBlueGolfLeagueWeb.Controllers
         {
             int selectedYear = this.SelectedYear;
             
-            var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
+            // Hack to order and rank teams until leaderboards is working
+            //var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
+            var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderByDescending(x => x.value).ToList();
+
+            // Re-rank
+            for (int i = 0; i < rankingValuesForYear.Count(); i++)
+            {
+                leaderboarddata lbd = rankingValuesForYear.ElementAt(i);
+                lbd.rank = i + 1;
+            }
+
             var year = this.Db.years.Where(x => x.value == selectedYear).ToList().First();
 
             var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
