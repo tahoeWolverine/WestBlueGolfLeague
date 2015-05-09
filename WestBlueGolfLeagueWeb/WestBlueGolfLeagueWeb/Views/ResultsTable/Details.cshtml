@@ -149,7 +149,8 @@
                                 <td></td>
                             }
                             else
-                            {var points = resultForWeekForPlayer.points;
+                            {
+                                var points = resultForWeekForPlayer.points;
                                 <td class=@(points > 12 ? "score-bold" : "score-normal")>@resultForWeekForPlayer.score</td>
                                 totalScore += ((int)resultForWeekForPlayer.score - w.course.par);
                                 resultCount++;
