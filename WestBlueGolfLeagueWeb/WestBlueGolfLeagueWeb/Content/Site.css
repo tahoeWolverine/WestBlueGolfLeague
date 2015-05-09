@@ -762,6 +762,14 @@ textarea.roster-input {
     font-weight: lighter;
 }
 
+.score-bold {
+    font-weight: bold;
+}
+
+.score-normal {
+    font-weight: lighter;
+}
+
 .matchup .matchup-vs {
   width: 8%;
   text-align: center;

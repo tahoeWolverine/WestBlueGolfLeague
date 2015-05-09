@@ -73,13 +73,21 @@
                 </tr>
                 @foreach (var p in this.Model.PlayersForTeamForYear)
                 {
+                    string boldClass = p.ResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
                     <tr>
                         <td>@p.Player.name</td>
-                        <td>@p.YearData.week0Score</td>
+
+                        <td class=@boldClass>@p.YearData.week0Score</td>
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
                             var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            // If no bold scores yet, look to see how many remaining results. If bold scores have happened, we know all future scores are
+                            if (boldClass == "score-normal")
+                            {
+                                var remainingResults = p.ResultsForYear.Where(x => x.match.teammatchup.week.date > w.date);
+                                boldClass = remainingResults.Count() < 5 ? "score-bold" : "score-normal";
+                            }
                             if (resultForWeekForPlayer == null)
                             {
                                 <td></td>
@@ -89,11 +97,11 @@
                                 // Equitable if we have it; could have said year >= 2015
                                 if (resultForWeekForPlayer.scoreVariant != null && resultForWeekForPlayer.scoreVariant > 0)
                                 {
-                                    <td>@resultForWeekForPlayer.scoreVariant</td>
+                                    <td class=@boldClass>@resultForWeekForPlayer.scoreVariant</td>
                                 }
                                 else
                                 {
-                                    <td>@resultForWeekForPlayer.score</td>
+                                    <td class=@boldClass>@resultForWeekForPlayer.score</td>
                                 }
                             }
                         }
@@ -101,6 +109,7 @@
                     </tr>
                 }
             </table>
+            <span>* - bold numbers used for handicap calculation (week 0 counted up to 3 times for veteran golfers, only once for rookies)</span>
         </div>
         <div id="scoreTable" class="results-table">
             <h4>@this.Model.Team.teamName (Score)</h4>
@@ -140,8 +149,8 @@
                                 <td></td>
                             }
                             else
-                            {
-                                <td>@resultForWeekForPlayer.score</td>
+                            {var points = resultForWeekForPlayer.points;
+                                <td class=@(points > 12 ? "score-bold" : "score-normal")>@resultForWeekForPlayer.score</td>
                                 totalScore += ((int)resultForWeekForPlayer.score - w.course.par);
                                 resultCount++;
                             }
@@ -158,6 +167,7 @@
                     </tr>
                 }
             </table>
+            <span>* - bold numbers used to denote wins</span>
         </div>
         <div id="pointsTable" class="results-table">
             <h4>@this.Model.Team.teamName (Points)</h4>
@@ -197,7 +207,8 @@
                             }
                             else
                             {
-                                <td>@resultForWeekForPlayer.points</td>
+                                var points = resultForWeekForPlayer.points;
+                                <td class=@(points > 12 ? "score-bold" : "score-normal")>@points</td>
                                 totalPoints += (int)resultForWeekForPlayer.points;
                                 resultCount++;
                             }
@@ -214,6 +225,7 @@
                     </tr>
                 }
             </table>
+            <span>* - bold numbers used to denote wins</span>
         </div>
     </div>
 </div>
