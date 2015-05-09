@@ -13,5 +13,7 @@ namespace WestBlueGolfLeagueWeb.Models.ViewModels
         public IEnumerable<week> WeeksForYear { get; set; }
 
         public List<team> TeamsForYear { get; set; }
+
+        public int toggleValue { get; set; }
     }
 }

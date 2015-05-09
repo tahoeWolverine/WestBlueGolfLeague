@@ -4,75 +4,216 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@section JavaScript
+{
+    <script type="text/javascript">
+        var showEquitable = function () {
+            $("#equitableTable").show();
+            $("#scoreTable").hide();
+            $("#pointsTable").hide();
+        }
+        var showScore = function () {
+            $("#equitableTable").hide();
+            $("#scoreTable").show();
+            $("#pointsTable").hide();
+        }
+        var showPoints = function () {
+            $("#equitableTable").hide();
+            $("#scoreTable").hide();
+            $("#pointsTable").show();
+        }
+    </script>
+}
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3 list-group">
         <ul>
             @foreach (var t in this.Model.TeamsForYear)
             {
                 if (t.id == this.Model.Team.id)
                 {
-                    <li>@t.teamName</li>
+                    <li class="list-group-item">@t.teamName</li>
                 }
                 else
                 {
-                    <li>@Html.ActionLink(t.teamName, "Details", "ResultsTable", new { id = t.id }, null)</li>
+                    <li class="list-group-item">@Html.ActionLink(t.teamName, "Details", "ResultsTable", new { id = t.id }, null)</li>
                 }
             }
         </ul>
     </div>
 
-    <div class="col-md-10">
-        <h4>@this.Model.Team.teamName (Equitable Scores)</h4>
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>0</th>
-                @foreach (var w in this.Model.WeeksForYear)
-                {
-                    <th>@w.seasonIndex</th>
-                }
-                <th>Handicap</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>36</td>
-                @foreach (var w in this.Model.WeeksForYear)
-                {
-                    <td>@w.course.par</td>
-                }
-                <td></td>
-            </tr>
-            @foreach (var p in this.Model.PlayersForTeamForYear)
-            {
+    <div class="col-md-9">
+        <div class="row text-center">
+            <div class="btn-group btn-group-lg">
+                <button type="button" class="btn btn-default" onclick="showEquitable()" autofocus>Equitable Score</button>
+                <button type="button" class="btn btn-default" onclick="showScore()">Score</button>
+                <button type="button" class="btn btn-default" onclick="showPoints()">Points</button>
+            </div>
+        </div>
+        <div id="equitableTable">
+            <h4>@this.Model.Team.teamName (Equitable Score)</h4>
+            <table class="table">
                 <tr>
-                    <td>@p.Player.name</td>
-                    <td>@p.YearData.week0Score</td>
-
+                    <th>Name</th>
+                    <th>0</th>
                     @foreach (var w in this.Model.WeeksForYear)
                     {
-                        var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
-                        if (resultForWeekForPlayer == null)
+                        <th>@w.seasonIndex</th>
+                    }
+                    <th>Handicap</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>36</td>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <td>@w.course.par</td>
+                    }
+                    <td></td>
+                </tr>
+                @foreach (var p in this.Model.PlayersForTeamForYear)
+                {
+                    <tr>
+                        <td>@p.Player.name</td>
+                        <td>@p.YearData.week0Score</td>
+
+                        @foreach (var w in this.Model.WeeksForYear)
                         {
-                            <td></td>
-                        }
-                        else
-                        {
-                            // Equitable if we have it; could have said year >= 2015
-                            if (resultForWeekForPlayer.scoreVariant != null && resultForWeekForPlayer.scoreVariant > 0)
+                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            if (resultForWeekForPlayer == null)
                             {
-                                <td>@resultForWeekForPlayer.scoreVariant</td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                // Equitable if we have it; could have said year >= 2015
+                                if (resultForWeekForPlayer.scoreVariant != null && resultForWeekForPlayer.scoreVariant > 0)
+                                {
+                                    <td>@resultForWeekForPlayer.scoreVariant</td>
+                                }
+                                else
+                                {
+                                    <td>@resultForWeekForPlayer.score</td>
+                                }
+                            }
+                        }
+                        <td>+@p.YearData.finishingHandicap</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="scoreTable" class="results-table">
+            <h4>@this.Model.Team.teamName (Score)</h4>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>0</th>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <th>@w.seasonIndex</th>
+                    }
+                    <th>Average</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>36</td>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <td>@w.course.par</td>
+                    }
+                    <td></td>
+                </tr>
+                @foreach (var p in this.Model.PlayersForTeamForYear)
+                {
+                    // Keep track of total over par
+                    var totalScore = 0;
+                    var resultCount = 0;
+                    <tr>
+                        <td>@p.Player.name</td>
+                        <td>@p.YearData.week0Score</td>
+
+                        @foreach (var w in this.Model.WeeksForYear)
+                        {
+                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            if (resultForWeekForPlayer == null)
+                            {
+                                <td></td>
                             }
                             else
                             {
                                 <td>@resultForWeekForPlayer.score</td>
+                                totalScore += ((int)resultForWeekForPlayer.score - w.course.par);
+                                resultCount++;
                             }
                         }
+
+                        @if (resultCount > 0)
+                        {
+                            <td>+@(totalScore / resultCount)</td>
+                        }
+                        else
+                        {
+                            <td>+0</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="pointsTable" class="results-table">
+            <h4>@this.Model.Team.teamName (Points)</h4>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>0</th>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <th>@w.seasonIndex</th>
                     }
-                    <td>@p.YearData.finishingHandicap</td>
+                    <th>Average</th>
                 </tr>
-            }
-        </table>
+                <tr>
+                    <td></td>
+                    <td>36</td>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <td>@w.course.par</td>
+                    }
+                    <td></td>
+                </tr>
+                @foreach (var p in this.Model.PlayersForTeamForYear)
+                {
+                    var totalPoints = 0;
+                    var resultCount = 0;
+                    <tr>
+                        <td>@p.Player.name</td>
+                        <td>@p.YearData.week0Score</td>
+
+                        @foreach (var w in this.Model.WeeksForYear)
+                        {
+                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            if (resultForWeekForPlayer == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td>@resultForWeekForPlayer.points</td>
+                                totalPoints += (int)resultForWeekForPlayer.points;
+                                resultCount++;
+                            }
+                        }
+
+                        @if (resultCount > 0)
+                        {
+                            <td>@(totalPoints / resultCount)</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>

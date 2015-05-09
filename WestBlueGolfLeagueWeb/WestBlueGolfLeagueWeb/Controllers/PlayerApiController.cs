@@ -59,13 +59,21 @@ namespace WestBlueGolfLeagueWeb.Controllers
             IEnumerable<result> resultsForYear = await results;
 
             var keyToBoardData = leaderBoardDatas.ToDictionary(x => x.leaderboard.key);
+            var boardHandicap = TryGetFormattedValue(keyToBoardData, "player_handicap");
+
+            // Display the player's handicap when the boards are down
+            if (string.IsNullOrEmpty(boardHandicap))
+            {
+                // This may be prone to being incorrect for prior years, but the boards shouldn't be down for those
+                boardHandicap = player.currentHandicap.ToString();
+            }
 
             return Ok(
                 new PlayerProfileData 
                 { 
                     PlayerName = player.name,
 					AveragePoints = TryGetFormattedValue(keyToBoardData, "player_avg_points"), 
-                    Handicap = TryGetFormattedValue(keyToBoardData, "player_handicap"), 
+                    Handicap = boardHandicap, 
                     Improved = TryGetFormattedValue(keyToBoardData, "player_season_improvement"), 
                     LowNet = TryGetFormattedValue(keyToBoardData, "player_net_best_score"), 
                     LowScore = TryGetFormattedValue(keyToBoardData, "player_best_score"),

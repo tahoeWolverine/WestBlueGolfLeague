@@ -510,6 +510,11 @@ team-list-item-name {
     display: none;
 }
 
+/* Results Table */
+.results-table {
+    display: none;
+}
+
 /*.player-result {
     margin: 14px;
     padding: 16px;
