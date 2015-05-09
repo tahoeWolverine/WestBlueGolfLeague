@@ -51,7 +51,7 @@
             </div>
         </div>
         <div id="equitableTable">
-            <h4>@this.Model.Team.teamName (Equitable Score)</h4>
+            <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Equitable Score)</h4>
             <table class="table">
                 <tr>
                     <th>Name</th>
@@ -75,7 +75,7 @@
                 {
                     string boldClass = p.ResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
                     <tr>
-                        <td>@p.Player.name</td>
+                        <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
 
                         <td class=@boldClass>@p.YearData.week0Score</td>
 
@@ -112,7 +112,7 @@
             <span>* - bold numbers used for handicap calculation (week 0 counted up to 3 times for veteran golfers, only once for rookies)</span>
         </div>
         <div id="scoreTable" class="results-table">
-            <h4>@this.Model.Team.teamName (Score)</h4>
+            <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Score)</h4>
             <table class="table">
                 <tr>
                     <th>Name</th>
@@ -138,7 +138,7 @@
                     var totalScore = 0;
                     var resultCount = 0;
                     <tr>
-                        <td>@p.Player.name</td>
+                        <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
                         <td>@p.YearData.week0Score</td>
 
                         @foreach (var w in this.Model.WeeksForYear)
@@ -171,7 +171,7 @@
             <span>* - bold numbers used to denote wins</span>
         </div>
         <div id="pointsTable" class="results-table">
-            <h4>@this.Model.Team.teamName (Points)</h4>
+            <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Points)</h4>
             <table class="table">
                 <tr>
                     <th>Name</th>
@@ -196,7 +196,7 @@
                     var totalPoints = 0;
                     var resultCount = 0;
                     <tr>
-                        <td>@p.Player.name</td>
+                        <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
                         <td>@p.YearData.week0Score</td>
 
                         @foreach (var w in this.Model.WeeksForYear)
