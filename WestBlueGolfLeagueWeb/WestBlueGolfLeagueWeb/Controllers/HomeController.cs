@@ -13,7 +13,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public async Task<ViewResult> Index()
         {
             int selectedYear = this.SelectedYear;
-            
+
             // Hack to order and rank teams until leaderboards is working
             //var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
             var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderByDescending(x => x.value).ToList();

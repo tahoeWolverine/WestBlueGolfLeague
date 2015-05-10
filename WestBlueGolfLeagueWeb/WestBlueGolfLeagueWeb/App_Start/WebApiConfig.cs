@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using WestBlueGolfLeagueWeb.Controllers.Filters;
 
 namespace WestBlueGolfLeagueWeb
 {
@@ -14,6 +15,7 @@ namespace WestBlueGolfLeagueWeb
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Filters.Add(new WestBlueApiExceptionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

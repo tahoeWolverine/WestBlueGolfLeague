@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using WestBlueGolfLeagueWeb.Controllers.Filters;
 
 namespace WestBlueGolfLeagueWeb
 {
@@ -7,7 +8,7 @@ namespace WestBlueGolfLeagueWeb
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new WestBlueHandleErrorAttribute());
         }
     }
 }
