@@ -31,23 +31,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public async Task ComputeAndSaveLeaderBoardsAsync()
         {
-            // get all the valid results for the team matchup
-            // get all the players for the team matchup
-            // calculate handicaps, save them to both player year data.finishingHandicap and 
+            // TODO: only calculate handicaps if needed.
+
 
             // Eagerly fetch everything we're going to need.
             var teamMatchup = (await this.database.teammatchups
                             .Include(x => x.matches)
-                            .Include("matches.results")
-                            .Include("matches.results.team")
-                            .Include("matches.results.year")
-                            .Include("matches.results.match.teammatchup")
-                            .Include("matches.results.player")
-                            // Don't know what's up with these two things.
-                            //.Include("matches.players")
-                            //.Include("matches.players.playeryeardatas")
                             .Include(x => x.week)
-                            .Include("week.course")
                             .Include(x => x.teams)
                             .Where(x => x.id == this.teamMatchupId).ToListAsync()).First();
 
