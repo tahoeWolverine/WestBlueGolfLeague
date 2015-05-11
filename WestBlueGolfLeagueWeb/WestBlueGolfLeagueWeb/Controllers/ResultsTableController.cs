@@ -63,8 +63,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
                                                         {
                                                             Player = y.player,
                                                             YearData = y,
-                                                            ResultsForYear = y.player.results
-                                                                            .Where(r => r.year.value == year)
+                                                            CompleteResultsForYear = y.player.results
+                                                                            .Where(r => r.year.value == year && r.match.teammatchup.matchComplete)
                                                                             .OrderBy(r => r.match.teammatchup.week.seasonIndex)
                                                         })
             });

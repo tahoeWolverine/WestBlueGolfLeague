@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.ViewModels
 {
     public class PlayerResultsViewModel
     {
-        public IEnumerable<result> ResultsForYear { get; set; }
+        public IEnumerable<result> CompleteResultsForYear { get; set; }
         public player Player { get; set; }
 
         public playeryeardata YearData { get; set; }

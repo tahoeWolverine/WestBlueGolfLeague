@@ -73,7 +73,7 @@
                 </tr>
                 @foreach (var p in this.Model.PlayersForTeamForYear)
                 {
-                    string boldClass = p.ResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
+                    string boldClass = p.CompleteResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
                     <tr>
                         <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
 
@@ -81,11 +81,11 @@
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             // If no bold scores yet, look to see how many remaining results. If bold scores have happened, we know all future scores are
                             if (boldClass == "score-normal")
                             {
-                                var remainingResults = p.ResultsForYear.Where(x => x.match.teammatchup.week.date > w.date);
+                                var remainingResults = p.CompleteResultsForYear.Where(x => x.match.teammatchup.week.date > w.date);
                                 boldClass = remainingResults.Count() < 5 ? "score-bold" : "score-normal";
                             }
                             if (resultForWeekForPlayer == null)
@@ -143,7 +143,7 @@
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             if (resultForWeekForPlayer == null)
                             {
                                 <td></td>
@@ -201,7 +201,7 @@
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.ResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             if (resultForWeekForPlayer == null)
                             {
                                 <td></td>
