@@ -12,6 +12,7 @@ using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.ScoreEntry;
 using System.Net;
 using System.Web.Http;
+using log4net;
 
 
 namespace WestBlueGolfLeagueWeb.Controllers.Admin
@@ -19,6 +20,8 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
     [Authorize(Roles = AdminRole.Admin.Name + "," + AdminRole.TeamCaptain.Name)]
     public class ScoreEntryController : WestBlueDbApiController
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ScoreEntryController));
+
         public ScoreEntryController() : base(true) {  }
 
         /// <summary>
@@ -88,6 +91,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             }
             catch (Exception e)
             {
+                Logger.Error(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches: " + e.Message } });
             }
 
@@ -99,6 +103,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             }
             catch (Exception e)
             {
+                Logger.Error(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving handicaps and leaderboards: " + e.Message } });
             }
 
