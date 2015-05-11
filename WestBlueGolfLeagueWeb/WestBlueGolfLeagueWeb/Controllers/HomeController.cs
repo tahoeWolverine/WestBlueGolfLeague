@@ -19,10 +19,17 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderByDescending(x => x.value).ToList();
 
             // Re-rank
+            double previousValue = 0;
+            var currentRank = 0;
             for (int i = 0; i < rankingValuesForYear.Count(); i++)
             {
                 leaderboarddata lbd = rankingValuesForYear.ElementAt(i);
-                lbd.rank = i + 1;
+                if (lbd.value != previousValue)
+                {
+                    currentRank = i + 1;
+                }
+                lbd.rank = currentRank;
+                previousValue = lbd.value;
             }
 
             var year = this.Db.years.Where(x => x.value == selectedYear).ToList().First();
