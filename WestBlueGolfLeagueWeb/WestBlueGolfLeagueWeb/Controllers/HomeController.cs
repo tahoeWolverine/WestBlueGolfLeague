@@ -16,7 +16,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             // Hack to order and rank teams until leaderboards is working
             //var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderBy(x => x.rank).ToList();
-            var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderByDescending(x => x.value).ToList();
+            var rankingValuesForYear = this.Db.leaderboarddatas.Where(x => x.year.value == selectedYear && x.leaderboard.key == "team_ranking").OrderByDescending(x => x.value / x.team.teammatchups.Where(y => y.week.year.value == selectedYear && y.matchComplete).Count()).ToList();
 
             // Re-rank
             double previousValue = 0;
@@ -24,6 +24,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             for (int i = 0; i < rankingValuesForYear.Count(); i++)
             {
                 leaderboarddata lbd = rankingValuesForYear.ElementAt(i);
+                int matches = lbd.team.teammatchups.Where(y => y.week.year.value == selectedYear && y.matchComplete).Count();
                 if (lbd.value != previousValue)
                 {
                     currentRank = i + 1;

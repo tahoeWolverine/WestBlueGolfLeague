@@ -66,15 +66,18 @@
                         <th></th>
                         <th>Name</th>
                         <th>Points</th>
+                        <th>Avg</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var rankData in this.Model.TeamRankingDataForYear)
                     {
+                        double completeMatches = rankData.team.teammatchups.Where(y => y.week.year.value == this.Model.SelectedYear && y.matchComplete).Count();
                         <tr>
                             <td>@rankData.rank</td>
                             <td>@rankData.team.teamName</td>
                             <td>@rankData.value</td>
+                            <td>@((double)rankData.value / completeMatches)</td>
                         </tr>
                     }
                 </tbody>
