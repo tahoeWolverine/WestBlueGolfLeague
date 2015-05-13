@@ -8,6 +8,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
     public class HandicapCalculator
     {
+        private ScoreResultFactory scoreResultFactory;
+
+        public HandicapCalculator(ScoreResultFactory scoreResultFactory)
+        {
+            this.scoreResultFactory = scoreResultFactory;
+        }
+
         public HandicapCalculationResult CalculateAndCascadeHandicaps(IEnumerable<result> results, int week0Score, bool isRookie)
         {
             if (results == null || results.Count() == 0)
@@ -47,7 +54,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public HandicapCalculationResult HandicapsForResults(IEnumerable<result> results, int week0Score, bool isRookie)
         {
-            LinkedList<ScoreResult> copiedScores = new LinkedList<ScoreResult>(results.Select(x => new ScoreResult(x)));
+            LinkedList<ScoreResult> copiedScores = new LinkedList<ScoreResult>(results.Select(x => this.scoreResultFactory.CreateScoreResult(x)));
 
             int numberOfWeekZeroesToAdd = 0;
 
@@ -70,7 +77,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             for (int i = 0; i < numberOfWeekZeroesToAdd; i++)
             {
-                copiedScores.AddLast(ScoreResult.CreateWeek0Score(week0Score));
+                copiedScores.AddLast(this.scoreResultFactory.CreateWeek0Score(week0Score));
             }
 
             if (copiedScores.Count >= 5)

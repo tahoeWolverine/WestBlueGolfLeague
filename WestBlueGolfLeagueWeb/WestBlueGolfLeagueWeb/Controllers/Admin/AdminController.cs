@@ -33,7 +33,7 @@ namespace WestBlueGolfLeagueWeb.Admin
 			var teams =
 				this.Db.teams.Where(x => x.teamyeardata.Any(y => y.year.value == this.CurrentYear)).OrderBy(x => x.teamName);
 
-		    return View(new AddPlayerRequest { Teams = teams });
+		    return View(new AddPlayerRequest { Teams = teams, IsRookie = true });
 	    }
 
 		[HttpPost]
@@ -54,6 +54,9 @@ namespace WestBlueGolfLeagueWeb.Admin
 
             player player = null;
 
+            // If the player doesn't exist, force create as rookie.
+            bool rookieStatus = true;
+
             if (playerTask.Result != null)
             {
                 player = playerTask.Result;
@@ -67,6 +70,9 @@ namespace WestBlueGolfLeagueWeb.Admin
                 {
                     this.Db.playeryeardatas.Remove(currentYearPyd);
                 }
+
+                // if player DOES exist honor rookie option.
+                rookieStatus = addPlayerRequest.IsRookie;
             }
             else
             {
@@ -75,7 +81,7 @@ namespace WestBlueGolfLeagueWeb.Admin
 
             var newPyd = new playeryeardata
                                 {
-                                    isRookie = true,
+                                    isRookie = rookieStatus, 
                                     year = yearTask.Result,
                                     team = teamTask.Result,
                                     player = player,

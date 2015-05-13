@@ -70,7 +70,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         /// </summary>
         private void UpdatePlayerHandicaps(teammatchup tm, ILookup<int, result> resultsLookup)
         {
-            var hc = new HandicapCalculator();
+            var scoreResultFactory = new ScoreResultFactory(tm.week.year.value);
+            var hc = new HandicapCalculator(scoreResultFactory);
 
             foreach (var match in tm.matches)
             {

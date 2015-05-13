@@ -23,6 +23,9 @@ namespace WestBlueGolfLeagueWeb.Models.Admin
 		[Display(Name = "Team")]
         public int TeamId { get; set; }
 
+        [Display(Name = "Rookie", Description = "Should this player be treated as a rookie?")]
+        public bool IsRookie { get; set; }
+
 		public IEnumerable<team> Teams { get; set; }
     }
 }

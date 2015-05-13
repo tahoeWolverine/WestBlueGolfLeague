@@ -6,19 +6,25 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
-    public class ScoreResult
+    public interface ScoreResult
     {
-        private ScoreResult()
+        int Week
         {
-
+            get;
         }
 
-        public ScoreResult(result result)
+        int ScoreOverPar
         {
-            bool useEScore = result.year.value > 2014;
+            get;
+        }
+    }
 
+    public class EquitableScoreResult : ScoreResult
+    {
+        public EquitableScoreResult(result result)
+        {
             this.Week = result.match.teammatchup.week.seasonIndex;
-            this.ScoreOverPar = Math.Min((useEScore ? result.scoreVariant.Value : result.score.Value) - result.match.teammatchup.week.course.par, 20);
+            this.ScoreOverPar = result.scoreVariant.Value - result.match.teammatchup.week.course.par;
         }
 
         public int Week
@@ -32,10 +38,28 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             get;
             private set;
         }
+    }
 
-        public static ScoreResult CreateWeek0Score(int week0Score)
+    public class ClassicScoreResult : ScoreResult
+    {
+        public ClassicScoreResult(result result)
         {
-            return new ScoreResult { ScoreOverPar = week0Score - 36, Week = 0 };
+            this.Week = result.match.teammatchup.week.seasonIndex;
+            this.ScoreOverPar = Math.Min(result.score.Value - result.match.teammatchup.week.course.par, 20);
+        }
+
+        public ClassicScoreResult() { }
+
+        public int Week
+        {
+            get;
+            set;
+        }
+
+        public int ScoreOverPar
+        {
+            get;
+            set;
         }
     }
 }
