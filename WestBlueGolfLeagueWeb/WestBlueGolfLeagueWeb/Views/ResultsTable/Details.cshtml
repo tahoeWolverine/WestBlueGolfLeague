@@ -74,6 +74,7 @@
                 @foreach (var p in this.Model.PlayersForTeamForYear)
                 {
                     string boldClass = p.CompleteResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
+                    var playerResults = p.CompleteResultsForYear;
                     <tr>
                         <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
 
@@ -81,11 +82,11 @@
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = playerResults.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             // If no bold scores yet, look to see how many remaining results. If bold scores have happened, we know all future scores are
                             if (boldClass == "score-normal")
                             {
-                                var remainingResults = p.CompleteResultsForYear.Where(x => x.match.teammatchup.week.date > w.date);
+                                var remainingResults = playerResults.Where(x => x.match.teammatchup.week.date > w.date);
                                 boldClass = remainingResults.Count() < 5 ? "score-bold" : "score-normal";
                             }
                             if (resultForWeekForPlayer == null)
@@ -109,7 +110,7 @@
                     </tr>
                 }
             </table>
-            <span>* - bold numbers used for handicap calculation (week 0 counted up to 3 times for veteran golfers, only once for rookies)</span>
+            <span><span class="score-bold">38</span> - bold numbers used for handicap calculation (week 0 counted up to 3 times for veteran golfers, only once for rookies)</span>
         </div>
         <div id="scoreTable" class="results-table">
             <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Score)</h4>
@@ -136,14 +137,14 @@
                 {
                     // Keep track of total over par
                     var totalScore = 0;
-                    var resultCount = 0;
+                    var playerResults = p.CompleteResultsForYear;
                     <tr>
                         <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
                         <td>@p.YearData.week0Score</td>
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = playerResults.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             if (resultForWeekForPlayer == null)
                             {
                                 <td></td>
@@ -153,13 +154,12 @@
                                 var points = resultForWeekForPlayer.points;
                                 <td class=@(points > 12 ? "score-bold" : "score-normal")>@resultForWeekForPlayer.score</td>
                                 totalScore += ((int)resultForWeekForPlayer.score - w.course.par);
-                                resultCount++;
                             }
                         }
 
-                        @if (resultCount > 0)
+                        @if (playerResults.Count() > 0)
                         {
-                            <td>+@(totalScore / resultCount)</td>
+                            <td>+@(totalScore / playerResults.Count())</td>
                         }
                         else
                         {
@@ -168,7 +168,7 @@
                     </tr>
                 }
             </table>
-            <span>* - bold numbers used to denote wins</span>
+            <span><span class="score-bold">39</span> - bold numbers used to denote wins</span>
         </div>
         <div id="pointsTable" class="results-table">
             <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Points)</h4>
@@ -180,6 +180,7 @@
                     {
                         <th>@w.seasonIndex</th>
                     }
+                    <th>Total</th>
                     <th>Average</th>
                 </tr>
                 <tr>
@@ -190,18 +191,18 @@
                         <td>@w.course.par</td>
                     }
                     <td></td>
+                    <td></td>
                 </tr>
                 @foreach (var p in this.Model.PlayersForTeamForYear)
                 {
-                    var totalPoints = 0;
-                    var resultCount = 0;
+                    var playerResults = p.CompleteResultsForYear;
                     <tr>
                         <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
                         <td>-</td>
 
                         @foreach (var w in this.Model.WeeksForYear)
                         {
-                            var resultForWeekForPlayer = p.CompleteResultsForYear.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            var resultForWeekForPlayer = playerResults.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
                             if (resultForWeekForPlayer == null)
                             {
                                 <td></td>
@@ -209,15 +210,25 @@
                             else
                             {
                                 var points = resultForWeekForPlayer.points;
-                                <td class=@(points > 12 ? "score-bold" : "score-normal")>@points</td>
-                                totalPoints += (int)resultForWeekForPlayer.points;
-                                resultCount++;
+                                // Account for when your team members play for other teams, your team doesn't get the points
+                                bool sub = resultForWeekForPlayer.teamId != this.Model.Team.id;
+                                string pointsStr = points.ToString() + (sub ? "*" : "");
+                                <td class=@(points > 12 ? "score-bold" : "score-normal")>@pointsStr</td>
                             }
                         }
 
-                        @if (resultCount > 0)
+                        @if (playerResults.Count() > 0)
                         {
-                            <td>@(totalPoints / resultCount)</td>
+                            <td>@(playerResults.Sum(x => x.points))</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                        
+                        @if (playerResults.Count() > 0)
+                        {
+                            <td>@(playerResults.Sum(x => x.points) / playerResults.Count())</td>
                         }
                         else
                         {
@@ -225,8 +236,114 @@
                         }
                     </tr>
                 }
+                <tr>
+                    <td>Subs</td>
+                    <td>-</td>
+                    @{
+                        var yearid = this.Model.WeeksForYear.ElementAt(0).year.id;
+                        var thisTeam = this.Model.Team;
+                        var allResults = thisTeam.results.Where(x => x.match.teammatchup.week.yearId == yearid);
+                        //var subResults = allResults.Where(x => x.player.playeryeardatas.Where(y => y.year.id == yearid).FirstOrDefault().team.id != thisTeam.id);
+
+                        var subResults = new System.Collections.ObjectModel.Collection<result>();
+                        foreach (var r in allResults)
+                        {
+                            var data = r.player.playeryeardatas.Where(y => y.year.id == yearid);
+                            if (data == null || data.Count() == 0)
+                            {
+                                // Should fall into here with the failing LINQ statement above...
+                            }
+                            else
+                            {
+                                if (data.FirstOrDefault().teamId != thisTeam.id)
+                                {
+                                    subResults.Add(r);
+                                }
+                            }
+                        }
+
+                        foreach (var w in this.Model.WeeksForYear)
+                        {
+                            var subResultsForWeek = subResults.Where(x => x.match.teammatchup.weekId == w.id);
+                            if (subResultsForWeek == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                var pointsForSubs = subResultsForWeek.Sum(x => x.points);
+                                if (pointsForSubs > 0)
+                                {
+                                    <td class=@(pointsForSubs > 12 * subResultsForWeek.Count() ? "score-bold" : "score-normal")>@pointsForSubs</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                        }
+
+                        if (subResults.Count() > 0)
+                        {
+                            <td>@(subResults.Sum(x => x.points))</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+
+                        if (subResults.Count() > 0)
+                        {
+                            <td>@(subResults.Sum(x => x.points) / subResults.Count())</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td>Team</td>
+                    <td>-</td>
+                    @{
+                        foreach (var w in this.Model.WeeksForYear)
+                        {
+                            var resultsForWeek = allResults.Where(x => x.match.teammatchup.weekId == w.id);
+                            if (resultsForWeek.Count() > 0)
+                            {
+                                var pointsForWeek = resultsForWeek.Sum(x => x.points);
+                                <td class=@(pointsForWeek > 48 ? "score-bold" : "score-normal")>@pointsForWeek</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+
+                        // Tabulate the team's total points   
+                        if (allResults.Count() > 0)
+                        {
+                            <td>@(allResults.Sum(x => x.points))</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+
+                        // Tabulate the team's weekly average points, match average x 4    
+                        if (allResults.Count() > 0)
+                        {
+                            <td>@(allResults.Sum(x => x.points) * 4 / allResults.Count())</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                    }
+                </tr>
             </table>
-            <span>* - bold numbers used to denote wins</span>
+            <p><span class="score-bold">16</span> - bold numbers used to denote wins</p>
+            <p>* - indicates match played for a different team</p>
         </div>
     </div>
 </div>
