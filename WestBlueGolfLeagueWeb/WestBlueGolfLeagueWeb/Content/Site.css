@@ -161,6 +161,10 @@ input[type="checkbox"].input-validation-error {
     width: 100%;
 }
 
+.player-list-selection .player-list-players {
+    padding-bottom: 80px; /* offset for fixed footer - body padding */
+}
+
 .player-details-profile {
     z-index: 10;
 	position: relative;
@@ -840,6 +844,10 @@ textarea.roster-input {
         bottom: inherit;
         z-index: inherit;
         height: inherit;
+    }
+
+    .player-list-selection .player-list-players {
+        padding-bottom: 0;
     }
 
     .match-player-edit .match-team-name {
