@@ -8,10 +8,10 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
     interface ILeaderBoard<T>
     {
-        public int Format { get; set; }
-        public string LeaderBoardKey { get; set; }
-        public string LeaderBoardName { get; set; }
-        public bool Ascending { get; set; }
-        public double DoCalculation(T t);
+        int Format { get; set; }
+        string LeaderBoardKey { get; set; }
+        string LeaderBoardName { get; set; }
+        bool Ascending { get; set; }
+        double DoCalculation(T t);
     }
 }
