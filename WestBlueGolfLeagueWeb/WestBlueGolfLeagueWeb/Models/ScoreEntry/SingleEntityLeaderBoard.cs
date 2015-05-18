@@ -6,7 +6,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
-    public delegate double LeaderBoardCalculation<T>(T team);
+    public delegate double LeaderBoardCalculation<T>(T entity, year year);
 
     public class SingleEntityLeaderBoard<T> : ILeaderBoard<T>
     {
@@ -17,10 +17,12 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey,
             int format,
             LeaderBoardCalculation<T> calculation,
+            bool isPlayerBoard = true,
             bool ascending = true)
         {
             this.LeaderBoardName = leaderBoardName;
             this.Format = format;
+            this.IsPlayerBoard = IsPlayerBoard;
             this.LeaderBoardKey = leaderBoardKey;
             this.Ascending = ascending;
             this.calc = calculation;
@@ -42,9 +44,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             set;
         }
 
-        public double DoCalculation(T t)
+        public bool IsPlayerBoard { get; private set; }
+
+        public double DoCalculation(T t, year year)
         {
-            return this.calc(t);
+            return this.calc(t, year);
         }
     }
 
@@ -54,8 +58,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardName, 
             string leaderBoardKey, 
             int format,
-            LeaderBoardCalculation<team> calculation, 
-            bool ascending = true) : base(leaderBoardName, leaderBoardKey, format, calculation, ascending)
+            LeaderBoardCalculation<team> calculation,
+            bool ascending = true) : base(leaderBoardName, leaderBoardKey, format, calculation, false, ascending)
         {
             
         }
@@ -69,7 +73,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             int format,
             LeaderBoardCalculation<player> calculation,
             bool ascending = true)
-            : base(leaderBoardName, leaderBoardKey, format, calculation, ascending)
+            : base(leaderBoardName, leaderBoardKey, format, calculation, true, ascending)
         {
 
         }

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
-    interface ILeaderBoard<T>
+    public interface ILeaderBoard<T>
     {
         int Format { get; set; }
         string LeaderBoardKey { get; set; }
         string LeaderBoardName { get; set; }
         bool Ascending { get; set; }
-        double DoCalculation(T t);
+        double DoCalculation(T t, year year);
+        bool IsPlayerBoard { get; }
     }
 }

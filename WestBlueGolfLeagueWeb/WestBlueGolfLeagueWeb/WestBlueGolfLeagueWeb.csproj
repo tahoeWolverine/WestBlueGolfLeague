@@ -269,6 +269,7 @@
     <Compile Include="Models\Admin\Schedule.cs" />
     <Compile Include="Models\Entities\note.cs" />
     <Compile Include="Models\Entities\teamyeardata.cs" />
+    <Compile Include="Models\Extensions\PlayerExtensions.cs" />
     <Compile Include="Models\Extensions\TeamMatchupExtensions.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Admin\AddPlayerRequest.cs" />

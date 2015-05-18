@@ -29,6 +29,11 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .ToList();
         }
 
+        public static async Task<List<player>> AllPlayersForYear(this WestBlue westBlue, year year, bool includeInvalidPlayers = false)
+        {
+            return await westBlue.players.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToListAsync();
+        }
+
         public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)
         {
             var weeks = await westBlue.weeks
