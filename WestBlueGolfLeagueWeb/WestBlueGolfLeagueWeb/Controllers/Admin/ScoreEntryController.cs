@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using WestBlueGolfLeagueWeb.Models.Admin;

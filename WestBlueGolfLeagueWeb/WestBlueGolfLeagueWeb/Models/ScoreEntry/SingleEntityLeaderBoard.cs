@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         {
             this.LeaderBoardName = leaderBoardName;
             this.Format = format;
-            this.IsPlayerBoard = IsPlayerBoard;
+            this.IsPlayerBoard = isPlayerBoard;
             this.LeaderBoardKey = leaderBoardKey;
             this.Ascending = ascending;
             this.calc = calculation;

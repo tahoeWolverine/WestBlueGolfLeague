@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
@@ -31,7 +32,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public async Task ComputeAndSaveLeaderBoardsAsync()
         {
-            // TODO: only calculate handicaps if needed.
+            // TODO: only calculate handicaps and leaderboards if needed.
 
 
             // Eagerly fetch everything we're going to need.
@@ -58,7 +59,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             var resultsForYearLookupByTeam = resultsForYear.ToLookup(x => x.teamId);
 
             // TODO: this board lookup stuff needs to be more generic. For now just do the team ranking board.
-            this.UpdateTeamRanking(teamBoardDataLookup, boardLookup, resultsForYearLookupByTeam, teamMatchup);
+            //this.UpdateTeamRanking(teamBoardDataLookup, boardLookup, resultsForYearLookupByTeam, teamMatchup);
+
+            var lbe = new LeaderBoardExecutor(this.database, teamMatchup.week.year);
+
+            await lbe.ExecuteLeaderBoards();
 
             this.UpdatePlayerHandicaps(teamMatchup, resultsForPlayer);
 

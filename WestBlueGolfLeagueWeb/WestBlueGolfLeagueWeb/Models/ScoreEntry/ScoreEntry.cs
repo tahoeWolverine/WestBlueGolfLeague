@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Entities;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using System.Threading.Tasks;

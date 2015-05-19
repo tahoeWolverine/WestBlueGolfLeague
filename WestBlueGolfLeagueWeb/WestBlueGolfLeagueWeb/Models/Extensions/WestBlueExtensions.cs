@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using WestBlueGolfLeagueWeb.Models.Entities;
 
-namespace WestBlueGolfLeagueWeb.Models.Entities
+namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
     public static class WestBlueExtensions
     {
@@ -29,9 +30,16 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
                         .ToList();
         }
 
-        public static async Task<List<player>> AllPlayersForYear(this WestBlue westBlue, year year, bool includeInvalidPlayers = false)
+        public static async Task<List<player>> AllPlayersForYear(this WestBlue westBlue, year year, bool includeResults = false, bool includeInvalidPlayers = false)
         {
-            return await westBlue.players.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToListAsync();
+            IQueryable<player> playersSet = westBlue.players;
+
+            if (includeResults) 
+            {
+                playersSet = playersSet.Include(x => x.results);
+            }
+                
+            return await playersSet.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToListAsync();
         }
 
         public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)
@@ -55,43 +63,6 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public static int? PointsFor(this teammatchup tm, team team)
         {
             return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
-        }
-
-        public static bool WasWin(this result r)
-        {
-            return r.points > 12;
-        }
-
-        public static bool WasLoss(this result r)
-        {
-            return r.points < 12;
-        }
-
-        public static result OpponentResult(this result r)
-        {
-            if (r.match.results.Count < 2)
-            {
-                return null;
-            }
-            return r.match.results.First(x => x.id != r.id);
-        }
-
-        public static int? ScoreDifference(this result r)
-        {
-            return r.score - r.match.teammatchup.week.course.par;
-        }
-
-        public static int? NetScoreDifference(this result r)
-        {
-            return r.ScoreDifference() - r.priorHandicap;
-        }
-
-        /// <summary>
-        /// Score and escore can never be 0.
-        /// </summary>
-        public static bool IsComplete(this result r)
-        {
-            return r.points.HasValue && r.score.HasValue && r.score.Value > 0 && (!r.scoreVariant.HasValue || r.scoreVariant > 0);
         }
 
         public static bool IsComplete(this match r)

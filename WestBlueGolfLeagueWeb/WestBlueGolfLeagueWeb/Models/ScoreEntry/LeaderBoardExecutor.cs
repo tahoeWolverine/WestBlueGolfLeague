@@ -19,7 +19,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             public static readonly List<PlayerLeaderBoard> Boards = new
                 List<PlayerLeaderBoard>
                 {
-                    
                     new PlayerLeaderBoard( "Best Score", "player_best_score", 1, (p, year) => p.LowRoundForYear(year)),
 
                     new PlayerLeaderBoard( "Best Net Score", "player_net_best_score",  1, (p, year) => p.LowNetForYear(year)),
@@ -44,7 +43,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
                     new PlayerLeaderBoard( "Total Points", "player_total_points",  1, (p, year) => p.TotalPointsForYear(year)),
 
-                    //new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year) => p.RecordForYear(year)[0]),
+                    new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year) => p.RecordForYear(year)[0]),
 
                     new PlayerLeaderBoard( "Avg. Margin of Victory", "player_avg_margin_victory",  1, (p, year) => p.AverageMarginOfVictoryForYear(year)),
 
@@ -61,7 +60,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.year = year;
         }
 
-        public async void ExecuteLeaderBoards()
+        public async Task ExecuteLeaderBoards()
         {
             // for each board, get board from prefetched map
             // if board doesn't already exist, create it!
@@ -73,16 +72,27 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             await lbc.Initialize();
 
             var allLeaderBoards = await this.db.leaderboards.ToListAsync();
-            var allPlayersForYear = await this.db.AllPlayersForYear(this.year);
+            var allPlayersForYear = await this.db.AllPlayersForYear(this.year, includeResults: true);
 
+            foreach (var lb in PlayerBoards.Boards)
+            {
+                foreach (player p in allPlayersForYear)
+                {
+                    var lbd = lbc.GetLeaderBoardData<player>(p.id, lb);
 
+                    lbd.value = lb.DoCalculation(p, this.year);
+                    lbd.formattedValue = Convert.ToString(lbd.value);
+                }
+            }
 
+            // TODO: ranks
 
             // For each multi value board, create it if it doesn't exist
             // get leaderboard datas
             // execute query/code
             
             // save changessss
+            await this.db.SaveChangesAsync();
         }
     }
 

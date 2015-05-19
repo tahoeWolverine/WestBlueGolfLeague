@@ -10,22 +10,18 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
     {
         public static IEnumerable<result> AllResultsForYear(this player player, year year)
         {
-            return player.results.Where(x => x.year.id == year.id);
+            return player.results.Where(x => x.year.id == year.id && x.IsComplete());
         }
 
         public static double ImprovedInYear(this player player, year year)
         {
             // There should always be a year data for the year passed in.
-            //var ydForYear = this.yearData.First(yd => yd.year.Value == year.Value);
-            //int starting = ydForYear.StartingHandicap;
+            var ydForYear = player.playeryeardatas.First(yd => yd.year.id == year.id);
 
-            //int ending = year.NewestYear ? this.CurrentHandicap : ydForYear.FinishingHandicap;
-
-            //return ending - starting;
-            return 0;
+            return ydForYear.finishingHandicap - ydForYear.startingHandicap;
         }
 
-        // TODO: take in to account unfinished results.
+        // TODO: don't return 99 here. doesn't make sense. Only use value if needed.
         public static double LowRoundForYear(this player player, year year)
         {
             var bestScore = player.AllResultsForYear(year).OrderBy(x => x.score).FirstOrDefault();
@@ -35,7 +31,6 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
                 return 99;
             }
 
-            // TODO: take in to account unfinished results.
             return bestScore.score.Value;
         }
 
@@ -58,13 +53,14 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return lowNet;
         }
 
+        /// <summary>
+        /// Might be able to just use current handicap here.
+        /// </summary>
         public static double FinishingHandicapInYear(this player player, year year)
         {
-            //// Should only be called with a valid year... will blow up otherwise.
-            //var yd = player.yearData.First(x => x.year.Value == year.Value);
+            var yd = player.playeryeardatas.First(x => x.year.id == year.id);
 
-            //return yd.FinishingHandicap;
-            return 0;
+            return yd.finishingHandicap;
         }
 
         // TODO: take in to account unfinished results.
@@ -85,29 +81,27 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static double RecordRatioForYear(this player player, year year)
         {
-            //var record = player.RecordForYear(year);
-            //double totalWins = record[0] + ((double)record[2] / 2);
-            //int totalMatches = record[0] + record[1] + record[2];
+            var record = player.RecordForYear(year);
+            double totalWins = record[0] + ((double)record[2] / 2);
+            int totalMatches = record[0] + record[1] + record[2];
 
-            //return totalMatches == 0 ? 0.0 : totalWins / (double)totalMatches;
-            return 0;
+            return totalMatches == 0 ? 0.0 : totalWins / (double)totalMatches;
         }
 
         public static int[] RecordForYear(this player player, year year)
         {
-            //var results = player.AllResultsForYear(year);
+            var results = player.AllResultsForYear(year);
 
-            //int wins = 0, losses = 0, ties = 0;
+            int wins = 0, losses = 0, ties = 0;
 
-            //foreach (var result in results)
-            //{
-            //    if (result.WasWin) wins++;
-            //    else if (result.WasLoss) losses++;
-            //    else ties++;
-            //}
+            foreach (var result in results)
+            {
+                if (result.WasWin()) wins++;
+                else if (result.WasLoss()) losses++;
+                else ties++;
+            }
 
-            //return new int[] { wins, losses, ties };
-            return new int[] { 0, 0, 0 };
+            return new int[] { wins, losses, ties };
         }
 
         // TODO: take in to account unfinished results.
@@ -140,30 +134,29 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static double AverageOpponentNetScoreForYear(this player player, year year)
         {
-            //var results = player.AllResultsForYear(year);
+            var results = player.AllResultsForYear(year);
 
-            //if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return 0.0;
 
-            //double totalOpponentScore = 0;
-            //int opponentCount = 0;
-            //int value = 0;
-            //foreach (var result in results)
-            //{
-            //    value = result.GetOpponentResult().NetScoreDifference;
-            //    if (value < 60)
-            //    {
-            //        totalOpponentScore += value;
-            //        opponentCount++;
-            //    }
-            //}
+            double totalOpponentScore = 0;
+            int opponentCount = 0;
+            int value = 0;
+            foreach (var result in results)
+            {
+                value = result.OpponentResult().NetScoreDifference().Value;
+                if (value < 60)
+                {
+                    totalOpponentScore += value;
+                    opponentCount++;
+                }
+            }
 
-            //if (opponentCount == 0)
-            //{
-            //    return 0.0;
-            //}
+            if (opponentCount == 0)
+            {
+                return 0.0;
+            }
 
-            //return (double)totalOpponentScore / (double)opponentCount;
-            return 0;
+            return (double)totalOpponentScore / (double)opponentCount;
         }
 
         // TODO: take in to account unfinished results.
@@ -302,10 +295,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static double TotalRoundsForYear(this player player, year year)
         {
-            //var record = player.RecordForYear(year);
+            var record = player.RecordForYear(year);
 
-            //return record[0] + record[1] + record[2];
-            return 0;
+            return record[0] + record[1] + record[2];
         }
     }
 }
