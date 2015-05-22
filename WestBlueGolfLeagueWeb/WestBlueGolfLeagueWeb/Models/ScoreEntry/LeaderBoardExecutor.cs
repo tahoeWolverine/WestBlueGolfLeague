@@ -80,7 +80,16 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 {
                     var lbd = lbc.GetLeaderBoardData<player>(p.id, lb);
 
-                    lbd.value = lb.DoCalculation(p, this.year);
+                    if (lb.ShouldCalculateValue(p, year))
+                    {
+                        lbd.value = lb.DoCalculation(p, this.year);
+                    }
+                    else
+                    {
+                        // there should be no value in the DB for this entity, let's delete it then.
+                        lbc.DeleteLeaderBoardData(p.id, lb.LeaderBoardKey);
+                    }
+
                     lbd.formattedValue = Convert.ToString(lbd.value);
                 }
             }
@@ -126,6 +135,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         {
             leaderboard dbLb = null;
 
+            // TODO: reset priority, format, and name here. This would allow changing those leaderboard values via code.
             if (!keyToLeaderBoard.TryGetValue(lb.LeaderBoardKey, out dbLb))
             {
                 dbLb = new leaderboard 

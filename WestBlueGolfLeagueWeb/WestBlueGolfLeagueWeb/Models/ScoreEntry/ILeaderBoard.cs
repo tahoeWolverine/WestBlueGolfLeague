@@ -15,5 +15,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         bool Ascending { get; set; }
         double DoCalculation(T t, year year);
         bool IsPlayerBoard { get; }
+        bool ShouldCalculateValue(T t, year year);
     }
 }
