@@ -6,13 +6,11 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
-    public delegate double LeaderBoardCalculation<T>(T entity, year year);
-    public delegate bool CalculateValueTest<T>(T entity, year year);
+    public delegate double? LeaderBoardCalculation<T>(T entity, year year, IEnumerable<result> results);
 
     public class SingleEntityLeaderBoard<T> : ILeaderBoard<T>
     {
         private LeaderBoardCalculation<T> calc;
-        private CalculateValueTest<T> calculateValueTest;
 
         public SingleEntityLeaderBoard(
             string leaderBoardName,
@@ -20,8 +18,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             int format,
             LeaderBoardCalculation<T> calculation,
             bool isPlayerBoard = true,
-            bool ascending = true,
-            CalculateValueTest<T> calculateValueTest = null)
+            bool ascending = true)
         {
             this.LeaderBoardName = leaderBoardName;
             this.Format = format;
@@ -29,11 +26,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.LeaderBoardKey = leaderBoardKey;
             this.Ascending = ascending;
             this.calc = calculation;
-
-            if (calculateValueTest == null)
-            {
-                calculateValueTest = (t, y) => { return true; };
-            }
         }
 
         public string LeaderBoardName { get; set; }
@@ -54,14 +46,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public bool IsPlayerBoard { get; private set; }
 
-        public double DoCalculation(T t, year year)
+        public double? DoCalculation(T t, year year, IEnumerable<result> results)
         {
-            return this.calc(t, year);
-        }
-
-        public bool ShouldCalculateValue(T t, year year)
-        {
-            return this.calculateValueTest(t, year);
+            return this.calc(t, year, results);
         }
     }
 
@@ -72,8 +59,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey, 
             int format,
             LeaderBoardCalculation<team> calculation,
-            bool ascending = true, CalculateValueTest<team> calculateValueTest = null)
-            : base(leaderBoardName, leaderBoardKey, format, calculation, false, ascending, calculateValueTest)
+            bool ascending = true)
+            : base(leaderBoardName, leaderBoardKey, format, calculation, false, ascending)
         {
             
         }
@@ -86,9 +73,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey,
             int format,
             LeaderBoardCalculation<player> calculation,
-            bool ascending = true,
-            CalculateValueTest<player> calculateValueTest = null)
-            : base(leaderBoardName, leaderBoardKey, format, calculation, true, ascending, calculateValueTest)
+            bool ascending = true)
+            : base(leaderBoardName, leaderBoardKey, format, calculation, true, ascending)
         {
 
         }

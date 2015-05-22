@@ -13,8 +13,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         string LeaderBoardKey { get; set; }
         string LeaderBoardName { get; set; }
         bool Ascending { get; set; }
-        double DoCalculation(T t, year year);
+        double? DoCalculation(T t, year year, IEnumerable<result> results);
         bool IsPlayerBoard { get; }
-        bool ShouldCalculateValue(T t, year year);
     }
 }

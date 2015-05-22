@@ -19,37 +19,37 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             public static readonly List<PlayerLeaderBoard> Boards = new
                 List<PlayerLeaderBoard>
                 {
-                    new PlayerLeaderBoard( "Best Score", "player_best_score", 1, (p, year) => p.LowRoundForYear(year)),
+                    new PlayerLeaderBoard( "Best Score", "player_best_score", 1, (p, year, r) => p.LowRoundForYear(year)),
 
-                    new PlayerLeaderBoard( "Best Net Score", "player_net_best_score",  1, (p, year) => p.LowNetForYear(year)),
+                    new PlayerLeaderBoard( "Best Net Score", "player_net_best_score",  1, (p, year, r) => p.LowNetForYear(year)),
 
-                    new PlayerLeaderBoard( "Handicap", "player_handicap",  1, (p, year) => p.FinishingHandicapInYear(year)),
+                    new PlayerLeaderBoard( "Handicap", "player_handicap",  1, (p, year, r) => p.FinishingHandicapInYear(year)),
 
-                    new PlayerLeaderBoard( "Average Points", "player_avg_points",  1, (p, year) => p.AveragePointsInYear(year)),
+                    new PlayerLeaderBoard( "Average Points", "player_avg_points",  1, (p, year, r) => p.AveragePointsInYear(year)),
 
-                    new PlayerLeaderBoard( "Win/Loss Ratio", "player_win_loss_ratio",  1, (p, year) => p.RecordRatioForYear(year)),
+                    new PlayerLeaderBoard( "Win/Loss Ratio", "player_win_loss_ratio",  1, (p, year, r) => p.RecordRatioForYear(year)),
 
-                    new PlayerLeaderBoard( "Season Improvement", "player_season_improvement",  1, (p, year) => p.ImprovedInYear(year)),
+                    new PlayerLeaderBoard( "Season Improvement", "player_season_improvement",  1, (p, year, r) => p.ImprovedInYear(year)),
 
-                    new PlayerLeaderBoard( "Avg. Opp. Score", "player_avg_opp_score",  1, (p, year) => p.AverageOpponentScoreForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Opp. Score", "player_avg_opp_score",  1, (p, year, r) => p.AverageOpponentScoreForYear(year)),
 
-                    new PlayerLeaderBoard( "Avg. Opp. Net Score", "player_avg_opp_net_score",  1, (p, year) => p.AverageOpponentNetScoreForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Opp. Net Score", "player_avg_opp_net_score",  1, (p, year, r) => p.AverageOpponentNetScoreForYear(year)),
 
-                    new PlayerLeaderBoard( "Average Score", "player_avg_score",  1, (p, year) => p.AverageScoreForYear(year)),
+                    new PlayerLeaderBoard( "Average Score", "player_avg_score",  1, (p, year, r) => p.AverageScoreForYear(year)),
 
-                    new PlayerLeaderBoard( "Average Net Score", "player_avg_net_score",  1, (p, year) => p.AverageNetScoreForYear(year)),
+                    new PlayerLeaderBoard( "Average Net Score", "player_avg_net_score",  1, (p, year, r) => p.AverageNetScoreForYear(year)),
 
-                    new PlayerLeaderBoard( "Points in a Match", "player_points_in_match",  1, (p, year) => p.MostPointsInMatchForYear(year)),
+                    new PlayerLeaderBoard( "Points in a Match", "player_points_in_match",  1, (p, year, r) => p.MostPointsInMatchForYear(year)),
 
-                    new PlayerLeaderBoard( "Total Points", "player_total_points",  1, (p, year) => p.TotalPointsForYear(year)),
+                    new PlayerLeaderBoard( "Total Points", "player_total_points",  1, (p, year, r) => p.TotalPointsForYear(year)),
 
-                    new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year) => p.RecordForYear(year)[0]),
+                    new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year, r) => p.RecordForYear(year)[0]),
 
-                    new PlayerLeaderBoard( "Avg. Margin of Victory", "player_avg_margin_victory",  1, (p, year) => p.AverageMarginOfVictoryForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Margin of Victory", "player_avg_margin_victory",  1, (p, year, r) => p.AverageMarginOfVictoryForYear(year)),
 
-                    new PlayerLeaderBoard( "Avg. Margin of Net Victory", "player_avg_margin_net_victory",  1, (p, year) => p.AverageMarginOfNetVictoryForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Margin of Net Victory", "player_avg_margin_net_victory",  1, (p, year, r) => p.AverageMarginOfNetVictoryForYear(year)),
 
-                    new PlayerLeaderBoard( "Total Rounds", "player_total_rounds_for_year",  1, (p, year) => p.TotalRoundsForYear(year)),
+                    new PlayerLeaderBoard( "Total Rounds", "player_total_rounds_for_year",  1, (p, year, r) => p.TotalRoundsForYear(year)),
                 };
         }
 
@@ -80,13 +80,15 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 {
                     var lbd = lbc.GetLeaderBoardData<player>(p.id, lb);
 
-                    if (lb.ShouldCalculateValue(p, year))
+                    var results = p.AllResultsForYear(year);
+
+                    var value = lb.DoCalculation(p, this.year, results);
+
+                    if (value.HasValue) 
                     {
-                        lbd.value = lb.DoCalculation(p, this.year);
+                        lbd.value = value.Value;
                     }
-                    else
                     {
-                        // there should be no value in the DB for this entity, let's delete it then.
                         lbc.DeleteLeaderBoardData(p.id, lb.LeaderBoardKey);
                     }
 
@@ -109,7 +111,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
     {
         private IDictionary<string, leaderboard> keyToLeaderBoard = new Dictionary<string, leaderboard>();
         private IDictionary<string, leaderboarddata> idToLeaderBoardData = new Dictionary<string, leaderboarddata>();
-        //private IDictionary<string, leaderboarddata> teamToLeaderBoardData = new Dictionary<string, leaderboarddata>();
+        private ILookup<string, leaderboarddata> boardToData;
 
         private WestBlue db;
         private year year;
@@ -129,6 +131,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             this.keyToLeaderBoard = leaderBoards.ToDictionary(x => x.key, x => x);
             this.idToLeaderBoardData = leaderBoardData.ToDictionary(x => this.GetLookupKey(x.playerId.HasValue ? x.playerId.Value : x.teamId.Value, leaderBoardIdToLeaderBoard[x.leaderBoardId].key), x => x);
+            this.boardToData = leaderBoardData.ToLookup(x => leaderBoardIdToLeaderBoard[x.leaderBoardId].key);
         }
 
         public leaderboard GetLeaderBoard<T>(ILeaderBoard<T> lb)
@@ -184,6 +187,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 this.db.leaderboarddatas.Remove(lbd);
                 this.idToLeaderBoardData.Remove(key);
             }
+        }
+
+        public IEnumerable<leaderboarddata> GetBoardData(string leaderBoardKey)
+        {
+            return this.boardToData[leaderBoardKey];
         }
 
         private string GetLookupKey(int id, string lbKey)

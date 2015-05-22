@@ -8,6 +8,8 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
     public static class PlayerExtensions
     {
+        // TODO: need to switch over many of these methods to be part of something else that
+        // takes in results.
         public static IEnumerable<result> AllResultsForYear(this player player, year year)
         {
             return player.results.Where(x => x.year.id == year.id && x.IsComplete());
@@ -22,7 +24,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
         }
 
         // TODO: don't return 99 here. doesn't make sense. Only use value if needed.
-        public static double LowRoundForYear(this player player, year year)
+        public static double? LowRoundForYear(this player player, year year)
         {
             var bestScore = player.AllResultsForYear(year).OrderBy(x => x.score).FirstOrDefault();
 
