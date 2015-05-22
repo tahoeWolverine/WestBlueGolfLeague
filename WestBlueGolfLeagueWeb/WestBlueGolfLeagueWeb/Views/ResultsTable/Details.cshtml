@@ -228,7 +228,9 @@
                         
                         @if (playerResults.Count() > 0)
                         {
-                            <td>@(playerResults.Sum(x => x.points) / playerResults.Count())</td>
+                            double averagePoints = (double)playerResults.Sum(x => x.points) / playerResults.Count();
+                            double truncated = Math.Truncate(averagePoints * 100) / 100;
+                            <td>@truncated</td>
                         }
                         else
                         {
@@ -333,7 +335,9 @@
                         // Tabulate the team's weekly average points, match average x 4    
                         if (allResults.Count() > 0)
                         {
-                            <td>@(allResults.Sum(x => x.points) * 4 / allResults.Count())</td>
+                            double averagePoints = (double)allResults.Sum(x => x.points) * 4 / allResults.Count();
+                            double truncated = Math.Truncate(averagePoints * 100) / 100;
+                            <td>@truncated</td>
                         }
                         else
                         {

@@ -67,17 +67,21 @@
                         <th>Name</th>
                         <th>Points</th>
                         <th>Avg</th>
+                        <th>Weeks</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var rankData in this.Model.TeamRankingDataForYear)
                     {
                         double completeMatches = rankData.team.teammatchups.Where(y => y.week.year.value == this.Model.SelectedYear && y.matchComplete).Count();
+                        double averagePoints = (double)rankData.value / completeMatches;
+                        double truncated = Math.Truncate(averagePoints * 100) / 100;
                         <tr>
                             <td>@rankData.rank</td>
                             <td>@rankData.team.teamName</td>
                             <td>@rankData.value</td>
-                            <td>@((double)rankData.value / completeMatches)</td>
+                            <td>@truncated</td>
+                            <td>@completeMatches</td>
                         </tr>
                     }
                 </tbody>
