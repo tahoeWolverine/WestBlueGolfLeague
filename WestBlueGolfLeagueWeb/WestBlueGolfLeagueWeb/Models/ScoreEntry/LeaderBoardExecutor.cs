@@ -16,40 +16,42 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public class PlayerBoards
         {
+            private static int priorityCounter = 1;
+
             public static readonly List<PlayerLeaderBoard> Boards = new
                 List<PlayerLeaderBoard>
                 {
-                    new PlayerLeaderBoard( "Best Score", "player_best_score", 1, (p, year, r) => p.LowRoundForYear(year)),
+                    new PlayerLeaderBoard( "Best Score", "player_best_score", 1, (p, year, r) => p.LowRoundForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Best Net Score", "player_net_best_score",  1, (p, year, r) => p.LowNetForYear(year)),
+                    new PlayerLeaderBoard( "Best Net Score", "player_net_best_score",  1, (p, year, r) => p.LowNetForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Handicap", "player_handicap",  1, (p, year, r) => p.FinishingHandicapInYear(year)),
+                    new PlayerLeaderBoard( "Handicap", "player_handicap",  1, (p, year, r) => p.FinishingHandicapInYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Average Points", "player_avg_points",  1, (p, year, r) => p.AveragePointsInYear(year)),
+                    new PlayerLeaderBoard( "Average Points", "player_avg_points",  1, (p, year, r) => p.AveragePointsInYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Win/Loss Ratio", "player_win_loss_ratio",  1, (p, year, r) => p.RecordRatioForYear(year)),
+                    new PlayerLeaderBoard( "Win/Loss Ratio", "player_win_loss_ratio",  1, (p, year, r) => p.RecordRatioForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Season Improvement", "player_season_improvement",  1, (p, year, r) => p.ImprovedInYear(year)),
+                    new PlayerLeaderBoard( "Season Improvement", "player_season_improvement",  1, (p, year, r) => p.ImprovedInYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Avg. Opp. Score", "player_avg_opp_score",  1, (p, year, r) => p.AverageOpponentScoreForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Opp. Score", "player_avg_opp_score",  1, (p, year, r) => p.AverageOpponentScoreForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Avg. Opp. Net Score", "player_avg_opp_net_score",  1, (p, year, r) => p.AverageOpponentNetScoreForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Opp. Net Score", "player_avg_opp_net_score",  1, (p, year, r) => p.AverageOpponentNetScoreForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Average Score", "player_avg_score",  1, (p, year, r) => p.AverageScoreForYear(year)),
+                    new PlayerLeaderBoard( "Average Score", "player_avg_score",  1, (p, year, r) => p.AverageScoreForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Average Net Score", "player_avg_net_score",  1, (p, year, r) => p.AverageNetScoreForYear(year)),
+                    new PlayerLeaderBoard( "Average Net Score", "player_avg_net_score",  1, (p, year, r) => p.AverageNetScoreForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Points in a Match", "player_points_in_match",  1, (p, year, r) => p.MostPointsInMatchForYear(year)),
+                    new PlayerLeaderBoard( "Points in a Match", "player_points_in_match",  1, (p, year, r) => p.MostPointsInMatchForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Total Points", "player_total_points",  1, (p, year, r) => p.TotalPointsForYear(year)),
+                    new PlayerLeaderBoard( "Total Points", "player_total_points",  1, (p, year, r) => p.TotalPointsForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year, r) => p.RecordForYear(year)[0]),
+                    new PlayerLeaderBoard( "Total Wins", "player_total_wins",  1, (p, year, r) => p.RecordForYear(year)[0], priorityCounter++),
 
-                    new PlayerLeaderBoard( "Avg. Margin of Victory", "player_avg_margin_victory",  1, (p, year, r) => p.AverageMarginOfVictoryForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Margin of Victory", "player_avg_margin_victory",  1, (p, year, r) => p.AverageMarginOfVictoryForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Avg. Margin of Net Victory", "player_avg_margin_net_victory",  1, (p, year, r) => p.AverageMarginOfNetVictoryForYear(year)),
+                    new PlayerLeaderBoard( "Avg. Margin of Net Victory", "player_avg_margin_net_victory",  1, (p, year, r) => p.AverageMarginOfNetVictoryForYear(year), priorityCounter++),
 
-                    new PlayerLeaderBoard( "Total Rounds", "player_total_rounds_for_year",  1, (p, year, r) => p.TotalRoundsForYear(year)),
+                    new PlayerLeaderBoard( "Total Rounds", "player_total_rounds_for_year",  1, (p, year, r) => p.TotalRoundsForYear(year), priorityCounter++),
                 };
         }
 
@@ -144,9 +146,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                 dbLb = new leaderboard 
                             { 
                                 key = lb.LeaderBoardKey, 
-                                name = lb.LeaderBoardName, 
                                 isPlayerBoard = lb.IsPlayerBoard, 
-                                formatType = lb.Format, 
                                 priority = keyToLeaderBoard.Values.Max(x => x.priority) + 1 
                             };
 
@@ -154,6 +154,10 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
                 keyToLeaderBoard[lb.LeaderBoardKey] = dbLb;
             }
+
+            dbLb.name = lb.LeaderBoardName;
+            dbLb.formatType = lb.Format;
+            dbLb.priority = lb.Priority;
 
             return dbLb;
         }

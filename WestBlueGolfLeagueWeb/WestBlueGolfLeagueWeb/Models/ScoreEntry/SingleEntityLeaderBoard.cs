@@ -17,6 +17,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey,
             int format,
             LeaderBoardCalculation<T> calculation,
+            int priority,
             bool isPlayerBoard = true,
             bool ascending = true)
         {
@@ -26,6 +27,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.LeaderBoardKey = leaderBoardKey;
             this.Ascending = ascending;
             this.calc = calculation;
+            this.Priority = priority;
         }
 
         public string LeaderBoardName { get; set; }
@@ -50,6 +52,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         {
             return this.calc(t, year, results);
         }
+
+        public int Priority { get; private set; }
     }
 
     public class TeamLeaderBoard : SingleEntityLeaderBoard<team>
@@ -59,8 +63,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey, 
             int format,
             LeaderBoardCalculation<team> calculation,
+            int priority,
             bool ascending = true)
-            : base(leaderBoardName, leaderBoardKey, format, calculation, false, ascending)
+            : base(leaderBoardName, leaderBoardKey, format, calculation, priority, false, ascending)
         {
             
         }
@@ -73,8 +78,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             string leaderBoardKey,
             int format,
             LeaderBoardCalculation<player> calculation,
+            int priority,
             bool ascending = true)
-            : base(leaderBoardName, leaderBoardKey, format, calculation, true, ascending)
+            : base(leaderBoardName, leaderBoardKey, format, calculation, priority, true, ascending)
         {
 
         }

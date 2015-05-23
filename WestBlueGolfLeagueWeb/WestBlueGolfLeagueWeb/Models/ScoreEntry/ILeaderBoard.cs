@@ -15,5 +15,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         bool Ascending { get; set; }
         double? DoCalculation(T t, year year, IEnumerable<result> results);
         bool IsPlayerBoard { get; }
+        int Priority { get; }
     }
 }
