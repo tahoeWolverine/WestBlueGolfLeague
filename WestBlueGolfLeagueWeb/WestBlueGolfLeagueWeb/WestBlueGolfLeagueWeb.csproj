@@ -296,6 +296,7 @@
     <Compile Include="Models\ScoreEntry\HandicapCalculator.cs" />
     <Compile Include="Models\ScoreEntry\ILeaderBoard.cs" />
     <Compile Include="Models\ScoreEntry\LeaderBoardExecutor.cs" />
+    <Compile Include="Models\ScoreEntry\LeaderBoardStore.cs" />
     <Compile Include="Models\ScoreEntry\SingleEntityLeaderBoard.cs" />
     <Compile Include="Models\ScoreEntry\LeaderBoardCalculator.cs" />
     <Compile Include="Models\ScoreEntry\ScoreEntry.cs" />

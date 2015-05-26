@@ -23,23 +23,21 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return ydForYear.finishingHandicap - ydForYear.startingHandicap;
         }
 
-        // TODO: don't return 99 here. doesn't make sense. Only use value if needed.
-        public static double? LowRoundForYear(this player player, year year)
+        public static double? LowRoundForYear(this player player, year year, IEnumerable<result> results)
         {
-            var bestScore = player.AllResultsForYear(year).OrderBy(x => x.score).FirstOrDefault();
+            var bestScore = results.OrderBy(x => x.score).FirstOrDefault();
 
             if (bestScore == null)
             {
-                return 99;
+                return null;
             }
 
             return bestScore.score.Value;
         }
 
-        public static double LowNetForYear(this player player, year year)
+        public static double LowNetForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
+            // TODO: ask Mike what the significance of the 10 is.
             if (results == null || results.Count() == 0) return 10;
 
             int lowNet = 100;
@@ -65,11 +63,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return yd.finishingHandicap;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AveragePointsInYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double AveragePointsInYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             int totalPoints = 0;
@@ -81,19 +77,18 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalPoints / (double)results.Count();
         }
 
-        public static double RecordRatioForYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double RecordRatioForYear(this player player, year year, IEnumerable<result> results)
         {
-            var record = player.RecordForYear(year);
+            var record = player.RecordForYear(year, results);
             double totalWins = record[0] + ((double)record[2] / 2);
             int totalMatches = record[0] + record[1] + record[2];
 
             return totalMatches == 0 ? 0.0 : totalWins / (double)totalMatches;
         }
 
-        public static int[] RecordForYear(this player player, year year)
+        public static int[] RecordForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             int wins = 0, losses = 0, ties = 0;
 
             foreach (var result in results)
@@ -106,11 +101,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return new int[] { wins, losses, ties };
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AverageOpponentScoreForYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double AverageOpponentScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalOpponentScore = 0;
@@ -134,10 +127,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalOpponentScore / (double)opponentCount;
         }
 
-        public static double AverageOpponentNetScoreForYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double AverageOpponentNetScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalOpponentScore = 0;
@@ -161,11 +153,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalOpponentScore / (double)opponentCount;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AverageScoreForYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double AverageScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalRoundScore = 0;
@@ -184,11 +174,8 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return totalRoundScore / (double)roundCount;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AverageNetScoreForYear(this player player, year year)
+        public static double AverageNetScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalRoundScore = 0;
@@ -202,11 +189,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalRoundScore / (double)roundCount;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double MostPointsInMatchForYear(this player player, year year)
+        // TODO: is this a board that should not be processed without results?
+        public static double MostPointsInMatchForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             int mostPoints = 0;
@@ -221,11 +206,8 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return mostPoints;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double TotalPointsForYear(this player player, year year)
+        public static double TotalPointsForYear(this player player, year year, IEnumerable<result> results)
         {
-            var results = player.AllResultsForYear(year);
-
             if (results == null || results.Count() == 0) return 0.0;
 
             int totalPoints = 0;
@@ -237,11 +219,15 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return totalPoints;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AverageMarginOfVictoryForYear(this player player, year year)
+        public static double TotalPointsForYear(this player player, year year)
         {
             var results = player.AllResultsForYear(year);
 
+            return player.TotalPointsForYear(year, results);
+        }
+
+        public static double AverageMarginOfVictoryForYear(this player player, year year, IEnumerable<result> results)
+        {
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalMargin = 0;
@@ -266,11 +252,15 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return totalMargin / roundCount;
         }
 
-        // TODO: take in to account unfinished results.
-        public static double AverageMarginOfNetVictoryForYear(this player player, year year)
+        public static double AverageMarginOfVictoryForYear(this player player, year year)
         {
             var results = player.AllResultsForYear(year);
 
+            return player.AverageMarginOfVictoryForYear(year, results);
+        }
+
+        public static double AverageMarginOfNetVictoryForYear(this player player, year year, IEnumerable<result> results)
+        {
             if (results == null || results.Count() == 0) return 0.0;
 
             double totalMargin = 0;
@@ -295,9 +285,16 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return totalMargin / roundCount;
         }
 
-        public static double TotalRoundsForYear(this player player, year year)
+        public static double AverageMarginOfNetVictoryForYear(this player player, year year)
         {
-            var record = player.RecordForYear(year);
+            var results = player.AllResultsForYear(year);
+
+            return player.AverageMarginOfNetVictoryForYear(year, results);
+        }
+
+        public static double TotalRoundsForYear(this player player, year year, IEnumerable<result> results)
+        {
+            var record = player.RecordForYear(year, results);
 
             return record[0] + record[1] + record[2];
         }

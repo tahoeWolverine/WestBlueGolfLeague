@@ -15,7 +15,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         public SingleEntityLeaderBoard(
             string leaderBoardName,
             string leaderBoardKey,
-            int format,
+            LeaderBoardFormat format,
             LeaderBoardCalculation<T> calculation,
             int priority,
             bool isPlayerBoard = true,
@@ -32,7 +32,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public string LeaderBoardName { get; set; }
 
-        public int Format { get; set; }
+        public LeaderBoardFormat Format { get; set; }
 
         public string LeaderBoardKey
         {
@@ -60,8 +60,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
     {
         public TeamLeaderBoard(
             string leaderBoardName, 
-            string leaderBoardKey, 
-            int format,
+            string leaderBoardKey,
+            LeaderBoardFormat format,
             LeaderBoardCalculation<team> calculation,
             int priority,
             bool ascending = true)
@@ -76,7 +76,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         public PlayerLeaderBoard(
             string leaderBoardName,
             string leaderBoardKey,
-            int format,
+            LeaderBoardFormat format,
             LeaderBoardCalculation<player> calculation,
             int priority,
             bool ascending = true)
