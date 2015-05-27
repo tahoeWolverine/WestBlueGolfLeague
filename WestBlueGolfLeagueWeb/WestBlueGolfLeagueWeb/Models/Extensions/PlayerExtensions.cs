@@ -8,8 +8,6 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
     public static class PlayerExtensions
     {
-        // TODO: need to switch over many of these methods to be part of something else that
-        // takes in results.
         public static IEnumerable<result> AllResultsForYear(this player player, year year)
         {
             return player.results.Where(x => x.year.id == year.id && x.IsComplete());
@@ -17,7 +15,6 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static double ImprovedInYear(this player player, year year)
         {
-            // There should always be a year data for the year passed in.
             var ydForYear = player.playeryeardatas.First(yd => yd.year.id == year.id);
 
             return ydForYear.finishingHandicap - ydForYear.startingHandicap;

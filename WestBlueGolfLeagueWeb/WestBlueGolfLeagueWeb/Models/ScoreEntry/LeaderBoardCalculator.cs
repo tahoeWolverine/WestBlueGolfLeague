@@ -61,7 +61,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             // TODO: this board lookup stuff needs to be more generic. For now just do the team ranking board.
             //this.UpdateTeamRanking(teamBoardDataLookup, boardLookup, resultsForYearLookupByTeam, teamMatchup);
 
-            var lbe = new LeaderBoardExecutor(this.database, teamMatchup.week.year);
+            var lbe = new LeaderBoardExecutor(teamMatchup.week.year);
 
             await lbe.ExecuteLeaderBoards();
 

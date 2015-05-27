@@ -32,7 +32,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             this.keyToLeaderBoard = leaderBoards.ToDictionary(x => x.key, x => x);
             this.idToLeaderBoardData = leaderBoardData.ToDictionary(x => this.GetLookupKey(x.playerId.HasValue ? x.playerId.Value : x.teamId.Value, leaderBoardIdToLeaderBoard[x.leaderBoardId].key), x => x);
-            this.boardToData = leaderBoardData.GroupBy(x => leaderBoardIdToLeaderBoard[x.leaderBoardId].key).ToDictionary(x => x.Key, x => (ISet<leaderboarddata>)new HashSet<leaderboarddata>(x));
+
+            this.boardToData = leaderBoards.ToDictionary(x => x.key, x => (ISet<leaderboarddata>)new HashSet<leaderboarddata>());
+
+            foreach (leaderboarddata data in leaderBoardData)
+            {
+                boardToData[leaderBoardIdToLeaderBoard[data.leaderBoardId].key].Add(data);
+            }
         }
 
         public leaderboard GetLeaderBoard<T>(ILeaderBoard<T> lb)

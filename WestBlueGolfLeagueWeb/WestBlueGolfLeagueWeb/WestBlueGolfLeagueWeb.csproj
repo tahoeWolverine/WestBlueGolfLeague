@@ -271,6 +271,7 @@
     <Compile Include="Models\Entities\teamyeardata.cs" />
     <Compile Include="Models\Extensions\PlayerExtensions.cs" />
     <Compile Include="Models\Extensions\ResultExtensions.cs" />
+    <Compile Include="Models\Extensions\TeamExtensions.cs" />
     <Compile Include="Models\Extensions\TeamMatchupExtensions.cs" />
     <Compile Include="Models\IdentityConfiguration.cs" />
     <Compile Include="Models\Admin\AddPlayerRequest.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Models\ScoreEntry\HandicapCalculator.cs" />
     <Compile Include="Models\ScoreEntry\ILeaderBoard.cs" />
     <Compile Include="Models\ScoreEntry\LeaderBoardExecutor.cs" />
+    <Compile Include="Models\ScoreEntry\LeaderBoards.cs" />
     <Compile Include="Models\ScoreEntry\LeaderBoardStore.cs" />
     <Compile Include="Models\ScoreEntry\SingleEntityLeaderBoard.cs" />
     <Compile Include="Models\ScoreEntry\LeaderBoardCalculator.cs" />

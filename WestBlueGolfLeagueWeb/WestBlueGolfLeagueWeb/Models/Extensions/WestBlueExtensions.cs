@@ -30,6 +30,13 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
                         .ToList();
         }
 
+        public static IEnumerable<team> TeamsForYear(this WestBlue westBlue, int year, bool includeInvalidTeams = false)
+        {
+            return westBlue.teams
+                        .Where(x => (includeInvalidTeams || x.validTeam) && x.teamyeardata.Any(y => y.year.value == year))
+                        .ToList();
+        }
+
         public static async Task<List<player>> AllPlayersForYear(this WestBlue westBlue, year year, bool includeResults = false, bool includeInvalidPlayers = false)
         {
             IQueryable<player> playersSet = westBlue.players;
