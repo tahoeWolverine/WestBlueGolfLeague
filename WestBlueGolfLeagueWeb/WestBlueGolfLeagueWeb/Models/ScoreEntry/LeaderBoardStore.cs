@@ -95,6 +95,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             {
                 this.db.leaderboarddatas.Remove(lbd);
                 this.idToLeaderBoardData.Remove(key);
+	            //lbd.leaderboard.leaderboarddatas.Remove(lbd);
 
                 ISet<leaderboarddata> lbdSet = null;
 

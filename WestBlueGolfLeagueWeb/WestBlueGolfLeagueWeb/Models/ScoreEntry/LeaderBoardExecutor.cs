@@ -134,20 +134,18 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         private void CalculateAndSetValue<T>(int id, ILeaderBoard<T> lb, IEnumerable<result> results, T t)
         {
-            var lbd = this.LeaderBoardStore.GetLeaderBoardData<T>(id, lb);
-
             var value = lb.DoCalculation(t, this.year, results);
 
             if (value.HasValue)
             {
+				var lbd = this.LeaderBoardStore.GetLeaderBoardData(id, lb);
                 lbd.value = value.Value;
+				lbd.formattedValue = lb.Format.FormatValue(lbd.value);
             }
             else
             {
-                this.LeaderBoardStore.DeleteLeaderBoardData(id, lb.LeaderBoardKey);
+	            this.LeaderBoardStore.DeleteLeaderBoardData(id, lb.LeaderBoardKey);
             }
-
-            lbd.formattedValue = lb.Format.FormatValue(lbd.value);
         }
 
         private void SortAndRankLeaderBoardData(IEnumerable<leaderboarddata> datas, bool isAsc)
