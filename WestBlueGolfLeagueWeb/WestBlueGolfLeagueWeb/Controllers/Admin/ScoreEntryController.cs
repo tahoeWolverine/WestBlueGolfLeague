@@ -98,9 +98,11 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
             try
             {
-                // Crunch leaderboards/handicaps
-                var lbc = new LeaderBoardCalculator(this.Db, persistedTeamMatchup.id);
-                await lbc.ComputeAndSaveLeaderBoardsAsync();
+                if (scoreEntry.ShouldCalculateLeaderBoards(persistedTeamMatchup))
+                {
+                    var lbc = new LeaderBoardCalculator(this.Db, persistedTeamMatchup.id);
+                    await lbc.ComputeAndSaveLeaderBoardsAsync();
+                }
             }
             catch (Exception e)
             {

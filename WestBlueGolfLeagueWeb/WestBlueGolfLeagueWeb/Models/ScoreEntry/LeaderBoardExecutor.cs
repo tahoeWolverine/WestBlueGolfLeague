@@ -6,6 +6,7 @@ using System.Web;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Extensions;
+using log4net;
 
 namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 {
@@ -15,6 +16,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         private year year;
         private LeaderBoardStore lbc;
 
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(LeaderBoardExecutor));
+
         public LeaderBoardExecutor(year year)
         {
             this.year = year;
@@ -22,51 +25,111 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public async Task ExecuteLeaderBoards()
         {
-            // for each board, get board from prefetched map
-            // if board doesn't already exist, create it!
-            // for each player/team, get leaderboard data for board
-            // create it if it doesn't exist
-            // do calculation, set value, save
             this.year = await this.WestBlue.years.FirstAsync(x => x.id == this.year.id);
             
             await this.LeaderBoardStore.Initialize();
 
             var allPlayersForYear = await this.db.AllPlayersForYear(this.year, includeResults: true);
+            var playerIds = allPlayersForYear.Select(x => x.id);
 
-            foreach (var lb in LeaderBoards.PlayerBoards)
+            PlayerLeaderBoard playerLeaderBoard = null;
+            player currPlayer = null;
+
+            try
             {
-                foreach (player p in allPlayersForYear)
+                foreach (var lb in LeaderBoards.PlayerBoards)
                 {
-                    var results = p.AllResultsForYear(year);
+                    playerLeaderBoard = lb;
 
-                    this.CalculateAndSetValue(p.id, lb, results, p);
+                    this.CleanUpLeaderBoardDatas<player>(playerIds, lb);
+
+                    foreach (player p in allPlayersForYear)
+                    {
+                        currPlayer = p;
+
+                        var results = p.AllResultsForYear(year);
+
+                        this.CalculateAndSetValue(p.id, lb, results, p);
+                    }
+
+                    var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
+
+                    this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
                 }
-
-                var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
-
-                this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Error executing player leaderboard: " + playerLeaderBoard.LeaderBoardKey + ", " + currPlayer.name, e);
             }
 
-            foreach (var lb in LeaderBoards.TeamBoards)
+            TeamLeaderBoard teamLeaderBoard = null;
+            team currTeam = null;
+
+            try
             {
-                foreach (team t in this.db.TeamsForYear(this.year.value))
+                var teams = this.db.TeamsForYear(this.year.value).Where(x => !string.Equals("league subs", x.teamName, StringComparison.OrdinalIgnoreCase));
+                var teamIds = teams.Select(x => x.id);
+
+                foreach (var lb in LeaderBoards.TeamBoards)
                 {
-                    var results = t.AllResultsForYear(year);
+                    teamLeaderBoard = lb;
 
-                    this.CalculateAndSetValue(t.id, lb, results, t);
+                    this.CleanUpLeaderBoardDatas<team>(teamIds, lb);
+
+                    foreach (var t in teams)
+                    {
+                        currTeam = t;
+
+                        var results = t.AllResultsForYear(year);
+
+                        this.CalculateAndSetValue(t.id, lb, results, t);
+                    }
+
+                    var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
+
+                    this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
                 }
-
-                var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
-
-                this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Error executing team board: " + teamLeaderBoard.LeaderBoardKey + ", " + currTeam.teamName, e);
             }
 
             // For each multi value board, create it if it doesn't exist
             // get leaderboard datas
             // execute query/code
             
-            // save changessss
             await this.db.SaveChangesAsync();
+        }
+
+        public double? CalculateBoardValueForPlayer(PlayerLeaderBoard plb, player p, year y)
+        {
+            return plb.DoCalculation(p, y, p.AllResultsForYear(y));
+        }
+
+        public double? CalculateBoardValueForTeam(TeamLeaderBoard tlb, team t, year y)
+        {
+            return tlb.DoCalculation(t, y, t.AllResultsForYear(y));
+        }
+
+        /// <summary>
+        /// Cleans up board datas
+        /// </summary>
+        private void CleanUpLeaderBoardDatas<T>(IEnumerable<int> ids, ILeaderBoard<T> board)
+        {
+            var lookup = new HashSet<int>(ids);
+
+            var datas = new List<leaderboarddata>(this.LeaderBoardStore.GetBoardData(board.LeaderBoardKey));
+
+            foreach (var d in datas)
+            {
+                int id = board.IsPlayerBoard ? d.playerId.Value : d.teamId.Value;
+
+                if (!lookup.Contains(id))
+                {
+                    this.LeaderBoardStore.DeleteLeaderBoardData(id, board.LeaderBoardKey);
+                }
+            }
         }
 
         private void CalculateAndSetValue<T>(int id, ILeaderBoard<T> lb, IEnumerable<result> results, T t)

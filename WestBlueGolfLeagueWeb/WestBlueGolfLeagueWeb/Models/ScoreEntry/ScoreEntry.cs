@@ -127,6 +127,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             db.matches.RemoveRange(teamMatchup.matches);
         }
 
+        public bool ShouldCalculateLeaderBoards(teammatchup matchup)
+        {
+            return matchup.matches.SelectMany(x => x.results).Any(x => x.IsComplete());
+        }
+
         public async Task<teammatchup> SaveScoresAsync(WestBlue db)
         {
             // if for some reason there are no matches, we don't gotta do nothin.

@@ -34,7 +34,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         {
             // TODO: only calculate handicaps and leaderboards if needed.
 
-
             // Eagerly fetch everything we're going to need.
             var teamMatchup = (await this.database.teammatchups
                             .Include(x => x.matches)
