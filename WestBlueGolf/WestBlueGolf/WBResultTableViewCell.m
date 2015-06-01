@@ -54,7 +54,7 @@
 	} else {
 		NSArray *displayStrings = [matchup displayStringsForTeam:team];
 		self.dateAndOpponentLabel.text = displayStrings[0];
-		if (matchup.matchCompleteValue) {
+		if ([matchup scoringComplete]) {
 			BOOL win = [displayStrings[1] isEqualToString:@"W"];
 			BOOL tie = [displayStrings[1] isEqualToString:@"T"];
 			BOOL loss = [displayStrings[1] isEqualToString:@"L"];

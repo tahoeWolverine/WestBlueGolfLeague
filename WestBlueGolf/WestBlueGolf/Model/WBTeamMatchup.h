@@ -36,4 +36,6 @@ typedef enum {
 
 - (WBTeam *)teamWithName:(NSString *)name;
 
+- (BOOL)scoringComplete;
+
 @end

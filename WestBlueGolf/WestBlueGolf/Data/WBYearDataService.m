@@ -9,7 +9,8 @@
 #import "WBYearDataService.h"
 #import <AFNetworking/AFNetworking.h>
 
-#define kEndpointYearData @"http://westblue.digitalzebra.net/api/v1/data/%ld"
+//#define kEndpointYearData @"http://westblue.digitalzebra.net/api/v1/data/%ld"
+#define kEndpointYearData @"http://new.westbluegolfleague.com/api/v1/data/%ld"
 
 @implementation WBYearDataService
 

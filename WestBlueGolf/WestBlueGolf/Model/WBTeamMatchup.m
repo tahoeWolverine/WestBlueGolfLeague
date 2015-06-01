@@ -267,4 +267,14 @@
 	return nil;
 }
 
+- (BOOL)scoringComplete {
+    if (!self.matchComplete) {
+        return NO;
+    }
+    
+    NSArray *matches = [self orderedMatches];
+    //TRAssert(matches && matches.count == 4, @"Attempting to display less than 4 matches");
+    return matches && matches.count == 4;
+}
+
 @end

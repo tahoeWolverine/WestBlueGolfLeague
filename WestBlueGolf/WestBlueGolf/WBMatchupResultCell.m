@@ -21,14 +21,15 @@
 	//DLog(@"%ld", (long)matchup.week.seasonIndexValue);
 
 	NSArray *displayStrings = [matchup displayStrings];
-    //DLog(@"displayStrings: %@", displayStrings);
+    DLog(@"matchup team1: %@", [(WBTeam *)matchup.teams.allObjects[0] name]);
+    DLog(@"displayStrings: %@", displayStrings);
     TRAssert(displayStrings && displayStrings.count > 3, @"Display string didn't have 4 strings as needed");
 	self.team1NameLabel.text = displayStrings[0];
 	self.team1NameSmall.text = displayStrings[0];
 	self.team2NameLabel.text = displayStrings[3];
 	self.team2NameSmall.text = displayStrings[3];
 
-	if (matchup.matchCompleteValue) {
+	if ([matchup scoringComplete]) {
         TRAssert(displayStrings && displayStrings.count > 5, @"Display string didn't have 6 strings as needed");
         
 		self.team1NameLabel.font = [UIFont boldSystemFontOfSize:17.0f];
@@ -42,9 +43,9 @@
 		self.team1NameSmall.text = displayStrings[0];
 		self.team2NameSmall.text = displayStrings[3];
 		
-		NSArray *matches = [matchup orderedMatches];
-        //TRAssert(matches && matches.count == 4, @"Attempting to display less than 4 matches");
-		
+        NSArray *matches = [matchup orderedMatches];
+
+        // Scoring Complete ensures that there are 4 matches per team matchup
 		NSArray *match1DisplayStrings = [(WBMatch *)matches[0] displayStrings];
         TRAssert(match1DisplayStrings && match1DisplayStrings.count > 4, @"P1 Display string didn't have 5 strings as needed");
 		self.team1Player1Name.text = match1DisplayStrings[0];
