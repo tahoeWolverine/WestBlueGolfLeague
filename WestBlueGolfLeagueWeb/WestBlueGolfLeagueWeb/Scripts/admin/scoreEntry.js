@@ -123,48 +123,64 @@
                     url: '/api/scoreEntry/matchup/' + weekId + '/' + matchupId,
                     data: self.teamMatchup
                 }).catch(function (data) {
-                    return $q.reject(data.data);
+                    var errorCode = data.status == 500 ? "error" : "invalidScoreEntry";
+                    return $q.reject({ errorCode: errorCode, errors: data.data && data.data.errors ? data.data.errors : ['Unspecified error occurred when saving scores'] });
                 });
             };
         };
     }])
+
+    .filter('scoreEntryErrorMessage', function () {
+
+        return function (input) {
+            if (input === 'error') {
+                return 'There was an error saving scores:';
+            }
+            else {
+                return 'Please fix the following issues with your score entry to continue:';
+            }
+        };
+    })
 
     .controller('MatchupEdit', ['$stateParams', 'resolvedTeamMatchup', 'scoreEntryData', 'scoreEntry',
 		function ($stateParams, resolvedTeamMatchup, scoreEntryData, scoreEntry) {
 
 		    var self = this;
 
-            this.team1 = resolvedTeamMatchup.teamMatchup.team1;
-            this.team2 = resolvedTeamMatchup.teamMatchup.team2;
+		    self.team1 = resolvedTeamMatchup.teamMatchup.team1;
+		    self.team2 = resolvedTeamMatchup.teamMatchup.team2;
 		
-            this.matches = resolvedTeamMatchup.teamMatchup.matches;
+		    self.matches = resolvedTeamMatchup.teamMatchup.matches;
 
 		    var dummyTeam = scoreEntryData.teamIdToPlayer[1]; // dummy team is #1 in the db, and should always be?
 
-		    this.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
+		    self.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
 								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
 
-		    this.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
+		    self.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
 								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
 
-		    this.toggleInputState = function (playerId, match, prop) {
+		    self.toggleInputState = function (playerId, match, prop) {
 		        if (playerId < 3) {
 		            match[prop].points = 0;
 		            match[prop].score = match[prop].equitableScore = 99;
 		        }
 		    };
 
+		    self.error = null;
+
 		    this.saveMatchup = function () {
 		        self.disabled = true;
-		        self.errors = null;
+		        self.error = null;
 		        self.successMessage = null;
 
 		        resolvedTeamMatchup.save().then(function () {
 		            self.disabled = false;
-		            self.successMessage = "successfully saved scores!";
-		        }).catch(function (data) {
+		            self.successMessage = 'Successfully saved scores!';
+		        }).catch(function (err) {
 		            self.disabled = false;
-		            self.errors = data ? data.errors : ["Unspecified error occurred when saving scores"];
+
+		            self.error = err;
 		        });
 		    };
 	}])

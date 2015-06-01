@@ -37,7 +37,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
                         .ToList();
         }
 
-        public static async Task<List<player>> AllPlayersForYear(this WestBlue westBlue, year year, bool includeResults = false, bool includeInvalidPlayers = false)
+        public static async Task<List<player>> AllPlayersForYearAsync(this WestBlue westBlue, year year, bool includeResults = false, bool includeInvalidPlayers = false)
         {
             IQueryable<player> playersSet = westBlue.players;
 
@@ -47,6 +47,18 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             }
                 
             return await playersSet.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToListAsync();
+        }
+
+        public static List<player> AllPlayersForYear(this WestBlue westBlue, year year, bool includeResults = false, bool includeInvalidPlayers = false)
+        {
+            IQueryable<player> playersSet = westBlue.players;
+
+            if (includeResults)
+            {
+                playersSet = playersSet.Include(x => x.results);
+            }
+
+            return playersSet.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToList();
         }
 
         public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)

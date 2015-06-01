@@ -6,7 +6,7 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
+namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
     public class LeaderBoardStore
     {
@@ -23,10 +23,10 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.year = year;
         }
 
-        public async Task Initialize()
+        public void Initialize()
         {
-            var leaderBoards = await this.db.leaderboards.ToListAsync();
-            var leaderBoardData = await this.db.leaderboarddatas.Where(x => x.year.id == this.year.id).ToListAsync();
+            var leaderBoards = this.db.leaderboards.ToList();
+            var leaderBoardData = this.db.leaderboarddatas.Where(x => x.year.id == this.year.id).ToList();
 
             var leaderBoardIdToLeaderBoard = leaderBoards.ToDictionary(x => x.id, x => x);
 
@@ -41,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             }
         }
 
-        public leaderboard GetLeaderBoard<T>(ILeaderBoard<T> lb)
+        public leaderboard GetLeaderBoard(ILeaderBoard lb)
         {
             leaderboard dbLb = null;
 
@@ -66,11 +66,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             return dbLb;
         }
 
-        public leaderboarddata GetLeaderBoardData<T>(int id, ILeaderBoard<T> lb)
+        public leaderboarddata GetLeaderBoardData(int id, ILeaderBoard lb)
         {
             leaderboarddata lbd = null;
 
-            leaderboard dbLb = this.GetLeaderBoard<T>(lb);
+            leaderboard dbLb = this.GetLeaderBoard(lb);
 
             if (!this.idToLeaderBoardData.TryGetValue(this.GetLookupKey(id, lb.LeaderBoardKey), out lbd))
             {

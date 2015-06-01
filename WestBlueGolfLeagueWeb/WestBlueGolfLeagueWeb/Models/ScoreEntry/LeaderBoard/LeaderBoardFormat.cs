@@ -1,23 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WestBlueGolfLeagueWeb.Models.Entities;
+using System.Web;
 
-namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
+namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
-    public interface ILeaderBoard<T>
-    {
-        LeaderBoardFormat Format { get; set; }
-        string LeaderBoardKey { get; set; }
-        string LeaderBoardName { get; set; }
-        bool Ascending { get; set; }
-        double? DoCalculation(T t, year year, IEnumerable<result> results);
-        bool IsPlayerBoard { get; }
-        int Priority { get; }
-    }
-
     public class LeaderBoardFormat
     {
         private FormatFunc formatFunc;
