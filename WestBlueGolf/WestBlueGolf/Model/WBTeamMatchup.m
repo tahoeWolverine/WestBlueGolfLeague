@@ -267,11 +267,48 @@
 	return nil;
 }
 
-- (BOOL)scoringComplete {
-    if (!self.matchComplete) {
-        return NO;
+- (NSArray *)playersForTeam:(WBTeam *)team {
+    TRAssert(team && [self.teams containsObject:team], @"No team provided to playersForTeam:");
+
+    NSMutableArray *players = [NSMutableArray array];
+    for (WBMatch *match in self.matches) {
+        for (WBResult *result in match.results) {
+            if (result.team.idValue == team.idValue) {
+                if (result.player) {
+                    [players addObject:result.player];
+                } else {
+                    // Kind of a harsh return, but if we're missing 1 player, the whole array is useless
+                    return nil;
+                }
+            }
+        }
     }
     
+    // Sort by handicap
+    if (players.count > 0) {
+        [players sortUsingComparator:^(id obj1, id obj2) {
+            WBPlayer *player1 = (WBPlayer *)obj1;
+            WBPlayer *player2 = (WBPlayer *)obj2;
+            NSInteger handicap1 = player1.currentHandicapValue;
+            NSInteger handicap2 = player2.currentHandicapValue;
+            return handicap1 < handicap2 ? NSOrderedAscending : handicap1 == handicap2 ? NSOrderedSame : NSOrderedDescending;
+        }];
+    }
+    
+    return players;
+}
+
+- (BOOL)scoringComplete {
+    if (!self.matchCompleteValue) {
+        return NO;
+    }
+
+    // If the match is complete and we have 4 matches, we're scored!
+    return [self lineupComplete];
+}
+
+// Asking for lineup complete assumes scoring complete already returned no.
+- (BOOL)lineupComplete {
     NSArray *matches = [self orderedMatches];
     //TRAssert(matches && matches.count == 4, @"Attempting to display less than 4 matches");
     return matches && matches.count == 4;

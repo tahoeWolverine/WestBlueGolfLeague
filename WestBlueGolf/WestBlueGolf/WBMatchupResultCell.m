@@ -61,7 +61,11 @@
 		self.team2Player2Name.text = match2DisplayStrings[2];
 		self.team2Player2Score.text = match2DisplayStrings[3];
 		self.match2Points.text = match2DisplayStrings[4];
-		
+
+        if ([match2DisplayStrings[0] isEqualToString:@"J. Hanggi"] || [match2DisplayStrings[2] isEqualToString:@"J. Hanggi"]) {
+            DLog(@"hi");
+        }
+
         if (matches.count > 2) {
             NSArray *match3DisplayStrings = [(WBMatch *)matches[2] displayStrings];
             TRAssert(match3DisplayStrings && match3DisplayStrings.count > 4, @"P3 Display string didn't have 5 strings as needed");
@@ -93,7 +97,7 @@
             self.team2Player4Score.text = @"";
             self.match4Points.text = @"";
         }
-	} else {
+    } else {
 		self.team1PointsLabel.text = [matchup timeLabel];
 		self.team2PointsLabel.text = @"";
 		
@@ -104,29 +108,39 @@
 			WBTeam *team1 = [matchup teamWithName:displayStrings[0]];
 			WBTeam *team2 = [matchup teamWithName:displayStrings[3]];
 			if (team1.realValue) {
-				NSArray *team1TopPlayers = [team1 top4Players];
-                TRAssert(team1TopPlayers && team1TopPlayers.count == 4, @"Team 1 did not have 4 players");
-				self.team1Player1Name.text = [(WBPlayer *)team1TopPlayers[0] shortName];
-				self.team1Player1Score.text = [(WBPlayer *)team1TopPlayers[0] currentHandicapString];
-				self.team1Player2Name.text = [(WBPlayer *)team1TopPlayers[1] shortName];
-				self.team1Player2Score.text = [(WBPlayer *)team1TopPlayers[1] currentHandicapString];
-				self.team1Player3Name.text = [(WBPlayer *)team1TopPlayers[2] shortName];
-				self.team1Player3Score.text = [(WBPlayer *)team1TopPlayers[2] currentHandicapString];
-				self.team1Player4Name.text = [(WBPlayer *)team1TopPlayers[3] shortName];
-				self.team1Player4Score.text = [(WBPlayer *)team1TopPlayers[3] currentHandicapString];
+                NSArray *team1Players = nil;
+                if ([matchup lineupComplete]) {
+                    team1Players = [matchup playersForTeam:team1];
+                } else {
+                    team1Players = [team1 top4Players];
+                }
+                TRAssert(team1Players && team1Players.count == 4, @"Team 1 did not have 4 players");
+				self.team1Player1Name.text = [(WBPlayer *)team1Players[0] shortName];
+				self.team1Player1Score.text = [(WBPlayer *)team1Players[0] currentHandicapString];
+				self.team1Player2Name.text = [(WBPlayer *)team1Players[1] shortName];
+				self.team1Player2Score.text = [(WBPlayer *)team1Players[1] currentHandicapString];
+				self.team1Player3Name.text = [(WBPlayer *)team1Players[2] shortName];
+				self.team1Player3Score.text = [(WBPlayer *)team1Players[2] currentHandicapString];
+				self.team1Player4Name.text = [(WBPlayer *)team1Players[3] shortName];
+				self.team1Player4Score.text = [(WBPlayer *)team1Players[3] currentHandicapString];
 			}
 			
 			if (team2.realValue) {
-				NSArray *team2TopPlayers = [team2 top4Players];
-                TRAssert(team2TopPlayers && team2TopPlayers.count == 4, @"Team 2 did not have 4 players");
-				self.team2Player1Name.text = [(WBPlayer *)team2TopPlayers[0] shortName];
-				self.team2Player1Score.text = [(WBPlayer *)team2TopPlayers[0] currentHandicapString];
-				self.team2Player2Name.text = [(WBPlayer *)team2TopPlayers[1] shortName];
-				self.team2Player2Score.text = [(WBPlayer *)team2TopPlayers[1] currentHandicapString];
-				self.team2Player3Name.text = [(WBPlayer *)team2TopPlayers[2] shortName];
-				self.team2Player3Score.text = [(WBPlayer *)team2TopPlayers[2] currentHandicapString];
-				self.team2Player4Name.text = [(WBPlayer *)team2TopPlayers[3] shortName];
-				self.team2Player4Score.text = [(WBPlayer *)team2TopPlayers[3] currentHandicapString];
+                NSArray *team2Players = nil;
+                if ([matchup lineupComplete]) {
+                    team2Players = [matchup playersForTeam:team2];
+                } else {
+                    team2Players = [team2 top4Players];
+                }
+                TRAssert(team2Players && team2Players.count == 4, @"Team 2 did not have 4 players");
+				self.team2Player1Name.text = [(WBPlayer *)team2Players[0] shortName];
+				self.team2Player1Score.text = [(WBPlayer *)team2Players[0] currentHandicapString];
+				self.team2Player2Name.text = [(WBPlayer *)team2Players[1] shortName];
+				self.team2Player2Score.text = [(WBPlayer *)team2Players[1] currentHandicapString];
+				self.team2Player3Name.text = [(WBPlayer *)team2Players[2] shortName];
+				self.team2Player3Score.text = [(WBPlayer *)team2Players[2] currentHandicapString];
+				self.team2Player4Name.text = [(WBPlayer *)team2Players[3] shortName];
+				self.team2Player4Score.text = [(WBPlayer *)team2Players[3] currentHandicapString];
 			}
 		}
 	}

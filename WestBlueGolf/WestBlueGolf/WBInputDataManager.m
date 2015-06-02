@@ -266,8 +266,8 @@
             continue;
         }
         
-        
-        DLog(@"mathupid: %ld, team1: %@, team2: %@", (unsigned long)matchupId, team1.name, team2.name);
+
+        //DLog(@"mathupid: %ld, team1: %@, team2: %@", (unsigned long)matchupId, team1.name, team2.name);
         for (matchJson in matchesJson) {
             resultsJson = [matchJson objectForKey:wbJsonKeyResults];
             result1Json = resultsJson.count == 2 ? resultsJson[0] : nil;
