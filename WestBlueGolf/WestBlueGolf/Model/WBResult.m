@@ -21,7 +21,7 @@
 							   moc:(NSManagedObjectContext *)moc {
 	BOOL found = NO;
 	for (WBPlayer *p in match.players) {
-		if (player.objectID == p.objectID) {
+		if (player.idValue == p.idValue) {
 			found = YES;
 		}
 	}
