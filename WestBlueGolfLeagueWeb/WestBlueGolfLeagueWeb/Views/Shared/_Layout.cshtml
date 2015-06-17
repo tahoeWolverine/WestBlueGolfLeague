@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="header-link">@Html.ActionLink("West Blue Golf League", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
+                <span class="header-link">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand", target = "_self" })</span>
                 <span class="header-link-small">@Html.ActionLink("WBGL", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
                 <span class="header-link-up" ui-view="header.main">@Html.ActionLink("West Blue Golf League", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
             </div>

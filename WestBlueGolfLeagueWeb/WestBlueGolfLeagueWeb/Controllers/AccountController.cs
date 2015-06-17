@@ -393,7 +393,7 @@ namespace WestBlueGolfLeagueWeb.Account
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToRoute("Root");
         }
 
         //
@@ -464,7 +464,7 @@ namespace WestBlueGolfLeagueWeb.Account
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToRoute("Root");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
