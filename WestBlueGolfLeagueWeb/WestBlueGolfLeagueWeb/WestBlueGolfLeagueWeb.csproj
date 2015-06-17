@@ -424,6 +424,9 @@
     <Content Include="Scripts\lib\lodash.min.js" />
     <Content Include="Scripts\lib\ui-bootstrap-tpls-0.12.0.js" />
     <Content Include="Scripts\main\tpl\index.tpl.html" />
+    <Content Include="Scripts\main\tpl\schedule.tpl.html" />
+    <Content Include="Scripts\main\tpl\schedulePager.tpl.html" />
+    <Content Include="Scripts\main\tpl\weekDisplay.tpl.html" />
     <Content Include="Scripts\schedule\schedule.js" />
     <Content Include="Scripts\schedule\tpl\schedule.tpl.html" />
     <Content Include="Scripts\team\team.js" />
