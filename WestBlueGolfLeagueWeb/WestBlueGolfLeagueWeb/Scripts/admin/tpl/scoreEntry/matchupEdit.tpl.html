@@ -1,9 +1,9 @@
 ﻿
-<div ng-if="matchupEdit.errors" class="alert alert-danger">
+<div ng-if="matchupEdit.error" class="alert alert-danger">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <i class="fa fa-warning"></i> Please fix the following issues with your score entry to continue:
+    <i class="fa fa-warning"></i> {{matchupEdit.error.errorCode | scoreEntryErrorMessage}}
     <ul>
-        <li ng-repeat="error in matchupEdit.errors">{{error}}</li>
+        <li ng-repeat="error in matchupEdit.error.errors">{{error}}</li>
     </ul>
 </div>
 

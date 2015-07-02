@@ -8,10 +8,12 @@ using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Extensions;
 using log4net;
 
-namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
+namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
     public class LeaderBoardExecutor
     {
+
+
         private WestBlue db;
         private year year;
         private LeaderBoardStore lbc;
@@ -23,13 +25,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.year = year;
         }
 
-        public async Task ExecuteLeaderBoards()
+        public void CalculateAndSaveLeaderBoards()
         {
-            this.year = await this.WestBlue.years.FirstAsync(x => x.id == this.year.id);
-            
-            await this.LeaderBoardStore.Initialize();
+            this.year = this.WestBlue.years.First(x => x.id == this.year.id);
 
-            var allPlayersForYear = await this.db.AllPlayersForYear(this.year, includeResults: true);
+            this.LeaderBoardStore.Initialize();
+
+            var allPlayersForYear = this.db.AllPlayersForYear(this.year, includeResults: true);
             var playerIds = allPlayersForYear.Select(x => x.id);
 
             PlayerLeaderBoard playerLeaderBoard = null;
@@ -59,7 +61,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             }
             catch (Exception e)
             {
-                Logger.Error("Error executing player leaderboard: " + playerLeaderBoard.LeaderBoardKey + ", " + currPlayer.name, e);
+                var thrown = new Exception("Error calculating player leaderboard: " + playerLeaderBoard.LeaderBoardName + ", " + currPlayer.name, e);
+                Logger.Error(thrown);
+                throw thrown;
             }
 
             TeamLeaderBoard teamLeaderBoard = null;
@@ -92,30 +96,50 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             }
             catch (Exception e)
             {
-                Logger.Error("Error executing team board: " + teamLeaderBoard.LeaderBoardKey + ", " + currTeam.teamName, e);
+                var thrown = new Exception("Error calculating team board: " + teamLeaderBoard.LeaderBoardName + ", " + currTeam.teamName, e);
+                Logger.Error(thrown);
+                throw thrown;
             }
 
             // For each multi value board, create it if it doesn't exist
             // get leaderboard datas
             // execute query/code
-            
-            await this.db.SaveChangesAsync();
+
+            this.db.SaveChanges();
         }
 
-        public double? CalculateBoardValueForPlayer(PlayerLeaderBoard plb, player p, year y)
+        public double CalculateBoardValueForPlayer(PlayerLeaderBoard plb, player p, year y)
         {
-            return plb.DoCalculation(p, y, p.AllResultsForYear(y));
+            var value = plb.DoCalculation(p, y, p.AllResultsForYear(y));
+
+            return value.HasValue ? value.Value : 0;
         }
 
-        public double? CalculateBoardValueForTeam(TeamLeaderBoard tlb, team t, year y)
+        public double CalculateBoardValueForTeam(TeamLeaderBoard tlb, team t, year y)
         {
-            return tlb.DoCalculation(t, y, t.AllResultsForYear(y));
+            var value = tlb.DoCalculation(t, y, t.AllResultsForYear(y));
+
+            return value.HasValue ? value.Value : 0.0;
+        }
+
+        public string FormattedBoardValueForPlayer(PlayerLeaderBoard plb, player p, year y)
+        {
+            var value = this.CalculateBoardValueForPlayer(plb, p, y);
+
+            return plb.Format.FormatValue(value);
+        }
+
+        public string FormattedBoardValueForTeam(TeamLeaderBoard tlb, team t, year y)
+        {
+            var value = this.CalculateBoardValueForTeam(tlb, t, y);
+
+            return tlb.Format.FormatValue(value);
         }
 
         /// <summary>
         /// Cleans up board datas
         /// </summary>
-        private void CleanUpLeaderBoardDatas<T>(IEnumerable<int> ids, ILeaderBoard<T> board)
+        private void CleanUpLeaderBoardDatas<T>(IEnumerable<int> ids, ILeaderBoard board)
         {
             var lookup = new HashSet<int>(ids);
 
@@ -132,7 +156,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             }
         }
 
-        private void CalculateAndSetValue<T>(int id, ILeaderBoard<T> lb, IEnumerable<result> results, T t)
+        private void CalculateAndSetValue<T>(int id, SingleEntityLeaderBoard<T> lb, IEnumerable<result> results, T t)
         {
             var value = lb.DoCalculation(t, this.year, results);
 

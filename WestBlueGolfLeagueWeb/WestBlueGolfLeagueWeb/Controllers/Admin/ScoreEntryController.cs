@@ -93,21 +93,21 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
             catch (Exception e)
             {
                 Logger.Error(e);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches: " + e.Message } });
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving scores/matches. " + e.Message } });
             }
 
             try
             {
                 if (scoreEntry.ShouldCalculateLeaderBoards(persistedTeamMatchup))
                 {
-                    var lbc = new LeaderBoardCalculator(this.Db, persistedTeamMatchup.id);
-                    await lbc.ComputeAndSaveLeaderBoardsAsync();
+                    var lbc = new PostScoreEntryProcessor(this.Db, persistedTeamMatchup.id);
+                    lbc.Execute();
                 }
             }
             catch (Exception e)
             {
                 Logger.Error(e);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving handicaps and leaderboards: " + e.Message } });
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = new string[] { "There was an error saving handicaps and leaderboards. " + e.Message } });
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);

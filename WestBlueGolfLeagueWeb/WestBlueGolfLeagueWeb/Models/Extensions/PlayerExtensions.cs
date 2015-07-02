@@ -98,10 +98,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return new int[] { wins, losses, ties };
         }
 
-        // TODO: is this a board that should not be processed without results?
-        public static double AverageOpponentScoreForYear(this player player, year year, IEnumerable<result> results)
+        public static double? AverageOpponentScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return null;
 
             double totalOpponentScore = 0;
             int opponentCount = 0;
@@ -124,10 +123,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalOpponentScore / (double)opponentCount;
         }
 
-        // TODO: is this a board that should not be processed without results?
-        public static double AverageOpponentNetScoreForYear(this player player, year year, IEnumerable<result> results)
+        public static double? AverageOpponentNetScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return null;
 
             double totalOpponentScore = 0;
             int opponentCount = 0;
@@ -150,10 +148,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalOpponentScore / (double)opponentCount;
         }
 
-        // TODO: is this a board that should not be processed without results?
-        public static double AverageScoreForYear(this player player, year year, IEnumerable<result> results)
+        public static double? AverageScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return null;
 
             double totalRoundScore = 0;
             int roundCount = 0;
@@ -171,9 +168,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return totalRoundScore / (double)roundCount;
         }
 
-        public static double AverageNetScoreForYear(this player player, year year, IEnumerable<result> results)
+        public static double? AverageNetScoreForYear(this player player, year year, IEnumerable<result> results)
         {
-            if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return null;
 
             double totalRoundScore = 0;
             int roundCount = 0;
@@ -186,10 +183,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return (double)totalRoundScore / (double)roundCount;
         }
 
-        // TODO: is this a board that should not be processed without results?
-        public static double MostPointsInMatchForYear(this player player, year year, IEnumerable<result> results)
+        public static double? MostPointsInMatchForYear(this player player, year year, IEnumerable<result> results)
         {
-            if (results == null || results.Count() == 0) return 0.0;
+            if (results == null || results.Count() == 0) return null;
 
             int mostPoints = 0;
             foreach (var result in results)

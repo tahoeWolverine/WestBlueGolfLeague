@@ -58,18 +58,52 @@
 
 
 angular
-    .module('main', ['app', 'ui.router', 'ngAnimate', 'leaderBoards'])
+    .module('main', ['app', 'ui.router', 'ngAnimate', 'leaderBoards', 'schedule'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
         function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
             $stateProvider
                 .state("root", {
-                    url: '/testtest',
+                    url: '/',
                     templateUrl: '/Scripts/main/tpl/index.tpl.html',
-                    controller: function () { },
+                    resolve: {
+                        Schedule: 'schedule',
+                        scheduleObj: function (Schedule) {
+                            return new Schedule().$promise;
+                        }
+                    },
+                    controller: 'Main as main'
                 });
 
             $locationProvider.html5Mode(true);
             // 'leaderBoards', 'player', 'team'
 
-        }]);
+        }])
+
+    .directive('pager', [function () {
+        return {
+            templateUrl: '/Scripts/main/tpl/schedulePager.tpl.html',
+            scope: {
+                schedule: '=*',
+                selectedWeek: '='
+            },
+            restrict: 'A',
+            link: function (scope, ele) {
+                
+            }
+        }
+    }])
+
+    .directive('weekDisplay', [function () {
+        return {
+            templateUrl: '/Scripts/main/tpl/weekDisplay.tpl.html',
+            scope: {
+                week: '='
+            },
+            restrict: 'A'
+        }
+    }])
+
+    .controller('Main', ['scheduleObj', function (schedule) {
+        this.schedule = schedule;
+    }]);

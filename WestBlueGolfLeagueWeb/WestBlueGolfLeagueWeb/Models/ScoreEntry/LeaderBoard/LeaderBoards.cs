@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Extensions;
 
-namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
+namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
     public static class LeaderBoards
     {
