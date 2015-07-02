@@ -5,18 +5,18 @@
         <h2>{{playerDetails.profileData.playerName}}</h2>
     </div>
 </div>
-<div class="row">
+<div class="row player-stats">
     <!--div class="col-md-3">Profile pic here</div-->
     <div class="col-md-9">
         <div class="row">
-            <div class="col-xs-4 col-sm-4 text-center"><div>Win/Loss</div>{{playerDetails.profileData.recordString}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Handicap</div>+{{playerDetails.profileData.handicap}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Low Score</div>{{playerDetails.profileData.lowScore}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Win/Loss</h4><span class="player-stat">{{playerDetails.profileData.recordString}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Handicap</h4><span class="player-stat">{{playerDetails.profileData.handicap}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Low Score</h4><span class="player-stat">{{playerDetails.profileData.lowScore}}</span></div>
         </div>
         <div class="row">
-            <div class="col-xs-4 col-sm-4 text-center"><div>Avg. Points</div>{{playerDetails.profileData.averagePoints}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Season Improvement</div>{{playerDetails.profileData.improved}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Low Net</div>{{playerDetails.profileData.lowNet}}</div>
+	        <div class="col-xs-4 col-sm-4 text-center"><h4>Avg. Points</h4><span class="player-stat">{{playerDetails.profileData.averagePoints}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Season Improvement</h4><span class="player-stat">{{playerDetails.profileData.improved}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Low Net</h4><span class="player-stat">{{playerDetails.profileData.lowNet}}</span></div>
         </div>
     </div>
 </div>

@@ -169,7 +169,6 @@ input[type="checkbox"].input-validation-error {
     z-index: 10;
 	position: relative;
     margin-left: 280px;
-	background-color: white;
     padding-bottom: 80px;
     transition: margin-left .3s ease;
 }
@@ -210,6 +209,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .player-details-player-list-parent {
+	border-right: 1px solid #999;
 	overflow: hidden;
 }
 
@@ -354,6 +354,24 @@ player-list-item-name {
     font-size: 1.3em;
     /*box-shadow: 0 0 8px #777;*/
 }
+
+.player-stats .row {
+	margin-bottom: 14px;
+}
+
+.player-stat {
+	display: block;
+	border-radius: 25px;
+	height: 50px;
+	margin: auto;
+	background: #888;
+	color: white;
+	vertical-align: middle;
+	line-height: 50px;
+	width: 50px;
+	font-size: 1.3em;
+}
+
 
 /* Team CSS */
 .team-details-team-list .col-sm-4 {
@@ -899,4 +917,10 @@ textarea.roster-input {
     .boardVisible {
         display: block;
     }
+}
+
+
+/* Bootstrap overrides */
+.btn {
+	/*border-radius: 0;*/
 }
