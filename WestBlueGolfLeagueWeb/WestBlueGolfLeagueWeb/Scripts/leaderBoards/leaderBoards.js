@@ -20,6 +20,9 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
 
     function leaderBoardsConfig($locationProvider, $urlRouterProvider, $stateProvider, boardStates) {
         
+    	// TODO: remove this abstract state.  No need to keep this around since the spinner
+		// stuff doesn't work anyways.
+
         $stateProvider
             .state('leaderboards', {
                 abstract: true,
