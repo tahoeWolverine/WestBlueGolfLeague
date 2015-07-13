@@ -6,16 +6,16 @@
 </div>
 
 <div ng-hide="isLoading || !leaderBoardData.leaderBoardData.length" scroll-to-top>
-    <table class="table table-striped">
+    <table class="table table-striped leader-board-data">
         <thead>
             <tr>
-                <th>Rank <sort-indicator></sort-indicator></th>
-                <th>Name <sort-indicator></sort-indicator></th>
-	            <th>Value <sort-indicator></sort-indicator></th>
+                <th ng-click="doSort('rank')">Rank <sort-indicator sort-key="rank" sort-obj="sort" /></th>
+                <th ng-click="doSort('entityName')">Name <sort-indicator sort-key="entityName" sort-obj="sort" /></th>
+                <th ng-click="doSort('value')">Value <sort-indicator sort-key="value" sort-obj="sort" /></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="boardData in leaderBoardData.leaderBoardData | orderBy:'rank'">
+            <tr ng-repeat="boardData in leaderBoardData.leaderBoardData | orderBy:sort.key:!sort.asc">
                 <td class="col-md-2">{{boardData.rank}}</td>
                 <td class="col-md-4">{{boardData.entityName}}</td>
                 <td>{{boardData.formattedValue}}</td>

@@ -97,6 +97,23 @@
 
         $scope.leaderBoardData = leaderBoardDetails.data;
 
+        $scope.sort = {
+            key: 'rank',
+            asc: true
+        };
+
+        $scope.doSort = function (key) {
+            var s = $scope.sort;
+
+            if (key === s.key) {
+                s.asc = !s.asc;
+                return;
+            }
+
+            s.key = key;
+            s.asc = true;
+        }
+
         // uncomment to use spinners and not resolve.
         /*$scope.isLoading = true;
         leaderBoardService.getBoardDetails($stateParams.id).then(function (response) {

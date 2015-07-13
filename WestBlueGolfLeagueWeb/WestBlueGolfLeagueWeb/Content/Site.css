@@ -141,6 +141,14 @@ input[type="checkbox"].input-validation-error {
    opacity: 1;
 }
 
+sort-indicator {
+    display: inline;
+}
+
+.leader-board-data {
+    cursor: pointer;
+}
+
 .fade-in.ng-enter {
     -webkit-transition: 0.2s ease-in all;
     -moz-transition: 0.2s ease-in all;
