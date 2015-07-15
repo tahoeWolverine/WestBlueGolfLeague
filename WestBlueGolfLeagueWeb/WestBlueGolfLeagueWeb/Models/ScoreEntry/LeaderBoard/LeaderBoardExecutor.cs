@@ -12,14 +12,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
     public class LeaderBoardExecutor
     {
-
-
         private WestBlue db;
         private year year;
         private LeaderBoardStore lbc;
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(LeaderBoardExecutor));
 
+        // TODO: pass in DB context.
         public LeaderBoardExecutor(year year)
         {
             this.year = year;
@@ -217,6 +216,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
             }
         }
 
+        //
+        // TODO: fix this (need to use DB passed in to here)
+        //
         public WestBlue WestBlue
         {
             get

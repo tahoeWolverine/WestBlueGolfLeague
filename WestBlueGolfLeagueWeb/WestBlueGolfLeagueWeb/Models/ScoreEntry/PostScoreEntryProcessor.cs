@@ -29,6 +29,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.teamMatchupId = tmId;
         }
 
+        // TODO: global lock here.
         public void Execute()
         {
             // Handicap updating.
@@ -39,7 +40,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             this.UpdatePlayerHandicaps(teamMatchup);
 
-            // calc leaderboards
+            // TODO: pass in DB context.
             var lbe = new LeaderBoardExecutor(teamMatchup.week.year);
             lbe.CalculateAndSaveLeaderBoards();
 
