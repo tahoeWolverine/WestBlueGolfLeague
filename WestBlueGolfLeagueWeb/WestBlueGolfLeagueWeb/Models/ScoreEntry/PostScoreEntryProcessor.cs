@@ -29,22 +29,23 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
             this.teamMatchupId = tmId;
         }
 
-        // TODO: global lock here.
         public void Execute()
         {
-            // Handicap updating.
-            var teamMatchup = this.database.teammatchups
-                            .Include(x => x.matches)
-                            .Include(x => x.week)
-                            .Where(x => x.id == this.teamMatchupId).First();
+            lock (LockObject)
+            {
+                // Handicap updating.
+                var teamMatchup = this.database.teammatchups
+                                .Include(x => x.matches)
+                                .Include(x => x.week)
+                                .Where(x => x.id == this.teamMatchupId).First();
 
-            this.UpdatePlayerHandicaps(teamMatchup);
+                this.UpdatePlayerHandicaps(teamMatchup);
 
-            // TODO: pass in DB context.
-            var lbe = new LeaderBoardExecutor(teamMatchup.week.year);
-            lbe.CalculateAndSaveLeaderBoards();
+                var lbe = new LeaderBoardExecutor(this.database, teamMatchup.week.year);
+                lbe.CalculateAndSaveLeaderBoards();
 
-            this.database.SaveChanges();
+                this.database.SaveChanges();
+            }
         }
 
         /// <summary>
