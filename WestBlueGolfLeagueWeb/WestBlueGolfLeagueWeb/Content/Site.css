@@ -145,7 +145,11 @@ sort-indicator {
     display: inline;
 }
 
-.leader-board-data {
+.invisible {
+    visibility: hidden;
+}
+
+.leader-board-data th {
     cursor: pointer;
 }
 
@@ -828,6 +832,28 @@ textarea.roster-input {
     width: 200px;
     height: 200px;
 }
+
+
+
+/* Home page */
+
+.week-pager {
+    overflow-x: hidden;
+}
+
+.week-page {
+    width: 50px;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.week-page-wrapper {
+    width: 800px;
+}
+
+
 
 
 

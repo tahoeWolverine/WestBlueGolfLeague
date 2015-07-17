@@ -106,4 +106,5 @@ angular
 
     .controller('Main', ['scheduleObj', function (schedule) {
         this.schedule = schedule;
+        this.selectedWeek = null;
     }]);

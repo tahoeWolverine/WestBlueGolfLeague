@@ -1,6 +1,8 @@
 ﻿
 <div class="week-pager">
-    <div class="week-page" ng-repeat="week in schedule.weeks">
-        {{::week.date | date: 'M/d'}}
+    <div class="week-page-wrapper">
+        <div class="week-page" ng-repeat="week in schedule.weeks" ng-click="$parent.selectedWeek = week">
+            {{::week.date | date: 'M/d'}}
+        </div>
     </div>
 </div>
