@@ -266,6 +266,8 @@
             continue;
         }
         
+
+        //DLog(@"mathupid: %ld, team1: %@, team2: %@", (unsigned long)matchupId, team1.name, team2.name);
         for (matchJson in matchesJson) {
             resultsJson = [matchJson objectForKey:wbJsonKeyResults];
             result1Json = resultsJson.count == 2 ? resultsJson[0] : nil;
@@ -285,9 +287,11 @@
             
             // Results
             for (result1Json in resultsJson) {
-                score = [[result1Json objectForKey:wbJsonKeyResultScore] integerValue];
+                if (matchComplete) {
+                    score = [[result1Json objectForKey:wbJsonKeyResultScore] integerValue];
+                    points = [[result1Json objectForKey:wbJsonKeyResultPoints] integerValue];
+                }
                 priorHandicap = [[result1Json objectForKey:wbJsonKeyResultPriorHandicap] integerValue];
-                points = [[result1Json objectForKey:wbJsonKeyResultPoints] integerValue];
                 playerId = [[result1Json objectForKey:wbJsonKeyResultPlayerId] integerValue];
                 player = playerId == player1Id ? player1 : player2;
                 teamId = [[result1Json objectForKey:wbJsonKeyResultTeamId] integerValue];

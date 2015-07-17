@@ -30,15 +30,23 @@
 	BOOL badData = result.match.teamMatchup.week.isBadDataValue;
 	BOOL win = [result wasWin];
 	BOOL tie = [result wasTie];
-	self.winLossLabel.text = badData ? @"N/A" : win ? @"W" : tie ? @"T" : @"L";
-	self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : badData ? [UIColor blackColor] : [UIColor redColor];
-	NSNumber *opponentScore = opponentResult.score ?: @0;
-	self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
-	
+
 	self.pairingLabel.text = [NSString stringWithFormat:@"#%ld Players", (long)[result.match pairing]];
 	self.priorHandicapsLabel.text = [NSString stringWithFormat:@"%@ vs %@", [result priorHandicapString], [opponentResult priorHandicapString]];
-	self.pointsLabel.text = [NSString stringWithFormat:@"%@/%@", result.points, opponentResult.points];
-	self.netScoresLabel.text = [NSString stringWithFormat:@"%@,%@", [result netScoreDifferenceString], [opponentResult netScoreDifferenceString]];
+    if ([result.match.teamMatchup scoringComplete]) {
+        self.winLossLabel.text = badData ? @"N/A" : win ? @"W" : tie ? @"T" : @"L";
+        self.winLossLabel.textColor = win ? kEmeraldColor : tie ? [UIColor blackColor] : badData ? [UIColor blackColor] : [UIColor redColor];
+        NSNumber *opponentScore = opponentResult.score ?: @0;
+        self.scoreLabel.text = [NSString stringWithFormat:@"%@-%@", result.score, opponentScore];
+
+        self.pointsLabel.text = [NSString stringWithFormat:@"%@/%@", result.points, opponentResult.points];
+        self.netScoresLabel.text = [NSString stringWithFormat:@"%@,%@", [result netScoreDifferenceString], [opponentResult netScoreDifferenceString]];
+    } else {
+        self.winLossLabel.text = @"-";
+        self.scoreLabel.text = @"-";
+        self.pointsLabel.text = @"-";
+        self.netScoresLabel.text = @"-";
+    }
 }
 
 - (void)configureCellForResultsOfTeam:(WBTeam *)team matchup:(WBTeamMatchup *)matchup {
@@ -54,7 +62,7 @@
 	} else {
 		NSArray *displayStrings = [matchup displayStringsForTeam:team];
 		self.dateAndOpponentLabel.text = displayStrings[0];
-		if (matchup.matchCompleteValue) {
+		if ([matchup scoringComplete]) {
 			BOOL win = [displayStrings[1] isEqualToString:@"W"];
 			BOOL tie = [displayStrings[1] isEqualToString:@"T"];
 			BOOL loss = [displayStrings[1] isEqualToString:@"L"];

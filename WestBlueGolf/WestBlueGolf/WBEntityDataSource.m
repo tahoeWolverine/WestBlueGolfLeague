@@ -50,6 +50,10 @@
 	}
 }
 
+- (void)dealloc {
+    self.fetchedResultsController.delegate = nil;
+}
+
 #pragma mark - Abstract methods to implement
 
 - (NSString *)cellIdentifier {

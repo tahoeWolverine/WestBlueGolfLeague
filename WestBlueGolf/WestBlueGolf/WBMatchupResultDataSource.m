@@ -158,7 +158,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WBTeamMatchup *matchup = (WBTeamMatchup *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-	NSString *identifier = matchup.matchCompleteValue ? [self cellIdentifier] : [self incompleteCellIdentifier];
+	NSString *identifier = [matchup scoringComplete] ? [self cellIdentifier] : [self incompleteCellIdentifier];
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
 	
 	[self configureCell:cell withObject:matchup];
