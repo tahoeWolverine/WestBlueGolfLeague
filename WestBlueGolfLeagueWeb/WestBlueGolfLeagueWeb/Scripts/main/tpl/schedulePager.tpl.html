@@ -1,7 +1,7 @@
 ﻿
 <div class="week-pager">
-    <div class="week-page-wrapper">
-        <div class="week-page" ng-repeat="week in schedule.weeks" ng-click="$parent.selectedWeek = week">
+    <div class="week-page-wrapper clearfix">
+        <div class="week-page" ng-repeat="week in schedule.weeks" ng-click="selectWeek(week, $event)">
             {{::week.date | date: 'M/d'}}
         </div>
     </div>

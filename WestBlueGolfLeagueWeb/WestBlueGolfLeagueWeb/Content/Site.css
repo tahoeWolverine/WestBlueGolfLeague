@@ -838,7 +838,9 @@ textarea.roster-input {
 /* Home page */
 
 .week-pager {
-    overflow-x: hidden;
+    overflow: hidden;
+    position: relative;
+    height: 50px;
 }
 
 .week-page {
@@ -850,7 +852,7 @@ textarea.roster-input {
 
 
 .week-page-wrapper {
-    width: 800px;
+    position: absolute;
 }
 
 
