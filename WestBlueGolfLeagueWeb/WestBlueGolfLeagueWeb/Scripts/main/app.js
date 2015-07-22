@@ -90,13 +90,35 @@ angular
             restrict: 'A',
             link: function (scope, ele) {
 
+                scope.disableNext = false;
+                scope.disablePrev = false;
+
                 var $weekPageWrapper = ele.find('.week-page-wrapper');
-                var $weekPager = ele.find('.week-pager');
+                var $weekPager = ele.find('.week-page-window');
                 var pageWidth = 0,
                     wrapperWidth = 0;
 
-                scope.selectWeek = function (week, $event) {
-                    scope.selectedWeek = week;
+                var setDisableFlags = function (index, weeks) {
+                    if (index == weeks.length - 1) {
+                        scope.disableNext = true;
+                    }
+                    else {
+                        scope.disableNext = false;
+                    }
+
+                    if (index == 0) {
+                        scope.disablePrev = true;
+                    }
+                    else {
+                        scope.disablePrev = false;
+                    }
+                }
+
+                scope.selectWeek = function ($index) {
+
+                    var weeks = scope.schedule.weeks;
+
+                    scope.selectedWeek =weeks[$index];
                     var width = $weekPager.width();
 
                     if (width >= wrapperWidth) {
@@ -104,12 +126,28 @@ angular
                         return;
                     }
 
-                    var index = $($event.target).parent().children().index($event.target);                   
-
-                    var offset = (index * 50) + 25 - (width / 2);
+                    var offset = ($index * 50) + 25 - (width / 2);
                     
                     $weekPageWrapper.css('left', -offset);
+
+                    setDisableFlags($index, weeks);
                 }
+
+                scope.selectNextWeek = function () {
+                    var currIndex = scope.schedule.weeks.indexOf(scope.selectedWeek);
+
+                    if (!(currIndex + 1 > scope.schedule.weeks.length - 1)) {
+                        scope.selectWeek(currIndex + 1);
+                    }
+                };
+
+                scope.selectPrevWeek = function () {
+                    var currIndex = scope.schedule.weeks.indexOf(scope.selectedWeek);
+
+                    if (currIndex > 0) {
+                        scope.selectWeek(currIndex - 1);
+                    }
+                };
 
                 scope.$watchCollection('schedule', function (n, o) {
                     
@@ -120,6 +158,10 @@ angular
                         $weekPageWrapper.css('width', wrapperWidth);
                     }
                 });
+
+                // TODO: set up watch to watch for initial week selection
+
+                // TODO: handle window resizing (need to correct offset of pager after window resize.
 
             }
         }
