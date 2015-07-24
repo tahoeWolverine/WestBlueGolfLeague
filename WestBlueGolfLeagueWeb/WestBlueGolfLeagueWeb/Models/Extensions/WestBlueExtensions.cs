@@ -79,11 +79,6 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);
         }
 
-        public static int? PointsFor(this teammatchup tm, team team)
-        {
-            return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
-        }
-
         public static bool IsComplete(this match r)
         {
             return r.results != null && r.results.All(x => x != null && x.IsComplete());

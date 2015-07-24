@@ -23,8 +23,12 @@ namespace WestBlueGolfLeagueWeb.Controllers.Schedule
                 .Include(x => x.pairing)
                 .Include(x => x.course)
                 .Where(x => x.year.value == currentYear)
-                .OrderBy(x => x.date).AsNoTracking().ToListAsync();
+                .OrderBy(x => x.date).ToListAsync();
 
+            var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
+
+            // TODO: add note as well as other home page info here?? Maybe split this out in to service or something and
+            // have separate infos for home page
             return Ok(new ScheduleResponse { Weeks = weeks.Select(x => new ScheduleWeek(x)) });
         }
     }

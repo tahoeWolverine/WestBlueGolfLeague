@@ -1,10 +1,15 @@
 ﻿<div ng-if="week">
-    <span class="schedule-course" title="Course">{{week.course.name}}</span>
+    <h2>{{week.date | date:'MMMM, d'}}</h2>
+    <span class="schedule-course" title="Course">{{week.course.name}} ({{week.course.par}})</span>
     <span title="Pairing for week" class="schedule-pairing">{{week.pairing}}</span>
     <div ng-repeat="matchup in week.teamMatchups" class="matchup-date-detail">
-        {{matchup.teeTimeText}}
-        <div>{{matchup.team1}}</div>
-        <div>{{matchup.team2}}</div>
+        <div>
+            <div>{{matchup.team1.name}}</div>
+            <div>{{matchup.team2.name}}</div>
+        </div>
+        <div>
+            {{matchup.teeTimeText}}
+        </div>
     </div>
-    
+    {{week}}
 </div>
