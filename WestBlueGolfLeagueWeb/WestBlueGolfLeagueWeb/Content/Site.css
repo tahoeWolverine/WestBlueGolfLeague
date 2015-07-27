@@ -840,24 +840,27 @@ textarea.roster-input {
 .week-page-window {
     overflow: hidden;
     position: relative;
-    height: 40px;
 }
 
 .week-page-container {
-    position: absolute;
-    left: 40px;
-    right: 40px;
+	margin: 0 44px;
 }
 
 .week-page {
-    width: 50px;
+    width: 56px;
     float: left;
     cursor: pointer;
     text-align: center;
+	padding: 6px 0;
+}
+
+.week-page.selected {
+	background-color: #428bca;
+	color: white;
 }
 
 .week-page-wrapper {
-    position: absolute;
+    position: relative;
     left: 0;
 }
 
@@ -872,11 +875,11 @@ textarea.roster-input {
 
 .week-pager {
     position: relative;
-    height: 40px;
 }
 
 .week-pager .btn {
     position: absolute;
+	top: 9px;
 }
 
 .week-pager .pager-left {
@@ -886,6 +889,8 @@ textarea.roster-input {
 .week-pager .pager-right {
     right: 0;
 }
+
+
 
 
 @media (max-width: 992px) {

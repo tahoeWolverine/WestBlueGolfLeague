@@ -126,7 +126,7 @@ angular
                         return;
                     }
 
-                    var offset = ($index * 50) + 25 - (width / 2);
+                    var offset = ($index * 56) + 28 - (width / 2);
                     
                     $weekPageWrapper.css('left', -offset);
 
@@ -149,6 +149,10 @@ angular
                     }
                 };
 
+	            scope.selectCurrentWeek = function() {
+		            scope.selectWeek(scope.schedule.weeks.indexOf(scope.selectedWeek));
+	            };
+
                 // We need a watch in order to set the proper widths of everything.
                 scope.$watchCollection('schedule', function (n, o) {
                     
@@ -158,17 +162,19 @@ angular
 
                         $weekPageWrapper.css('width', wrapperWidth);
 
-                        var selectedWeekIndex = n.weeks.indexOf(scope.selectedWeek);
-                        scope.selectWeek(selectedWeekIndex);
+	                    scope.selectCurrentWeek();
 
                         scope.initialized = true;
                     }
                 });
 
-                // TODO: set up watch to watch for initial week selection
+	            $($window).on('resize.pager', function() {
+		            scope.selectCurrentWeek();
+	            });
 
-                // TODO: handle window resizing (need to correct offset of pager after window resize.
-
+	            scope.$on('$destroy', function() {
+		            $($window).off('.pager');
+	            });
             }
         }
     }])

@@ -54,7 +54,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static bool IsComplete(this teammatchup tm)
         {
-            return tm.matches.All(x => x.IsComplete());
+            return tm.matches != null && tm.matches.Count > 0 && tm.matches.All(x => x.IsComplete());
         }
 	}
 }

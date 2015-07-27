@@ -24,7 +24,6 @@ namespace WestBlueGolfLeagueWeb.Controllers
             for (int i = 0; i < rankingValuesForYear.Count(); i++)
             {
                 leaderboarddata lbd = rankingValuesForYear.ElementAt(i);
-                int matches = lbd.team.teammatchups.Where(y => y.week.year.value == selectedYear && y.matchComplete).Count();
                 if (lbd.value != previousValue)
                 {
                     currentRank = i + 1;

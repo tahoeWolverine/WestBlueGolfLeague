@@ -7,9 +7,14 @@
     <div class="week-page-container">
         <div class="week-page-window">
             <div class="week-page-wrapper clearfix" ng-class="{ 'initialized': initialized }">
-                <div class="week-page" ng-repeat="week in schedule.weeks track by $index" ng-click="selectWeek($index)">
-                    {{::week.date | date: 'M/d'}}
-                </div>
+	            <div class="week-page" ng-repeat="week in schedule.weeks track by $index" ng-click="selectWeek($index)" ng-class="{ 'selected': selectedWeek == week }">
+		            <div>
+			            {{::week.date | date: 'MMM'}}
+		            </div>
+					<div>
+						{{::week.date | date: 'd'}}
+					</div>
+	            </div>
             </div>
         </div>
     </div>

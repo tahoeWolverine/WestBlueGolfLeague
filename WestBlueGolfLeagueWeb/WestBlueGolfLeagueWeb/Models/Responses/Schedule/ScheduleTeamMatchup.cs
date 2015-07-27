@@ -27,11 +27,13 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
             if (team1 != null) {
                 this.Team1 =  TeamResponse.From(team1);
                 this.Team1Points = tm.PointsFor(team1);
+	            this.Team1Win = tm.Team1Won();
             }
 
             if (team2 != null) {
                 this.Team2 = TeamResponse.From(team2);
                 this.Team2Points = tm.PointsFor(team2);
+	            this.Team2Win = tm.Team2Won();
             }
 
             this.IsComplete = tm.IsComplete();
@@ -46,6 +48,8 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
         public TeamResponse Team2 { get; set; }
         public int? Team1Points { get; set; }
         public int? Team2Points { get; set; }
+		public bool? Team1Win { get; set; }
+		public bool? Team2Win { get; set; }
         public bool IsComplete { get; set; }
 		public string TeeTimeText { get; set; }
         public int Id { get; set; }
