@@ -1,5 +1,42 @@
 ﻿
-<div pager schedule="main.schedule" selected-week="main.selectedWeek"></div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="bs-callout bs-callout-primary" ng-switch on="!!main.homeData.leagueNote">
+            <h4>Commissioner's Note</h4>
 
-<div week-display week="main.selectedWeek"></div>
+            <span ng-switch-when="false">
+                There are no updates from the commissioner!
+            </span>
+            <span ng-switch-default>
+                {{::main.homeData.leagueNote.text}}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div pager schedule="main.homeData.schedule" selected-week="main.selectedWeek"></div>
+
+        <div week-display week="main.selectedWeek"></div>
+    </div>
+    <div class="col-md-3">
+
+
+
+        <h4>iPhone App</h4>
+        <p>Download the league's <a href="https://jenkinsmobile.int.thomsonreuters.com/job/WestBlueGolfLeague/lastSuccessfulBuild/artifact/output/WirelessDistribution/wireless-distribution.html">West Blue Golf iPhone App</a> from TR App Store, Thomson Reuters internal mobile apps site.</p>
+        <div><img class="qr-code" src="/Content/images/golfAppQRCode.jpg" /></div>
+
+    </div>
+</div>
+
+<div class="row" ng-if="main.homeData.selectedYear == 2015">
+    <div class="col-md-6">
+        <h4>2015 Year End Tournament</h4>
+        <p>
+            2015 Year End Tournament - Saturday, September 26th - River Oaks Golf Course, Cottage Grove, MN - 11:15 AM start
+        </p>
+    </div>
+</div>
 

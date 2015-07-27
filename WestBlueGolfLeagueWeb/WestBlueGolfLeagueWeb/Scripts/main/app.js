@@ -58,7 +58,7 @@
 
 
 angular
-    .module('main', ['app', 'ui.router', 'ngAnimate', 'leaderBoards', 'schedule'])
+    .module('main', ['app', 'ui.router', 'ngAnimate', 'leaderBoards'])
     .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
         function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
@@ -67,9 +67,9 @@ angular
                     url: '/',
                     templateUrl: '/Scripts/main/tpl/index.tpl.html',
                     resolve: {
-                        Schedule: 'schedule',
-                        scheduleObj: function (Schedule) {
-                            return new Schedule().$promise;
+                        homeApi: 'home',
+                        homeData: function (homeApi) {
+                            return homeApi.getHomeData();
                         }
                     },
                     controller: 'Main as main'
@@ -118,7 +118,7 @@ angular
 
                     var weeks = scope.schedule.weeks;
 
-                    scope.selectedWeek =weeks[$index];
+                    scope.selectedWeek = weeks[$index];
                     var width = $weekPager.width();
 
                     if (width >= wrapperWidth) {
@@ -149,6 +149,7 @@ angular
                     }
                 };
 
+                // We need a watch in order to set the proper widths of everything.
                 scope.$watchCollection('schedule', function (n, o) {
                     
                     if (n && n.weeks.length > 0) {
@@ -156,6 +157,11 @@ angular
                         wrapperWidth = $weekPageWrapper.children().length * pageWidth;
 
                         $weekPageWrapper.css('width', wrapperWidth);
+
+                        var selectedWeekIndex = n.weeks.indexOf(scope.selectedWeek);
+                        scope.selectWeek(selectedWeekIndex);
+
+                        scope.initialized = true;
                     }
                 });
 
@@ -177,7 +183,58 @@ angular
         }
     }])
 
-    .controller('Main', ['scheduleObj', function (schedule) {
-        this.schedule = schedule;
-        this.selectedWeek = null;
+    .factory('home', ['$http', '$q', function ($http, $q) {
+
+        return {
+            getHomeData: function () {
+                return $q(function (resolve, reject) {
+                    $http({
+                        method: 'GET',
+                        url: '/api/homeApi/'
+                    }).then(function (data) {
+                        resolve(data.data);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+                });
+            },
+
+            getSelectedWeek: function (weeks) {
+                var now = moment(),
+                    previousMatch;
+
+                // find the next upcoming match
+                var upcomingMatch = _.find(weeks, function (i) {
+                    return now.isBefore(i.date);
+                });
+
+                if (!upcomingMatch) {
+                    return _.last(weeks);
+                }
+
+                var upcomingMatchDate = moment(upcomingMatch.date).day(-4);
+
+                if (now.isAfter(upcomingMatchDate)) {
+                    return upcomingMatch;
+                }
+
+                previousMatch = _.findLast(weeks, function (i) {
+                    return now.isAfter(i.date);
+                });
+
+                if (!previousMatch) {
+                    return _.first(weeks);
+                }
+
+                return previousMatch;
+            }
+        };
+
+    }])
+
+    .controller('Main', ['homeData', 'home', function (homeData, home) {
+        this.homeData = homeData;
+
+        this.selectedWeek = home.getSelectedWeek(homeData.schedule.weeks);
     }]);

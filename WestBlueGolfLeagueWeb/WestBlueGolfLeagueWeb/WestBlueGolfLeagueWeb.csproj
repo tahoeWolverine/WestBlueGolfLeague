@@ -214,6 +214,7 @@
     <Compile Include="Controllers\DataByYearController.cs" />
     <Compile Include="Controllers\Filters\WestBlueApiExceptionFilterAttribute.cs" />
     <Compile Include="Controllers\Filters\WestBlueHandleErrorAttribute.cs" />
+    <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\LeaderBoardApiController.cs" />
