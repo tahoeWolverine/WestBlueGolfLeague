@@ -909,11 +909,11 @@ textarea.roster-input {
     text-align: center;
 }
 
-.week-display-result, .week-display-overview, .week-display-teetime {
+.week-display-result, .week-display-overview, .week-display-teetime, .week-display-upcoming {
     float: left;
 }
 
-.week-display-result {
+.week-display-result, .week-display-upcoming {
     width: 100%;
     right: 250px;
     margin-right: -250px;
@@ -921,8 +921,24 @@ textarea.roster-input {
     position: relative;
 }
 
+.week-display-week-info {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #999;
+}
+
+.week-display-week-info .schedule-course {
+    border-color: #999;
+}
+
 .week-display-overview, .week-display-teetime {
     width: 250px;
+}
+
+.week-display-teetime {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 24px;
 }
 
 .week-display-win td:first-child:after {
@@ -1034,7 +1050,7 @@ textarea.roster-input {
         display: block;
     }
 
-    .week-display-overview, .week-display-teetime {
+    .week-display-overview {
         display: none;
     }
 
@@ -1042,6 +1058,19 @@ textarea.roster-input {
         right: 0;
         margin-right: 0;
         padding-left: 0;
+        position: relative;
+    }
+
+    .week-display-teetime {
+        width: 150px;
+        text-align: right;
+        padding-right: 8px;
+    }
+
+    .week-display-upcoming {
+        right: 150px;
+        margin-right: -150px;
+        padding-left: 150px;
         position: relative;
     }
 }

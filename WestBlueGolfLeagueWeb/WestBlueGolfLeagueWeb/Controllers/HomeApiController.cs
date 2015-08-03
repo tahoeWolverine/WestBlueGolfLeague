@@ -28,7 +28,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var leaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking").FirstOrDefaultAsync();
             var leaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
 
-            var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard) };
+            var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
 
             return Ok(new { leagueNote = latestNote, selectedYear = selectedYear, standings = teamStandingData, schedule = new ScheduleResponse { Weeks = weeks.Select(x => new ScheduleWeek(x)) } });
         }
