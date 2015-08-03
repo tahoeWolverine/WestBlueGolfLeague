@@ -68,9 +68,9 @@ angular
                     templateUrl: '/Scripts/main/tpl/index.tpl.html',
                     resolve: {
                         homeApi: 'home',
-                        homeData: function (homeApi) {
+                        homeData: ['homeApi', function (homeApi) {
                             return homeApi.getHomeData();
-                        }
+                        }]
                     },
                     controller: 'Main as main'
                 });
