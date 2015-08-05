@@ -19,17 +19,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<span class="header-link">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand" })</span>
-				<span class="header-link-small">@Html.RouteLink("WBGL", "Root", null, new { @class = "navbar-brand" })</span>
-				<span class="header-link-up" ui-view="header.main">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand" })</span>
+				<span class="header-link">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse" })</span>
+				<span class="header-link-small">@Html.RouteLink("WBGL", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse" })</span>
+				<span class="header-link-up" ui-view="header.main">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse" })</span>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { target = "_self" })</li>
-                    <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { target = "_self" })</li>
-					<li ui-sref-active="active" ui-sref="leaderboards.landingPage()">@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" })</li>
-
-                    <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable", null, new { target = "_self" })</li>
+                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse" })</li>
+                    <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse" })</li>
+					<li ui-sref-active="active" ui-sref="leaderboards.landingPage()">@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" }, new { data_toggle = "collapse", data_target = ".navbar-collapse" })</li>
+                    <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable", null, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse" })</li>
                 </ul>
                 @{Html.RenderAction("ToggleLogin", "Account");}
             </div>
