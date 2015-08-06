@@ -44,6 +44,14 @@
 	[match addResultsObject:newResult];
 	[player addResultsObject:newResult];
 	[team addResultsObject:newResult];
+
+    // Check for impossible math scenarios
+    WBResult *opp = [newResult opponentResult];
+    BOOL win = [newResult netScoreDifference] < [opp netScoreDifference];
+    if (opp && win && newResult.pointsValue <= 7) {
+        DLog(@"Match Math Sucks: %@ v %@, week %@", newResult.player.name, opp.player.name, newResult.match.teamMatchup.week.seasonIndex);
+    }
+    
 	return newResult;
 }
 
