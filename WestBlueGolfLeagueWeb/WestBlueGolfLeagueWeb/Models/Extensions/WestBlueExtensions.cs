@@ -61,6 +61,19 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return playersSet.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToList();
         }
 
+        public static async Task<List<week>> GetSchedule(this WestBlue westBlue, int year)
+        {
+            var weeks = await westBlue.weeks
+                .Include(x => x.teammatchups)
+                .Include("teammatchups.teams")
+                .Include(x => x.pairing)
+                .Include(x => x.course)
+                .Where(x => x.year.value == year)
+                .OrderBy(x => x.date).ToListAsync();
+
+            return weeks;
+        }
+
         public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)
         {
             var weeks = await westBlue.weeks
@@ -77,11 +90,6 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
         public static IEnumerable<leaderboarddata> GetCurrentTeamRankingForYear(this WestBlue westBlue, int year)
         {
             return westBlue.leaderboarddatas.Include(x => x.leaderboard).Where(x => x.year.value == year).ToList().OrderBy(x => x.rank);
-        }
-
-        public static int? PointsFor(this teammatchup tm, team team)
-        {
-            return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
         }
 
         public static bool IsComplete(this match r)

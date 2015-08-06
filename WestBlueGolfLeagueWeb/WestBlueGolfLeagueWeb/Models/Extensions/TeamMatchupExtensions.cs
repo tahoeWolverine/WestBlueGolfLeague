@@ -46,5 +46,15 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 		{
 			return teamMatchup.PointsForTeam(1) > 48;
 		}
+
+        public static int? PointsFor(this teammatchup tm, team team)
+        {
+            return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
+        }
+
+        public static bool IsComplete(this teammatchup tm)
+        {
+            return tm.matches != null && tm.matches.Count > 0 && tm.matches.All(x => x.IsComplete());
+        }
 	}
 }

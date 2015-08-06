@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 
 namespace WestBlueGolfLeagueWeb.Controllers.Schedule
 {
@@ -17,13 +18,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Schedule
             var currentYear = this.CurrentYear;
 
             // populated weeks
-            var weeks = await this.Db.weeks
-                .Include(x => x.teammatchups)
-                .Include("teammatchups.teams")
-                .Include(x => x.pairing)
-                .Include(x => x.course)
-                .Where(x => x.year.value == currentYear)
-                .OrderBy(x => x.date).AsNoTracking().ToListAsync();
+            var weeks = await this.Db.GetSchedule(currentYear);
 
             return Ok(new ScheduleResponse { Weeks = weeks.Select(x => new ScheduleWeek(x)) });
         }

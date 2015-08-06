@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "West Blue Golf League" : ViewBag.Title)</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -19,20 +19,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="header-link">@Html.ActionLink("West Blue Golf League", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
-                <span class="header-link-small">@Html.ActionLink("WBGL", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
-                <span class="header-link-up" ui-view="header.main">@Html.ActionLink("West Blue Golf League", "Index", "Home", null, new { @class = "navbar-brand", target = "_self" })</span>
+				<span class="header-link">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</span>
+				<span class="header-link-small">@Html.RouteLink("WBGL", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</span>
+				<span class="header-link-up" ui-view="header.main">@Html.RouteLink("West Blue Golf League", "Root", null, new { @class = "navbar-brand", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</span>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { target = "_self" })</li>
-                    <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { target = "_self" })</li>
-                    <li>@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" }, new { target = "_self" })</li>
-
-                    <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable", null, new { target = "_self" })</li>
+                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
+                    <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
+					<li ui-sref-active="active" ui-sref="leaderboards.landingPage()">@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" }, new { data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
+                    <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable", null, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
                 </ul>
                 @{Html.RenderAction("ToggleLogin", "Account");}
-                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
@@ -53,5 +51,16 @@
     @Scripts.Render("~/bundles/app")
     @AngularHelpers.RenderTemplates("~/bundles/app/html")
     @RenderSection("scripts", required: false)
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-60185057-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+
 </body>
 </html>

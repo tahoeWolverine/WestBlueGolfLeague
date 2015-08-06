@@ -7,7 +7,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Admin", routeValues: new { catchall = "/" }, htmlAttributes: new { title = "Manage", target = "_self" })*@
-			@Html.ActionLink("Admin", "Index", "Admin", routeValues: new { catchall = "/" }, htmlAttributes: new { title = "Manage", target = "_self" })
+			@Html.ActionLink("Admin", "Index", "Admin", routeValues: new { catchall = "/" }, htmlAttributes: new { title = "Manage", target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

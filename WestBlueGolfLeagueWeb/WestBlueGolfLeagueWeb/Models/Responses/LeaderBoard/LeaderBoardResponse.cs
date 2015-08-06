@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard
 {
     public class LeaderBoardResponse
     {
-        public LeaderBoardResponse(leaderboard leaderboard)
+        public LeaderBoardResponse(leaderboard leaderboard, bool includeLeaderBoardData = true)
         {
             this.Id = leaderboard.id;
             this.Name = leaderboard.name;
@@ -17,7 +17,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard
             this.Priority = leaderboard.priority;
             this.FormatType = leaderboard.formatType;
 
-            if (leaderboard.leaderboarddatas != null)
+            if (includeLeaderBoardData && leaderboard.leaderboarddatas != null)
             {
                 this.LeaderBoardDatas = leaderboard.leaderboarddatas.Select(x => LeaderBoardDataResponse.From(x));
             }

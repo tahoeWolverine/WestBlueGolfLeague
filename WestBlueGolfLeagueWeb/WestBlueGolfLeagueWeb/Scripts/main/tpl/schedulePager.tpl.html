@@ -1,0 +1,24 @@
+﻿
+<div class="week-pager">
+    <button class="btn btn-default pager-left" ng-click="selectPrevWeek($event)">
+        <i class=" fa fa-chevron-left">
+        </i>
+    </button>
+    <div class="week-page-container">
+        <div class="week-page-window">
+            <div class="week-page-wrapper clearfix" ng-class="{ 'initialized': initialized }">
+	            <div class="week-page" ng-repeat="week in schedule.weeks track by $index" ng-click="selectWeek($index)" ng-class="{ 'selected': selectedWeek == week }">
+		            <div>
+			            {{::week.date | date: 'MMM'}}
+		            </div>
+					<div>
+						{{::week.date | date: 'd'}}
+					</div>
+	            </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-default pager-right" ng-click="selectNextWeek($event)">
+        <i class="fa fa-chevron-right"></i>
+    </button>
+</div>

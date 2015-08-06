@@ -64,12 +64,183 @@ angular
 
             $stateProvider
                 .state("root", {
-                    url: '/testtest',
+                    url: '/',
                     templateUrl: '/Scripts/main/tpl/index.tpl.html',
-                    controller: function () { },
+                    resolve: {
+                        homeApi: 'home',
+                        homeData: ['homeApi', function (homeApi) {
+                            return homeApi.getHomeData();
+                        }]
+                    },
+                    controller: 'Main as main'
                 });
 
             $locationProvider.html5Mode(true);
             // 'leaderBoards', 'player', 'team'
 
-        }]);
+        }])
+
+    .directive('pager', ['$window', function ($window) {
+        return {
+            templateUrl: '/Scripts/main/tpl/schedulePager.tpl.html',
+            scope: {
+                schedule: '=*',
+                selectedWeek: '='
+            },
+            restrict: 'A',
+            link: function (scope, ele) {
+
+                scope.disableNext = false;
+                scope.disablePrev = false;
+
+                var $weekPageWrapper = ele.find('.week-page-wrapper');
+                var $weekPager = ele.find('.week-page-window');
+                var pageWidth = 0,
+                    wrapperWidth = 0;
+
+                var setDisableFlags = function (index, weeks) {
+                    if (index == weeks.length - 1) {
+                        scope.disableNext = true;
+                    }
+                    else {
+                        scope.disableNext = false;
+                    }
+
+                    if (index == 0) {
+                        scope.disablePrev = true;
+                    }
+                    else {
+                        scope.disablePrev = false;
+                    }
+                }
+
+                scope.selectWeek = function ($index) {
+
+                    var weeks = scope.schedule.weeks;
+
+                    scope.selectedWeek = weeks[$index];
+                    var width = $weekPager.width();
+
+                    if (width >= wrapperWidth) {
+                        $weekPageWrapper.css('left', 0);
+                        return;
+                    }
+
+                    var offset = ($index * 56) + 28 - (width / 2);
+                    
+                    $weekPageWrapper.css('left', -offset);
+
+                    setDisableFlags($index, weeks);
+                }
+
+                scope.selectNextWeek = function () {
+                    var currIndex = scope.schedule.weeks.indexOf(scope.selectedWeek);
+
+                    if (!(currIndex + 1 > scope.schedule.weeks.length - 1)) {
+                        scope.selectWeek(currIndex + 1);
+                    }
+                };
+
+                scope.selectPrevWeek = function () {
+                    var currIndex = scope.schedule.weeks.indexOf(scope.selectedWeek);
+
+                    if (currIndex > 0) {
+                        scope.selectWeek(currIndex - 1);
+                    }
+                };
+
+	            scope.selectCurrentWeek = function() {
+		            scope.selectWeek(scope.schedule.weeks.indexOf(scope.selectedWeek));
+	            };
+
+                // We need a watch in order to set the proper widths of everything.
+                scope.$watchCollection('schedule', function (n, o) {
+                    
+                    if (n && n.weeks.length > 0) {
+                        pageWidth = $weekPageWrapper.children().width();
+                        wrapperWidth = $weekPageWrapper.children().length * pageWidth;
+
+                        $weekPageWrapper.css('width', wrapperWidth);
+
+	                    scope.selectCurrentWeek();
+
+                        scope.initialized = true;
+                    }
+                });
+
+	            $($window).on('resize.pager', function() {
+		            scope.selectCurrentWeek();
+	            });
+
+	            scope.$on('$destroy', function() {
+		            $($window).off('.pager');
+	            });
+            }
+        }
+    }])
+
+    .directive('weekDisplay', [function () {
+        return {
+            templateUrl: '/Scripts/main/tpl/weekDisplay.tpl.html',
+            scope: {
+                week: '='
+            },
+            restrict: 'A'
+        }
+    }])
+
+    .factory('home', ['$http', '$q', function ($http, $q) {
+
+        return {
+            getHomeData: function () {
+                return $q(function (resolve, reject) {
+                    $http({
+                        method: 'GET',
+                        url: '/api/homeApi/'
+                    }).then(function (data) {
+                        resolve(data.data);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+                });
+            },
+
+            getSelectedWeek: function (weeks) {
+                var now = moment(),
+                    previousMatch;
+
+                // find the next upcoming match
+                var upcomingMatch = _.find(weeks, function (i) {
+                    return now.isBefore(i.date);
+                });
+
+                if (!upcomingMatch) {
+                    return _.last(weeks);
+                }
+
+                var upcomingMatchDate = moment(upcomingMatch.date).day(-4);
+
+                if (now.isAfter(upcomingMatchDate)) {
+                    return upcomingMatch;
+                }
+
+                previousMatch = _.findLast(weeks, function (i) {
+                    return now.isAfter(i.date);
+                });
+
+                if (!previousMatch) {
+                    return _.first(weeks);
+                }
+
+                return previousMatch;
+            }
+        };
+
+    }])
+
+    .controller('Main', ['homeData', 'home', function (homeData, home) {
+        this.homeData = homeData;
+
+        this.selectedWeek = home.getSelectedWeek(homeData.schedule.weeks);
+    }]);

@@ -35,7 +35,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
 	        var now = DateTimeOffset.UtcNow;
 
-	        var currentWeek = weeks.FirstOrDefault(x => now > new DateTimeOffset(x.date)) ?? weeks.LastOrDefault();
+	        var currentWeek = weeks.LastOrDefault(x => now > new DateTimeOffset(x.date)) ?? weeks.FirstOrDefault();
 
 	        Dictionary<int, IEnumerable<player>> lookup =
 		        this.Db.GetPlayersWithTeamsForYear(this.CurrentYear, true)

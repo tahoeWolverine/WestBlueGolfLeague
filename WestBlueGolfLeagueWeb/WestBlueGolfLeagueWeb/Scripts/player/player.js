@@ -82,6 +82,6 @@
         .factory('PlayerProfileService', ['$http', PlayerProfileService])
         .directive('playerList', PlayerListDirective);
 
-})(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList']));
+})(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList', 'leaderBoards']));
 
   

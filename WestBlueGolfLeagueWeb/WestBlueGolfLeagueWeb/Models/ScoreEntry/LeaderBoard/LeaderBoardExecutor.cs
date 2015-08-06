@@ -12,24 +12,24 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 {
     public class LeaderBoardExecutor
     {
-
-
         private WestBlue db;
         private year year;
         private LeaderBoardStore lbc;
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(LeaderBoardExecutor));
 
-        public LeaderBoardExecutor(year year)
+        public LeaderBoardExecutor(WestBlue wb, year year)
         {
+            this.db = wb;
             this.year = year;
+            this.lbc = new LeaderBoardStore(wb, this.year);
         }
 
         public void CalculateAndSaveLeaderBoards()
         {
-            this.year = this.WestBlue.years.First(x => x.id == this.year.id);
+            this.year = this.db.years.First(x => x.id == this.year.id);
 
-            this.LeaderBoardStore.Initialize();
+            this.lbc.Initialize();
 
             var allPlayersForYear = this.db.AllPlayersForYear(this.year, includeResults: true);
             var playerIds = allPlayersForYear.Select(x => x.id);
@@ -54,7 +54,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
                         this.CalculateAndSetValue(p.id, lb, results, p);
                     }
 
-                    var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
+                    var leaderBoardDatas = this.lbc.GetBoardData(lb.LeaderBoardKey);
 
                     this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
                 }
@@ -89,7 +89,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
                         this.CalculateAndSetValue(t.id, lb, results, t);
                     }
 
-                    var leaderBoardDatas = this.LeaderBoardStore.GetBoardData(lb.LeaderBoardKey);
+                    var leaderBoardDatas = this.lbc.GetBoardData(lb.LeaderBoardKey);
 
                     this.SortAndRankLeaderBoardData(leaderBoardDatas, lb.Ascending);
                 }
@@ -143,7 +143,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
         {
             var lookup = new HashSet<int>(ids);
 
-            var datas = new List<leaderboarddata>(this.LeaderBoardStore.GetBoardData(board.LeaderBoardKey));
+            var datas = new List<leaderboarddata>(this.lbc.GetBoardData(board.LeaderBoardKey));
 
             foreach (var d in datas)
             {
@@ -151,7 +151,7 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 
                 if (!lookup.Contains(id))
                 {
-                    this.LeaderBoardStore.DeleteLeaderBoardData(id, board.LeaderBoardKey);
+                    this.lbc.DeleteLeaderBoardData(id, board.LeaderBoardKey);
                 }
             }
         }
@@ -162,13 +162,13 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 
             if (value.HasValue)
             {
-				var lbd = this.LeaderBoardStore.GetLeaderBoardData(id, lb);
+                var lbd = this.lbc.GetLeaderBoardData(id, lb);
                 lbd.value = value.Value;
 				lbd.formattedValue = lb.Format.FormatValue(lbd.value);
             }
             else
             {
-	            this.LeaderBoardStore.DeleteLeaderBoardData(id, lb.LeaderBoardKey);
+                this.lbc.DeleteLeaderBoardData(id, lb.LeaderBoardKey);
             }
         }
 
@@ -197,40 +197,6 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
 
                 lbd.rank = rank;
                 previousValue = lbd.value;
-            }
-        }
-
-        public LeaderBoardStore LeaderBoardStore
-        {
-            get
-            {
-                if (this.lbc == null)
-                {
-                    this.lbc = new LeaderBoardStore(this.WestBlue, this.year);
-                }
-
-                return this.lbc;
-            }
-            set
-            {
-                this.lbc = value;
-            }
-        }
-
-        public WestBlue WestBlue
-        {
-            get
-            {
-                if (this.db == null)
-                {
-                    this.db = new WestBlue();
-                }
-
-                return this.db;
-            }
-            set
-            {
-                this.db = value;
             }
         }
     }

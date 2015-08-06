@@ -141,6 +141,18 @@ input[type="checkbox"].input-validation-error {
    opacity: 1;
 }
 
+sort-indicator {
+    display: inline;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.leader-board-data th {
+    cursor: pointer;
+}
+
 .fade-in.ng-enter {
     -webkit-transition: 0.2s ease-in all;
     -moz-transition: 0.2s ease-in all;
@@ -169,7 +181,6 @@ input[type="checkbox"].input-validation-error {
     z-index: 10;
 	position: relative;
     margin-left: 280px;
-	background-color: white;
     padding-bottom: 80px;
     transition: margin-left .3s ease;
 }
@@ -210,6 +221,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .player-details-player-list-parent {
+	border-right: 1px solid #999;
 	overflow: hidden;
 }
 
@@ -354,6 +366,24 @@ player-list-item-name {
     font-size: 1.3em;
     /*box-shadow: 0 0 8px #777;*/
 }
+
+.player-stats .row {
+	margin-bottom: 14px;
+}
+
+.player-stat {
+	display: block;
+	border-radius: 25px;
+	height: 50px;
+	margin: auto;
+	background: #888;
+	color: white;
+	vertical-align: middle;
+	line-height: 50px;
+	width: 50px;
+	font-size: 1.3em;
+}
+
 
 /* Team CSS */
 .team-details-team-list .col-sm-4 {
@@ -805,6 +835,126 @@ textarea.roster-input {
 
 
 
+/* Home page */
+
+.home-page-weekpager .matchup-date-detail {
+    padding-top: 10px;
+}
+
+.week-page-window {
+    overflow: hidden;
+    position: relative;
+}
+
+.week-page-container {
+	margin: 0 44px;
+}
+
+.week-page {
+    width: 56px;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+	padding: 6px 0;
+}
+
+.week-page.selected {
+	background-color: #428bca;
+	color: white;
+}
+
+.week-page-wrapper {
+    position: relative;
+    left: 0;
+}
+
+.week-page-wrapper.initialized {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+
+.week-pager {
+    position: relative;
+}
+
+.week-pager .btn {
+    position: absolute;
+	top: 9px;
+}
+
+.week-pager .pager-left {
+    left: 0;
+}
+
+.week-pager .pager-right {
+    right: 0;
+}
+
+.team-matchup-result {
+    width: 100%;
+}
+
+.team-matchup-result td {
+    padding: 8px;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.team-score {
+    width: 60px;
+    text-align: center;
+}
+
+.week-display-result, .week-display-overview, .week-display-teetime, .week-display-upcoming {
+    float: left;
+}
+
+.week-display-result, .week-display-upcoming {
+    width: 100%;
+    right: 250px;
+    margin-right: -250px;
+    padding-left: 250px;
+    position: relative;
+}
+
+.week-display-week-info {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #999;
+}
+
+.week-display-week-info .schedule-course {
+    border-color: #999;
+}
+
+.week-display-overview, .week-display-teetime {
+    width: 250px;
+}
+
+.week-display-teetime {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 24px;
+}
+
+.week-display-win td:first-child:after {
+    content: '(WINNER)';
+    color: #5cb85c;
+    font-size: 10px;
+    position: relative;
+    top: -3px;
+    display: inline-block;
+    padding-left: 8px;
+}
+
+.week-display-win td {
+    font-weight: bold;
+}
+
 
 @media (max-width: 992px) {
     .header-link-small {
@@ -899,4 +1049,34 @@ textarea.roster-input {
     .boardVisible {
         display: block;
     }
+
+    .week-display-overview {
+        display: none;
+    }
+
+    .week-display-result {
+        right: 0;
+        margin-right: 0;
+        padding-left: 0;
+        position: relative;
+    }
+
+    .week-display-teetime {
+        width: 150px;
+        text-align: right;
+        padding-right: 8px;
+    }
+
+    .week-display-upcoming {
+        right: 150px;
+        margin-right: -150px;
+        padding-left: 150px;
+        position: relative;
+    }
+}
+
+
+/* Bootstrap overrides */
+.btn {
+	/*border-radius: 0;*/
 }

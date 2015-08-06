@@ -31,19 +31,21 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
         public void Execute()
         {
-            // Handicap updating.
-            var teamMatchup = this.database.teammatchups
-                            .Include(x => x.matches)
-                            .Include(x => x.week)
-                            .Where(x => x.id == this.teamMatchupId).First();
+            lock (LockObject)
+            {
+                // Handicap updating.
+                var teamMatchup = this.database.teammatchups
+                                .Include(x => x.matches)
+                                .Include(x => x.week)
+                                .Where(x => x.id == this.teamMatchupId).First();
 
-            this.UpdatePlayerHandicaps(teamMatchup);
+                this.UpdatePlayerHandicaps(teamMatchup);
 
-            // calc leaderboards
-            var lbe = new LeaderBoardExecutor(teamMatchup.week.year);
-            lbe.CalculateAndSaveLeaderBoards();
+                var lbe = new LeaderBoardExecutor(this.database, teamMatchup.week.year);
+                lbe.CalculateAndSaveLeaderBoards();
 
-            this.database.SaveChanges();
+                this.database.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -51,8 +53,14 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         /// </summary>
         private void UpdatePlayerHandicaps(teammatchup tm)
         {
-            var teamIds = tm.teams.Select(x => x.id);
-            var resultsForTeamMatchup = this.database.results.Where(x => teamIds.Contains(x.teamId) && x.year.value == tm.week.year.value).ToList();
+            var playerIds = new List<int>();
+
+            foreach (var match in tm.matches)
+            {
+                playerIds.AddRange(match.players.Select(x => x.id));
+            }
+
+            var resultsForTeamMatchup = this.database.results.Where(x => playerIds.Contains(x.playerId) && x.year.value == tm.week.year.value).ToList();
             var resultsLookup = resultsForTeamMatchup.ToLookup(x => x.playerId);
             
             var scoreResultFactory = new ScoreResultFactory(tm.week.year.value);

@@ -43,8 +43,9 @@ namespace WestBlueGolfLeagueWeb
             // TODO: possibly change this path to make fonts work correctly?
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+					  //"~/Content/bootstrap-theme.css",
                       "~/Content/fontawesome/font-awesome.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
 
             //BundleTable.EnableOptimizations = true;
         }
