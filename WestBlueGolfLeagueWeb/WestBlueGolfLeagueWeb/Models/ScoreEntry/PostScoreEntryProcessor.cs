@@ -53,8 +53,14 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         /// </summary>
         private void UpdatePlayerHandicaps(teammatchup tm)
         {
-            var teamIds = tm.teams.Select(x => x.id);
-            var resultsForTeamMatchup = this.database.results.Where(x => teamIds.Contains(x.teamId) && x.year.value == tm.week.year.value).ToList();
+            var playerIds = new List<int>();
+
+            foreach (var match in tm.matches)
+            {
+                playerIds.AddRange(match.players.Select(x => x.id));
+            }
+
+            var resultsForTeamMatchup = this.database.results.Where(x => playerIds.Contains(x.playerId) && x.year.value == tm.week.year.value).ToList();
             var resultsLookup = resultsForTeamMatchup.ToLookup(x => x.playerId);
             
             var scoreResultFactory = new ScoreResultFactory(tm.week.year.value);
