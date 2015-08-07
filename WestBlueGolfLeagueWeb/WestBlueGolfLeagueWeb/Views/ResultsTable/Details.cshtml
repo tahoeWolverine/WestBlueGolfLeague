@@ -11,16 +11,25 @@
             $("#equitableTable").show();
             $("#scoreTable").hide();
             $("#pointsTable").hide();
+            $("#handicapsTable").hide();
         }
         var showScore = function () {
             $("#equitableTable").hide();
             $("#scoreTable").show();
             $("#pointsTable").hide();
+            $("#handicapsTable").hide();
         }
         var showPoints = function () {
             $("#equitableTable").hide();
             $("#scoreTable").hide();
             $("#pointsTable").show();
+            $("#handicapsTable").hide();
+        }
+        var showHandicaps = function () {
+            $("#equitableTable").hide();
+            $("#scoreTable").hide();
+            $("#pointsTable").hide();
+            $("#handicapsTable").show();
         }
     </script>
 }
@@ -48,6 +57,7 @@
                 <button type="button" class="btn btn-default" onclick="showEquitable()" autofocus>Equitable Score</button>
                 <button type="button" class="btn btn-default" onclick="showScore()">Score</button>
                 <button type="button" class="btn btn-default" onclick="showPoints()">Points</button>
+                <button type="button" class="btn btn-default" onclick="showHandicaps()">Handicaps</button>
             </div>
         </div>
         <div id="equitableTable">
@@ -348,6 +358,54 @@
             </table>
             <p><span class="score-bold">16</span> - bold numbers used to denote wins</p>
             <p>* - indicates match played for a different team</p>
+        </div>
+        <div id="handicapsTable" class="results-table">
+            <h4><a href="/Team/@this.Model.Team.id">@this.Model.Team.teamName</a> (Handicaps)</h4>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>0</th>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <th>@w.seasonIndex</th>
+                    }
+                    <th>Current</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>36</td>
+                    @foreach (var w in this.Model.WeeksForYear)
+                    {
+                        <td>@w.course.par</td>
+                    }
+                    <td></td>
+                </tr>
+                @foreach (var p in this.Model.PlayersForTeamForYear)
+                {
+                    var playerResults = p.CompleteResultsForYear;
+                    <tr>
+                        <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
+                        <td>@(p.YearData.week0Score - 36)</td>
+
+                        @foreach (var w in this.Model.WeeksForYear)
+                        {
+                            var resultForWeekForPlayer = playerResults.Where(x => x.match.teammatchup.weekId == w.id).FirstOrDefault();
+                            if (resultForWeekForPlayer == null)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                var handicap = resultForWeekForPlayer.priorHandicap;
+                                <td class="score-normal">@handicap</td>
+                            }
+                        }
+
+                        <td>+@p.Player.currentHandicap</td>
+                    </tr>
+                }
+            </table>
+            <span>These are prior handicaps for each week so you can see what you went into a match with.</span>
         </div>
     </div>
 </div>
