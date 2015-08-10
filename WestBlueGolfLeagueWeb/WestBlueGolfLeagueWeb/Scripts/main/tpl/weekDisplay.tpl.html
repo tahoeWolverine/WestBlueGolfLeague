@@ -4,28 +4,57 @@
         <span class="schedule-course" title="Course">{{week.course.name}} ({{week.course.par}})</span>
         <span title="Pairing for week" class="schedule-pairing">{{week.pairing}}</span>
     </div>
-    <div ng-repeat="matchup in week.teamMatchups" class="matchup-date-detail clearfix">
-        <div ng-class="{'week-display-result': matchup.isComplete, 'week-display-upcoming': !matchup.isComplete}">
-            <table class="team-matchup-result">
-                <tr ng-class="{'week-display-win': matchup.team1Win }">
-                    <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team1.id}}">{{matchup.team1.name}}</a></td>
-                    <td class="team-score" ng-if="::matchup.isComplete">
-                        {{$parent.matchup.team1Points}}
-                    </td>
-                </tr>
-                <tr ng-class="{'week-display-win': matchup.team2Win }">
-                    <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team2.id}}">{{matchup.team2.name}}</a></td>
-                    <td class="team-score" ng-if="::matchup.isComplete">
-                        {{$parent.matchup.team2Points}}
-                    </td>
-                </tr>
-            </table>
+
+    <h4 ng-if></h4>
+
+    <div ng-if="!week.isPlayoff">
+        <div ng-repeat="matchup in week.teamMatchups" class="matchup-date-detail clearfix">
+            <div ng-class="{'week-display-result': matchup.isComplete, 'week-display-upcoming': !matchup.isComplete}">
+                <table class="team-matchup-result">
+                    <tr ng-class="{'week-display-win': matchup.team1Win }">
+                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team1.id}}">{{matchup.team1.name}}</a></td>
+                        <td class="team-score" ng-if="::matchup.isComplete">
+                            {{$parent.matchup.team1Points}}
+                        </td>
+                    </tr>
+                    <tr ng-class="{'week-display-win': matchup.team2Win }">
+                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team2.id}}">{{matchup.team2.name}}</a></td>
+                        <td class="team-score" ng-if="::matchup.isComplete">
+                            {{$parent.matchup.team2Points}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-if="::matchup.isComplete" class="week-display-overview">
+                Match Summary (under construction!)
+            </div>
+            <div ng-if="::!matchup.isComplete" class="week-display-teetime">
+                {{$parent.matchup.teeTimeText}}
+            </div>
         </div>
-		<div ng-if="::matchup.isComplete" class="week-display-overview">
-			Match Summary (under construction!)
-		</div>
-	    <div ng-if="::!matchup.isComplete" class="week-display-teetime">
-		    {{$parent.matchup.teeTimeText}}
-	    </div>
+    </div>
+
+    <div ng-if="week.isPlayoff" class="panel panel-primary">
+        <div class="panel-heading">Anticipated Playoff Matchups</div>
+        <div class="panel-body">
+
+            <div ng-if="week.playoffMatchups == null">
+                <h4>No playoff information available yet!</h4>
+            </div>
+
+            <div ng-repeat="playoffMatchup in week.playoffMatchups" class="matchup-date-detail clearfix">
+                <div ng-class="week-display-upcoming">
+                    <h4>{{::playoffMatchup.playoffType | playoffName}}</h4>
+                    <table class="team-matchup-result">
+                        <tr>
+                            <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::playoffMatchup.team1.id}}">{{::playoffMatchup.team1.name}}</a> ({{::playoffMatchup.team1Seed}})</td>
+                        </tr>
+                        <tr>
+                            <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::playoffMatchup.team2.id}}">{{::playoffMatchup.team2.name}}</a> ({{::playoffMatchup.team2Seed}})</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

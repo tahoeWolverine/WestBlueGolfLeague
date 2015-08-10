@@ -80,6 +80,22 @@ angular
 
         }])
 
+    .filter('playoffName', function () {
+        return function (input) {
+            if (input == 'championship') {
+                return 'Championship';
+            }
+            else if (input == 'consolation') {
+                return 'Consolation';
+            }
+            else if (input == 'lastplace') {
+                return 'Last Place';
+            }
+
+            return 'Unknown Playoff Type';
+        };
+    })
+
     .directive('pager', ['$window', function ($window) {
         return {
             templateUrl: '/Scripts/main/tpl/schedulePager.tpl.html',

@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
             // only grab playoff weeks.
             var playoffWeeksInOrder = this.allWeeks.Where(x => x.isPlayoff).OrderBy(x => x.seasonIndex);
 
-            if (this.rankings.Count() != 10)
+            if (this.rankings.Count() != 8)
             {
                 throw new Exception("Right now playoff rankings are only implemented for a 10 team league.");
             }
@@ -33,20 +33,33 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
 
             // If week1 is complete, pull the matchup and return that.  How to match back to seed?
 
-            // Week 1
-            var week1PlayoffMatchup = new GroupedPlayoffMatchup { Week = playoffWeeksInOrder.First() };
+            var predictionResults = new List<GroupedPlayoffMatchup>(2);
 
-            List<PlayoffMatchup> playoffMatchupsWeek1 = new List<PlayoffMatchup>(5);
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[0].id, Team2 = sortedRanks[3].id, Team1Seed = 1, Team2Seed = 4 });
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[1].id, Team2 = sortedRanks[2].id, Team1Seed = 2, Team2Seed = 3 });
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[4].id, Team2 = sortedRanks[7].id, Team1Seed = 5, Team2Seed = 8 });
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[5].id, Team2 = sortedRanks[6].id, Team1Seed = 6, Team2Seed = 7 });
-            playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.LastPlace, Team1 = sortedRanks[8].id, Team2 = sortedRanks[9].id, Team1Seed = 9, Team2Seed = 10 });
+            // Week 1
+            var week1 = playoffWeeksInOrder.First();
+            var week1NotSet = week1.teammatchups.Count == 0 && week1.teammatchups.All(x => x.matchComplete);
+
+            if (week1NotSet)
+            {
+                var week1PlayoffMatchup = new GroupedPlayoffMatchup { Week = playoffWeeksInOrder.First() };
+
+                List<PlayoffMatchup> playoffMatchupsWeek1 = new List<PlayoffMatchup>(4);
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[0].team, Team2 = sortedRanks[3].team, Team1Seed = 1, Team2Seed = 4 });
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[1].team, Team2 = sortedRanks[2].team, Team1Seed = 2, Team2Seed = 3 });
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[4].team, Team2 = sortedRanks[7].team, Team1Seed = 5, Team2Seed = 8 });
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[5].team, Team2 = sortedRanks[6].team, Team1Seed = 6, Team2Seed = 7 });
+
+                week1PlayoffMatchup.PlayoffMatchups = playoffMatchupsWeek1;
+
+                predictionResults.Add(week1PlayoffMatchup);
+            }
 
             // Week 2
-            // need to look at all matchups... if they are all completed we'll not predict the matches
+            // need to look at all matchups... if they are all completed we'll not predict the matches.  Need to look at what teams won/lost in the first week somehow.
 
-            if (playoffWeeksInOrder.First().teammatchups.All(x => x.matchComplete))
+            var week1Complete = week1.teammatchups.Count != 0 && week1.teammatchups.All(x => x.matchComplete);
+
+            if (week1Complete)
             {
 
             }
@@ -55,7 +68,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
 
             }
 
-            return null;
+            return predictionResults;
         }
     }
 }

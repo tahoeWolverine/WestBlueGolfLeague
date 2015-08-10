@@ -9,6 +9,8 @@ using WestBlueGolfLeagueWeb.Models.Extensions;
 using System.Data.Entity;
 using WestBlueGolfLeagueWeb.Models.Responses.Schedule;
 using WestBlueGolfLeagueWeb.Models.Responses.LeaderBoard;
+using WestBlueGolfLeagueWeb.Models.Playoffs;
+using WestBlueGolfLeagueWeb.Models.Responses.Team;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
@@ -30,7 +32,25 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
 
-            return Ok(new { leagueNote = latestNote, selectedYear = selectedYear, standings = teamStandingData, schedule = new ScheduleResponse { Weeks = weeks.Select(x => new ScheduleWeek(x)) } });
+            var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, weeks).PredictPlayoffMatchups();
+
+            var playoffLookup = playoffPredictorResults.ToDictionary(x => x.Week.id, x => x);
+
+            return Ok(
+                new 
+                { 
+                    leagueNote = latestNote, 
+                    selectedYear = selectedYear, 
+                    standings = teamStandingData, 
+                    schedule = new ScheduleResponse { Weeks = weeks.Select(x => {
+
+                        GroupedPlayoffMatchup matchup = null;
+
+                        playoffLookup.TryGetValue(x.id, out matchup);
+
+                        return new ScheduleWeek(x, matchup);
+                    })}
+                });
         }
     }
 }
