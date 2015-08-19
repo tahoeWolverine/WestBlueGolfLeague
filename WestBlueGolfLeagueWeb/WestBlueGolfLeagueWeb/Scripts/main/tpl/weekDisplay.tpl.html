@@ -1,13 +1,11 @@
 ﻿<div ng-if="week">
-    <h2>{{week.date | date:'MMMM, d'}}</h2>
+    <h2>{{week.date | date:'MMMM, d'}} <span class="week-display-playoffs-header" ng-if="week.isPlayoff">(Playoffs)</span></h2>
     <div class="week-display-week-info">
         <span class="schedule-course" title="Course">{{week.course.name}} ({{week.course.par}})</span>
         <span title="Pairing for week" class="schedule-pairing">{{week.pairing}}</span>
     </div>
 
-    <h4 ng-if></h4>
-
-    <div ng-if="!week.isPlayoff">
+    <div ng-if="week.teamMatchups.length > 0">
         <div ng-repeat="matchup in week.teamMatchups" class="matchup-date-detail clearfix">
             <div ng-class="{'week-display-result': matchup.isComplete, 'week-display-upcoming': !matchup.isComplete}">
                 <table class="team-matchup-result">
@@ -34,7 +32,7 @@
         </div>
     </div>
 
-    <div ng-if="week.isPlayoff" class="panel panel-primary">
+    <div ng-if="week.isPlayoff && (!week.teamMatchups || week.teamMatchups.length == 0)" class="panel panel-primary">
         <div class="panel-heading">Anticipated Playoff Matchups</div>
         <div class="panel-body">
 

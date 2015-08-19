@@ -858,6 +858,10 @@ textarea.roster-input {
 	padding: 6px 0;
 }
 
+.week-page.playoff {
+    box-shadow: inset 0 0 2px 0 #428bca;
+}
+
 .week-page.selected {
 	background-color: #428bca;
 	color: white;
@@ -953,6 +957,15 @@ textarea.roster-input {
 
 .week-display-win td {
     font-weight: bold;
+}
+
+.week-display-playoffs-header {
+    color: #428bca;
+    font-size: 26px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
 }
 
 
