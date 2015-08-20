@@ -852,14 +852,18 @@ textarea.roster-input {
 
 .week-page {
     width: 56px;
+    margin-right: 6px;
     float: left;
     cursor: pointer;
     text-align: center;
 	padding: 6px 0;
+    margin-top: 2px;
 }
 
 .week-page.playoff {
-    box-shadow: inset 0 0 2px 0 #428bca;
+    border: 2px solid #428bca;
+    margin-top: 0;
+    border-radius: 6px;
 }
 
 .week-page.selected {
@@ -960,12 +964,20 @@ textarea.roster-input {
 }
 
 .week-display-playoffs-header {
-    color: #428bca;
-    font-size: 26px;
+    font-size: 20px;
+    background: #428bca;
+    color: white;
     font-weight: bold;
     display: inline-block;
-    line-height: 30px;
-    vertical-align: middle;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-left: 12px;
+    position: relative;
+    top: -4px;
+}
+
+.week-display-playoff-type {
+    font-weight: bold;
 }
 
 

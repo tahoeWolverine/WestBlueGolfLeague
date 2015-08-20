@@ -49,7 +49,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static int? PointsFor(this teammatchup tm, team team)
         {
-            return tm.matches.Select(x => x.results.First(r => r.teamId == team.id)).Sum(x => x.points);
+            return tm.matches.Select(x => x.results.FirstOrDefault(r => r.teamId == team.id)).Sum(x => x == null ? 0 : x.points);
         }
 
         public static bool IsComplete(this teammatchup tm)

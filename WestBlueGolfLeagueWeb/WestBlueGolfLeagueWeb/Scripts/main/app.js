@@ -91,6 +91,9 @@ angular
             else if (input == 'lastplace') {
                 return 'Last Place';
             }
+            else if (input == 'thirdplace') {
+                return 'Third Place';
+            }
 
             return 'Unknown Playoff Type';
         };
@@ -142,7 +145,8 @@ angular
                         return;
                     }
 
-                    var offset = ($index * 56) + 28 - (width / 2);
+                    // Need to offset for the 6px margin here, along with half of the width of a page.
+                    var offset = ($index * (56 + 6)) + (28) - (width / 2);
                     
                     $weekPageWrapper.css('left', -offset);
 
@@ -173,7 +177,7 @@ angular
                 scope.$watchCollection('schedule', function (n, o) {
                     
                     if (n && n.weeks.length > 0) {
-                        pageWidth = $weekPageWrapper.children().width();
+                        pageWidth = $weekPageWrapper.children().width() + 6;
                         wrapperWidth = $weekPageWrapper.children().length * pageWidth;
 
                         $weekPageWrapper.css('width', wrapperWidth);

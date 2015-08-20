@@ -24,7 +24,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
 
             if (this.rankings.Count() != 8)
             {
-                throw new Exception("Right now playoff rankings are only implemented for a 10 team league.");
+                return new List<GroupedPlayoffMatchup>();
             }
 
             var sortedRanks = this.rankings.OrderBy(x => x.rank).ToList();

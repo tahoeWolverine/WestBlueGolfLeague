@@ -39,6 +39,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
             this.IsComplete = tm.IsComplete();
             this.TeeTimeText = tm.TeeTimeText();
             this.Id = tm.id;
+            this.PlayoffType = tm.playoffType;
 
             // TODO: going to need to add all the results here I think :\
         }
@@ -52,6 +53,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 		public bool? Team2Win { get; set; }
         public bool IsComplete { get; set; }
 		public string TeeTimeText { get; set; }
+        public string PlayoffType { get; set; }
         public int Id { get; set; }
     }
 }
