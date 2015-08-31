@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Extensions;
+using WestBlueGolfLeagueWeb.Models.Responses.Player;
 using WestBlueGolfLeagueWeb.Models.Responses.Team;
+using WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 {
@@ -41,6 +43,39 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
             this.Id = tm.id;
             this.PlayoffType = tm.playoffType;
 
+            if (this.IsComplete && team1 != null && team2 != null) 
+            {
+                result team1PointsResult = tm.TopPoints(team1);
+                //result team2PointsResult = tm.TopPoints(team2);
+
+                this.TopPoints = team1PointsResult != null ?
+                    new MatchSummaryValue
+                    {
+                        Player = new PlayerWebResponse(team1PointsResult.player),
+                        FormattedValue = LeaderBoardFormat.Default.FormatValue(team1PointsResult.points),
+                        Value = (double)team1PointsResult.points
+                    } : null;
+
+
+                result topNetScore = tm.TopNetDifference(team1);
+
+                this.TopNetScore = topNetScore != null ?
+                    new MatchSummaryValue
+                    {
+                        Player = new PlayerWebResponse(topNetScore.player),
+                        FormattedValue = LeaderBoardFormat.Net.FormatValue(topNetScore.NetScoreDifference()),
+                        Value = (double)topNetScore.NetScoreDifference()
+                    } : null;
+
+                //this.Team2TopPoints = team2PointsResult != null ?
+                //    new MatchSummaryValue
+                //    {
+                //        Player = new PlayerWebResponse(team2PointsResult.player),
+                //        FormattedValue = LeaderBoardFormat.Default.FormatValue(team2PointsResult.points),
+                //        Value = (double)team2PointsResult.points
+                //    } : null;
+            }
+
             // TODO: going to need to add all the results here I think :\
         }
 
@@ -55,5 +90,9 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 		public string TeeTimeText { get; set; }
         public string PlayoffType { get; set; }
         public int Id { get; set; }
+        public MatchSummaryValue TopPoints { get; set; }
+        //public MatchSummaryValue Team2TopPoints { get; set; }
+
+        public MatchSummaryValue TopNetScore { get; set; }
     }
 }

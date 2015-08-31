@@ -52,6 +52,36 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return tm.matches.Select(x => x.results.FirstOrDefault(r => r.teamId == team.id)).Sum(x => x == null ? 0 : x.points);
         }
 
+        // TODO: could probably use expression instead of function
+        private static result TopX(teammatchup tm, team team, Func<result, result, result> func)
+        {
+            if (!tm.IsComplete())
+            {
+                return null;
+            }
+
+            List<result> allResults = tm.matches.SelectMany(x => x.results).ToList();//.Where(x => x.teamId == team.id).ToList();
+
+            if (allResults.Count == 0)
+            {
+                return null;
+            }
+
+            result r = allResults.Aggregate(func);
+
+            return r;
+        }
+
+        public static result TopPoints(this teammatchup tm, team team)
+        {
+            return TopX(tm, team, (agg, next) => agg.points > next.points ? agg : next);
+        }
+
+        public static result TopNetDifference(this teammatchup tm, team team)
+        {
+            return TopX(tm, team, (agg, next) => agg.NetScoreDifference() < next.NetScoreDifference() ? agg : next);
+        }
+
         public static bool IsComplete(this teammatchup tm)
         {
             return tm.matches != null && tm.matches.Count > 0 && tm.matches.All(x => x.IsComplete());

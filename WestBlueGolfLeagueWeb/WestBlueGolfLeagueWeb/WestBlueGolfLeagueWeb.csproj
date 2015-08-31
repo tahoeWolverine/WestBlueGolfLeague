@@ -286,6 +286,7 @@
     <Compile Include="Models\Responses\Schedule\MatchWebResponse.cs" />
     <Compile Include="Models\Responses\Player\PlayerWebResponse.cs" />
     <Compile Include="Models\Responses\Schedule\ResultWebResponse.cs" />
+    <Compile Include="Models\Responses\Schedule\MatchSummaryValue.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleResponse.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleTeamMatchup.cs" />
     <Compile Include="Models\Responses\Team\TeamProfileData.cs" />

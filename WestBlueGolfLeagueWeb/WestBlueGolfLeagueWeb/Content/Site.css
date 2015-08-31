@@ -923,9 +923,9 @@ textarea.roster-input {
 
 .week-display-result, .week-display-upcoming {
     width: 100%;
-    right: 250px;
-    margin-right: -250px;
-    padding-left: 250px;
+    right: 220px;
+    margin-right: -220px;
+    padding-left: 220px;
     position: relative;
 }
 
@@ -940,7 +940,7 @@ textarea.roster-input {
 }
 
 .week-display-overview, .week-display-teetime {
-    width: 250px;
+    width: 220px;
 }
 
 .week-display-teetime {
@@ -975,6 +975,32 @@ textarea.roster-input {
     position: relative;
     top: -4px;
 }
+
+.match-summary-metric {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.metric-label {
+    display: table-cell;
+    width: 64px;
+    color: #999;
+}
+
+.metric-details {
+    display: table-cell;
+    width: auto;
+}
+
+.metric-value {
+    display: table-cell;
+    width: 26px;
+    text-align: right;
+}
+
 
 .week-display-playoff-type {
     font-weight: bold;
@@ -1074,7 +1100,9 @@ textarea.roster-input {
     .boardVisible {
         display: block;
     }
+}
 
+@media (max-width: 500px) {
     .week-display-overview {
         display: none;
     }

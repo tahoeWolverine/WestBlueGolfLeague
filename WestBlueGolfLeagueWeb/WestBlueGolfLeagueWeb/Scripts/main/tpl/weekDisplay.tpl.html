@@ -26,7 +26,21 @@
                 </table>
             </div>
             <div ng-if="::matchup.isComplete" class="week-display-overview">
-                Match Summary (under construction!)
+                <b>Top Players</b>
+                <div class="match-summary-metric">
+                    <div class="metric-label">Points</div>
+                    <div class="metric-details">
+                        {{::matchup.topPoints.player.name}} 
+                    </div>
+                    <div class="metric-value">{{::matchup.topPoints.formattedValue}}</div>
+                </div>
+                <div class="match-summary-metric">
+                    <div class="metric-label">Net Score</div>
+                    <div class="metric-details">
+                        {{::matchup.topNetScore.player.name}}
+                    </div>
+                    <div class="metric-value">{{::matchup.topNetScore.formattedValue}}</div>
+                </div>
             </div>
             <div ng-if="::!matchup.isComplete" class="week-display-teetime">
                 {{$parent.matchup.teeTimeText}}
