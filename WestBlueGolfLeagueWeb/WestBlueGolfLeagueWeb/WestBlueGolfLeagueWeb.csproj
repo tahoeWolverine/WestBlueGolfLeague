@@ -375,6 +375,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\appStoreQRCode.jpg" />
     <Content Include="Content\images\golfAppQRCode.jpg" />
+    <Content Include="Content\images\missingLinks15.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

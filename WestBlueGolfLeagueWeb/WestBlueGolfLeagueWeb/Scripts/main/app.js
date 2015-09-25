@@ -89,7 +89,7 @@ angular
                 return 'Consolation';
             }
             else if (input == 'lastplace') {
-                return 'Last Place';
+                return 'Lexis Nexis';
             }
             else if (input == 'thirdplace') {
                 return 'Third Place';
