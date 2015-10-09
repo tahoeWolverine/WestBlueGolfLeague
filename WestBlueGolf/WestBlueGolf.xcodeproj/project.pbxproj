@@ -993,7 +993,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = WB;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Mike Harlow";
 				TargetAttributes = {
 					A5F476DE1890769400AB3529 = {
@@ -1300,6 +1300,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1346,6 +1347,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1414,6 +1417,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1434,6 +1438,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

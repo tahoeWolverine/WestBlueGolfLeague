@@ -145,12 +145,12 @@
 }
 
 - (NSInteger)rankForTeam:(WBTeam *)team priorToWeek:(WBWeek *)week {
-	NSNumber *rank = [self.teamWeekRankStore objectForKey:[NSString stringWithFormat:@"%@%@", team.objectID, week.objectID]];
+	NSNumber *rank = [self.teamWeekRankStore objectForKey:[NSString stringWithFormat:@"%@%@", team.id, week.id]];
 	return rank ? rank.integerValue : 0;
 }
 
 - (void)setRank:(NSInteger)rank forTeam:(WBTeam *)team priorToWeek:(WBWeek *)week {
-	[self.teamWeekRankStore setObject:[NSNumber numberWithInteger:rank] forKey:[NSString stringWithFormat:@"%@%@", team.objectID, week.objectID]];
+	[self.teamWeekRankStore setObject:[NSNumber numberWithInteger:rank] forKey:[NSString stringWithFormat:@"%@%@", team.id, week.id]];
 }
 
 @end
