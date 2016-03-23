@@ -460,6 +460,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="dbConnections.config" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
+    <None Include="Properties\PublishProfiles\website.pubxml" />
     <None Include="Scripts\lib\jquery\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\lib\jquery\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\lib\jquery\jquery-2.1.0.js" />
