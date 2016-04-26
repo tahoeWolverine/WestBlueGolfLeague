@@ -101,7 +101,7 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
                 // This fetches all players from the previous two years, as they may be in the league again this year.
                 RosterInitializer rosterInitializer =
-                    new RosterInitializer(rosters, await this.Db.players.Where(x => x.playeryeardatas.Any(y => y.year.value > yearToSave.value - 3)).ToListAsync(), yearToSave);
+                    new RosterInitializer(rosters, await this.Db.players.Where(x => x.playeryeardatas.Any(y => y.year.value > yearToSave.value - 4)).ToListAsync(), yearToSave);
 
                 rosterInitializer.PersistRosters(this.Db);
 
