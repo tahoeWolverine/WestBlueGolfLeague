@@ -11,7 +11,7 @@ namespace WestBlueGolfLeagueWeb
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/lib/jquery/jquery-{version}.js",
-						"~/Scripts/lib/jquery/jquery.validate*",
+                        //"~/Scripts/lib/jquery/jquery.validate*",
                         "~/Scripts/lib/bootstrap/bootstrap.js",
                         "~/Scripts/lib/lodash.min.js",
                         "~/Scripts/lib/moment/moment.js",
