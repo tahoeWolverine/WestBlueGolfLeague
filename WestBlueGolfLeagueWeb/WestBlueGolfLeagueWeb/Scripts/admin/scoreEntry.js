@@ -154,11 +154,13 @@
 
 		    var dummyTeam = scoreEntryData.teamIdToPlayer[1]; // dummy team is #1 in the db, and should always be?
 
-		    self.team1PlayerList = scoreEntryData.teamIdToPlayer[this.team1.id]
-								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
+		    var team1players = scoreEntryData.teamIdToPlayer[this.team1.id] || [];
 
-		    self.team2PlayerList = scoreEntryData.teamIdToPlayer[this.team2.id]
-								    .concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
+		    self.team1PlayerList = team1players.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team1.id, scoreEntryData.teamIdToPlayer));
+
+            var team2players = scoreEntryData.teamIdToPlayer[this.team2.id] || [];
+
+		    self.team2PlayerList = team2players.concat(dummyTeam, scoreEntry.getOtherTeamPlayers(this.team2.id, scoreEntryData.teamIdToPlayer));
 
 		    self.toggleInputState = function (playerId, match, prop) {
 		        if (playerId < 3) {
