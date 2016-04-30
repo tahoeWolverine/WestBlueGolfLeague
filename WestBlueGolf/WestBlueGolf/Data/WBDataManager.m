@@ -101,7 +101,9 @@
 				[WBCoreDataManager saveMainContext];
 				
 				[weakSelf setThisYearValue:[WBYear newestYearInContext:[WBCoreDataManager mainContext]].valueValue inContext:[WBCoreDataManager mainContext]];
-			}
+            } else {
+                // No data from service
+            }
 		}];
 	} else {
 		[self setThisYearValue:year.valueValue inContext:[WBCoreDataManager mainContext]];
