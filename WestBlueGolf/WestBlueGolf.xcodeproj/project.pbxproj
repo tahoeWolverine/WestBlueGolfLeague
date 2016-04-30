@@ -161,6 +161,7 @@
 		A5F477141890769400AB3529 /* WestBlueGolfTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F477131890769400AB3529 /* WestBlueGolfTests.m */; };
 		A5F4771E18907E5E00AB3529 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F4771D18907E5E00AB3529 /* CoreData.framework */; };
 		A5F4772918907F5000AB3529 /* WestBlueGolf.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */; };
+		A5FEBD211CD457AE002977E8 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBD201CD457AE002977E8 /* Launch.storyboard */; };
 		D2C274AD18DB56F500CB1B93 /* ProfilePictureCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -406,6 +407,7 @@
 		A5F477131890769400AB3529 /* WestBlueGolfTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WestBlueGolfTests.m; sourceTree = "<group>"; };
 		A5F4771D18907E5E00AB3529 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A5F4772818907F5000AB3529 /* WestBlueGolf.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WestBlueGolf.xcdatamodel; sourceTree = "<group>"; };
+		A5FEBD201CD457AE002977E8 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		D2C274AB18DB56F500CB1B93 /* ProfilePictureCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCropperViewController.h; sourceTree = "<group>"; };
 		D2C274AC18DB56F500CB1B93 /* ProfilePictureCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCropperViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -851,6 +853,7 @@
 				A5F3454E18C9087A00EBF40A /* WBNotifications.h */,
 				A5F3454F18C9087A00EBF40A /* WBNotifications.m */,
 				A5F477001890769400AB3529 /* Images.xcassets */,
+				A5FEBD201CD457AE002977E8 /* Launch.storyboard */,
 				A5F476F71890769400AB3529 /* Main_iPad.storyboard */,
 				A5F476F41890769400AB3529 /* Main_iPhone.storyboard */,
 				A5F4772718907F5000AB3529 /* WestBlueGolf.xcdatamodeld */,
@@ -1039,6 +1042,7 @@
 				48FDD91918D81C9000F64989 /* teamTable2021.json in Resources */,
 				A5CAEE6E18D3CAB90072F134 /* weekTable2012.json in Resources */,
 				48FDD91718D81C9000F64989 /* playerTable2021.json in Resources */,
+				A5FEBD211CD457AE002977E8 /* Launch.storyboard in Resources */,
 				A5CAEE7518D751890072F134 /* matchTable2011.json in Resources */,
 				48FDD92518D81C9100F64989 /* matchTable2024.json in Resources */,
 				A5F477011890769400AB3529 /* Images.xcassets in Resources */,
