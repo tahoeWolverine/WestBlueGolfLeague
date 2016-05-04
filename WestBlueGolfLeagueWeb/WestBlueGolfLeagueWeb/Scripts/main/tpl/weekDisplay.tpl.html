@@ -1,5 +1,5 @@
 ﻿<div ng-if="week">
-    <h2>{{week.date | date:'MMMM, d'}} <span class="week-display-playoffs-header" ng-if="week.isPlayoff">Playoffs</span></h2>
+    <h2>{{week.date | date:'MMMM d'}} <span class="week-display-playoffs-header" ng-if="week.isPlayoff">Playoffs</span></h2>
     <div class="week-display-week-info">
         <span class="schedule-course" title="Course">{{week.course.name}} ({{week.course.par}})</span>
         <span title="Pairing for week" class="schedule-pairing">{{week.pairing}}</span>
