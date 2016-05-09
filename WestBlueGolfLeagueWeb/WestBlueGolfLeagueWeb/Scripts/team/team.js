@@ -6,7 +6,7 @@
 
         $stateProvider
             .state('teamList', {
-                url: '/',
+                url: '/Team/',
                 templateUrl: '/Scripts/team/tpl/teamListWrapper.tpl.html',
             });
 
@@ -19,7 +19,7 @@
 
         $stateProvider
             .state('teamDetails.teamProfile', {
-                url: '/:id',
+                url: '/Team/:id',
                 views: {
                     /*teamList: {
                         templateUrl: '/Scripts/team/tpl/teamList.tpl.html',
@@ -50,7 +50,7 @@
             getTeamData: function (id) {
                 return $http({
                     method: 'GET',
-                    url: '/api/v1/teamProfile/' + id
+                    url: '/api/v1/teams/' + id
                 });
             }
         };

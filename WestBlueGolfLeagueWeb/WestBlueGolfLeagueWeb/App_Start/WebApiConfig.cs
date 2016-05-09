@@ -28,9 +28,12 @@ namespace WestBlueGolfLeagueWeb
 
             config.Routes.MapHttpRoute(name: "GetLeaderBoardByKey", routeTemplate: "api/v1/leaderboards/{key}", defaults: new { controller = "LeaderBoardApi", action = "GetLeaderBoard" });
 
-            config.Routes.MapHttpRoute(name: "GetPlayerProfile", routeTemplate: "api/v1/playerProfile/{id}", defaults: new { controller = "PlayerApi", action = "GetProfileData" });
+            config.Routes.MapHttpRoute(name: "GetPlayerProfile", routeTemplate: "api/v1/players/{id}", defaults: new { controller = "PlayerApi", action = "GetProfileData" });
 
-            config.Routes.MapHttpRoute(name: "GetTeamProfile", routeTemplate: "api/v1/teamProfile/{id}", defaults: new { controller = "TeamApi", action = "GetProfileData" });
+            config.Routes.MapHttpRoute(name: "GetPlayers", routeTemplate: "api/v1/players/", defaults: new { controller = "PlayerApi", action = "GetPlayersList" });
+
+            config.Routes.MapHttpRoute(name: "GetTeamProfile", routeTemplate: "api/v1/teams/{id}", defaults: new { controller = "TeamApi", action = "GetProfileData" });
+            config.Routes.MapHttpRoute(name: "GetTeamList", routeTemplate: "api/v1/teams/", defaults: new { controller = "TeamApi", action = "GetTeams" });
 
             config.Routes.MapHttpRoute(name: "GetUserNameAvailability", routeTemplate: "api/user/name/{username}", defaults: new { controller = "User", action = "UserNameAvailable" });
 

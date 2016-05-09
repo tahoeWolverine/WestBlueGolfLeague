@@ -24,7 +24,7 @@ angular.module('leaderBoards', ['app', 'ngAnimate', 'ui.router']);
 		// stuff doesn't work anyways.
 
         $stateProvider
-            .state('leaderboards', {
+            .state(boardStates.LEADER_BOARDS_ROOT, {
                 abstract: true,
                 url: '/LeaderBoards',
                 templateUrl: '/Scripts/leaderBoards/tpl/leaderBoardWrapper.tpl.html',

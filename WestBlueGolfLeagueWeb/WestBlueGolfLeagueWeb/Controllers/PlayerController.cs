@@ -16,11 +16,11 @@ namespace WestBlueGolfLeagueWeb.Controllers
     {
         //
         // GET: /Player/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             int year = this.SelectedYear;
 
-            var playersForYear = this.Db.GetPlayersWithTeamsForYear(year);
+            var playersForYear = await this.Db.GetPlayersWithTeamsForYear(year);
 
 	        return
 		        View(new PlayerListViewModel

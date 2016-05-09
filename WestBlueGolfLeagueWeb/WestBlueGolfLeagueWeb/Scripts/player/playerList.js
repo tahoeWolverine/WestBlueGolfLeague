@@ -27,20 +27,15 @@ angular.module('playerList', ['app', 'ui.router']);
         });
 
 
-    var PlayerListService = function ($window, $q, $timeout) {
-
-        var playerYearData = $window.playerYearData;
+    var PlayerListService = function ($http) {
 
         return {
             getPlayersForYear: function () {
 
-                // This is kind of goofy but I want to keep an async contract in case
-                // we return this data from http or something else which is async in the future.
-                var defer = $q.defer();
-
-                defer.resolve(playerYearData);
-
-                return defer.promise;
+                return $http({
+                    method: 'GET',
+                    url: '/api/v1/players'
+                }).then(function(result) { return result.data.playersForYear; });
             }
         };
     };
@@ -66,7 +61,7 @@ angular.module('playerList', ['app', 'ui.router']);
 
     module
         .controller('PlayerList', ['$scope', 'playerListService', '$filter', ListController])
-        .factory('playerListService', ['$window', '$q', '$timeout', PlayerListService]);
+        .factory('playerListService', ['$http', PlayerListService]);
 
 })(angular.module('playerList'));
 
