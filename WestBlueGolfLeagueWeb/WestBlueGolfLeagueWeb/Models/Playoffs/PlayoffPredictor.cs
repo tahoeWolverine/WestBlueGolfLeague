@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
             // only grab playoff weeks.
             var playoffWeeksInOrder = this.allWeeks.Where(x => x.isPlayoff).OrderBy(x => x.seasonIndex);
 
-            if (this.rankings.Count() != 8)
+            if (this.rankings.Count() != 8 || playoffWeeksInOrder.Count() == 0)
             {
                 return new List<GroupedPlayoffMatchup>();
             }
