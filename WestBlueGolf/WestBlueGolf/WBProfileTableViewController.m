@@ -199,12 +199,35 @@
 
 - (IBAction)favoritePlayer:(UIBarButtonItem *)sender {
 	if ([self isMeTab]) {
-		UIAlertView *resetAlert = [[UIAlertView alloc] initWithTitle:@"Remove Profile"
+		/*UIAlertView *resetAlert = [[UIAlertView alloc] initWithTitle:@"Remove Profile"
 															 message:@"Are you sure you want to reset your identity in the app?"
 															delegate:self
 												   cancelButtonTitle:@"Cancel"
 												   otherButtonTitles:@"Reset", nil];
-		[resetAlert show];
+		[resetAlert show];*/
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Remove Profile"
+                                                                                 message:@"Are you sure you want to reset your identity in the app?"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action) {
+                                                             
+                                                         }];
+        UIAlertAction *actionReset = [UIAlertAction actionWithTitle:@"Reset"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action) {
+                                                             [self.selectedPlayer setPlayerToNotMe];
+                                                             
+                                                             [WBCoreDataManager saveMainContext];
+                                                             
+                                                             self.selectedPlayer = nil;
+                                                             
+                                                             [self refreshPlayerHighlights];
+                                                             [self refreshFavoriteButton];
+                                                         }];
+        [alertController addAction:actionCancel];
+        [alertController addAction:actionReset];
+        [self presentViewController:alertController animated:YES completion:nil];
 	} else {
 		WBPlayer *me = [WBPlayer me];
 		WBPlayer *selected = self.selectedPlayer;
@@ -220,7 +243,7 @@
 	[self refreshFavoriteButton];
 }
 
-#pragma mark - WBEntityDetailViewController methods to implement
+/*#pragma mark - WBEntityDetailViewController methods to implement
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if ([alertView.title isEqualToString:@"No Player"]) {
@@ -237,18 +260,28 @@
 		[self refreshPlayerHighlights];
 		[self refreshFavoriteButton];
 	}
-}
+}*/
 
 #pragma mark - IBAction Methods
 
 - (IBAction)tappedProfileImage:(UITapGestureRecognizer *)sender {
 	if (!self.selectedPlayer || [self.selectedPlayer.name isEqualToString:@""]) {
-		UIAlertView *noPlayerAlert = [[UIAlertView alloc] initWithTitle:@"No Player"
+		/*UIAlertView *noPlayerAlert = [[UIAlertView alloc] initWithTitle:@"No Player"
 																message:@"You can only add a profile photo once you've selected yourself from the players list"
 															   delegate:self
 													  cancelButtonTitle:@"Ok"
 													  otherButtonTitles:nil];
-		[noPlayerAlert show];
+		[noPlayerAlert show];*/
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Player"
+                                                                                 message:@"You can only add a profile photo once you've selected yourself from the players list"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action) {
+                                                             
+                                                         }];
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
 		return;
 	}
 	
@@ -257,22 +290,60 @@
 	}
 	
 	// Display Action Sheet for selecting source of image
-	UIActionSheet *imagePickerActionSheet = [[UIActionSheet alloc] initWithTitle:@"Profile Picture Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Library", @"Camera", nil];
-	[imagePickerActionSheet showInView:self.view];
+	/*UIActionSheet *imagePickerActionSheet = [[UIActionSheet alloc] initWithTitle:@"Profile Picture Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Library", @"Camera", nil];
+	[imagePickerActionSheet showInView:self.view];*/
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Profile Picture"
+                                                                   message:@"Please select a picture source."
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    TRWeakSelf weakSelf = self;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        UIAlertAction *library = [UIAlertAction actionWithTitle:@"Library"
+                                                              style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                                                  [weakSelf pictureSourceTapped:UIImagePickerControllerSourceTypePhotoLibrary];
+                                                              }];
+        [alert addAction:library];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Camera"
+                                                               style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                                                   [weakSelf pictureSourceTapped:UIImagePickerControllerSourceTypeCamera];
+                                                               }];
+        [alert addAction:camera];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        UIAlertAction *photos = [UIAlertAction actionWithTitle:@"Saved Photos"
+                                                               style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                                                   [weakSelf pictureSourceTapped:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+                                                               }];
+        [alert addAction:photos];
+    }
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                     style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                                     }];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-#pragma mark - UIActionSheet Delegate
+/*#pragma mark - UIActionSheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
 	
 	// Check if the User selected the Library or Camera as a source
 	if ([buttonTitle isEqualToString:@"Library"] || [buttonTitle isEqualToString:@"Camera"]) {
-		self.imagePickerController = [[UIImagePickerController alloc] init];
-		self.imagePickerController.sourceType = [buttonTitle isEqualToString:@"Library"] ?  UIImagePickerControllerSourceTypePhotoLibrary : UIImagePickerControllerSourceTypeCamera;
-		self.imagePickerController.delegate = self;
-		[self presentViewController:self.imagePickerController animated:YES completion:nil];
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.sourceType = [buttonTitle isEqualToString:@"Library"] ?  UIImagePickerControllerSourceTypePhotoLibrary : UIImagePickerControllerSourceTypeCamera;
+        self.imagePickerController.delegate = self;
+        [self presentViewController:self.imagePickerController animated:YES completion:nil];
 	}
+}*/
+
+- (void)pictureSourceTapped:(UIImagePickerControllerSourceType)type {
+    self.imagePickerController = [[UIImagePickerController alloc] init];
+    self.imagePickerController.sourceType = type;
+    self.imagePickerController.delegate = self;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerController Delegate

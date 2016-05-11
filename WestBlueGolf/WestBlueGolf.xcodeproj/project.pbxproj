@@ -1305,6 +1305,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
@@ -1424,6 +1425,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
@@ -1445,6 +1447,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WestBlueGolf/WestBlueGolf-Prefix.pch";
 				INFOPLIST_FILE = "WestBlueGolf/WestBlueGolf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thomsonreuters.legal.beta.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = WestBlueGolf;
 				PROVISIONING_PROFILE = "";
