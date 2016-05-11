@@ -68,7 +68,7 @@
 - (NSManagedObjectContext *)managedObjectContext {
 	//NSAssert1([NSThread isMainThread], @"%s called with non-main thread!", __FUNCTION__);
 	if (_managedObjectContext == nil) {
-		_managedObjectContext = [[NSManagedObjectContext alloc] init];
+		_managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 		[_managedObjectContext setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
 		[_managedObjectContext setUndoManager:nil];
 	}
