@@ -390,6 +390,10 @@ player-list-item-name {
     width: 100%;
 }
 
+.team-list-selection .team-list-teams {
+    padding-bottom: 80px; /* offset for fixed footer - body padding */
+}
+
 .team-details-profile {
     z-index: 10;
 	position: relative;
@@ -1021,6 +1025,10 @@ textarea.roster-input {
         width: 75%;
     }
 
+    .team-list-input .col-xs-12 {
+        width: 75%;
+    }
+
     .header-link {
         display: none;
     }
@@ -1054,6 +1062,30 @@ textarea.roster-input {
 
     .player-list-selection .player-list-players {
         padding-bottom: 0;
+    }
+
+    .team-details-team-list-parent {
+        width: 0;
+        display: none;
+    }
+
+    .team-details-profile {
+        margin-left: 0;
+    }
+
+    .team + footer {
+        position: inherit;
+        bottom: inherit;
+        z-index: inherit;
+        height: inherit;
+    }
+
+    .team-list-selection .team-list-teams {
+        padding-bottom: 0;
+    }
+
+    .team-list-input .col-xs-12 {
+        width: inherit;
     }
 
     .match-player-edit .match-team-name {
