@@ -19,6 +19,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.API
             tmr.WId = tm.weekId;
             tmr.Matches = tm.matches.Select(x => MatchResponse.From(x)).ToList();
             tmr.PlayoffType = tm.playoffType;
+            tmr.MatchOrder = tm.matchOrder;
             return tmr;
         }
 
@@ -31,6 +32,8 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.API
         public int WId { get; set; }
 
         public IList<MatchResponse> Matches { get; set; }
+
+        public int? MatchOrder { get; set; }
 
         public string PlayoffType { get; set; }
     }
