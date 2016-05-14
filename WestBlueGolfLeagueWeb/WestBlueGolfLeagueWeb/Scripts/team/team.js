@@ -28,6 +28,9 @@
                     teamDetails: {
                         templateUrl: '/Scripts/team/tpl/teamDetails.tpl.html',
                         controller: 'TeamDetails as teamDetails'
+                    },
+                    'header.main@': {
+                        template: '<a class="navbar-brand" ui-sref="teamList()" href="javascript:void();"><i class="fa fa-chevron-left"></i> Teams</a>'
                     }
                 },
                 resolve: {
@@ -79,6 +82,6 @@
         .factory('TeamProfileService', ['$http', TeamProfileService])
         .directive('teamList', TeamListDirective);
 
-})(angular.module('team', ['app', 'ngAnimate', 'ui.router', 'teamList']));
+})(angular.module('team', ['app', 'ngAnimate', 'ui.router', 'teamList', 'leaderBoards']));
 
   
