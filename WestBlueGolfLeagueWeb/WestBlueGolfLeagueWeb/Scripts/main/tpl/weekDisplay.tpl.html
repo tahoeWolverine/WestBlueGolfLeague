@@ -12,13 +12,13 @@
                 
                 <table class="team-matchup-result">
                     <tr ng-class="{'week-display-win': matchup.team1Win }">
-                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team1.id}}">{{matchup.team1.name}}</a></td>
+                        <td class="week-display-teamname"><a ui-sref="teamDetails.teamProfile({ id: matchup.team1.id })">{{matchup.team1.name}}</a></td>
                         <td class="team-score" ng-if="::matchup.isComplete">
                             {{$parent.matchup.team1Points}}
                         </td>
                     </tr>
                     <tr ng-class="{'week-display-win': matchup.team2Win }">
-                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team2.id}}">{{matchup.team2.name}}</a></td>
+                        <td class="week-display-teamname"><a ui-sref="teamDetails.teamProfile({id: matchup.team2.id })">{{matchup.team2.name}}</a></td>
                         <td class="team-score" ng-if="::matchup.isComplete">
                             {{$parent.matchup.team2Points}}
                         </td>
