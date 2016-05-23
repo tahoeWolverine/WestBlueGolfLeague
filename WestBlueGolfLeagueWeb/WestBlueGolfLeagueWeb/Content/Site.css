@@ -984,6 +984,25 @@ textarea.roster-input {
     top: -4px;
 }
 
+.week-display-details-toggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 24px;
+    height: 28px;
+    text-align: center;
+    font-size: 28px;
+    bottom: -14px;
+    line-height: 1;
+    background: white;
+    color: #428bca;
+}
+
+.matchup-date-detail {
+    position: relative;
+}
+
 .match-summary-metric {
     width: 100%;
     display: table;

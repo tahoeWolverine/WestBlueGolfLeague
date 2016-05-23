@@ -9,7 +9,6 @@
         <div ng-repeat="matchup in week.teamMatchups" class="matchup-date-detail clearfix">
             <h5 class="week-display-playoff-type" ng-if="::(matchup.playoffType)">{{::matchup.playoffType | playoffName}}</h5>
             <div ng-class="{'week-display-result': matchup.isComplete, 'week-display-upcoming': !matchup.isComplete}">
-                
                 <table class="team-matchup-result">
                     <tr ng-class="{'week-display-win': matchup.team1Win }">
                         <td class="week-display-teamname"><a ui-sref="teamDetails.teamProfile({ id: matchup.team1.id })">{{matchup.team1.name}}</a></td>
@@ -44,6 +43,9 @@
             </div>
             <div ng-if="::!matchup.isComplete" class="week-display-teetime">
                 {{$parent.matchup.teeTimeText}}
+            </div>
+            <div class="week-display-details-toggle">
+                <i class="fa fa-chevron-circle-down"></i>
             </div>
         </div>
     </div>
