@@ -1,109 +1,57 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBPeopleEntity.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBPeopleEntityAttributes {
-	__unsafe_unretained NSString *favorite;
-	__unsafe_unretained NSString *me;
-	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *real;
-} WBPeopleEntityAttributes;
-
-extern const struct WBPeopleEntityRelationships {
-	__unsafe_unretained NSString *boardData;
-} WBPeopleEntityRelationships;
-
-extern const struct WBPeopleEntityFetchedProperties {
-} WBPeopleEntityFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBBoardData;
-
-
-
-
-
 
 @interface WBPeopleEntityID : NSManagedObjectID {}
 @end
 
-@interface _WBPeopleEntity : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBPeopleEntity : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBPeopleEntityID*)objectID;
-
-
-
-
+@property (nonatomic, readonly, strong) WBPeopleEntityID *objectID;
 
 @property (nonatomic, strong) NSNumber* favorite;
 
-
-
-@property BOOL favoriteValue;
+@property (atomic) BOOL favoriteValue;
 - (BOOL)favoriteValue;
 - (void)setFavoriteValue:(BOOL)value_;
 
-//- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* me;
 
-
-
-@property BOOL meValue;
+@property (atomic) BOOL meValue;
 - (BOOL)meValue;
 - (void)setMeValue:(BOOL)value_;
 
-//- (BOOL)validateMe:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* name;
-
-
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 @property (nonatomic, strong) NSNumber* real;
 
-
-
-@property BOOL realValue;
+@property (atomic) BOOL realValue;
 - (BOOL)realValue;
 - (void)setRealValue:(BOOL)value_;
 
-//- (BOOL)validateReal:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSSet *boardData;
-
-- (NSMutableSet*)boardDataSet;
-
-
-
-
+@property (nonatomic, strong, nullable) NSSet<WBBoardData*> *boardData;
+- (nullable NSMutableSet<WBBoardData*>*)boardDataSet;
 
 @end
 
-@interface _WBPeopleEntity (CoreDataGeneratedAccessors)
-
-- (void)addBoardData:(NSSet*)value_;
-- (void)removeBoardData:(NSSet*)value_;
+@interface _WBPeopleEntity (BoardDataCoreDataGeneratedAccessors)
+- (void)addBoardData:(NSSet<WBBoardData*>*)value_;
+- (void)removeBoardData:(NSSet<WBBoardData*>*)value_;
 - (void)addBoardDataObject:(WBBoardData*)value_;
 - (void)removeBoardDataObject:(WBBoardData*)value_;
 
@@ -111,15 +59,11 @@ extern const struct WBPeopleEntityFetchedProperties {
 
 @interface _WBPeopleEntity (CoreDataGeneratedPrimitiveAccessors)
 
-
 - (NSNumber*)primitiveFavorite;
 - (void)setPrimitiveFavorite:(NSNumber*)value;
 
 - (BOOL)primitiveFavoriteValue;
 - (void)setPrimitiveFavoriteValue:(BOOL)value_;
-
-
-
 
 - (NSNumber*)primitiveMe;
 - (void)setPrimitiveMe:(NSNumber*)value;
@@ -127,14 +71,8 @@ extern const struct WBPeopleEntityFetchedProperties {
 - (BOOL)primitiveMeValue;
 - (void)setPrimitiveMeValue:(BOOL)value_;
 
-
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
 
 - (NSNumber*)primitiveReal;
 - (void)setPrimitiveReal:(NSNumber*)value;
@@ -142,12 +80,20 @@ extern const struct WBPeopleEntityFetchedProperties {
 - (BOOL)primitiveRealValue;
 - (void)setPrimitiveRealValue:(BOOL)value_;
 
-
-
-
-
-- (NSMutableSet*)primitiveBoardData;
-- (void)setPrimitiveBoardData:(NSMutableSet*)value;
-
+- (NSMutableSet<WBBoardData*>*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(NSMutableSet<WBBoardData*>*)value;
 
 @end
+
+@interface WBPeopleEntityAttributes: NSObject 
++ (NSString *)favorite;
++ (NSString *)me;
++ (NSString *)name;
++ (NSString *)real;
+@end
+
+@interface WBPeopleEntityRelationships: NSObject
++ (NSString *)boardData;
+@end
+
+NS_ASSUME_NONNULL_END

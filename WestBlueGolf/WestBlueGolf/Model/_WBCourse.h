@@ -1,93 +1,51 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBCourse.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBCourseAttributes {
-	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *par;
-} WBCourseAttributes;
-
-extern const struct WBCourseRelationships {
-	__unsafe_unretained NSString *weeks;
-} WBCourseRelationships;
-
-extern const struct WBCourseFetchedProperties {
-} WBCourseFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBWeek;
-
-
-
-
 
 @interface WBCourseID : NSManagedObjectID {}
 @end
 
-@interface _WBCourse : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBCourse : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBCourseID*)objectID;
-
-
-
-
+@property (nonatomic, readonly, strong) WBCourseID *objectID;
 
 @property (nonatomic, strong) NSNumber* id;
 
-
-
-@property int16_t idValue;
+@property (atomic) int16_t idValue;
 - (int16_t)idValue;
 - (void)setIdValue:(int16_t)value_;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* name;
-
-
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 @property (nonatomic, strong) NSNumber* par;
 
+@property (atomic) uint16_t parValue;
+- (uint16_t)parValue;
+- (void)setParValue:(uint16_t)value_;
 
-
-@property int16_t parValue;
-- (int16_t)parValue;
-- (void)setParValue:(int16_t)value_;
-
-//- (BOOL)validatePar:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSSet *weeks;
-
-- (NSMutableSet*)weeksSet;
-
-
-
-
+@property (nonatomic, strong) NSSet<WBWeek*> *weeks;
+- (NSMutableSet<WBWeek*>*)weeksSet;
 
 @end
 
-@interface _WBCourse (CoreDataGeneratedAccessors)
-
-- (void)addWeeks:(NSSet*)value_;
-- (void)removeWeeks:(NSSet*)value_;
+@interface _WBCourse (WeeksCoreDataGeneratedAccessors)
+- (void)addWeeks:(NSSet<WBWeek*>*)value_;
+- (void)removeWeeks:(NSSet<WBWeek*>*)value_;
 - (void)addWeeksObject:(WBWeek*)value_;
 - (void)removeWeeksObject:(WBWeek*)value_;
 
@@ -95,34 +53,34 @@ extern const struct WBCourseFetchedProperties {
 
 @interface _WBCourse (CoreDataGeneratedPrimitiveAccessors)
 
-
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
 
 - (int16_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int16_t)value_;
 
-
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
 
 - (NSNumber*)primitivePar;
 - (void)setPrimitivePar:(NSNumber*)value;
 
-- (int16_t)primitiveParValue;
-- (void)setPrimitiveParValue:(int16_t)value_;
+- (uint16_t)primitiveParValue;
+- (void)setPrimitiveParValue:(uint16_t)value_;
 
-
-
-
-
-- (NSMutableSet*)primitiveWeeks;
-- (void)setPrimitiveWeeks:(NSMutableSet*)value;
-
+- (NSMutableSet<WBWeek*>*)primitiveWeeks;
+- (void)setPrimitiveWeeks:(NSMutableSet<WBWeek*>*)value;
 
 @end
+
+@interface WBCourseAttributes: NSObject 
++ (NSString *)id;
++ (NSString *)name;
++ (NSString *)par;
+@end
+
+@interface WBCourseRelationships: NSObject
++ (NSString *)weeks;
+@end
+
+NS_ASSUME_NONNULL_END

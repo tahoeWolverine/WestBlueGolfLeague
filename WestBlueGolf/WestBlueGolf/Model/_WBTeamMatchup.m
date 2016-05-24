@@ -3,27 +3,12 @@
 
 #import "_WBTeamMatchup.h"
 
-const struct WBTeamMatchupAttributes WBTeamMatchupAttributes = {
-	.matchComplete = @"matchComplete",
-	.matchId = @"matchId",
-	.playoffType = @"playoffType",
-};
-
-const struct WBTeamMatchupRelationships WBTeamMatchupRelationships = {
-	.matches = @"matches",
-	.teams = @"teams",
-	.week = @"week",
-};
-
-const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
-};
-
 @implementation WBTeamMatchupID
 @end
 
 @implementation _WBTeamMatchup
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBTeamMatchup" inManagedObjectContext:moc_];
 }
@@ -43,7 +28,7 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"matchCompleteValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"matchComplete"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -51,6 +36,11 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 	}
 	if ([key isEqualToString:@"matchIdValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"matchId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"matchOrderValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"matchOrder"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -63,12 +53,7 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic matchComplete;
-
-
 
 - (BOOL)matchCompleteValue {
 	NSNumber *result = [self matchComplete];
@@ -76,7 +61,7 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setMatchCompleteValue:(BOOL)value_ {
-	[self setMatchComplete:[NSNumber numberWithBool:value_]];
+	[self setMatchComplete:@(value_)];
 }
 
 - (BOOL)primitiveMatchCompleteValue {
@@ -85,16 +70,10 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setPrimitiveMatchCompleteValue:(BOOL)value_ {
-	[self setPrimitiveMatchComplete:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveMatchComplete:@(value_)];
 }
 
-
-
-
-
 @dynamic matchId;
-
-
 
 - (int16_t)matchIdValue {
 	NSNumber *result = [self matchId];
@@ -102,7 +81,7 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setMatchIdValue:(int16_t)value_ {
-	[self setMatchId:[NSNumber numberWithShort:value_]];
+	[self setMatchId:@(value_)];
 }
 
 - (int16_t)primitiveMatchIdValue {
@@ -111,16 +90,30 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setPrimitiveMatchIdValue:(int16_t)value_ {
-	[self setPrimitiveMatchId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveMatchId:@(value_)];
 }
 
+@dynamic matchOrder;
 
+- (uint16_t)matchOrderValue {
+	NSNumber *result = [self matchOrder];
+	return [result unsignedShortValue];
+}
 
+- (void)setMatchOrderValue:(uint16_t)value_ {
+	[self setMatchOrder:@(value_)];
+}
 
+- (uint16_t)primitiveMatchOrderValue {
+	NSNumber *result = [self primitiveMatchOrder];
+	return [result unsignedShortValue];
+}
+
+- (void)setPrimitiveMatchOrderValue:(uint16_t)value_ {
+	[self setPrimitiveMatchOrder:@(value_)];
+}
 
 @dynamic playoffType;
-
-
 
 - (int16_t)playoffTypeValue {
 	NSNumber *result = [self playoffType];
@@ -128,7 +121,7 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setPlayoffTypeValue:(int16_t)value_ {
-	[self setPlayoffType:[NSNumber numberWithShort:value_]];
+	[self setPlayoffType:@(value_)];
 }
 
 - (int16_t)primitivePlayoffTypeValue {
@@ -137,46 +130,59 @@ const struct WBTeamMatchupFetchedProperties WBTeamMatchupFetchedProperties = {
 }
 
 - (void)setPrimitivePlayoffTypeValue:(int16_t)value_ {
-	[self setPrimitivePlayoffType:[NSNumber numberWithShort:value_]];
+	[self setPrimitivePlayoffType:@(value_)];
 }
-
-
-
-
 
 @dynamic matches;
 
-	
-- (NSMutableSet*)matchesSet {
+- (NSMutableSet<WBMatch*>*)matchesSet {
 	[self willAccessValueForKey:@"matches"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"matches"];
-  
+
+	NSMutableSet<WBMatch*> *result = (NSMutableSet<WBMatch*>*)[self mutableSetValueForKey:@"matches"];
+
 	[self didAccessValueForKey:@"matches"];
 	return result;
 }
-	
 
 @dynamic teams;
 
-	
-- (NSMutableSet*)teamsSet {
+- (NSMutableSet<WBTeam*>*)teamsSet {
 	[self willAccessValueForKey:@"teams"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"teams"];
-  
+
+	NSMutableSet<WBTeam*> *result = (NSMutableSet<WBTeam*>*)[self mutableSetValueForKey:@"teams"];
+
 	[self didAccessValueForKey:@"teams"];
 	return result;
 }
-	
 
 @dynamic week;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBTeamMatchupAttributes 
++ (NSString *)matchComplete {
+	return @"matchComplete";
+}
++ (NSString *)matchId {
+	return @"matchId";
+}
++ (NSString *)matchOrder {
+	return @"matchOrder";
+}
++ (NSString *)playoffType {
+	return @"playoffType";
+}
+@end
+
+@implementation WBTeamMatchupRelationships 
++ (NSString *)matches {
+	return @"matches";
+}
++ (NSString *)teams {
+	return @"teams";
+}
++ (NSString *)week {
+	return @"week";
+}
+@end
+

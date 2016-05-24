@@ -3,29 +3,12 @@
 
 #import "_WBBoardData.h"
 
-const struct WBBoardDataAttributes WBBoardDataAttributes = {
-	.detailValue = @"detailValue",
-	.displayValue = @"displayValue",
-	.id = @"id",
-	.rank = @"rank",
-	.value = @"value",
-};
-
-const struct WBBoardDataRelationships WBBoardDataRelationships = {
-	.leaderBoard = @"leaderBoard",
-	.peopleEntity = @"peopleEntity",
-	.year = @"year",
-};
-
-const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
-};
-
 @implementation WBBoardDataID
 @end
 
 @implementation _WBBoardData
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBBoardData" inManagedObjectContext:moc_];
 }
@@ -45,7 +28,7 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -65,26 +48,11 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic detailValue;
-
-
-
-
-
 
 @dynamic displayValue;
 
-
-
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -92,7 +60,7 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -101,42 +69,30 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
-
-
-
-
 
 @dynamic rank;
 
-
-
-- (int16_t)rankValue {
+- (uint16_t)rankValue {
 	NSNumber *result = [self rank];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setRankValue:(int16_t)value_ {
-	[self setRank:[NSNumber numberWithShort:value_]];
+- (void)setRankValue:(uint16_t)value_ {
+	[self setRank:@(value_)];
 }
 
-- (int16_t)primitiveRankValue {
+- (uint16_t)primitiveRankValue {
 	NSNumber *result = [self primitiveRank];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitiveRankValue:(int16_t)value_ {
-	[self setPrimitiveRank:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveRankValue:(uint16_t)value_ {
+	[self setPrimitiveRank:@(value_)];
 }
-
-
-
-
 
 @dynamic value;
-
-
 
 - (double)valueValue {
 	NSNumber *result = [self value];
@@ -144,7 +100,7 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 }
 
 - (void)setValueValue:(double)value_ {
-	[self setValue:[NSNumber numberWithDouble:value_]];
+	[self setValue:@(value_)];
 }
 
 - (double)primitiveValueValue {
@@ -153,28 +109,44 @@ const struct WBBoardDataFetchedProperties WBBoardDataFetchedProperties = {
 }
 
 - (void)setPrimitiveValueValue:(double)value_ {
-	[self setPrimitiveValue:[NSNumber numberWithDouble:value_]];
+	[self setPrimitiveValue:@(value_)];
 }
-
-
-
-
 
 @dynamic leaderBoard;
 
-	
-
 @dynamic peopleEntity;
-
-	
 
 @dynamic year;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBBoardDataAttributes 
++ (NSString *)detailValue {
+	return @"detailValue";
+}
++ (NSString *)displayValue {
+	return @"displayValue";
+}
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)rank {
+	return @"rank";
+}
++ (NSString *)value {
+	return @"value";
+}
+@end
+
+@implementation WBBoardDataRelationships 
++ (NSString *)leaderBoard {
+	return @"leaderBoard";
+}
++ (NSString *)peopleEntity {
+	return @"peopleEntity";
+}
++ (NSString *)year {
+	return @"year";
+}
+@end
+

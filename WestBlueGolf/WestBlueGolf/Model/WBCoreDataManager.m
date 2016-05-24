@@ -97,7 +97,7 @@
 }
 
 - (void)resetManagedObjectContextAndPersistentStore {
-	[_managedObjectContext lock];
+	//[_managedObjectContext lock];
 	[_managedObjectContext reset];		//to drop pending changes
 	
 	// remove any persistent stores before remove the files
@@ -115,7 +115,7 @@
 			DLog(@"removeItemAtPath - error %@, %@", error, [error userInfo]);
 	}
 	
-	[_managedObjectContext unlock];
+	//[_managedObjectContext unlock];
 	_managedObjectContext = nil;
 }
 

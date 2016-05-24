@@ -14,6 +14,7 @@ typedef enum {
 										andTeam:(WBTeam *)team2
 										forWeek:(WBWeek *)week
                                       matchupId:(NSInteger)matchupId
+                                   matchupOrder:(NSInteger)matchupOrder
 								  matchComplete:(BOOL)matchComplete
                                     playoffType:(WBPlayoffType)playoffType
 											moc:(NSManagedObjectContext *)moc;

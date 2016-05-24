@@ -3,28 +3,12 @@
 
 #import "_WBPlayerYearData.h"
 
-const struct WBPlayerYearDataAttributes WBPlayerYearDataAttributes = {
-	.finishingHandicap = @"finishingHandicap",
-	.id = @"id",
-	.isRookie = @"isRookie",
-	.startingHandicap = @"startingHandicap",
-};
-
-const struct WBPlayerYearDataRelationships WBPlayerYearDataRelationships = {
-	.player = @"player",
-	.team = @"team",
-	.year = @"year",
-};
-
-const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties = {
-};
-
 @implementation WBPlayerYearDataID
 @end
 
 @implementation _WBPlayerYearData
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBPlayerYearData" inManagedObjectContext:moc_];
 }
@@ -44,7 +28,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"finishingHandicapValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"finishingHandicap"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -69,12 +53,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 	return keyPaths;
 }
 
-
-
-
 @dynamic finishingHandicap;
-
-
 
 - (int16_t)finishingHandicapValue {
 	NSNumber *result = [self finishingHandicap];
@@ -82,7 +61,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setFinishingHandicapValue:(int16_t)value_ {
-	[self setFinishingHandicap:[NSNumber numberWithShort:value_]];
+	[self setFinishingHandicap:@(value_)];
 }
 
 - (int16_t)primitiveFinishingHandicapValue {
@@ -91,16 +70,10 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setPrimitiveFinishingHandicapValue:(int16_t)value_ {
-	[self setPrimitiveFinishingHandicap:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveFinishingHandicap:@(value_)];
 }
 
-
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -108,7 +81,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -117,16 +90,10 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
 
-
-
-
-
 @dynamic isRookie;
-
-
 
 - (BOOL)isRookieValue {
 	NSNumber *result = [self isRookie];
@@ -134,7 +101,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setIsRookieValue:(BOOL)value_ {
-	[self setIsRookie:[NSNumber numberWithBool:value_]];
+	[self setIsRookie:@(value_)];
 }
 
 - (BOOL)primitiveIsRookieValue {
@@ -143,16 +110,10 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setPrimitiveIsRookieValue:(BOOL)value_ {
-	[self setPrimitiveIsRookie:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveIsRookie:@(value_)];
 }
 
-
-
-
-
 @dynamic startingHandicap;
-
-
 
 - (int16_t)startingHandicapValue {
 	NSNumber *result = [self startingHandicap];
@@ -160,7 +121,7 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setStartingHandicapValue:(int16_t)value_ {
-	[self setStartingHandicap:[NSNumber numberWithShort:value_]];
+	[self setStartingHandicap:@(value_)];
 }
 
 - (int16_t)primitiveStartingHandicapValue {
@@ -169,28 +130,41 @@ const struct WBPlayerYearDataFetchedProperties WBPlayerYearDataFetchedProperties
 }
 
 - (void)setPrimitiveStartingHandicapValue:(int16_t)value_ {
-	[self setPrimitiveStartingHandicap:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveStartingHandicap:@(value_)];
 }
-
-
-
-
 
 @dynamic player;
 
-	
-
 @dynamic team;
-
-	
 
 @dynamic year;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBPlayerYearDataAttributes 
++ (NSString *)finishingHandicap {
+	return @"finishingHandicap";
+}
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)isRookie {
+	return @"isRookie";
+}
++ (NSString *)startingHandicap {
+	return @"startingHandicap";
+}
+@end
+
+@implementation WBPlayerYearDataRelationships 
++ (NSString *)player {
+	return @"player";
+}
++ (NSString *)team {
+	return @"team";
+}
++ (NSString *)year {
+	return @"year";
+}
+@end
+

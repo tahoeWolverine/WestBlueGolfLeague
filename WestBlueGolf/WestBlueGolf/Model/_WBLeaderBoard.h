@@ -1,121 +1,59 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBLeaderBoard.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBLeaderBoardAttributes {
-	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *isPlayerBoard;
-	__unsafe_unretained NSString *key;
-	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *tablePriority;
-} WBLeaderBoardAttributes;
-
-extern const struct WBLeaderBoardRelationships {
-	__unsafe_unretained NSString *boardData;
-} WBLeaderBoardRelationships;
-
-extern const struct WBLeaderBoardFetchedProperties {
-} WBLeaderBoardFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBBoardData;
-
-
-
-
-
-
 
 @interface WBLeaderBoardID : NSManagedObjectID {}
 @end
 
-@interface _WBLeaderBoard : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBLeaderBoard : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBLeaderBoardID*)objectID;
-
-
-
-
+@property (nonatomic, readonly, strong) WBLeaderBoardID *objectID;
 
 @property (nonatomic, strong) NSNumber* id;
 
-
-
-@property int16_t idValue;
+@property (atomic) int16_t idValue;
 - (int16_t)idValue;
 - (void)setIdValue:(int16_t)value_;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* isPlayerBoard;
 
-
-
-@property BOOL isPlayerBoardValue;
+@property (atomic) BOOL isPlayerBoardValue;
 - (BOOL)isPlayerBoardValue;
 - (void)setIsPlayerBoardValue:(BOOL)value_;
 
-//- (BOOL)validateIsPlayerBoard:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* key;
-
-
-
-//- (BOOL)validateKey:(id*)value_ error:(NSError**)error_;
-
-
-
-
 
 @property (nonatomic, strong) NSString* name;
 
-
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* tablePriority;
 
-
-
-@property int16_t tablePriorityValue;
+@property (atomic) int16_t tablePriorityValue;
 - (int16_t)tablePriorityValue;
 - (void)setTablePriorityValue:(int16_t)value_;
 
-//- (BOOL)validateTablePriority:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSSet *boardData;
-
-- (NSMutableSet*)boardDataSet;
-
-
-
-
+@property (nonatomic, strong, nullable) NSSet<WBBoardData*> *boardData;
+- (nullable NSMutableSet<WBBoardData*>*)boardDataSet;
 
 @end
 
-@interface _WBLeaderBoard (CoreDataGeneratedAccessors)
-
-- (void)addBoardData:(NSSet*)value_;
-- (void)removeBoardData:(NSSet*)value_;
+@interface _WBLeaderBoard (BoardDataCoreDataGeneratedAccessors)
+- (void)addBoardData:(NSSet<WBBoardData*>*)value_;
+- (void)removeBoardData:(NSSet<WBBoardData*>*)value_;
 - (void)addBoardDataObject:(WBBoardData*)value_;
 - (void)removeBoardDataObject:(WBBoardData*)value_;
 
@@ -123,15 +61,11 @@ extern const struct WBLeaderBoardFetchedProperties {
 
 @interface _WBLeaderBoard (CoreDataGeneratedPrimitiveAccessors)
 
-
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
 
 - (int16_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int16_t)value_;
-
-
-
 
 - (NSNumber*)primitiveIsPlayerBoard;
 - (void)setPrimitiveIsPlayerBoard:(NSNumber*)value;
@@ -139,20 +73,11 @@ extern const struct WBLeaderBoardFetchedProperties {
 - (BOOL)primitiveIsPlayerBoardValue;
 - (void)setPrimitiveIsPlayerBoardValue:(BOOL)value_;
 
-
-
-
 - (NSString*)primitiveKey;
 - (void)setPrimitiveKey:(NSString*)value;
 
-
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
 
 - (NSNumber*)primitiveTablePriority;
 - (void)setPrimitiveTablePriority:(NSNumber*)value;
@@ -160,12 +85,21 @@ extern const struct WBLeaderBoardFetchedProperties {
 - (int16_t)primitiveTablePriorityValue;
 - (void)setPrimitiveTablePriorityValue:(int16_t)value_;
 
-
-
-
-
-- (NSMutableSet*)primitiveBoardData;
-- (void)setPrimitiveBoardData:(NSMutableSet*)value;
-
+- (NSMutableSet<WBBoardData*>*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(NSMutableSet<WBBoardData*>*)value;
 
 @end
+
+@interface WBLeaderBoardAttributes: NSObject 
++ (NSString *)id;
++ (NSString *)isPlayerBoard;
++ (NSString *)key;
++ (NSString *)name;
++ (NSString *)tablePriority;
+@end
+
+@interface WBLeaderBoardRelationships: NSObject
++ (NSString *)boardData;
+@end
+
+NS_ASSUME_NONNULL_END
