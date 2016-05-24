@@ -9,11 +9,30 @@ using WestBlueGolfLeagueWeb.Models.Admin;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Responses;
 using WestBlueGolfLeagueWeb.Models.Responses.Player;
+using WestBlueGolfLeagueWeb.Models.ViewModels;
+using WestBlueGolfLeagueWeb.Models.Extensions;
 
 namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class PlayerApiController : WestBlueDbApiController
     {
+        [ResponseType(typeof(PlayerListViewModel))]
+        public async Task<IHttpActionResult> GetPlayersList()
+        {
+            int year = this.SelectedYear;
+
+            var playersForYear = await this.Db.GetPlayersWithTeamsForYear(year);
+
+            return Ok(new PlayerListViewModel
+            {
+                PlayersForYear =
+                        playersForYear.Select(
+                            x =>
+                                new { Name = x.Item1.name, CH = x.Item1.currentHandicap, TeamName = x.Item2.teamName, Id = x.Item1.id })
+            });
+        }
+
+
         [ResponseType(typeof(PlayerProfileData))]
         public async Task<IHttpActionResult> GetProfileData(int id)
         {

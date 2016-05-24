@@ -6,7 +6,7 @@
 
         $stateProvider
             .state('playerList', {
-                url: '/',
+                url: '/Player/',
                 templateUrl: '/Scripts/player/tpl/playerListWrapper.tpl.html',
             });
 
@@ -19,7 +19,7 @@
 
         $stateProvider
             .state('playerDetails.playerProfile', {
-                url: '/:id',
+                url: '/Player/:id',
                 views: {
                     /*playerList: {
                         templateUrl: '/Scripts/player/tpl/playerList.tpl.html',
@@ -53,7 +53,7 @@
             getPlayerData: function (id) {
                 return $http({
                     method: 'GET',
-                    url: '/api/v1/playerProfile/' + id
+                    url: '/api/v1/players/' + id
                 });
             }
         };
@@ -82,6 +82,6 @@
         .factory('PlayerProfileService', ['$http', PlayerProfileService])
         .directive('playerList', PlayerListDirective);
 
-})(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList', 'leaderBoards']));
+})(angular.module('player', ['app', 'ngAnimate', 'ui.router', 'playerList']));
 
   

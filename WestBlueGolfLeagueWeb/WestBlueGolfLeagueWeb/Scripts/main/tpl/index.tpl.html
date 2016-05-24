@@ -12,16 +12,7 @@
                 {{::main.homeData.leagueNote.text}}
             </span>
         </div>
-    </div>
-    <div class="col-md-5 bs-callout">
-        <p>Congratulations to the 2015 West Blue League Champions: Missing Links!</p>
-        <img class="team-photo" src="/Content/images/missingLinks15.jpg"/>
-        <!--If external is needed img class="team-photo" src="http://i.imgur.com/tg8aVVB.png" /-->
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-7 home-page-weekpager">
         <div pager schedule="main.homeData.schedule" selected-week="main.selectedWeek"></div>
 
         <div week-display week="main.selectedWeek"></div>
@@ -29,11 +20,11 @@
     <div class="col-md-5">
 
         <h3>Team Standings for {{::main.homeData.selectedYear}}</h3>
-		<table class="table">
+        <table class="table">
             <thead>
-                <th></th>
-                <th>Team</th>
-                <th>Points</th>
+            <th></th>
+            <th>Team</th>
+            <th>Points</th>
             </thead>
             <tbody>
                 <tr ng-repeat="boardData in main.homeData.standings.leaderBoardData | orderBy: boardData.rank">
@@ -44,8 +35,24 @@
             </tbody>
         </table>
 
+        <div class="bs-callout">
+            <p>Congratulations to the 2015 West Blue League Champions: Missing Links!</p>
+            <img class="team-photo" src="/Content/images/missingLinks15.jpg" />
+            <!--If external is needed img class="team-photo" src="http://i.imgur.com/tg8aVVB.png" /-->
+        </div>
+    </div>
+</div>
 
-	    <h3>iPhone App</h3>
+<div class="row">
+    <div class="col-md-7">
+        <h3>2016 Year End Tournament</h3>
+        <p>
+            2016 Year End Tournament - Saturday, September 24th - River Oaks Golf Course, Cottage Grove, MN - 10:00 AM start
+        </p>
+    </div>
+    <div class="col-md-5">
+
+        <h3>iPhone App</h3>
         <p>Download the league's <a href="https://jenkinsmobile.int.thomsonreuters.com/job/WestBlueGolfLeague/lastSuccessfulBuild/artifact/output/WirelessDistribution/wireless-distribution.html">West Blue Golf iPhone App</a> from TR App Store, Thomson Reuters internal mobile apps site.</p>
         <div><img class="qr-code" src="/Content/images/golfAppQRCode.jpg" /></div>
 
@@ -53,11 +60,6 @@
 </div>
 
 <div class="row" ng-if="main.homeData.selectedYear == 2016">
-    <div class="col-md-6">
-        <h3>2016 Year End Tournament</h3>
-        <p>
-            2016 Year End Tournament - Saturday, September 24th - River Oaks Golf Course, Cottage Grove, MN - 10:00 AM start
-        </p>
-    </div>
+    
 </div>
 

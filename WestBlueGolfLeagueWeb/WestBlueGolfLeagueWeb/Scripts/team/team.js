@@ -6,7 +6,7 @@
 
         $stateProvider
             .state('teamList', {
-                url: '/',
+                url: '/Team/',
                 templateUrl: '/Scripts/team/tpl/teamListWrapper.tpl.html',
             });
 
@@ -19,7 +19,7 @@
 
         $stateProvider
             .state('teamDetails.teamProfile', {
-                url: '/:id',
+                url: '/Team/:id',
                 views: {
                     /*teamList: {
                         templateUrl: '/Scripts/team/tpl/teamList.tpl.html',
@@ -28,6 +28,9 @@
                     teamDetails: {
                         templateUrl: '/Scripts/team/tpl/teamDetails.tpl.html',
                         controller: 'TeamDetails as teamDetails'
+                    },
+                    'header.main@': {
+                        template: '<a class="navbar-brand" ui-sref="teamList()" href="javascript:void();"><i class="fa fa-chevron-left"></i> Teams</a>'
                     }
                 },
                 resolve: {
@@ -50,7 +53,7 @@
             getTeamData: function (id) {
                 return $http({
                     method: 'GET',
-                    url: '/api/v1/teamProfile/' + id
+                    url: '/api/v1/teams/' + id
                 });
             }
         };
@@ -79,6 +82,6 @@
         .factory('TeamProfileService', ['$http', TeamProfileService])
         .directive('teamList', TeamListDirective);
 
-})(angular.module('team', ['app', 'ngAnimate', 'ui.router', 'teamList']));
+})(angular.module('team', ['app', 'ngAnimate', 'ui.router', 'teamList', 'leaderBoards']));
 
   

@@ -5,18 +5,18 @@
         <h2>{{teamDetails.profileData.teamName}}</h2>
     </div>
 </div>
-<div class="row">
+<div class="row player-stats">
     <!--div class="col-md-3">Profile pic here</div-->
     <div class="col-md-9">
         <div class="row">
-            <div class="col-xs-4 col-sm-4 text-center"><div>Week Win/Loss</div>{{teamDetails.profileData.weekRecordString}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Individual Win/Loss</div>{{teamDetails.profileData.individualRecordString}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Avg. Handicap</div>{{teamDetails.profileData.avgHandicap}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Week Win/Loss</h4><span class="player-stat">{{teamDetails.profileData.weekRecordString}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Individual Win/Loss</h4><span class="player-stat">{{teamDetails.profileData.individualRecordString}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Avg. Handicap</h4><span class="player-stat">{{teamDetails.profileData.avgHandicap}}</span></div>
         </div>
         <div class="row">
-            <div class="col-xs-4 col-sm-4 text-center"><div>Win Loss Ratio</div>{{teamDetails.profileData.winLossRatio}}</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Season Improvement</div>TBD</div>
-            <div class="col-xs-4 col-sm-4 text-center"><div>Total Points</div>{{teamDetails.profileData.totalPoints}}</div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Win Loss Ratio</h4><span class="player-stat">{{teamDetails.profileData.winLossRatio}}</span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Season Improvement</h4><span class="player-stat">TBD</h4></span></div>
+            <div class="col-xs-4 col-sm-4 text-center"><h4>Total Points</h4><span class="player-stat">{{teamDetails.profileData.totalPoints}}</span></div>
         </div>
     </div>
 </div>

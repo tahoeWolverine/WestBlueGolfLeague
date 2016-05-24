@@ -25,8 +25,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
-                    <li>@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
+                    <li ui-sref-active="active" ui-sref="playerList()">@Html.RouteLink("Players", "PlayerPage", new { catchall = "/" }, new { data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
+                    <li ui-sref-active="active" ui-sref="teamList()">@Html.RouteLink("Teams", "TeamPage", new { catchall = "/" }, new { data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
 					<li ui-sref-active="active" ui-sref="leaderboards.landingPage()">@Html.RouteLink("Leader Boards", "LeaderBoards", new { catchall = "/" }, new { data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
                     <li>@Html.ActionLink("Handicaps", "Index", "ResultsTable", null, new { target = "_self", data_toggle = "collapse", data_target = ".navbar-collapse.in" })</li>
                 </ul>

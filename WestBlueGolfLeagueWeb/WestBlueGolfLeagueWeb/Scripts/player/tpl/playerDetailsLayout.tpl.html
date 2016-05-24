@@ -8,7 +8,9 @@
     <div class="player-details-profile">
         <div class="row">
             <div class="col-md-12">
-                <a class="toggle-link" ng-click="toggled=toggled ? '' : 'toggled'"><i class="fa fa-angle-double-left"></i></a>
+                <a class="toggle-link" ng-click="toggled=toggled ? '' : 'toggled'" ng-attr-title="{{!toggled ? 'Hide player list' : 'Show player list'}}">
+                    <i class="fa" ng-class="{'fa-angle-double-left': !toggled, 'fa-angle-double-right': toggled }"></i>
+                </a>
                 <div ui-view="playerDetails"></div>
             </div>
         </div>

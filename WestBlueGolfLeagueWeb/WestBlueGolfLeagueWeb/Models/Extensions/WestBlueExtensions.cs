@@ -10,16 +10,16 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
     public static class WestBlueExtensions
     {
-        public static IEnumerable<Tuple<player, team>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidPlayers = false)
+        public static async Task<IEnumerable<Tuple<player, team>>> GetPlayersWithTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidPlayers = false)
         {
-            return westBlue.playeryeardatas
+            var playerData = await westBlue.playeryeardatas
                         .Include(p => p.player)
                         .Include(p => p.team)
                         .AsNoTracking()
                         .Where(x => x.year.value == year)
-                        .ToList()
-                        .Where(x => includeInvalidPlayers || x.player.validPlayer)
-                        .Select(x => Tuple.Create(x.player, x.team));
+                        .ToListAsync();
+
+            return playerData.Where(x => includeInvalidPlayers || x.player.validPlayer).Select(x => Tuple.Create(x.player, x.team));
         }
 
         public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidTeams = false)

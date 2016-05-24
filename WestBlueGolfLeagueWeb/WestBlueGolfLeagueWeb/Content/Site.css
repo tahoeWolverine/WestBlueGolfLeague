@@ -185,6 +185,10 @@ sort-indicator {
     transition: margin-left .3s ease;
 }
 
+.player-details-profile > .row, .team-details-profile > .row {
+    margin-left: 0px;
+}
+
 .details-layout.toggled .player-details-profile {
     margin-left: 0px;
 }
@@ -220,11 +224,6 @@ sort-indicator {
     margin-left: 0px;
 }
 
-.player-details-player-list-parent {
-	border-right: 1px solid #999;
-	overflow: hidden;
-}
-
 .toggle-link {
     position: absolute;
     cursor: pointer;
@@ -240,7 +239,7 @@ sort-indicator {
 	top: 0;
     bottom: 80px;
     position: fixed;
-	overflow-y: hidden;
+    overflow: hidden;
 	z-index: 5;
     /*margin-left: -280px;*/
 	padding: 50px 0px 0px 15px;
@@ -388,6 +387,10 @@ player-list-item-name {
 /* Team CSS */
 .team-details-team-list .col-sm-4 {
     width: 100%;
+}
+
+.team-list-selection .team-list-teams {
+    padding-bottom: 80px; /* offset for fixed footer - body padding */
 }
 
 .team-details-profile {
@@ -1021,6 +1024,10 @@ textarea.roster-input {
         width: 75%;
     }
 
+    .team-list-input .col-xs-12 {
+        width: 75%;
+    }
+
     .header-link {
         display: none;
     }
@@ -1054,6 +1061,30 @@ textarea.roster-input {
 
     .player-list-selection .player-list-players {
         padding-bottom: 0;
+    }
+
+    .team-details-team-list-parent {
+        width: 0;
+        display: none;
+    }
+
+    .team-details-profile {
+        margin-left: 0;
+    }
+
+    .team + footer {
+        position: inherit;
+        bottom: inherit;
+        z-index: inherit;
+        height: inherit;
+    }
+
+    .team-list-selection .team-list-teams {
+        padding-bottom: 0;
+    }
+
+    .team-list-input .col-xs-12 {
+        width: inherit;
     }
 
     .match-player-edit .match-team-name {

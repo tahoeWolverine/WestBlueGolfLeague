@@ -1,5 +1,5 @@
 ﻿<div ng-if="week">
-    <h2>{{week.date | date:'MMMM, d'}} <span class="week-display-playoffs-header" ng-if="week.isPlayoff">Playoffs</span></h2>
+    <h2>{{week.date | date:'MMMM d'}} <span class="week-display-playoffs-header" ng-if="week.isPlayoff">Playoffs</span></h2>
     <div class="week-display-week-info">
         <span class="schedule-course" title="Course">{{week.course.name}} ({{week.course.par}})</span>
         <span title="Pairing for week" class="schedule-pairing">{{week.pairing}}</span>
@@ -12,13 +12,13 @@
                 
                 <table class="team-matchup-result">
                     <tr ng-class="{'week-display-win': matchup.team1Win }">
-                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team1.id}}">{{matchup.team1.name}}</a></td>
+                        <td class="week-display-teamname"><a ui-sref="teamDetails.teamProfile({ id: matchup.team1.id })">{{matchup.team1.name}}</a></td>
                         <td class="team-score" ng-if="::matchup.isComplete">
                             {{$parent.matchup.team1Points}}
                         </td>
                     </tr>
                     <tr ng-class="{'week-display-win': matchup.team2Win }">
-                        <td class="week-display-teamname"><a target="_self" ng-href="/Team/{{::matchup.team2.id}}">{{matchup.team2.name}}</a></td>
+                        <td class="week-display-teamname"><a ui-sref="teamDetails.teamProfile({id: matchup.team2.id })">{{matchup.team2.name}}</a></td>
                         <td class="team-score" ng-if="::matchup.isComplete">
                             {{$parent.matchup.team2Points}}
                         </td>

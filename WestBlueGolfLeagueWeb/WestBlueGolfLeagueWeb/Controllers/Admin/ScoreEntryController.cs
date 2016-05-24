@@ -37,9 +37,8 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
 
 	        var currentWeek = weeks.LastOrDefault(x => now > new DateTimeOffset(x.date)) ?? weeks.FirstOrDefault();
 
-	        Dictionary<int, IEnumerable<player>> lookup =
-		        this.Db.GetPlayersWithTeamsForYear(this.CurrentYear, true)
-			        .ToLookup(x => x.Item2.id, x => x.Item1)
+            Dictionary<int, IEnumerable<player>> lookup =
+                (await this.Db.GetPlayersWithTeamsForYear(this.CurrentYear, true)).ToLookup(x => x.Item2.id, x => x.Item1)
 			        .ToDictionary(x => x.Key, x => (IEnumerable<player>)x);
 			
 	        return Ok(new ScoreEntryDataResponse(currentWeek, weeks, lookup, this.Db.GetTeamsForYear(this.CurrentYear, true)));
