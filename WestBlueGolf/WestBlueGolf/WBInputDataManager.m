@@ -57,6 +57,7 @@
 #define wbJsonKeyTeamMatchupComplete @"mc"
 #define wbJsonKeyTeamMatchupTeams @"teamIds"
 #define wbJsonKeyTeamMatchupPlayoffType @"playoffType"
+#define wbJsonKeyTeamMatchupOrder @"matchOrder"
 
 #define wbJsonValueTeamMatchupPlayoffTypeNone @""
 #define wbJsonValueTeamMatchupPlayoffTypeChampionship @"championship"
@@ -213,7 +214,7 @@
     WBWeek *week = nil;
     WBMatch *match = nil;
     WBPlayoffType playoffType = WBPlayoffTypeNone;
-    NSInteger team1Id = -1, team2Id = -1, matchupId = 0, player1Id = 0, player2Id = 0, score = 0, priorHandicap = 0, points = 0;
+    NSInteger team1Id = -1, team2Id = -1, matchupId = 0, player1Id = 0, player2Id = 0, score = 0, priorHandicap = 0, points = 0, matchupOrder = 0;
     NSArray *matchesJson = nil, *resultsJson = nil, *teamsJson = nil;
     NSDictionary *matchJson = nil, *result1Json = nil, *result2Json = nil;
     NSString *playoffTypeStr = @"";
@@ -223,12 +224,17 @@
 		matchupId = [[elt objectForKey:wbJsonKeyTeamMatchupId] integerValue];
 		matchComplete = [[elt objectForKey:wbJsonKeyTeamMatchupComplete] boolValue];
 		playoffTypeStr = [elt objectForKey:wbJsonKeyTeamMatchupPlayoffType];
+        matchupOrder = [[elt objectForKey:wbJsonKeyTeamMatchupOrder] integerValue];
         playoffType = [self playoffTypeForString:playoffTypeStr];
         
 		if (!matchComplete) {
 			DLog(@"Incomplete Match in received data");
 			//continue;
 		}
+        
+        if (weekId == 326) {
+            DLog(@"hi");
+        }
         
         teamsJson = [elt objectForKey:wbJsonKeyTeamMatchupTeams];
         
@@ -258,7 +264,7 @@
             }
         }
         
-        matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchupId:matchupId matchComplete:matchComplete playoffType:playoffType moc:moc];
+        matchup = [WBTeamMatchup createTeamMatchupBetweenTeam:team1 andTeam:team2 forWeek:week matchupId:matchupId matchupOrder:matchupOrder matchComplete:matchComplete playoffType:playoffType moc:moc];
         
         // Matches
         matchesJson = [elt objectForKey:wbJsonKeyMatches];

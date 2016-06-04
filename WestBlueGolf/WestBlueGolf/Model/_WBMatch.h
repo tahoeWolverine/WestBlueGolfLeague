@@ -1,72 +1,52 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBMatch.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBMatchAttributes {
-} WBMatchAttributes;
-
-extern const struct WBMatchRelationships {
-	__unsafe_unretained NSString *players;
-	__unsafe_unretained NSString *results;
-	__unsafe_unretained NSString *teamMatchup;
-} WBMatchRelationships;
-
-extern const struct WBMatchFetchedProperties {
-} WBMatchFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBPlayer;
 @class WBResult;
 @class WBTeamMatchup;
 
-
 @interface WBMatchID : NSManagedObjectID {}
 @end
 
-@interface _WBMatch : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBMatch : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBMatchID*)objectID;
+@property (nonatomic, readonly, strong) WBMatchID *objectID;
 
+@property (nonatomic, strong) NSSet<WBPlayer*> *players;
+- (NSMutableSet<WBPlayer*>*)playersSet;
 
-
-
-
-@property (nonatomic, strong) NSSet *players;
-
-- (NSMutableSet*)playersSet;
-
-
-
-
-@property (nonatomic, strong) NSSet *results;
-
-- (NSMutableSet*)resultsSet;
-
-
-
+@property (nonatomic, strong, nullable) NSSet<WBResult*> *results;
+- (nullable NSMutableSet<WBResult*>*)resultsSet;
 
 @property (nonatomic, strong) WBTeamMatchup *teamMatchup;
 
-//- (BOOL)validateTeamMatchup:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @end
 
-@interface _WBMatch (CoreDataGeneratedAccessors)
-
-- (void)addPlayers:(NSSet*)value_;
-- (void)removePlayers:(NSSet*)value_;
+@interface _WBMatch (PlayersCoreDataGeneratedAccessors)
+- (void)addPlayers:(NSSet<WBPlayer*>*)value_;
+- (void)removePlayers:(NSSet<WBPlayer*>*)value_;
 - (void)addPlayersObject:(WBPlayer*)value_;
 - (void)removePlayersObject:(WBPlayer*)value_;
 
-- (void)addResults:(NSSet*)value_;
-- (void)removeResults:(NSSet*)value_;
+@end
+
+@interface _WBMatch (ResultsCoreDataGeneratedAccessors)
+- (void)addResults:(NSSet<WBResult*>*)value_;
+- (void)removeResults:(NSSet<WBResult*>*)value_;
 - (void)addResultsObject:(WBResult*)value_;
 - (void)removeResultsObject:(WBResult*)value_;
 
@@ -74,20 +54,21 @@ extern const struct WBMatchFetchedProperties {
 
 @interface _WBMatch (CoreDataGeneratedPrimitiveAccessors)
 
+- (NSMutableSet<WBPlayer*>*)primitivePlayers;
+- (void)setPrimitivePlayers:(NSMutableSet<WBPlayer*>*)value;
 
-
-- (NSMutableSet*)primitivePlayers;
-- (void)setPrimitivePlayers:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveResults;
-- (void)setPrimitiveResults:(NSMutableSet*)value;
-
-
+- (NSMutableSet<WBResult*>*)primitiveResults;
+- (void)setPrimitiveResults:(NSMutableSet<WBResult*>*)value;
 
 - (WBTeamMatchup*)primitiveTeamMatchup;
 - (void)setPrimitiveTeamMatchup:(WBTeamMatchup*)value;
 
-
 @end
+
+@interface WBMatchRelationships: NSObject
++ (NSString *)players;
++ (NSString *)results;
++ (NSString *)teamMatchup;
+@end
+
+NS_ASSUME_NONNULL_END

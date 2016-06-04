@@ -3,26 +3,12 @@
 
 #import "_WBPeopleEntity.h"
 
-const struct WBPeopleEntityAttributes WBPeopleEntityAttributes = {
-	.favorite = @"favorite",
-	.me = @"me",
-	.name = @"name",
-	.real = @"real",
-};
-
-const struct WBPeopleEntityRelationships WBPeopleEntityRelationships = {
-	.boardData = @"boardData",
-};
-
-const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
-};
-
 @implementation WBPeopleEntityID
 @end
 
 @implementation _WBPeopleEntity
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBPeopleEntity" inManagedObjectContext:moc_];
 }
@@ -42,7 +28,7 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"favoriteValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"favorite"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -62,12 +48,7 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic favorite;
-
-
 
 - (BOOL)favoriteValue {
 	NSNumber *result = [self favorite];
@@ -75,7 +56,7 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setFavoriteValue:(BOOL)value_ {
-	[self setFavorite:[NSNumber numberWithBool:value_]];
+	[self setFavorite:@(value_)];
 }
 
 - (BOOL)primitiveFavoriteValue {
@@ -84,16 +65,10 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setPrimitiveFavoriteValue:(BOOL)value_ {
-	[self setPrimitiveFavorite:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveFavorite:@(value_)];
 }
 
-
-
-
-
 @dynamic me;
-
-
 
 - (BOOL)meValue {
 	NSNumber *result = [self me];
@@ -101,7 +76,7 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setMeValue:(BOOL)value_ {
-	[self setMe:[NSNumber numberWithBool:value_]];
+	[self setMe:@(value_)];
 }
 
 - (BOOL)primitiveMeValue {
@@ -110,23 +85,12 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setPrimitiveMeValue:(BOOL)value_ {
-	[self setPrimitiveMe:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveMe:@(value_)];
 }
-
-
-
-
 
 @dynamic name;
 
-
-
-
-
-
 @dynamic real;
-
-
 
 - (BOOL)realValue {
 	NSNumber *result = [self real];
@@ -134,7 +98,7 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setRealValue:(BOOL)value_ {
-	[self setReal:[NSNumber numberWithBool:value_]];
+	[self setReal:@(value_)];
 }
 
 - (BOOL)primitiveRealValue {
@@ -143,29 +107,40 @@ const struct WBPeopleEntityFetchedProperties WBPeopleEntityFetchedProperties = {
 }
 
 - (void)setPrimitiveRealValue:(BOOL)value_ {
-	[self setPrimitiveReal:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveReal:@(value_)];
 }
-
-
-
-
 
 @dynamic boardData;
 
-	
-- (NSMutableSet*)boardDataSet {
+- (NSMutableSet<WBBoardData*>*)boardDataSet {
 	[self willAccessValueForKey:@"boardData"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"boardData"];
-  
+
+	NSMutableSet<WBBoardData*> *result = (NSMutableSet<WBBoardData*>*)[self mutableSetValueForKey:@"boardData"];
+
 	[self didAccessValueForKey:@"boardData"];
 	return result;
 }
-	
-
-
-
-
-
 
 @end
+
+@implementation WBPeopleEntityAttributes 
++ (NSString *)favorite {
+	return @"favorite";
+}
++ (NSString *)me {
+	return @"me";
+}
++ (NSString *)name {
+	return @"name";
+}
++ (NSString *)real {
+	return @"real";
+}
+@end
+
+@implementation WBPeopleEntityRelationships 
++ (NSString *)boardData {
+	return @"boardData";
+}
+@end
+

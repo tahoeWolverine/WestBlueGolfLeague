@@ -3,24 +3,12 @@
 
 #import "_WBMatch.h"
 
-const struct WBMatchAttributes WBMatchAttributes = {
-};
-
-const struct WBMatchRelationships WBMatchRelationships = {
-	.players = @"players",
-	.results = @"results",
-	.teamMatchup = @"teamMatchup",
-};
-
-const struct WBMatchFetchedProperties WBMatchFetchedProperties = {
-};
-
 @implementation WBMatchID
 @end
 
 @implementation _WBMatch
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBMatch" inManagedObjectContext:moc_];
 }
@@ -40,47 +28,45 @@ const struct WBMatchFetchedProperties WBMatchFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
 
 	return keyPaths;
 }
 
-
-
-
 @dynamic players;
 
-	
-- (NSMutableSet*)playersSet {
+- (NSMutableSet<WBPlayer*>*)playersSet {
 	[self willAccessValueForKey:@"players"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"players"];
-  
+
+	NSMutableSet<WBPlayer*> *result = (NSMutableSet<WBPlayer*>*)[self mutableSetValueForKey:@"players"];
+
 	[self didAccessValueForKey:@"players"];
 	return result;
 }
-	
 
 @dynamic results;
 
-	
-- (NSMutableSet*)resultsSet {
+- (NSMutableSet<WBResult*>*)resultsSet {
 	[self willAccessValueForKey:@"results"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"results"];
-  
+
+	NSMutableSet<WBResult*> *result = (NSMutableSet<WBResult*>*)[self mutableSetValueForKey:@"results"];
+
 	[self didAccessValueForKey:@"results"];
 	return result;
 }
-	
 
 @dynamic teamMatchup;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBMatchRelationships 
++ (NSString *)players {
+	return @"players";
+}
++ (NSString *)results {
+	return @"results";
+}
++ (NSString *)teamMatchup {
+	return @"teamMatchup";
+}
+@end
+

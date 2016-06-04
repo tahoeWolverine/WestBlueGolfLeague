@@ -3,27 +3,12 @@
 
 #import "_WBLeaderBoard.h"
 
-const struct WBLeaderBoardAttributes WBLeaderBoardAttributes = {
-	.id = @"id",
-	.isPlayerBoard = @"isPlayerBoard",
-	.key = @"key",
-	.name = @"name",
-	.tablePriority = @"tablePriority",
-};
-
-const struct WBLeaderBoardRelationships WBLeaderBoardRelationships = {
-	.boardData = @"boardData",
-};
-
-const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
-};
-
 @implementation WBLeaderBoardID
 @end
 
 @implementation _WBLeaderBoard
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBLeaderBoard" inManagedObjectContext:moc_];
 }
@@ -43,7 +28,7 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -63,12 +48,7 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -76,7 +56,7 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -85,16 +65,10 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
 
-
-
-
-
 @dynamic isPlayerBoard;
-
-
 
 - (BOOL)isPlayerBoardValue {
 	NSNumber *result = [self isPlayerBoard];
@@ -102,7 +76,7 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setIsPlayerBoardValue:(BOOL)value_ {
-	[self setIsPlayerBoard:[NSNumber numberWithBool:value_]];
+	[self setIsPlayerBoard:@(value_)];
 }
 
 - (BOOL)primitiveIsPlayerBoardValue {
@@ -111,30 +85,14 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setPrimitiveIsPlayerBoardValue:(BOOL)value_ {
-	[self setPrimitiveIsPlayerBoard:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveIsPlayerBoard:@(value_)];
 }
-
-
-
-
 
 @dynamic key;
 
-
-
-
-
-
 @dynamic name;
 
-
-
-
-
-
 @dynamic tablePriority;
-
-
 
 - (int16_t)tablePriorityValue {
 	NSNumber *result = [self tablePriority];
@@ -142,7 +100,7 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setTablePriorityValue:(int16_t)value_ {
-	[self setTablePriority:[NSNumber numberWithShort:value_]];
+	[self setTablePriority:@(value_)];
 }
 
 - (int16_t)primitiveTablePriorityValue {
@@ -151,29 +109,43 @@ const struct WBLeaderBoardFetchedProperties WBLeaderBoardFetchedProperties = {
 }
 
 - (void)setPrimitiveTablePriorityValue:(int16_t)value_ {
-	[self setPrimitiveTablePriority:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveTablePriority:@(value_)];
 }
-
-
-
-
 
 @dynamic boardData;
 
-	
-- (NSMutableSet*)boardDataSet {
+- (NSMutableSet<WBBoardData*>*)boardDataSet {
 	[self willAccessValueForKey:@"boardData"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"boardData"];
-  
+
+	NSMutableSet<WBBoardData*> *result = (NSMutableSet<WBBoardData*>*)[self mutableSetValueForKey:@"boardData"];
+
 	[self didAccessValueForKey:@"boardData"];
 	return result;
 }
-	
-
-
-
-
-
 
 @end
+
+@implementation WBLeaderBoardAttributes 
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)isPlayerBoard {
+	return @"isPlayerBoard";
+}
++ (NSString *)key {
+	return @"key";
+}
++ (NSString *)name {
+	return @"name";
+}
++ (NSString *)tablePriority {
+	return @"tablePriority";
+}
+@end
+
+@implementation WBLeaderBoardRelationships 
++ (NSString *)boardData {
+	return @"boardData";
+}
+@end
+

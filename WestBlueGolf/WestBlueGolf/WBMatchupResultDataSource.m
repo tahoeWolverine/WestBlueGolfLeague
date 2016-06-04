@@ -14,7 +14,8 @@
 #import "WBWeekTableViewController.h"
 #import "V8HorizontalPickerView.h"
 
-#define SORT_KEY	@"matchId"
+#define SORT_KEY	@"matchOrder"
+#define SECONDARY_SORT_KEY @"matchId" // for data without match order
 #define SECTION_KEY	@"playoffType"
 
 #define HEADER_HEIGHT 44.0f
@@ -152,8 +153,9 @@
 
 - (NSArray *)sortDescriptorsForFetch {
 	NSSortDescriptor *sectionSort = [[NSSortDescriptor alloc] initWithKey:SECTION_KEY ascending:YES];
-	NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
-	return @[sectionSort, sortOrderDescriptor];
+    NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:SORT_KEY ascending:YES];
+    NSSortDescriptor *secondaryDescriptor = [[NSSortDescriptor alloc] initWithKey:SECONDARY_SORT_KEY ascending:YES];
+	return @[sectionSort, sortOrderDescriptor, secondaryDescriptor];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

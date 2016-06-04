@@ -3,28 +3,12 @@
 
 #import "_WBYear.h"
 
-const struct WBYearAttributes WBYearAttributes = {
-	.dataComplete = @"dataComplete",
-	.id = @"id",
-	.isComplete = @"isComplete",
-	.value = @"value",
-};
-
-const struct WBYearRelationships WBYearRelationships = {
-	.boardData = @"boardData",
-	.playerYearData = @"playerYearData",
-	.weeks = @"weeks",
-};
-
-const struct WBYearFetchedProperties WBYearFetchedProperties = {
-};
-
 @implementation WBYearID
 @end
 
 @implementation _WBYear
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBYear" inManagedObjectContext:moc_];
 }
@@ -44,7 +28,7 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"dataCompleteValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"dataComplete"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -69,12 +53,7 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic dataComplete;
-
-
 
 - (BOOL)dataCompleteValue {
 	NSNumber *result = [self dataComplete];
@@ -82,7 +61,7 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setDataCompleteValue:(BOOL)value_ {
-	[self setDataComplete:[NSNumber numberWithBool:value_]];
+	[self setDataComplete:@(value_)];
 }
 
 - (BOOL)primitiveDataCompleteValue {
@@ -91,16 +70,10 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setPrimitiveDataCompleteValue:(BOOL)value_ {
-	[self setPrimitiveDataComplete:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveDataComplete:@(value_)];
 }
 
-
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -108,7 +81,7 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -117,16 +90,10 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
 
-
-
-
-
 @dynamic isComplete;
-
-
 
 - (BOOL)isCompleteValue {
 	NSNumber *result = [self isComplete];
@@ -134,7 +101,7 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setIsCompleteValue:(BOOL)value_ {
-	[self setIsComplete:[NSNumber numberWithBool:value_]];
+	[self setIsComplete:@(value_)];
 }
 
 - (BOOL)primitiveIsCompleteValue {
@@ -143,81 +110,88 @@ const struct WBYearFetchedProperties WBYearFetchedProperties = {
 }
 
 - (void)setPrimitiveIsCompleteValue:(BOOL)value_ {
-	[self setPrimitiveIsComplete:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveIsComplete:@(value_)];
 }
-
-
-
-
 
 @dynamic value;
 
-
-
-- (int16_t)valueValue {
+- (uint16_t)valueValue {
 	NSNumber *result = [self value];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setValueValue:(int16_t)value_ {
-	[self setValue:[NSNumber numberWithShort:value_]];
+- (void)setValueValue:(uint16_t)value_ {
+	[self setValue:@(value_)];
 }
 
-- (int16_t)primitiveValueValue {
+- (uint16_t)primitiveValueValue {
 	NSNumber *result = [self primitiveValue];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitiveValueValue:(int16_t)value_ {
-	[self setPrimitiveValue:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveValueValue:(uint16_t)value_ {
+	[self setPrimitiveValue:@(value_)];
 }
-
-
-
-
 
 @dynamic boardData;
 
-	
-- (NSMutableSet*)boardDataSet {
+- (NSMutableSet<WBBoardData*>*)boardDataSet {
 	[self willAccessValueForKey:@"boardData"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"boardData"];
-  
+
+	NSMutableSet<WBBoardData*> *result = (NSMutableSet<WBBoardData*>*)[self mutableSetValueForKey:@"boardData"];
+
 	[self didAccessValueForKey:@"boardData"];
 	return result;
 }
-	
 
 @dynamic playerYearData;
 
-	
-- (NSMutableSet*)playerYearDataSet {
+- (NSMutableSet<WBPlayerYearData*>*)playerYearDataSet {
 	[self willAccessValueForKey:@"playerYearData"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"playerYearData"];
-  
+
+	NSMutableSet<WBPlayerYearData*> *result = (NSMutableSet<WBPlayerYearData*>*)[self mutableSetValueForKey:@"playerYearData"];
+
 	[self didAccessValueForKey:@"playerYearData"];
 	return result;
 }
-	
 
 @dynamic weeks;
 
-	
-- (NSMutableSet*)weeksSet {
+- (NSMutableSet<WBWeek*>*)weeksSet {
 	[self willAccessValueForKey:@"weeks"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"weeks"];
-  
+
+	NSMutableSet<WBWeek*> *result = (NSMutableSet<WBWeek*>*)[self mutableSetValueForKey:@"weeks"];
+
 	[self didAccessValueForKey:@"weeks"];
 	return result;
 }
-	
-
-
-
-
-
 
 @end
+
+@implementation WBYearAttributes 
++ (NSString *)dataComplete {
+	return @"dataComplete";
+}
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)isComplete {
+	return @"isComplete";
+}
++ (NSString *)value {
+	return @"value";
+}
+@end
+
+@implementation WBYearRelationships 
++ (NSString *)boardData {
+	return @"boardData";
+}
++ (NSString *)playerYearData {
+	return @"playerYearData";
+}
++ (NSString *)weeks {
+	return @"weeks";
+}
+@end
+

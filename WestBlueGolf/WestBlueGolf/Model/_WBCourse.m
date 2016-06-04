@@ -3,25 +3,12 @@
 
 #import "_WBCourse.h"
 
-const struct WBCourseAttributes WBCourseAttributes = {
-	.id = @"id",
-	.name = @"name",
-	.par = @"par",
-};
-
-const struct WBCourseRelationships WBCourseRelationships = {
-	.weeks = @"weeks",
-};
-
-const struct WBCourseFetchedProperties WBCourseFetchedProperties = {
-};
-
 @implementation WBCourseID
 @end
 
 @implementation _WBCourse
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBCourse" inManagedObjectContext:moc_];
 }
@@ -41,7 +28,7 @@ const struct WBCourseFetchedProperties WBCourseFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -56,12 +43,7 @@ const struct WBCourseFetchedProperties WBCourseFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -69,7 +51,7 @@ const struct WBCourseFetchedProperties WBCourseFetchedProperties = {
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -78,62 +60,59 @@ const struct WBCourseFetchedProperties WBCourseFetchedProperties = {
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
-
-
-
-
 
 @dynamic name;
 
-
-
-
-
-
 @dynamic par;
 
-
-
-- (int16_t)parValue {
+- (uint16_t)parValue {
 	NSNumber *result = [self par];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setParValue:(int16_t)value_ {
-	[self setPar:[NSNumber numberWithShort:value_]];
+- (void)setParValue:(uint16_t)value_ {
+	[self setPar:@(value_)];
 }
 
-- (int16_t)primitiveParValue {
+- (uint16_t)primitiveParValue {
 	NSNumber *result = [self primitivePar];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitiveParValue:(int16_t)value_ {
-	[self setPrimitivePar:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveParValue:(uint16_t)value_ {
+	[self setPrimitivePar:@(value_)];
 }
-
-
-
-
 
 @dynamic weeks;
 
-	
-- (NSMutableSet*)weeksSet {
+- (NSMutableSet<WBWeek*>*)weeksSet {
 	[self willAccessValueForKey:@"weeks"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"weeks"];
-  
+
+	NSMutableSet<WBWeek*> *result = (NSMutableSet<WBWeek*>*)[self mutableSetValueForKey:@"weeks"];
+
 	[self didAccessValueForKey:@"weeks"];
 	return result;
 }
-	
-
-
-
-
-
 
 @end
+
+@implementation WBCourseAttributes 
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)name {
+	return @"name";
+}
++ (NSString *)par {
+	return @"par";
+}
+@end
+
+@implementation WBCourseRelationships 
++ (NSString *)weeks {
+	return @"weeks";
+}
+@end
+

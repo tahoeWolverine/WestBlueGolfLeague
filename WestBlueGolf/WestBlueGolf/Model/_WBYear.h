@@ -1,141 +1,85 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBYear.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBYearAttributes {
-	__unsafe_unretained NSString *dataComplete;
-	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *isComplete;
-	__unsafe_unretained NSString *value;
-} WBYearAttributes;
-
-extern const struct WBYearRelationships {
-	__unsafe_unretained NSString *boardData;
-	__unsafe_unretained NSString *playerYearData;
-	__unsafe_unretained NSString *weeks;
-} WBYearRelationships;
-
-extern const struct WBYearFetchedProperties {
-} WBYearFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBBoardData;
 @class WBPlayerYearData;
 @class WBWeek;
 
-
-
-
-
-
 @interface WBYearID : NSManagedObjectID {}
 @end
 
-@interface _WBYear : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBYear : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBYearID*)objectID;
-
-
-
-
+@property (nonatomic, readonly, strong) WBYearID *objectID;
 
 @property (nonatomic, strong) NSNumber* dataComplete;
 
-
-
-@property BOOL dataCompleteValue;
+@property (atomic) BOOL dataCompleteValue;
 - (BOOL)dataCompleteValue;
 - (void)setDataCompleteValue:(BOOL)value_;
 
-//- (BOOL)validateDataComplete:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* id;
 
-
-
-@property int16_t idValue;
+@property (atomic) int16_t idValue;
 - (int16_t)idValue;
 - (void)setIdValue:(int16_t)value_;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* isComplete;
 
-
-
-@property BOOL isCompleteValue;
+@property (atomic) BOOL isCompleteValue;
 - (BOOL)isCompleteValue;
 - (void)setIsCompleteValue:(BOOL)value_;
 
-//- (BOOL)validateIsComplete:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* value;
 
+@property (atomic) uint16_t valueValue;
+- (uint16_t)valueValue;
+- (void)setValueValue:(uint16_t)value_;
 
+@property (nonatomic, strong, nullable) NSSet<WBBoardData*> *boardData;
+- (nullable NSMutableSet<WBBoardData*>*)boardDataSet;
 
-@property int16_t valueValue;
-- (int16_t)valueValue;
-- (void)setValueValue:(int16_t)value_;
+@property (nonatomic, strong, nullable) NSSet<WBPlayerYearData*> *playerYearData;
+- (nullable NSMutableSet<WBPlayerYearData*>*)playerYearDataSet;
 
-//- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSSet *boardData;
-
-- (NSMutableSet*)boardDataSet;
-
-
-
-
-@property (nonatomic, strong) NSSet *playerYearData;
-
-- (NSMutableSet*)playerYearDataSet;
-
-
-
-
-@property (nonatomic, strong) NSSet *weeks;
-
-- (NSMutableSet*)weeksSet;
-
-
-
-
+@property (nonatomic, strong, nullable) NSSet<WBWeek*> *weeks;
+- (nullable NSMutableSet<WBWeek*>*)weeksSet;
 
 @end
 
-@interface _WBYear (CoreDataGeneratedAccessors)
-
-- (void)addBoardData:(NSSet*)value_;
-- (void)removeBoardData:(NSSet*)value_;
+@interface _WBYear (BoardDataCoreDataGeneratedAccessors)
+- (void)addBoardData:(NSSet<WBBoardData*>*)value_;
+- (void)removeBoardData:(NSSet<WBBoardData*>*)value_;
 - (void)addBoardDataObject:(WBBoardData*)value_;
 - (void)removeBoardDataObject:(WBBoardData*)value_;
 
-- (void)addPlayerYearData:(NSSet*)value_;
-- (void)removePlayerYearData:(NSSet*)value_;
+@end
+
+@interface _WBYear (PlayerYearDataCoreDataGeneratedAccessors)
+- (void)addPlayerYearData:(NSSet<WBPlayerYearData*>*)value_;
+- (void)removePlayerYearData:(NSSet<WBPlayerYearData*>*)value_;
 - (void)addPlayerYearDataObject:(WBPlayerYearData*)value_;
 - (void)removePlayerYearDataObject:(WBPlayerYearData*)value_;
 
-- (void)addWeeks:(NSSet*)value_;
-- (void)removeWeeks:(NSSet*)value_;
+@end
+
+@interface _WBYear (WeeksCoreDataGeneratedAccessors)
+- (void)addWeeks:(NSSet<WBWeek*>*)value_;
+- (void)removeWeeks:(NSSet<WBWeek*>*)value_;
 - (void)addWeeksObject:(WBWeek*)value_;
 - (void)removeWeeksObject:(WBWeek*)value_;
 
@@ -143,15 +87,11 @@ extern const struct WBYearFetchedProperties {
 
 @interface _WBYear (CoreDataGeneratedPrimitiveAccessors)
 
-
 - (NSNumber*)primitiveDataComplete;
 - (void)setPrimitiveDataComplete:(NSNumber*)value;
 
 - (BOOL)primitiveDataCompleteValue;
 - (void)setPrimitiveDataCompleteValue:(BOOL)value_;
-
-
-
 
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
@@ -159,40 +99,40 @@ extern const struct WBYearFetchedProperties {
 - (int16_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int16_t)value_;
 
-
-
-
 - (NSNumber*)primitiveIsComplete;
 - (void)setPrimitiveIsComplete:(NSNumber*)value;
 
 - (BOOL)primitiveIsCompleteValue;
 - (void)setPrimitiveIsCompleteValue:(BOOL)value_;
 
-
-
-
 - (NSNumber*)primitiveValue;
 - (void)setPrimitiveValue:(NSNumber*)value;
 
-- (int16_t)primitiveValueValue;
-- (void)setPrimitiveValueValue:(int16_t)value_;
+- (uint16_t)primitiveValueValue;
+- (void)setPrimitiveValueValue:(uint16_t)value_;
 
+- (NSMutableSet<WBBoardData*>*)primitiveBoardData;
+- (void)setPrimitiveBoardData:(NSMutableSet<WBBoardData*>*)value;
 
+- (NSMutableSet<WBPlayerYearData*>*)primitivePlayerYearData;
+- (void)setPrimitivePlayerYearData:(NSMutableSet<WBPlayerYearData*>*)value;
 
-
-
-- (NSMutableSet*)primitiveBoardData;
-- (void)setPrimitiveBoardData:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitivePlayerYearData;
-- (void)setPrimitivePlayerYearData:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveWeeks;
-- (void)setPrimitiveWeeks:(NSMutableSet*)value;
-
+- (NSMutableSet<WBWeek*>*)primitiveWeeks;
+- (void)setPrimitiveWeeks:(NSMutableSet<WBWeek*>*)value;
 
 @end
+
+@interface WBYearAttributes: NSObject 
++ (NSString *)dataComplete;
++ (NSString *)id;
++ (NSString *)isComplete;
++ (NSString *)value;
+@end
+
+@interface WBYearRelationships: NSObject
++ (NSString *)boardData;
++ (NSString *)playerYearData;
++ (NSString *)weeks;
+@end
+
+NS_ASSUME_NONNULL_END

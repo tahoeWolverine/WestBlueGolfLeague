@@ -3,27 +3,12 @@
 
 #import "_WBResult.h"
 
-const struct WBResultAttributes WBResultAttributes = {
-	.points = @"points",
-	.priorHandicap = @"priorHandicap",
-	.score = @"score",
-};
-
-const struct WBResultRelationships WBResultRelationships = {
-	.match = @"match",
-	.player = @"player",
-	.team = @"team",
-};
-
-const struct WBResultFetchedProperties WBResultFetchedProperties = {
-};
-
 @implementation WBResultID
 @end
 
 @implementation _WBResult
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBResult" inManagedObjectContext:moc_];
 }
@@ -43,7 +28,7 @@ const struct WBResultFetchedProperties WBResultFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"pointsValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"points"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -63,38 +48,27 @@ const struct WBResultFetchedProperties WBResultFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic points;
 
-
-
-- (int16_t)pointsValue {
+- (uint16_t)pointsValue {
 	NSNumber *result = [self points];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPointsValue:(int16_t)value_ {
-	[self setPoints:[NSNumber numberWithShort:value_]];
+- (void)setPointsValue:(uint16_t)value_ {
+	[self setPoints:@(value_)];
 }
 
-- (int16_t)primitivePointsValue {
+- (uint16_t)primitivePointsValue {
 	NSNumber *result = [self primitivePoints];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitivePointsValue:(int16_t)value_ {
-	[self setPrimitivePoints:[NSNumber numberWithShort:value_]];
+- (void)setPrimitivePointsValue:(uint16_t)value_ {
+	[self setPrimitivePoints:@(value_)];
 }
-
-
-
-
 
 @dynamic priorHandicap;
-
-
 
 - (int16_t)priorHandicapValue {
 	NSNumber *result = [self priorHandicap];
@@ -102,7 +76,7 @@ const struct WBResultFetchedProperties WBResultFetchedProperties = {
 }
 
 - (void)setPriorHandicapValue:(int16_t)value_ {
-	[self setPriorHandicap:[NSNumber numberWithShort:value_]];
+	[self setPriorHandicap:@(value_)];
 }
 
 - (int16_t)primitivePriorHandicapValue {
@@ -111,54 +85,58 @@ const struct WBResultFetchedProperties WBResultFetchedProperties = {
 }
 
 - (void)setPrimitivePriorHandicapValue:(int16_t)value_ {
-	[self setPrimitivePriorHandicap:[NSNumber numberWithShort:value_]];
+	[self setPrimitivePriorHandicap:@(value_)];
 }
-
-
-
-
 
 @dynamic score;
 
-
-
-- (int16_t)scoreValue {
+- (uint16_t)scoreValue {
 	NSNumber *result = [self score];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setScoreValue:(int16_t)value_ {
-	[self setScore:[NSNumber numberWithShort:value_]];
+- (void)setScoreValue:(uint16_t)value_ {
+	[self setScore:@(value_)];
 }
 
-- (int16_t)primitiveScoreValue {
+- (uint16_t)primitiveScoreValue {
 	NSNumber *result = [self primitiveScore];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitiveScoreValue:(int16_t)value_ {
-	[self setPrimitiveScore:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveScoreValue:(uint16_t)value_ {
+	[self setPrimitiveScore:@(value_)];
 }
-
-
-
-
 
 @dynamic match;
 
-	
-
 @dynamic player;
-
-	
 
 @dynamic team;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBResultAttributes 
++ (NSString *)points {
+	return @"points";
+}
++ (NSString *)priorHandicap {
+	return @"priorHandicap";
+}
++ (NSString *)score {
+	return @"score";
+}
+@end
+
+@implementation WBResultRelationships 
++ (NSString *)match {
+	return @"match";
+}
++ (NSString *)player {
+	return @"player";
+}
++ (NSString *)team {
+	return @"team";
+}
+@end
+

@@ -1,133 +1,64 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBPlayerYearData.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBManagedObject.h"
 
-extern const struct WBPlayerYearDataAttributes {
-	__unsafe_unretained NSString *finishingHandicap;
-	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *isRookie;
-	__unsafe_unretained NSString *startingHandicap;
-} WBPlayerYearDataAttributes;
-
-extern const struct WBPlayerYearDataRelationships {
-	__unsafe_unretained NSString *player;
-	__unsafe_unretained NSString *team;
-	__unsafe_unretained NSString *year;
-} WBPlayerYearDataRelationships;
-
-extern const struct WBPlayerYearDataFetchedProperties {
-} WBPlayerYearDataFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBPlayer;
 @class WBTeam;
 @class WBYear;
 
-
-
-
-
-
 @interface WBPlayerYearDataID : NSManagedObjectID {}
 @end
 
-@interface _WBPlayerYearData : WBManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBPlayerYearData : WBManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBPlayerYearDataID*)objectID;
+@property (nonatomic, readonly, strong) WBPlayerYearDataID *objectID;
 
+@property (nonatomic, strong, nullable) NSNumber* finishingHandicap;
 
-
-
-
-@property (nonatomic, strong) NSNumber* finishingHandicap;
-
-
-
-@property int16_t finishingHandicapValue;
+@property (atomic) int16_t finishingHandicapValue;
 - (int16_t)finishingHandicapValue;
 - (void)setFinishingHandicapValue:(int16_t)value_;
 
-//- (BOOL)validateFinishingHandicap:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* id;
 
-
-
-@property int16_t idValue;
+@property (atomic) int16_t idValue;
 - (int16_t)idValue;
 - (void)setIdValue:(int16_t)value_;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* isRookie;
 
-
-
-@property BOOL isRookieValue;
+@property (atomic) BOOL isRookieValue;
 - (BOOL)isRookieValue;
 - (void)setIsRookieValue:(BOOL)value_;
 
-//- (BOOL)validateIsRookie:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* startingHandicap;
 
-
-
-@property int16_t startingHandicapValue;
+@property (atomic) int16_t startingHandicapValue;
 - (int16_t)startingHandicapValue;
 - (void)setStartingHandicapValue:(int16_t)value_;
 
-//- (BOOL)validateStartingHandicap:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) WBPlayer *player;
-
-//- (BOOL)validatePlayer:(id*)value_ error:(NSError**)error_;
-
-
-
 
 @property (nonatomic, strong) WBTeam *team;
 
-//- (BOOL)validateTeam:(id*)value_ error:(NSError**)error_;
-
-
-
-
 @property (nonatomic, strong) WBYear *year;
-
-//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@end
-
-@interface _WBPlayerYearData (CoreDataGeneratedAccessors)
 
 @end
 
 @interface _WBPlayerYearData (CoreDataGeneratedPrimitiveAccessors)
-
 
 - (NSNumber*)primitiveFinishingHandicap;
 - (void)setPrimitiveFinishingHandicap:(NSNumber*)value;
@@ -135,17 +66,11 @@ extern const struct WBPlayerYearDataFetchedProperties {
 - (int16_t)primitiveFinishingHandicapValue;
 - (void)setPrimitiveFinishingHandicapValue:(int16_t)value_;
 
-
-
-
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
 
 - (int16_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int16_t)value_;
-
-
-
 
 - (NSNumber*)primitiveIsRookie;
 - (void)setPrimitiveIsRookie:(NSNumber*)value;
@@ -153,31 +78,34 @@ extern const struct WBPlayerYearDataFetchedProperties {
 - (BOOL)primitiveIsRookieValue;
 - (void)setPrimitiveIsRookieValue:(BOOL)value_;
 
-
-
-
 - (NSNumber*)primitiveStartingHandicap;
 - (void)setPrimitiveStartingHandicap:(NSNumber*)value;
 
 - (int16_t)primitiveStartingHandicapValue;
 - (void)setPrimitiveStartingHandicapValue:(int16_t)value_;
 
-
-
-
-
 - (WBPlayer*)primitivePlayer;
 - (void)setPrimitivePlayer:(WBPlayer*)value;
-
-
 
 - (WBTeam*)primitiveTeam;
 - (void)setPrimitiveTeam:(WBTeam*)value;
 
-
-
 - (WBYear*)primitiveYear;
 - (void)setPrimitiveYear:(WBYear*)value;
 
-
 @end
+
+@interface WBPlayerYearDataAttributes: NSObject 
++ (NSString *)finishingHandicap;
++ (NSString *)id;
++ (NSString *)isRookie;
++ (NSString *)startingHandicap;
+@end
+
+@interface WBPlayerYearDataRelationships: NSObject
++ (NSString *)player;
++ (NSString *)team;
++ (NSString *)year;
+@end
+
+NS_ASSUME_NONNULL_END

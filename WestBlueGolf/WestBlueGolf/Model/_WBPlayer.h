@@ -1,109 +1,73 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to WBPlayer.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
 #import "WBPeopleEntity.h"
 
-extern const struct WBPlayerAttributes {
-	__unsafe_unretained NSString *currentHandicap;
-	__unsafe_unretained NSString *id;
-} WBPlayerAttributes;
-
-extern const struct WBPlayerRelationships {
-	__unsafe_unretained NSString *matches;
-	__unsafe_unretained NSString *results;
-	__unsafe_unretained NSString *yearData;
-} WBPlayerRelationships;
-
-extern const struct WBPlayerFetchedProperties {
-} WBPlayerFetchedProperties;
+NS_ASSUME_NONNULL_BEGIN
 
 @class WBMatch;
 @class WBResult;
 @class WBPlayerYearData;
 
-
-
-
-@interface WBPlayerID : NSManagedObjectID {}
+@interface WBPlayerID : WBPeopleEntityID {}
 @end
 
-@interface _WBPlayer : WBPeopleEntity {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _WBPlayer : WBPeopleEntity
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (WBPlayerID*)objectID;
-
-
-
-
+@property (nonatomic, readonly, strong) WBPlayerID *objectID;
 
 @property (nonatomic, strong) NSNumber* currentHandicap;
 
-
-
-@property int16_t currentHandicapValue;
+@property (atomic) int16_t currentHandicapValue;
 - (int16_t)currentHandicapValue;
 - (void)setCurrentHandicapValue:(int16_t)value_;
 
-//- (BOOL)validateCurrentHandicap:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSNumber* id;
 
-
-
-@property int16_t idValue;
+@property (atomic) int16_t idValue;
 - (int16_t)idValue;
 - (void)setIdValue:(int16_t)value_;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, strong) NSSet<WBMatch*> *matches;
+- (NSMutableSet<WBMatch*>*)matchesSet;
 
+@property (nonatomic, strong, nullable) NSSet<WBResult*> *results;
+- (nullable NSMutableSet<WBResult*>*)resultsSet;
 
-
-
-
-@property (nonatomic, strong) NSSet *matches;
-
-- (NSMutableSet*)matchesSet;
-
-
-
-
-@property (nonatomic, strong) NSSet *results;
-
-- (NSMutableSet*)resultsSet;
-
-
-
-
-@property (nonatomic, strong) NSSet *yearData;
-
-- (NSMutableSet*)yearDataSet;
-
-
-
-
+@property (nonatomic, strong) NSSet<WBPlayerYearData*> *yearData;
+- (NSMutableSet<WBPlayerYearData*>*)yearDataSet;
 
 @end
 
-@interface _WBPlayer (CoreDataGeneratedAccessors)
-
-- (void)addMatches:(NSSet*)value_;
-- (void)removeMatches:(NSSet*)value_;
+@interface _WBPlayer (MatchesCoreDataGeneratedAccessors)
+- (void)addMatches:(NSSet<WBMatch*>*)value_;
+- (void)removeMatches:(NSSet<WBMatch*>*)value_;
 - (void)addMatchesObject:(WBMatch*)value_;
 - (void)removeMatchesObject:(WBMatch*)value_;
 
-- (void)addResults:(NSSet*)value_;
-- (void)removeResults:(NSSet*)value_;
+@end
+
+@interface _WBPlayer (ResultsCoreDataGeneratedAccessors)
+- (void)addResults:(NSSet<WBResult*>*)value_;
+- (void)removeResults:(NSSet<WBResult*>*)value_;
 - (void)addResultsObject:(WBResult*)value_;
 - (void)removeResultsObject:(WBResult*)value_;
 
-- (void)addYearData:(NSSet*)value_;
-- (void)removeYearData:(NSSet*)value_;
+@end
+
+@interface _WBPlayer (YearDataCoreDataGeneratedAccessors)
+- (void)addYearData:(NSSet<WBPlayerYearData*>*)value_;
+- (void)removeYearData:(NSSet<WBPlayerYearData*>*)value_;
 - (void)addYearDataObject:(WBPlayerYearData*)value_;
 - (void)removeYearDataObject:(WBPlayerYearData*)value_;
 
@@ -111,15 +75,11 @@ extern const struct WBPlayerFetchedProperties {
 
 @interface _WBPlayer (CoreDataGeneratedPrimitiveAccessors)
 
-
 - (NSNumber*)primitiveCurrentHandicap;
 - (void)setPrimitiveCurrentHandicap:(NSNumber*)value;
 
 - (int16_t)primitiveCurrentHandicapValue;
 - (void)setPrimitiveCurrentHandicapValue:(int16_t)value_;
-
-
-
 
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
@@ -127,22 +87,26 @@ extern const struct WBPlayerFetchedProperties {
 - (int16_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int16_t)value_;
 
+- (NSMutableSet<WBMatch*>*)primitiveMatches;
+- (void)setPrimitiveMatches:(NSMutableSet<WBMatch*>*)value;
 
+- (NSMutableSet<WBResult*>*)primitiveResults;
+- (void)setPrimitiveResults:(NSMutableSet<WBResult*>*)value;
 
-
-
-- (NSMutableSet*)primitiveMatches;
-- (void)setPrimitiveMatches:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveResults;
-- (void)setPrimitiveResults:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveYearData;
-- (void)setPrimitiveYearData:(NSMutableSet*)value;
-
+- (NSMutableSet<WBPlayerYearData*>*)primitiveYearData;
+- (void)setPrimitiveYearData:(NSMutableSet<WBPlayerYearData*>*)value;
 
 @end
+
+@interface WBPlayerAttributes: NSObject 
++ (NSString *)currentHandicap;
++ (NSString *)id;
+@end
+
+@interface WBPlayerRelationships: NSObject
++ (NSString *)matches;
++ (NSString *)results;
++ (NSString *)yearData;
+@end
+
+NS_ASSUME_NONNULL_END

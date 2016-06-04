@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
     <entity name="WBBoardData" representedClassName="WBBoardData" syncable="YES">
         <attribute name="detailValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayValue" attributeType="String" syncable="YES"/>
@@ -90,6 +90,7 @@
     <entity name="WBTeamMatchup" representedClassName="WBTeamMatchup" syncable="YES">
         <attribute name="matchComplete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="matchId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="matchOrder" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" syncable="YES"/>
         <attribute name="playoffType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WBMatch" inverseName="teamMatchup" inverseEntity="WBMatch" syncable="YES"/>
         <relationship name="teams" toMany="YES" minCount="1" maxCount="2" deletionRule="Nullify" destinationEntity="WBTeam" inverseName="matchups" inverseEntity="WBTeam" syncable="YES"/>
@@ -134,7 +135,7 @@
         <element name="WBPlayerYearData" positionX="288" positionY="-171" width="128" height="148"/>
         <element name="WBResult" positionX="151" positionY="-322" width="128" height="133"/>
         <element name="WBTeam" positionX="9" positionY="-46" width="128" height="103"/>
-        <element name="WBTeamMatchup" positionX="7" positionY="-189" width="128" height="133"/>
+        <element name="WBTeamMatchup" positionX="7" positionY="-189" width="128" height="148"/>
         <element name="WBWeek" positionX="-162" positionY="-252" width="128" height="178"/>
         <element name="WBYear" positionX="-162" positionY="-45" width="128" height="148"/>
     </elements>

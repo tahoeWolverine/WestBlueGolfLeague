@@ -3,30 +3,12 @@
 
 #import "_WBWeek.h"
 
-const struct WBWeekAttributes WBWeekAttributes = {
-	.date = @"date",
-	.id = @"id",
-	.isBadData = @"isBadData",
-	.isPlayoff = @"isPlayoff",
-	.pairing = @"pairing",
-	.seasonIndex = @"seasonIndex",
-};
-
-const struct WBWeekRelationships WBWeekRelationships = {
-	.course = @"course",
-	.teamMatchups = @"teamMatchups",
-	.year = @"year",
-};
-
-const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
-};
-
 @implementation WBWeekID
 @end
 
 @implementation _WBWeek
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"WBWeek" inManagedObjectContext:moc_];
 }
@@ -46,7 +28,7 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-	
+
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -76,19 +58,9 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 	return keyPaths;
 }
 
-
-
-
 @dynamic date;
 
-
-
-
-
-
 @dynamic id;
-
-
 
 - (int16_t)idValue {
 	NSNumber *result = [self id];
@@ -96,7 +68,7 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setIdValue:(int16_t)value_ {
-	[self setId:[NSNumber numberWithShort:value_]];
+	[self setId:@(value_)];
 }
 
 - (int16_t)primitiveIdValue {
@@ -105,16 +77,10 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setPrimitiveIdValue:(int16_t)value_ {
-	[self setPrimitiveId:[NSNumber numberWithShort:value_]];
+	[self setPrimitiveId:@(value_)];
 }
 
-
-
-
-
 @dynamic isBadData;
-
-
 
 - (BOOL)isBadDataValue {
 	NSNumber *result = [self isBadData];
@@ -122,7 +88,7 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setIsBadDataValue:(BOOL)value_ {
-	[self setIsBadData:[NSNumber numberWithBool:value_]];
+	[self setIsBadData:@(value_)];
 }
 
 - (BOOL)primitiveIsBadDataValue {
@@ -131,16 +97,10 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setPrimitiveIsBadDataValue:(BOOL)value_ {
-	[self setPrimitiveIsBadData:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveIsBadData:@(value_)];
 }
 
-
-
-
-
 @dynamic isPlayoff;
-
-
 
 - (BOOL)isPlayoffValue {
 	NSNumber *result = [self isPlayoff];
@@ -148,7 +108,7 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setIsPlayoffValue:(BOOL)value_ {
-	[self setIsPlayoff:[NSNumber numberWithBool:value_]];
+	[self setIsPlayoff:@(value_)];
 }
 
 - (BOOL)primitiveIsPlayoffValue {
@@ -157,16 +117,10 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setPrimitiveIsPlayoffValue:(BOOL)value_ {
-	[self setPrimitiveIsPlayoff:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveIsPlayoff:@(value_)];
 }
 
-
-
-
-
 @dynamic pairing;
-
-
 
 - (int16_t)pairingValue {
 	NSNumber *result = [self pairing];
@@ -174,7 +128,7 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setPairingValue:(int16_t)value_ {
-	[self setPairing:[NSNumber numberWithShort:value_]];
+	[self setPairing:@(value_)];
 }
 
 - (int16_t)primitivePairingValue {
@@ -183,63 +137,76 @@ const struct WBWeekFetchedProperties WBWeekFetchedProperties = {
 }
 
 - (void)setPrimitivePairingValue:(int16_t)value_ {
-	[self setPrimitivePairing:[NSNumber numberWithShort:value_]];
+	[self setPrimitivePairing:@(value_)];
 }
-
-
-
-
 
 @dynamic seasonIndex;
 
-
-
-- (int16_t)seasonIndexValue {
+- (uint16_t)seasonIndexValue {
 	NSNumber *result = [self seasonIndex];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setSeasonIndexValue:(int16_t)value_ {
-	[self setSeasonIndex:[NSNumber numberWithShort:value_]];
+- (void)setSeasonIndexValue:(uint16_t)value_ {
+	[self setSeasonIndex:@(value_)];
 }
 
-- (int16_t)primitiveSeasonIndexValue {
+- (uint16_t)primitiveSeasonIndexValue {
 	NSNumber *result = [self primitiveSeasonIndex];
-	return [result shortValue];
+	return [result unsignedShortValue];
 }
 
-- (void)setPrimitiveSeasonIndexValue:(int16_t)value_ {
-	[self setPrimitiveSeasonIndex:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveSeasonIndexValue:(uint16_t)value_ {
+	[self setPrimitiveSeasonIndex:@(value_)];
 }
-
-
-
-
 
 @dynamic course;
 
-	
-
 @dynamic teamMatchups;
 
-	
-- (NSMutableSet*)teamMatchupsSet {
+- (NSMutableSet<WBTeamMatchup*>*)teamMatchupsSet {
 	[self willAccessValueForKey:@"teamMatchups"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"teamMatchups"];
-  
+
+	NSMutableSet<WBTeamMatchup*> *result = (NSMutableSet<WBTeamMatchup*>*)[self mutableSetValueForKey:@"teamMatchups"];
+
 	[self didAccessValueForKey:@"teamMatchups"];
 	return result;
 }
-	
 
 @dynamic year;
 
-	
-
-
-
-
-
-
 @end
+
+@implementation WBWeekAttributes 
++ (NSString *)date {
+	return @"date";
+}
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)isBadData {
+	return @"isBadData";
+}
++ (NSString *)isPlayoff {
+	return @"isPlayoff";
+}
++ (NSString *)pairing {
+	return @"pairing";
+}
++ (NSString *)seasonIndex {
+	return @"seasonIndex";
+}
+@end
+
+@implementation WBWeekRelationships 
++ (NSString *)course {
+	return @"course";
+}
++ (NSString *)teamMatchups {
+	return @"teamMatchups";
+}
++ (NSString *)year {
+	return @"year";
+}
+@end
+
