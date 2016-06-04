@@ -997,6 +997,25 @@ textarea.roster-input {
     line-height: 1;
     background: white;
     color: #428bca;
+    cursor: pointer;
+}
+
+.week-display-details-toggle > i{
+  -webkit-transition: -webkit-transform .15s ease-in-out;
+          transition: transform .15s ease-in-out;
+  -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+}
+
+.week-display-details-toggle-on {
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.week-display-details {
+    clear: both;
 }
 
 .matchup-date-detail {

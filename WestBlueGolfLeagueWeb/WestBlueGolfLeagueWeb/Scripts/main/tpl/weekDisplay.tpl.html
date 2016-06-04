@@ -44,8 +44,11 @@
             <div ng-if="::!matchup.isComplete" class="week-display-teetime">
                 {{$parent.matchup.teeTimeText}}
             </div>
-            <div class="week-display-details-toggle">
-                <i class="fa fa-chevron-circle-down"></i>
+            <div class="week-display-details" ng-show="matchup.showDetails">
+                Deets!
+            </div>
+            <div class="week-display-details-toggle" ng-click="matchup.showDetails = !matchup.showDetails">
+                <i class="fa fa-chevron-circle-down" ng-class="{'week-display-details-toggle-on': matchup.showDetails }"></i>
             </div>
         </div>
     </div>
