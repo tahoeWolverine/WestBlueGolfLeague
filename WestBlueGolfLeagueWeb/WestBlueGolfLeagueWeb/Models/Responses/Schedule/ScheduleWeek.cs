@@ -4,22 +4,24 @@ using System.Linq;
 using System.Web;
 using WestBlueGolfLeagueWeb.Models.Entities;
 using WestBlueGolfLeagueWeb.Models.Playoffs;
+using WestBlueGolfLeagueWeb.Models.Responses.Admin;
 using WestBlueGolfLeagueWeb.Models.Responses.Team;
 
 namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
 {
     public class ScheduleWeek : WeekResponse
     {
-        public ScheduleWeek(week w) : this(w, null)
+        public ScheduleWeek(week w) : this(w, null, false)
         {
             
         }
 
-        public ScheduleWeek(week w, GroupedPlayoffMatchup playoffMatchup)
+        public ScheduleWeek(week w, GroupedPlayoffMatchup playoffMatchup, bool includeMatches = false)
             : base(w)
         {
-            this.TeamMatchups = w.teammatchups
-                .Select(x => new ScheduleTeamMatchup(x)).OrderBy(x => x.MatchOrder).ToList();
+
+            this.TeamMatchups = 
+                w.teammatchups.Select(x => includeMatches ? new TeamMatchupWithMatches(x) : new ScheduleTeamMatchup(x)).OrderBy(x => x.MatchOrder).ToList();
             this.Course = CourseResponse.From(w.course);
             this.Pairing = w.pairing.pairingText;
 

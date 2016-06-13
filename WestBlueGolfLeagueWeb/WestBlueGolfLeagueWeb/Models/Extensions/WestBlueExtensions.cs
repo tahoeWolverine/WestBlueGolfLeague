@@ -61,17 +61,42 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return playersSet.Where(x => x.playeryeardatas.Any(y => y.year.id == year.id) && (includeInvalidPlayers || x.validPlayer)).ToList();
         }
 
-        public static async Task<List<week>> GetSchedule(this WestBlue westBlue, int year)
+        public static async Task<List<week>> GetSchedule(this WestBlue westBlue, int year, bool includeMatches = false)
         {
-            var weeks = await westBlue.weeks
-                .Include(x => x.teammatchups)
-                .Include("teammatchups.teams")
+            var weeks = westBlue.weeks
                 .Include(x => x.pairing)
-                .Include(x => x.course)
-                .Where(x => x.year.value == year)
-                .OrderBy(x => x.date).ToListAsync();
+                .Include(x => x.course);
 
-            return weeks;
+            if (includeMatches)
+            {
+                weeks.Include(x => x.teammatchups.Select(tm => tm.matches.Select(m => m.results)));
+            }
+            else
+            {
+                weeks.Include(x => x.teammatchups.Select(tm => tm.teams));
+            }
+
+            /*
+            Current model is this:
+            week
+                |
+                teammatchup
+                    |
+                    matches
+                        |
+                        results
+                    |
+                    teams
+                        |
+                        players
+
+            Need something flat like this on the match level:
+            weekId, result1 infos..., result2 infos..., matchOrder, teamMatchup order, teamMatchup id, team1 info, team2 info?
+
+            */
+
+            return await weeks.Where(x => x.year.value == year)
+                .OrderBy(x => x.date).ToListAsync();
         }
 
         public static async Task<IEnumerable<week>> GetWeeksWithMatchUpsForYearAsync(this WestBlue westBlue, int year)

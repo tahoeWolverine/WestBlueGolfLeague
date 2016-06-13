@@ -20,7 +20,7 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public WestBlue(bool needWriteAccess)
             : base(needWriteAccess ? "name=WestBlue" : "name=WestBlue")
         {
-            //this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public virtual DbSet<course> courses { get; set; }

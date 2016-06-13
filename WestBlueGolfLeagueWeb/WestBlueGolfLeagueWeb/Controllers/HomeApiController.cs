@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var selectedYear = this.SelectedYear;
 
             // populated weeks
-            var weeks = await this.Db.GetSchedule(selectedYear);
+            var weeks = await this.Db.GetSchedule(selectedYear, false);
 
             var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
 
@@ -48,7 +48,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
                         playoffLookup.TryGetValue(x.id, out matchup);
 
-                        return new ScheduleWeek(x, matchup);
+                        return new ScheduleWeek(x, matchup, false);
                     })}
                 });
         }
