@@ -34,11 +34,11 @@ from
 
 /*With players:	*/	
 select 
-    /*tm.id as teamMatchupId*/
-	tm.id,
+	tm.id as teamMatchupId,
 	tm.matchComplete,
 	tm.weekId,
 	tm.playoffType,
+	matches.resultId as id,
 	matches.*
 from
     teammatchup tm
@@ -68,5 +68,3 @@ from
     inner join `year` y ON y.id = w.yearId
     WHERE
         y.value = 2016) yy ON yy.joinedWeekId = tm.weekId;
-		
-		

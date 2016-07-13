@@ -301,6 +301,7 @@
     <Compile Include="Models\Responses\Team\TeamProfileData.cs" />
     <Compile Include="Models\Responses\Team\TeamProfileResult.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleWeek.cs" />
+    <Compile Include="Models\MappedEntities\FlattenedResult.cs" />
     <Compile Include="Models\Schedule\RosterInitializer.cs" />
     <Compile Include="Models\Schedule\RosterReader.cs" />
     <Compile Include="Models\Schedule\TeamRoster.cs" />
@@ -371,6 +372,8 @@
     <Compile Include="Models\Extensions\WestBlueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Schedule\GolfYear.cs" />
+    <Compile Include="Repositories\ResultsRepository.cs" />
+    <Compile Include="Services\ResultService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

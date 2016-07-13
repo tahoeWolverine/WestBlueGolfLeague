@@ -52,5 +52,10 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     })}
                 });
         }
+
+        public async void NewHomeEndpoint()
+        {
+            
+        }
     }
 }
