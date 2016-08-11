@@ -20,7 +20,7 @@ namespace WestBlueGolfLeagueWeb.Services
 
         public void GetResultsForYear(int year)
         {
-
+            var results = this.resultsRepository.GetResultsForYear(year);
         }
     }
 }

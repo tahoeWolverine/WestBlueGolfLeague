@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var selectedYear = this.SelectedYear;
 
             // populated weeks
-            var weeks = await this.Db.GetSchedule(selectedYear, false);
+            var weeks = await this.Db.GetSchedule(selectedYear, true);
 
             var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
 
