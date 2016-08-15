@@ -44,8 +44,21 @@
             <div ng-if="::!matchup.isComplete" class="week-display-teetime">
                 {{$parent.matchup.teeTimeText}}
             </div>
+            <!-- begin matches/results -->
             <div class="week-display-details" ng-show="matchup.showDetails">
-                Deets!
+                <table>
+                    <tr>
+                        <th colspan="2">{{::matchup.team1.name}}</th>
+                        <th colspan="2">{{::matchup.team2.name}}</th>
+                    </tr>
+                    <tr ng-repeat="result in matchup.matches.team1">
+                        <td>{{::result.playerName}}</td>
+                        <td>{{::result.points}}</td>
+                        <td>{{::matchup.matches.team2[$index].playerName}}</td>
+                        <td>{{::matchup.matches.team2[$index].points}}</td>
+                        <td>{{::result}}</td>
+                    </tr>
+                </table>
             </div>
             <div class="week-display-details-toggle" ng-click="matchup.showDetails = !matchup.showDetails">
                 <i class="fa fa-chevron-circle-down" ng-class="{'week-display-details-toggle-on': matchup.showDetails }"></i>

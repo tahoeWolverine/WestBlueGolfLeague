@@ -22,6 +22,11 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return playerData.Where(x => includeInvalidPlayers || x.player.validPlayer).Select(x => Tuple.Create(x.player, x.team));
         }
 
+        public static async Task<IEnumerable<player>> GetPlayersForYear(this WestBlue westBlue, int year)
+        {
+            return (await westBlue.playeryeardatas.Include(x => x.player).Where(x => x.year.value == year).ToListAsync()).Select(x => x.player);
+        }
+
         public static IEnumerable<team> GetTeamsForYear(this WestBlue westBlue, int year, bool includeInvalidTeams = false)
         {
             return westBlue.teams

@@ -75,8 +75,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
                 //        Value = (double)team2PointsResult.points
                 //    } : null;
             }
-
-            // TODO: going to need to add all the results here I think :\
         }
 
         public int? MatchOrder { get; set; }

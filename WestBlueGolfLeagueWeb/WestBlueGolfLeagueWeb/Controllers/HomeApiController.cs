@@ -32,6 +32,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
 
+            var playersForYear = await this.Db.GetPlayersForYear(selectedYear);
+
             var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, weeks).PredictPlayoffMatchups();
 
             var playoffLookup = playoffPredictorResults.ToDictionary(x => x.Week.id, x => x);
@@ -41,14 +43,15 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 { 
                     leagueNote = latestNote, 
                     selectedYear = selectedYear, 
-                    standings = teamStandingData, 
+                    standings = teamStandingData,
+                    players = playersForYear.Select(x => new { id = x.id, name = x.name }),
                     schedule = new ScheduleResponse { Weeks = weeks.Select(x => {
 
                         GroupedPlayoffMatchup matchup = null;
 
                         playoffLookup.TryGetValue(x.id, out matchup);
 
-                        return new ScheduleWeek(x, matchup, false);
+                        return new ScheduleWeek(x, matchup, true);
                     })}
                 });
         }
