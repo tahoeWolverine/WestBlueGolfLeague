@@ -216,32 +216,14 @@ angular
             
             var playersLookup = _.indexBy(data.players, 'id');
 
+            var hydratePlayerName = function(result) {
+                result.playerName = playersLookup[result.playerId].name;
+            };
+
             _.each(data.schedule.weeks, function (week) {
                 _.each(week.teamMatchups, function (matchup) {
-
-                    // group all the results together
-                    var matches = {
-                        team1: [],
-                        team2: []
-                    };
-
-                    _.each(matchup.matches, function (match) {
-                        match.result1.playerName = playersLookup[match.result1.playerId].name;
-                        match.result2.playerName = playersLookup[match.result2.playerId].name;
-
-                        var team1Result = match.result1;
-                        var team2Result = match.result2;
-
-                        if (match.result1.teamId != matchup.team1.id) {
-                            team1Result = match.result2;
-                            team2Result = match.result1;
-                        }
-
-                        matches.team1.push(team1Result);
-                        matches.team2.push(team2Result);
-                    });
-
-                    matchup.matches = matches;
+                    _.each(matchup.team1Results, hydratePlayerName);
+                    _.each(matchup.team2Results, hydratePlayerName)
                 });
             });
 

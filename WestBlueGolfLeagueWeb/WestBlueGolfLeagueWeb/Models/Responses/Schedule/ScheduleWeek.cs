@@ -21,7 +21,7 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
         {
 
             this.TeamMatchups = 
-                w.teammatchups.Select(x => includeMatches ? new TeamMatchupWithMatches(x) : new ScheduleTeamMatchup(x)).OrderBy(x => x.MatchOrder).ToList();
+                w.teammatchups.Select(x => includeMatches ? new TeamMatchupWithResults(x) : new ScheduleTeamMatchup(x)).OrderBy(x => x.MatchOrder).ToList();
             this.Course = CourseResponse.From(w.course);
             this.Pairing = w.pairing.pairingText;
 

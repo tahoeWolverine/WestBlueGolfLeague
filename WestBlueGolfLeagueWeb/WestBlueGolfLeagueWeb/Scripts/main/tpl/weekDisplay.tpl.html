@@ -51,12 +51,11 @@
                         <th colspan="2">{{::matchup.team1.name}}</th>
                         <th colspan="2">{{::matchup.team2.name}}</th>
                     </tr>
-                    <tr ng-repeat="result in matchup.matches.team1">
+                    <tr ng-repeat="result in matchup.team1Results">
                         <td>{{::result.playerName}}</td>
                         <td>{{::result.points}}</td>
-                        <td>{{::matchup.matches.team2[$index].playerName}}</td>
-                        <td>{{::matchup.matches.team2[$index].points}}</td>
-                        <td>{{::result}}</td>
+                        <td>{{::matchup.team2Results[$index].playerName}}</td>
+                        <td>{{::matchup.team2Results[$index].points}}</td>
                     </tr>
                 </table>
             </div>
