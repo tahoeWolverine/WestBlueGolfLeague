@@ -211,6 +211,25 @@ angular
 
     .factory('home', ['$http', '$q', function ($http, $q) {
 
+        // so ugly, server should do this. Will cleanup.
+        var transformData = function (data) {
+            
+            var playersLookup = _.indexBy(data.players, 'id');
+
+            var hydratePlayerName = function(result) {
+                result.playerName = playersLookup[result.playerId].name;
+            };
+
+            _.each(data.schedule.weeks, function (week) {
+                _.each(week.teamMatchups, function (matchup) {
+                    _.each(matchup.team1Results, hydratePlayerName);
+                    _.each(matchup.team2Results, hydratePlayerName)
+                });
+            });
+
+            return data;
+        };
+
         return {
             getHomeData: function () {
                 return $q(function (resolve, reject) {
@@ -218,7 +237,7 @@ angular
                         method: 'GET',
                         url: '/api/homeApi/'
                     }).then(function (data) {
-                        resolve(data.data);
+                        resolve(transformData(data.data));
                     })
                     .catch(function (err) {
                         reject(err);

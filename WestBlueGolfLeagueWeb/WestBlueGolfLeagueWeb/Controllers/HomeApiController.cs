@@ -22,7 +22,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var selectedYear = this.SelectedYear;
 
             // populated weeks
-            var weeks = await this.Db.GetSchedule(selectedYear);
+            var weeks = await this.Db.GetSchedule(selectedYear, true);
 
             var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
 
@@ -31,6 +31,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var leaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
 
             var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
+
+            var playersForYear = await this.Db.GetPlayersForYear(selectedYear);
 
             var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, weeks).PredictPlayoffMatchups();
 
@@ -41,16 +43,22 @@ namespace WestBlueGolfLeagueWeb.Controllers
                 { 
                     leagueNote = latestNote, 
                     selectedYear = selectedYear, 
-                    standings = teamStandingData, 
+                    standings = teamStandingData,
+                    players = playersForYear.Select(x => new { id = x.id, name = x.name }),
                     schedule = new ScheduleResponse { Weeks = weeks.Select(x => {
 
                         GroupedPlayoffMatchup matchup = null;
 
                         playoffLookup.TryGetValue(x.id, out matchup);
 
-                        return new ScheduleWeek(x, matchup);
+                        return new ScheduleWeek(x, matchup, true);
                     })}
                 });
+        }
+
+        public async void NewHomeEndpoint()
+        {
+            
         }
     }
 }

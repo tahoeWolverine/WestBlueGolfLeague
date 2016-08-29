@@ -42,7 +42,5 @@ namespace WestBlueGolfLeagueWeb.Models.Entities
         public virtual week week { get; set; }
 
         public virtual ICollection<team> teams { get; set; }
-
-
     }
 }

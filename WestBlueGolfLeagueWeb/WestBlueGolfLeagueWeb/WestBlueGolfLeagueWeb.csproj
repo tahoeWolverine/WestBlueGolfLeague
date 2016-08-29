@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -199,6 +203,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Admin\AdminInfoController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
@@ -289,13 +294,16 @@
     <Compile Include="Models\Responses\Admin\UserResponse.cs" />
     <Compile Include="Models\Responses\Schedule\MatchWebResponse.cs" />
     <Compile Include="Models\Responses\Player\PlayerWebResponse.cs" />
+    <Compile Include="Models\Responses\Schedule\ResultWithOutcome.cs" />
     <Compile Include="Models\Responses\Schedule\ResultWebResponse.cs" />
     <Compile Include="Models\Responses\Schedule\MatchSummaryValue.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleResponse.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleTeamMatchup.cs" />
+    <Compile Include="Models\Responses\Schedule\TeamMatchupWithResults.cs" />
     <Compile Include="Models\Responses\Team\TeamProfileData.cs" />
     <Compile Include="Models\Responses\Team\TeamProfileResult.cs" />
     <Compile Include="Models\Responses\Schedule\ScheduleWeek.cs" />
+    <Compile Include="Models\MappedEntities\FlattenedResult.cs" />
     <Compile Include="Models\Schedule\RosterInitializer.cs" />
     <Compile Include="Models\Schedule\RosterReader.cs" />
     <Compile Include="Models\Schedule\TeamRoster.cs" />
@@ -366,6 +374,8 @@
     <Compile Include="Models\Extensions\WestBlueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Schedule\GolfYear.cs" />
+    <Compile Include="Repositories\ResultsRepository.cs" />
+    <Compile Include="Services\ResultService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

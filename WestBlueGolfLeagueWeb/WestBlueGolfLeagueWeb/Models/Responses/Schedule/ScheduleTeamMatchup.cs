@@ -29,13 +29,13 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
             if (team1 != null) {
                 this.Team1 =  TeamResponse.From(team1);
                 this.Team1Points = tm.PointsFor(team1);
-	            this.Team1Win = tm.Team1Won();
+                this.Team1Win = tm.Team1Won();
             }
 
             if (team2 != null) {
                 this.Team2 = TeamResponse.From(team2);
                 this.Team2Points = tm.PointsFor(team2);
-	            this.Team2Win = tm.Team2Won();
+                this.Team2Win = tm.Team2Won();
             }
 
             this.IsComplete = tm.IsComplete();
@@ -75,8 +75,6 @@ namespace WestBlueGolfLeagueWeb.Models.Responses.Schedule
                 //        Value = (double)team2PointsResult.points
                 //    } : null;
             }
-
-            // TODO: going to need to add all the results here I think :\
         }
 
         public int? MatchOrder { get; set; }
