@@ -46,20 +46,23 @@
             </div>
             <!-- begin matches/results -->
             <div class="week-display-details" ng-show="matchup.showDetails">
-                <table>
-                    <tr>
-                        <th colspan="2">{{::matchup.team1.name}}</th>
-                        <th colspan="2">{{::matchup.team2.name}}</th>
-                    </tr>
-                    <tr ng-repeat="result in matchup.team1Results">
-                        <td>{{::result.playerName}}</td>
-                        <td>{{::result.points}}</td>
-                        <td>{{::matchup.team2Results[$index].playerName}}</td>
-                        <td>{{::matchup.team2Results[$index].points}}</td>
-                    </tr>
-                </table>
+                <div>
+                    <table>
+                        <tr>
+                            <th>{{::matchup.team1.name}}</th>
+                            <th colspan="2">Points</th>
+                            <th>{{::matchup.team2.name}}</th>
+                        </tr>
+                        <tr ng-repeat="result in matchup.team1Results">
+                            <td>{{::result.playerName}}</td>
+                            <td>{{::result.points}}</td>
+                            <td>{{::matchup.team2Results[$index].points}}</td>
+                            <td>{{::matchup.team2Results[$index].playerName}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="week-display-details-toggle" ng-click="matchup.showDetails = !matchup.showDetails">
+            <div class="week-display-details-toggle" ng-class="{'week-display-details-toggle-parent-on': matchup.showDetails }" ng-click="matchup.showDetails = !matchup.showDetails">
                 <i class="fa fa-chevron-circle-down" ng-class="{'week-display-details-toggle-on': matchup.showDetails }"></i>
             </div>
         </div>

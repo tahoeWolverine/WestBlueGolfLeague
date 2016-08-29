@@ -993,11 +993,14 @@ textarea.roster-input {
     height: 28px;
     text-align: center;
     font-size: 28px;
-    bottom: -14px;
+    bottom: -19px;
     line-height: 1;
-    background: white;
     color: #428bca;
     cursor: pointer;
+}
+
+.week-display-details-toggle-parent-on {
+    bottom: -9px;
 }
 
 .week-display-details-toggle > i{
@@ -1016,6 +1019,26 @@ textarea.roster-input {
 
 .week-display-details {
     clear: both;
+}
+
+.week-display-details {
+    padding-top: 10px;
+}
+
+.week-display-details > div {
+    margin: 0 -10px -10px -10px;
+    padding: 5px 0 15px 0;
+    border-top: 1px solid #DDD;
+    background: #ebf3f9;
+}
+
+.week-display-details table {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.week-display-details td, .week-display-details th {
+    text-align: center;
 }
 
 .matchup-date-detail {
