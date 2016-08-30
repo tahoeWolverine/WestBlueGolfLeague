@@ -993,28 +993,40 @@ textarea.roster-input {
     height: 28px;
     text-align: center;
     font-size: 28px;
-    bottom: -19px;
+    bottom: -14px;
     line-height: 1;
     color: #428bca;
     cursor: pointer;
 }
 
-.week-display-details-toggle-parent-on {
-    bottom: -9px;
-}
-
-.week-display-details-toggle > i{
+.week-display-details-toggle > i {
   -webkit-transition: -webkit-transform .15s ease-in-out;
           transition: transform .15s ease-in-out;
   -webkit-transform-origin: 50% 50%;
       -ms-transform-origin: 50% 50%;
           transform-origin: 50% 50%;
+
+    position: absolute;
+    left: 0;
+    z-index: 2;
 }
 
 .week-display-details-toggle-on {
   -webkit-transform: rotate(180deg);
       -ms-transform: rotate(180deg);
           transform: rotate(180deg);
+}
+
+.week-display-details-toggle-bg {
+    background: white;
+    height: 20px;
+    display: inline-block;
+    width: 20px;
+    position: absolute;
+    left: 2px;
+    border-radius: 10px;
+    top: 3px;
+    z-index: 1;
 }
 
 .week-display-details {

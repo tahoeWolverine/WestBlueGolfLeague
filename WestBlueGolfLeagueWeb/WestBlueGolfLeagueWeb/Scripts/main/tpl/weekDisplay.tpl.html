@@ -45,7 +45,7 @@
                 {{$parent.matchup.teeTimeText}}
             </div>
             <!-- begin matches/results -->
-            <div class="week-display-details" ng-show="matchup.showDetails">
+            <div ng-if="::matchup.isComplete" class="week-display-details" ng-show="matchup.showDetails">
                 <div>
                     <table>
                         <tr>
@@ -62,7 +62,8 @@
                     </table>
                 </div>
             </div>
-            <div class="week-display-details-toggle" ng-class="{'week-display-details-toggle-parent-on': matchup.showDetails }" ng-click="matchup.showDetails = !matchup.showDetails">
+            <div ng-if="::matchup.isComplete" class="week-display-details-toggle" ng-click="matchup.showDetails = !matchup.showDetails">
+                <span class="week-display-details-toggle-bg"></span>
                 <i class="fa fa-chevron-circle-down" ng-class="{'week-display-details-toggle-on': matchup.showDetails }"></i>
             </div>
         </div>
