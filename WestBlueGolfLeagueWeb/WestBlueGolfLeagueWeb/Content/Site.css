@@ -1031,10 +1031,15 @@ textarea.roster-input {
 
 .week-display-details {
     clear: both;
+    padding-top: 10px;
 }
 
-.week-display-details {
-    padding-top: 10px;
+.week-display-details-names {
+    width: 43%;
+}
+
+.week-display-details-points {
+    width: 14%;
 }
 
 .week-display-details > div {
@@ -1045,8 +1050,10 @@ textarea.roster-input {
 }
 
 .week-display-details table {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
+    border-spacing: 0 .4em;
+    border-collapse: separate;
 }
 
 .week-display-details td, .week-display-details th {

@@ -49,9 +49,9 @@
                 <div>
                     <table>
                         <tr>
-                            <th>{{::matchup.team1.name}}</th>
-                            <th colspan="2">Points</th>
-                            <th>{{::matchup.team2.name}}</th>
+                            <th class="week-display-details-names">{{::matchup.team1.name}}</th>
+                            <th class="week-display-details-points" colspan="2">Points</th>
+                            <th class="week-display-details-names">{{::matchup.team2.name}}</th>
                         </tr>
                         <tr ng-repeat="result in matchup.team1Results">
                             <td>{{::result.playerName}}</td>
