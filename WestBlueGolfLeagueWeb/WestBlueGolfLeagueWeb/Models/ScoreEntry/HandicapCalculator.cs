@@ -127,9 +127,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         private static int CalcHandicapFromScores(int scoreTotal, int scoreCount)
         {
             double averageScoreAbovePar = ((double)scoreTotal / (double)scoreCount);
-            double remainder = averageScoreAbovePar - (scoreTotal / scoreCount);
 
-            return Math.Min((int)(averageScoreAbovePar + (remainder >= .5 ? 1 : 0)), 20);
+            // Pre-2017, this was doing a standard round; post-2017 the rule is to floor to the lower integer (which can be done by simply casting int)
+            return Math.Min((int)averageScoreAbovePar, 20);
         }
 
     }
