@@ -58,8 +58,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             int numberOfWeekZeroesToAdd = 0;
 
-            // nasty... look at maybe cleaning up
-            if (copiedScores.Count == 4)
+            // nasty... look at maybe cleaning up; now supporting needing 1 week 0 when having 4 or 5 actual results
+            if (copiedScores.Count == 5 || copiedScores.Count == 4)
             {
                 numberOfWeekZeroesToAdd = 1;
             }
@@ -82,31 +82,54 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
 
             if (copiedScores.Count >= 5)
             {
-                var lastFiveScores = copiedScores.Skip(copiedScores.Count - 5);
+                // Post-2017, handicap is best 4 of *6*, so 6 is now used along with max and secondMax
+                var lastSixScores = copiedScores.Skip(copiedScores.Count - 6);
 
                 int max = 0,
+                    secondMax = 0,
                     handicapSum = 0,
-                    weekWithMax = 0;
+                    weekWithMax = 0,
+                    weekWithSecondMax = 0;
 
                 LinkedList<int> weeksUsed = new LinkedList<int>();
 
-                foreach (var score in lastFiveScores)
+                foreach (var score in lastSixScores)
                 {
                     var handicapSplit = score.ScoreOverPar;
 
                     if (handicapSplit > max)
                     {
+                        // Not pretty; before replacing max, it might be second max
+                        if (max > secondMax)
+                        {
+                            secondMax = max;
+                            weekWithSecondMax = weekWithMax;
+                        }
                         max = handicapSplit;
                         weekWithMax = score.Week;
                     }
+                    else if (handicapSplit > secondMax)
+                    {
+                        secondMax = handicapSplit;
+                        weekWithSecondMax = score.Week;
+                    } 
 
                     weeksUsed.AddLast(score.Week);
                     handicapSum += handicapSplit;
                 }
 
+                int preAverageTotal = handicapSum;
                 weeksUsed.Remove(weekWithMax);
+                preAverageTotal -= max;
 
-                return new HandicapCalculationResult { Handicap = CalcHandicapFromScores(handicapSum - max, 4), WeeksUsed = weeksUsed };
+                // For players with 6 or more rounds, their 2nd worst round is also dropped
+                if (copiedScores.Count >= 6)
+                {
+                    weeksUsed.Remove(weekWithSecondMax);
+                    preAverageTotal -= secondMax;
+                }
+
+                return new HandicapCalculationResult { Handicap = CalcHandicapFromScores(preAverageTotal, 4), WeeksUsed = weeksUsed };
             }
             else
             {
@@ -127,9 +150,9 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
         private static int CalcHandicapFromScores(int scoreTotal, int scoreCount)
         {
             double averageScoreAbovePar = ((double)scoreTotal / (double)scoreCount);
-            double remainder = averageScoreAbovePar - (scoreTotal / scoreCount);
 
-            return Math.Min((int)(averageScoreAbovePar + (remainder >= .5 ? 1 : 0)), 20);
+            // Pre-2017, this was doing a standard round; post-2017 the rule is to floor to the lower integer (which can be done by simply casting int)
+            return Math.Min((int)averageScoreAbovePar, 20);
         }
 
     }

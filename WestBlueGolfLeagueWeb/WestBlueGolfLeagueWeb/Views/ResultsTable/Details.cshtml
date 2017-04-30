@@ -83,7 +83,7 @@
                 </tr>
                 @foreach (var p in this.Model.PlayersForTeamForYear)
                 {
-                    string boldClass = p.CompleteResultsForYear.Count() < 5 ? "score-bold" : "score-normal";
+                    string boldClass = p.CompleteResultsForYear.Count() < 6 ? "score-bold" : "score-normal";
                     var playerResults = p.CompleteResultsForYear;
                     <tr>
                         <td><a href="/Player/@p.Player.id">@p.Player.name</a></td>
@@ -97,7 +97,7 @@
                             if (boldClass == "score-normal")
                             {
                                 var remainingResults = playerResults.Where(x => x.match.teammatchup.week.date > w.date);
-                                boldClass = remainingResults.Count() < 5 ? "score-bold" : "score-normal";
+                                boldClass = remainingResults.Count() < 6 ? "score-bold" : "score-normal";
                             }
                             if (resultForWeekForPlayer == null)
                             {

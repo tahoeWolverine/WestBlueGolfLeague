@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
 	public static class TeamMatchupExtensions
 	{
-		private static readonly string[] TeeTimes = new string[] { "3:44 (3:52)", "4:00 (4:08)", "4:16 (4:24)", "4:32 (4:40)", "4:48 (4:56)", "n/a" };
+        private static readonly string[] TeeTimes = new string[] { "3:44", "3:52", "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
 
 		public static int? PointsForTeam(this teammatchup teamMatchup, int teamIndex)
 		{
@@ -34,7 +34,21 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
 		public static string TeeTimeText(this teammatchup teamMatchup)
 		{
-			return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value];
+            // Unfortunately, we need to fudge the tee times due to no-team matches only getting one time
+            if (teamMatchup.HasNoTeam())
+            {
+                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2];
+            }
+            else if (teamMatchup.matchOrder > 0 && teamMatchup.IsAfterNoTeam())
+            {
+                // Do a safety check on matchOrder to not bother checking if after no team if first matchup
+                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2 - 1] + " (" + TeeTimes[teamMatchup.matchOrder.Value * 2] + ")";
+            }
+            else
+            {
+                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2] + " (" + TeeTimes[teamMatchup.matchOrder.Value * 2 + 1] + ")";
+            }
+			
 		}
 
 		public static bool Team1Won(this teammatchup teamMatchup)
@@ -46,6 +60,31 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 		{
 			return teamMatchup.PointsForTeam(1) > 48;
 		}
+
+        public static bool HasNoTeam(this teammatchup teamMatchup)
+        {
+            foreach (team aTeam in teamMatchup.teams)
+            {
+                if (aTeam.teamName == "NO TEAM")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsAfterNoTeam(this teammatchup teamMatchup)
+        {
+            // Unfortunately, the iteration order seems not by match order, so we can't break early
+            foreach (teammatchup matchup in teamMatchup.week.teammatchups)
+            {
+                if (matchup.matchOrder < teamMatchup.matchOrder && matchup.HasNoTeam())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static int? PointsFor(this teammatchup tm, team team)
         {

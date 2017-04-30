@@ -38,8 +38,8 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
         private void CreateTeamYearData()
         {
             // first, create the year
-            // TODO: remove hardcoded 2016.
-            this.CreatedYear = new year { value = 2016, isComplete = false };
+            // TODO: remove hardcoded 2017.
+            this.CreatedYear = new year { value = 2017, isComplete = false };
             this.CreatedTeamYearDatas = new List<teamyeardata>(this.teams.Count);
 
             // create team year datas.
