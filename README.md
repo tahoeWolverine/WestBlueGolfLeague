@@ -13,3 +13,13 @@ WestBlueGolfLeague website and iPhone app
 5. Open the solution `$/WestBlueGolfLeagueWeb/WestBlueGolfLeagueWeb.sln`
 6. Start the website by hitting `F5` or `CTRL` + `F5` and navigate to the local address in your browser of choice.
 7. **OPTIONAL** Install MySQL Workbench to make schema changes or visually configure your database.
+
+iOS App
+=======
+
+The iOS App has become legacy for now. Distribution was difficult and it's now several iOS versions back.
+
+Wiki
+====
+
+Additional dev information is available on the wiki of this repo.
