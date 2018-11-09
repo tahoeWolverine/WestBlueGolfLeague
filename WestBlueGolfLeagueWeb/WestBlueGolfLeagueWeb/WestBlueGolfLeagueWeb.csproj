@@ -390,6 +390,7 @@
     <Content Include="Content\images\appStoreQRCode.jpg" />
     <Content Include="Content\images\golfAppQRCode.jpg" />
     <Content Include="Content\images\golfdoctors2017.jpg" />
+    <Content Include="Content\images\kraftdinner2018.jpg" />
     <Content Include="Content\images\missingLinks15.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
