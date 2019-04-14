@@ -140,7 +140,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 		{
 			int numOfTeeTimes = this.teams.Count / 2;
 
-			int[] teeTimes = new int[4];
+			int[] teeTimes = new int[numOfTeeTimes];
 
 			for (int i = 0; i < teeTimes.Length; i++)
 			{

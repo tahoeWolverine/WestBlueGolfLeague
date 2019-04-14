@@ -8,7 +8,7 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
 	public static class TeamMatchupExtensions
 	{
-        private static readonly string[] TeeTimes = new string[] { "3:44", "3:52", "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
+        private static readonly string[] TeeTimes = new string[] { "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
 
 		public static int? PointsForTeam(this teammatchup teamMatchup, int teamIndex)
 		{
@@ -34,6 +34,10 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
 		public static string TeeTimeText(this teammatchup teamMatchup)
 		{
+            if (teamMatchup.matchOrder < 0)
+            {
+                return "n/a";
+            }
             // Unfortunately, we need to fudge the tee times due to no-team matches only getting one time
             if (teamMatchup.HasNoTeam())
             {
