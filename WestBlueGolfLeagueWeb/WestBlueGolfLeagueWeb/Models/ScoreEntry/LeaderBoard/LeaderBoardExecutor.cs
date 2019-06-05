@@ -141,17 +141,19 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
         /// </summary>
         private void CleanUpLeaderBoardDatas<T>(IEnumerable<int> ids, ILeaderBoard board)
         {
-            var lookup = new HashSet<int>(ids);
+            if (this.lbc.hasBoardData(board.LeaderBoardKey)) {
+                var lookup = new HashSet<int>(ids);
 
-            var datas = new List<leaderboarddata>(this.lbc.GetBoardData(board.LeaderBoardKey));
+                var datas = new List<leaderboarddata>(this.lbc.GetBoardData(board.LeaderBoardKey));
 
-            foreach (var d in datas)
-            {
-                int id = board.IsPlayerBoard ? d.playerId.Value : d.teamId.Value;
-
-                if (!lookup.Contains(id))
+                foreach (var d in datas)
                 {
-                    this.lbc.DeleteLeaderBoardData(id, board.LeaderBoardKey);
+                    int id = board.IsPlayerBoard ? d.playerId.Value : d.teamId.Value;
+
+                    if (!lookup.Contains(id))
+                    {
+                        this.lbc.DeleteLeaderBoardData(id, board.LeaderBoardKey);
+                    }
                 }
             }
         }

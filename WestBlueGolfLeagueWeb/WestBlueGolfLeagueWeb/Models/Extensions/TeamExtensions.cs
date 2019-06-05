@@ -63,6 +63,37 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             return total;
         }
 
+        public static int TotalPointsForFirstHalf(this team team, year year)
+        {
+            var allResults = team.AllResultsForYear(year, year.weeks.ElementAt(8));
+
+            int total = 0;
+
+            foreach (var result in allResults)
+            {
+                total += result.points.Value;
+            }
+
+            return total;
+        }
+
+        public static int TotalPointsForSecondHalf(this team team, year year)
+        {
+            var allResults = team.AllResultsForYear(year);
+
+            int total = 0;
+
+            foreach (var result in allResults)
+            {
+                if (result.match.teammatchup.week.seasonIndex > 8)
+                {
+                    total += result.points.Value;
+                }
+            }
+
+            return total;
+        }
+
         public static double AverageOpponentScoreForYear(this team team, year year)
         {
             var results = team.AllResultsForYear(year);

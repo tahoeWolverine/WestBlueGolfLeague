@@ -53,6 +53,8 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
             new List<TeamLeaderBoard>
                 {
                     new TeamLeaderBoard("Team Ranking", "team_ranking", LeaderBoardFormat.Default, (t, year, r) => t.TotalPointsForYear(year), teamPriorityCounter++, false),
+                    new TeamLeaderBoard("Team Ranking - First Half", "team_ranking_1st", LeaderBoardFormat.Default, (t, year, r) => t.TotalPointsForFirstHalf(year), teamPriorityCounter++, false),
+                    new TeamLeaderBoard("Team Ranking - Second Half", "team_ranking_2nd", LeaderBoardFormat.Default, (t, year, r) => t.TotalPointsForSecondHalf(year), teamPriorityCounter++, false),
 
                     new TeamLeaderBoard("Average Handicap", "team_avg_handicap", LeaderBoardFormat.Default, (t, year, r) => t.AverageHandicapForYear(year), teamPriorityCounter++),
 

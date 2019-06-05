@@ -106,6 +106,11 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry.LeaderBoard
             }
         }
 
+        public Boolean hasBoardData(string leaderBoardKey)
+        {
+            return this.boardToData.ContainsKey(leaderBoardKey);
+        }
+
         public IEnumerable<leaderboarddata> GetBoardData(string leaderBoardKey)
         {
             return this.boardToData[leaderBoardKey];
