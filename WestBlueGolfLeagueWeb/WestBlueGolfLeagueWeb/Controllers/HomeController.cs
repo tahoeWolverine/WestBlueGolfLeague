@@ -10,6 +10,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
     [AllowAnonymous]
     public class HomeController : WestBlueDbMvcController
     {
+        // This function is not used to generate data for the home page; it's been replaced by HomeApiController->/homeApi/->app.js->index.tpl.html
         public async Task<ViewResult> Index()
         {
             int selectedYear = this.SelectedYear;
