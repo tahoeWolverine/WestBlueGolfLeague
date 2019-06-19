@@ -29,8 +29,15 @@ namespace WestBlueGolfLeagueWeb.Controllers
             // validate that we have a valid key.
             var leaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking").FirstOrDefaultAsync();
             var leaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
-
             var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
+
+            var firstHalfLeaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking_1st").FirstOrDefaultAsync();
+            var firstHalfLeaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_1st" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
+            var firstHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = firstHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(firstHalfLeaderBoard, false) };
+
+            var secondHalfLeaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking_2nd").FirstOrDefaultAsync();
+            var secondHalfLeaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_2nd" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
+            var secondHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = secondHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(secondHalfLeaderBoard, false) };
 
             var playersForYear = await this.Db.GetPlayersForYear(selectedYear);
 
@@ -44,6 +51,8 @@ namespace WestBlueGolfLeagueWeb.Controllers
                     leagueNote = latestNote, 
                     selectedYear = selectedYear, 
                     standings = teamStandingData,
+                    standingsFirstHalf = firstHalfData,
+                    standingsSecondHalf = secondHalfData,
                     players = playersForYear.Select(x => new { id = x.id, name = x.name }),
                     schedule = new ScheduleResponse { Weeks = weeks.Select(x => {
 
