@@ -22,55 +22,56 @@
     </div>
 
     <div class="col-md-5">
+        <div ng-if="main.homeData.selectedYear < 2019">
+            <h3>Team Standings for {{::main.homeData.selectedYear}}</h3>
+            <table class="table">
+                <thead>
+                <th></th>
+                <th>Team</th>
+                <th>Points</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="boardData in main.homeData.standings.leaderBoardData | orderBy: boardData.rank">
+                        <td>{{::boardData.rank}}</td>
+                        <td>{{::boardData.entityName}}</td>
+                        <td>{{::boardData.formattedValue}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="main.homeData.selectedYear >= 2019">
+            <h3>First Half Standings for {{::main.homeData.selectedYear}}</h3>
+            <table class="table">
+                <thead>
+                <th></th>
+                <th>Team</th>
+                <th>Points</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="boardData in main.homeData.standingsFirstHalf.leaderBoardData | orderBy: boardData.rank">
+                        <td>{{::boardData.rank}}</td>
+                        <td>{{::boardData.entityName}}</td>
+                        <td>{{::boardData.formattedValue}}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <!--h3>Team Standings for {{::main.homeData.selectedYear}}</!--h3>
-        <table class="table">
-            <thead>
-            <th></th>
-            <th>Team</th>
-            <th>Points</th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="boardData in main.homeData.standings.leaderBoardData | orderBy: boardData.rank">
-                    <td>{{::boardData.rank}}</td>
-                    <td>{{::boardData.entityName}}</td>
-                    <td>{{::boardData.formattedValue}}</td>
-                </tr>
-            </tbody>
-        </table-->
-
-        <h3>First Half Standings for {{::main.homeData.selectedYear}}</h3>
-        <table class="table">
-            <thead>
-            <th></th>
-            <th>Team</th>
-            <th>Points</th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="boardData in main.homeData.standingsFirstHalf.leaderBoardData | orderBy: boardData.rank">
-                    <td>{{::boardData.rank}}</td>
-                    <td>{{::boardData.entityName}}</td>
-                    <td>{{::boardData.formattedValue}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3>Second Half Standings for {{::main.homeData.selectedYear}}</h3>
-        <table class="table">
-            <thead>
-            <th></th>
-            <th>Team</th>
-            <th>Points</th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="boardData in main.homeData.standingsSecondHalf.leaderBoardData | orderBy: boardData.rank">
-                    <td>{{::boardData.rank}}</td>
-                    <td>{{::boardData.entityName}}</td>
-                    <td>{{::boardData.formattedValue}}</td>
-                </tr>
-            </tbody>
-        </table>
-
+            <h3>Second Half Standings for {{::main.homeData.selectedYear}}</h3>
+            <table class="table">
+                <thead>
+                <th></th>
+                <th>Team</th>
+                <th>Points</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="boardData in main.homeData.standingsSecondHalf.leaderBoardData | orderBy: boardData.rank">
+                        <td>{{::boardData.rank}}</td>
+                        <td>{{::boardData.entityName}}</td>
+                        <td>{{::boardData.formattedValue}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="bs-callout">
             <p>Congratulations to the 2018 West Blue League Champions: Kraft Dinner!</p>
             <img class="team-photo" src="/Content/images/kraftdinner2018.jpg" />

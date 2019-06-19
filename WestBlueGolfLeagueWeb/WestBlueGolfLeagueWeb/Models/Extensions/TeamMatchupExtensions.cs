@@ -8,6 +8,8 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
 	public static class TeamMatchupExtensions
 	{
+        private static readonly string[] TeeTimes2018 = new string[] { "3:44", "3:52", "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
+
         private static readonly string[] TeeTimes = new string[] { "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
 
 		public static int? PointsForTeam(this teammatchup teamMatchup, int teamIndex)
@@ -34,6 +36,12 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
 		public static string TeeTimeText(this teammatchup teamMatchup)
 		{
+            string[] times = TeeTimes;
+            if (teamMatchup.week.year.value < 2019)
+            {
+                times = TeeTimes2018;
+            }
+
             if (teamMatchup.matchOrder < 0)
             {
                 return "n/a";
@@ -41,16 +49,16 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             // Unfortunately, we need to fudge the tee times due to no-team matches only getting one time
             if (teamMatchup.HasNoTeam())
             {
-                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2];
+                return teamMatchup.matchOrder == null ? "n/a" : times[teamMatchup.matchOrder.Value * 2];
             }
             else if (teamMatchup.matchOrder > 0 && teamMatchup.IsAfterNoTeam())
             {
                 // Do a safety check on matchOrder to not bother checking if after no team if first matchup
-                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2 - 1] + " (" + TeeTimes[teamMatchup.matchOrder.Value * 2] + ")";
+                return teamMatchup.matchOrder == null ? "n/a" : times[teamMatchup.matchOrder.Value * 2 - 1] + " (" + times[teamMatchup.matchOrder.Value * 2] + ")";
             }
             else
             {
-                return teamMatchup.matchOrder == null ? "n/a" : TeeTimes[teamMatchup.matchOrder.Value * 2] + " (" + TeeTimes[teamMatchup.matchOrder.Value * 2 + 1] + ")";
+                return teamMatchup.matchOrder == null ? "n/a" : times[teamMatchup.matchOrder.Value * 2] + " (" + times[teamMatchup.matchOrder.Value * 2 + 1] + ")";
             }
 			
 		}
