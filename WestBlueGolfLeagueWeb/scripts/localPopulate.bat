@@ -6,7 +6,7 @@ set /p password=
 echo Your username is %usern%
 echo Your Group is %password%
 echo Loading database...
-call "C:\Program Files\MySQL\MySQL Server 5.6\bin\mysql.exe" --user=%usern% --password=%password% < 07_06_2019.sql
+call "C:\Program Files\MySQL\MySQL Server 5.6\bin\mysql.exe" --user=%usern% --password=%password% < 07_28_2019.sql
 echo Creating WestBlue users...
 call "C:\Program Files\MySQL\MySQL Server 5.6\bin\mysql.exe" --user=%usern% --password=%password% < createSqlUsers.sql
 pause
