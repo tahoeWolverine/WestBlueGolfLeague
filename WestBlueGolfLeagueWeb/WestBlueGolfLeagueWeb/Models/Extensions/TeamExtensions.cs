@@ -65,13 +65,16 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 
         public static int TotalPointsForFirstHalf(this team team, year year)
         {
-            var allResults = team.AllResultsForYear(year, year.weeks.ElementAt(8));
+            var allResults = team.AllResultsForYear(year);
 
             int total = 0;
 
             foreach (var result in allResults)
             {
-                total += result.points.Value;
+                if (result.match.teammatchup.week.seasonIndex <= 8)
+                {
+                    total += result.points.Value;
+                }
             }
 
             return total;
