@@ -40,8 +40,30 @@
             </table>
         </div>
         <div ng-if="main.homeData.selectedYear >= 2019">
-            <h3>First Half Standings for {{::main.homeData.selectedYear}}</h3>
-            <table class="table">
+            <h3>Standings for {{::main.homeData.selectedYear}}</h3>
+            <script type="text/javascript">
+                var showFirstHalf = function () {
+                    $("#firstHalfStandings").show();
+                    $("#secondHalfStandings").hide();
+                    $("#overallStandings").hide();
+                }
+                var showSecondHalf = function () {
+                    $("#firstHalfStandings").hide();
+                    $("#secondHalfStandings").show();
+                    $("#overallStandings").hide();
+                }
+                var showOverall = function () {
+                    $("#firstHalfStandings").hide();
+                    $("#secondHalfStandings").hide();
+                    $("#overallStandings").show();
+                }
+            </script>
+            <div class="btn-group btn-group-lg">
+                <button type="button" class="btn btn-default" onclick="showFirstHalf()">First Half</button>
+                <button type="button" class="btn btn-default" onclick="showSecondHalf()" autofocus>Second Half</button>
+                <button type="button" class="btn btn-default" onclick="showOverall()">Overall</button>
+            </div>
+            <table class="table" id="firstHalfStandings" hidden>
                 <thead>
                 <th></th>
                 <th>Team</th>
@@ -55,9 +77,7 @@
                     </tr>
                 </tbody>
             </table>
-
-            <h3>Second Half Standings for {{::main.homeData.selectedYear}}</h3>
-            <table class="table">
+            <table class="table" id="secondHalfStandings">
                 <thead>
                 <th></th>
                 <th>Team</th>
@@ -65,6 +85,20 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="boardData in main.homeData.standingsSecondHalf.leaderBoardData | orderBy: boardData.rank">
+                        <td>{{::boardData.rank}}</td>
+                        <td>{{::boardData.entityName}}</td>
+                        <td>{{::boardData.formattedValue}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table" id="overallStandings" hidden>
+                <thead>
+                <th></th>
+                <th>Team</th>
+                <th>Points</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="boardData in main.homeData.standings.leaderBoardData | orderBy: boardData.rank">
                         <td>{{::boardData.rank}}</td>
                         <td>{{::boardData.entityName}}</td>
                         <td>{{::boardData.formattedValue}}</td>
