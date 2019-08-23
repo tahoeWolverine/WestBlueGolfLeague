@@ -9,11 +9,15 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
     public class PlayoffPredictor
     {
         private IEnumerable<leaderboarddata> rankings;
+        private IEnumerable<leaderboarddata> firstHalfRankings;
+        private IEnumerable<leaderboarddata> secondHalfRankings;
         private IEnumerable<week> allWeeks;
 
-        public PlayoffPredictor(IEnumerable<leaderboarddata> rankingLeaderboard, IEnumerable<week> allWeeks)
+        public PlayoffPredictor(IEnumerable<leaderboarddata> rankingLeaderboard, IEnumerable<leaderboarddata> firstHalfLeaderboard, IEnumerable<leaderboarddata> secondHalfLeaderboard, IEnumerable<week> allWeeks)
         {
             this.rankings = rankingLeaderboard;
+            this.firstHalfRankings = firstHalfLeaderboard;
+            this.secondHalfRankings = secondHalfLeaderboard;
             this.allWeeks = allWeeks;
         }
 
@@ -22,12 +26,14 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
             // only grab playoff weeks.
             var playoffWeeksInOrder = this.allWeeks.Where(x => x.isPlayoff).OrderBy(x => x.seasonIndex);
 
-            if (this.rankings.Count() != 8 || playoffWeeksInOrder.Count() == 0)
+            if (this.rankings.Count() != 6 || playoffWeeksInOrder.Count() == 0)
             {
                 return new List<GroupedPlayoffMatchup>();
             }
 
             var sortedRanks = this.rankings.OrderBy(x => x.rank).ToList();
+            var sortedFirstHalfRanks = this.firstHalfRankings.OrderBy(x => x.rank).ToList();
+            var sortedSecondHalfRanks = this.secondHalfRankings.OrderBy(x => x.rank).ToList();
 
             // TODO: what about ties??  Need to implement tie breaking rules.
 
@@ -42,12 +48,56 @@ namespace WestBlueGolfLeagueWeb.Models.Playoffs
             if (week1NotSet)
             {
                 var week1PlayoffMatchup = new GroupedPlayoffMatchup { Week = playoffWeeksInOrder.First() };
-
                 List<PlayoffMatchup> playoffMatchupsWeek1 = new List<PlayoffMatchup>(4);
-                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[0].team, Team2 = sortedRanks[3].team, Team1Seed = 1, Team2Seed = 4 });
-                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedRanks[1].team, Team2 = sortedRanks[2].team, Team1Seed = 2, Team2Seed = 3 });
-                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[4].team, Team2 = sortedRanks[7].team, Team1Seed = 5, Team2Seed = 8 });
-                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[5].team, Team2 = sortedRanks[6].team, Team1Seed = 6, Team2Seed = 7 });
+                PlayoffMatchup championship;
+
+                bool uniqueFirstHalfWinner = sortedFirstHalfRanks[0].value != sortedFirstHalfRanks[1].value;
+                bool uniqueSecondHalfWinner = sortedSecondHalfRanks[0].value != sortedSecondHalfRanks[1].value;
+                leaderboarddata bestOverall = sortedRanks[0];
+                leaderboarddata secondOverall = sortedRanks[1];
+
+                if (uniqueFirstHalfWinner && uniqueSecondHalfWinner && sortedSecondHalfRanks[0].teamId != sortedFirstHalfRanks[0].teamId)
+                {
+                    championship = new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedFirstHalfRanks[0].team, Team2 = sortedSecondHalfRanks[0].team, Team1Seed = 1, Team2Seed = 2 };
+                    // Remove champ teams from sorted ranks to make it easier to fill out other matches
+                    sortedRanks.RemoveAll(x => x.teamId == sortedFirstHalfRanks[0].teamId);
+                    sortedRanks.RemoveAll(x => x.teamId == sortedSecondHalfRanks[0].teamId);
+                }
+                else if (uniqueFirstHalfWinner)
+                {
+                    // If 2nd spot playoff spot is occupied by same team as first spot, drop to 2nd overall
+                    if (sortedFirstHalfRanks[0].teamId == bestOverall.teamId)
+                    {
+                        championship = new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedFirstHalfRanks[0].team, Team2 = secondOverall.team, Team1Seed = 1, Team2Seed = 2 };
+                        sortedRanks.RemoveAll(x => x.teamId == sortedFirstHalfRanks[0].teamId);
+                        sortedRanks.Remove(secondOverall);
+                    } else
+                    {
+                        championship = new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedFirstHalfRanks[0].team, Team2 = bestOverall.team, Team1Seed = 1, Team2Seed = 2 };
+                        sortedRanks.RemoveAll(x => x.teamId == sortedFirstHalfRanks[0].teamId);
+                        sortedRanks.Remove(bestOverall);
+                    }
+                }
+                else
+                {
+                    // If 2nd spot playoff spot is occupied by same team as first spot, drop to 2nd overall
+                    if (sortedSecondHalfRanks[0].teamId == bestOverall.teamId)
+                    {
+                        championship = new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedSecondHalfRanks[0].team, Team2 = secondOverall.team, Team1Seed = 1, Team2Seed = 2 };
+                        sortedRanks.Remove(secondOverall);
+                        sortedRanks.RemoveAll(x => x.teamId == sortedSecondHalfRanks[0].teamId);
+                    }
+                    else
+                    {
+                        championship = new PlayoffMatchup { PlayoffType = PlayoffTypes.Championship, Team1 = sortedSecondHalfRanks[0].team, Team2 = bestOverall.team, Team1Seed = 1, Team2Seed = 2 };
+                        sortedRanks.Remove(bestOverall);
+                        sortedRanks.RemoveAll(x => x.teamId == sortedSecondHalfRanks[0].teamId);
+                    }
+                }
+
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.Consolation, Team1 = sortedRanks[2].team, Team2 = sortedRanks[3].team, Team1Seed = 5, Team2Seed = 6 });
+                playoffMatchupsWeek1.Add(new PlayoffMatchup { PlayoffType = PlayoffTypes.ThirdPlace, Team1 = sortedRanks[0].team, Team2 = sortedRanks[1].team, Team1Seed = 3, Team2Seed = 4 });
+                playoffMatchupsWeek1.Add(championship);
 
                 week1PlayoffMatchup.PlayoffMatchups = playoffMatchupsWeek1;
 

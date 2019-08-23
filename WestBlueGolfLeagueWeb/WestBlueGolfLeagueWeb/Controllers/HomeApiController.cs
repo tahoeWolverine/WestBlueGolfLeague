@@ -41,7 +41,7 @@ namespace WestBlueGolfLeagueWeb.Controllers
 
             var playersForYear = await this.Db.GetPlayersForYear(selectedYear);
 
-            var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, weeks).PredictPlayoffMatchups();
+            var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, firstHalfLeaderBoardDatas, secondHalfLeaderBoardDatas, weeks).PredictPlayoffMatchups();
 
             var playoffLookup = playoffPredictorResults.ToDictionary(x => x.Week.id, x => x);
 
