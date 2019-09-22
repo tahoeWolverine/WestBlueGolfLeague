@@ -22,24 +22,30 @@ namespace WestBlueGolfLeagueWeb.Controllers
             var selectedYear = this.SelectedYear;
 
             // populated weeks
-            var weeks = await this.Db.GetSchedule(selectedYear, true);
+            var weeksTask = this.Db.GetSchedule(selectedYear, true);
 
-            var latestNote = await this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
+            var latestNoteTask = this.Db.notes.OrderByDescending(x => x.date).FirstOrDefaultAsync();
+
+            var playersForYearTask = this.Db.GetPlayersForYear(selectedYear);
 
             // validate that we have a valid key.
-            var leaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking").FirstOrDefaultAsync();
-            var leaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
-            var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(leaderBoard, false) };
+            var leaderBoardTask = this.Db.leaderboards.Where(x => x.key == "team_ranking").FirstOrDefaultAsync();
+            var leaderBoardDataTask = this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
 
-            var firstHalfLeaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking_1st").FirstOrDefaultAsync();
-            var firstHalfLeaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_1st" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
-            var firstHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = firstHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(firstHalfLeaderBoard, false) };
+            var firstHalfLeaderBoardTask = this.Db.leaderboards.Where(x => x.key == "team_ranking_1st").FirstOrDefaultAsync();
+            var firstHalfLeaderBoardDataTask = this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_1st" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
 
-            var secondHalfLeaderBoard = await this.Db.leaderboards.Where(x => x.key == "team_ranking_2nd").FirstOrDefaultAsync();
-            var secondHalfLeaderBoardDatas = await this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_2nd" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
-            var secondHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = secondHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(secondHalfLeaderBoard, false) };
+            var secondHalfLeaderBoardTask = this.Db.leaderboards.Where(x => x.key == "team_ranking_2nd").FirstOrDefaultAsync();
+            var secondHalfLeaderBoardDataTask = this.Db.leaderboarddatas.Include(x => x.team).Where(x => x.leaderboard.key == "team_ranking_2nd" && x.year.value == selectedYear).OrderBy(x => x.rank).ToListAsync();
 
-            var playersForYear = await this.Db.GetPlayersForYear(selectedYear);
+            var weeks = await weeksTask;
+            var leaderBoardDatas = await leaderBoardDataTask;
+            var firstHalfLeaderBoardDatas = await firstHalfLeaderBoardDataTask;
+            var secondHalfLeaderBoardDatas = await secondHalfLeaderBoardDataTask;
+
+            var teamStandingData = new FullLeaderBoardForYearResponse { LeaderBoardData = leaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(await leaderBoardTask, false) };
+            var firstHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = firstHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(await firstHalfLeaderBoardTask, false) };
+            var secondHalfData = new FullLeaderBoardForYearResponse { LeaderBoardData = secondHalfLeaderBoardDatas.Select(x => new LeaderBoardDataWebResponse(x)), LeaderBoard = new LeaderBoardResponse(await secondHalfLeaderBoardTask, false) };
 
             var playoffPredictorResults = new PlayoffPredictor(leaderBoardDatas, firstHalfLeaderBoardDatas, secondHalfLeaderBoardDatas, weeks).PredictPlayoffMatchups();
 
@@ -48,12 +54,12 @@ namespace WestBlueGolfLeagueWeb.Controllers
             return Ok(
                 new 
                 { 
-                    leagueNote = latestNote, 
-                    selectedYear = selectedYear, 
+                    leagueNote = await latestNoteTask,
+                    selectedYear = selectedYear,
                     standings = teamStandingData,
                     standingsFirstHalf = firstHalfData,
                     standingsSecondHalf = secondHalfData,
-                    players = playersForYear.Select(x => new { id = x.id, name = x.name }),
+                    players = (await playersForYearTask).Select(x => new { id = x.id, name = x.name }),
                     schedule = new ScheduleResponse { Weeks = weeks.Select(x => {
 
                         GroupedPlayoffMatchup matchup = null;
