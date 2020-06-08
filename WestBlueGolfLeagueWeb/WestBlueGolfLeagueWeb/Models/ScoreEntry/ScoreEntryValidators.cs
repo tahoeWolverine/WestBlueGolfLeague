@@ -170,10 +170,10 @@ namespace WestBlueGolfLeagueWeb.Models.ScoreEntry
                     canBeLessThan24 = true;
                 }
 
-                if (match.Result1.Points + match.Result2.Points < 24 && !canBeLessThan24)
+                /*if (match.Result1.Points + match.Result2.Points < 24 && !canBeLessThan24)
                 {
                     mustBe24Error = true;
-                }
+                }*/
             }
 
             List<string> errors = new List<string>(2);
