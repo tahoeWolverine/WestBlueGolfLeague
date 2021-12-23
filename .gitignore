@@ -490,3 +490,6 @@ __pycache__/
 
 
 # End of https://www.gitignore.io/api/visualstudio
+
+# Windows 10/Notepad++ is creating .bat.bak files when editing .bat files (and others), don't seem to have value
+*.bak
