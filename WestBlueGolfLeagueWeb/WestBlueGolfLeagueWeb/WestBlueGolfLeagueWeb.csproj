@@ -389,6 +389,7 @@
     <Content Include="Content\fontawesome\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\appStoreQRCode.jpg" />
+    <Content Include="Content\images\doubled2021.png" />
     <Content Include="Content\images\earthmovers2019.jpg" />
     <Content Include="Content\images\golfAppQRCode.jpg" />
     <Content Include="Content\images\golfdoctors2017.jpg" />
