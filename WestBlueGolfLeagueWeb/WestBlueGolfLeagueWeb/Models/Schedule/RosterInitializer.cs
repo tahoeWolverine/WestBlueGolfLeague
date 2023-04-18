@@ -13,7 +13,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 
 		public RosterInitializer(IEnumerable<TeamRoster> rostersToInitialize, IEnumerable<player> allLeaguePlayers, year yearToInitialize)
 		{
-			this.playersLookup = allLeaguePlayers.ToDictionary(x => x.name.ToLowerInvariant());
+			this.playersLookup = allLeaguePlayers.GroupBy(x => x.name).Select(g => g.First()).ToDictionary(x => x.name.ToLowerInvariant());
 			this.rosters = rostersToInitialize;
             this.yearToInitialize = yearToInitialize;
 
