@@ -92,7 +92,7 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
             this.CreatedMatchups = createdMatchups.ToList();
             this.CreatedWeeks = createdWeeks.ToList();
 
-            this.AssignTeeTimes2();
+            this.AssignTeeTimes3();
         }
 
         private teammatchup CreateTeamMatchup(team team1, team team2, week week, int matchOrder)
@@ -175,6 +175,60 @@ namespace WestBlueGolfLeagueWeb.Models.Schedule
 				}
 			}
 		}
+
+        /// <summary>
+		/// This assumes we've already built the "schedule" - this version is best for leagues of 6 teams in 15 weeks;
+        /// it rotates each matchup through the 3 different timeslots, once each.
+		/// </summary>
+		private void AssignTeeTimes3()
+        {
+            int numOfTeeTimes = this.teams.Count / 2;
+
+            int[] teeTimes = new int[numOfTeeTimes];
+
+            for (int i = 0; i < teeTimes.Length; i++)
+            {
+                teeTimes[i] = i;
+            }
+
+            int anchorIndex = 1; // deemed to be the most "fair".
+
+            var groupedMatches = this.CreatedMatchups.GroupBy(x => x.week.seasonIndex).OrderBy(x => x.Key).ToList();
+
+            // Loop through first matchups of season
+            for (int i = 0; i < this.teams.Count - 1 && i < groupedMatches.Count; i++)
+            {
+                var sortedMatchUps = groupedMatches[i].OrderBy(x => x.matchOrder).ToList();
+
+                for (int j = 0; j < sortedMatchUps.Count; j++)
+                {
+                    sortedMatchUps[j].matchOrder = teeTimes[j];
+                }
+
+                this.RotateTeeTimes(teeTimes, anchorIndex);
+            }
+
+            // Loop through second matchups of season, increment tee times by one
+            for (int i = this.teams.Count - 1; i < groupedMatches.Count; i++)
+            {
+                var sortedMatchups = groupedMatches[i].OrderBy(x => x.matchOrder).ToList();
+                // TODO: not sure if the original matchups will be in the correct order anymore.
+                var originalMatchups = groupedMatches[i - (this.teams.Count - 1)].ToList();
+
+                for (int j = 0; j < sortedMatchups.Count(); j++)
+                {
+                    var original = originalMatchups[j].matchOrder + 1;
+                    if (original >= numOfTeeTimes)
+                    {
+                        sortedMatchups[j].matchOrder = 0;
+                    }
+                    else
+                    {
+                        sortedMatchups[j].matchOrder = originalMatchups[j].matchOrder + 1;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Performs the tee time rotation, which tries to evenly distribute the season's tee times across
