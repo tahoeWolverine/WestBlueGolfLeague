@@ -62,8 +62,13 @@ namespace WestBlueGolfLeagueWeb.Controllers.Admin
                 var pairings = this.Db.pairings.ToListAsync();
 
                 // Get courses to rotate.
-                List<string> courseNames = new List<string> { "Silver Front", "Silver Back", "Gold Front", "Gold Back" };
+                List<string> courseNames = new List<string> { "Silver Front '23", "Silver Back '23", "Gold Front '23", "Gold Back '23" };
                 var courses = this.Db.courses.Where(x => courseNames.Contains(x.name)).OrderBy(x => x.id).ToListAsync();
+
+                if (courses == null || courses.Result.Count == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, new { message = "No courses found!" });
+                }
 
                 await Task.WhenAll(selectedTeams, pairings, courses);
 
