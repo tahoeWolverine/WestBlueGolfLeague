@@ -8,9 +8,11 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
 {
 	public static class TeamMatchupExtensions
 	{
+        private static readonly string[] TeeTimes2024 = new string[] { "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
+
         private static readonly string[] TeeTimes2018 = new string[] { "3:44", "3:52", "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
 
-        private static readonly string[] TeeTimes = new string[] { "4:00", "4:08", "4:16", "4:24", "4:32", "4:40", "4:48", "4:56", "n/a" };
+        private static readonly string[] TeeTimes = new string[] { "4:32", "4:40", "4:48", "4:56", "5:04", "5:12", "n/a" };
 
 		public static int? PointsForTeam(this teammatchup teamMatchup, int teamIndex)
 		{
@@ -40,6 +42,9 @@ namespace WestBlueGolfLeagueWeb.Models.Extensions
             if (teamMatchup.week.year.value < 2019)
             {
                 times = TeeTimes2018;
+            } else if (teamMatchup.week.year.value < 2025)
+            {
+                times = TeeTimes2024;
             }
 
             if (teamMatchup.matchOrder < 0)
