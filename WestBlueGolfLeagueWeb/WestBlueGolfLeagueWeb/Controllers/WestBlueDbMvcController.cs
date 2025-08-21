@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using WestBlueGolfLeagueWeb.Models.Entities;
 
+
+using System.Data.Entity;
+
 namespace WestBlueGolfLeagueWeb.Controllers
 {
     public class WestBlueDbMvcController : Controller
@@ -24,8 +27,17 @@ namespace WestBlueGolfLeagueWeb.Controllers
         public int CurrentYear { get; private set; }
 
 	    protected override void OnActionExecuting(ActionExecutingContext filterContext)
-	    {
-            var allYears = this.db.years.ToList();
+        {
+            var allYears = new List<year>();
+            try
+            {
+                allYears = this.db.years.ToList();
+            }
+            catch (NullReferenceException e)
+            {
+                throw new ApplicationException("Years object null while launching application - ", e);
+            }
+            
 
             // populate required fields, initializing selected year to the current year.
             this.CurrentYear = this.SelectedYear = allYears.Max(x => x.value);
